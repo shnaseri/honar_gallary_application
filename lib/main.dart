@@ -50,7 +50,7 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
             dividerColor: Colors.transparent,
             highlightColor: Colors.black45,
-            fontFamily: 'Dana',
+            fontFamily: 'Sahel',
             iconTheme: const IconThemeData(color: Colors.white),
             colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.pink)
                 .copyWith(secondary: Colors.black12)),
