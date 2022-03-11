@@ -2,6 +2,7 @@ import 'package:animated_login/animated_login.dart';
 import 'package:flutter/material.dart';
 import 'package:honar_gallary/const/color_const.dart';
 import 'package:honar_gallary/logic/extenstion_methods.dart';
+import 'package:honar_gallary/logic/router_const.dart';
 
 class AuthenticationPage extends StatefulWidget {
   const AuthenticationPage({Key? key}) : super(key: key);
@@ -120,6 +121,9 @@ class _AuthenticationPageState extends State<AuthenticationPage> {
         textDirection: TextDirection.ltr,
         child: AnimatedLogin(
           onLogin: (login) async {
+            print(login.email);
+            print('4');
+            Navigator.pushReplacementNamed(context, HOME_PAGE_PATH);
             return "";
           },
           onSignup: (login) async {
