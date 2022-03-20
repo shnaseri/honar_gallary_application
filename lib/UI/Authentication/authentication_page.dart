@@ -33,7 +33,7 @@ class _AuthenticationPageState extends State<AuthenticationPage> {
         // const Color(0xFF6666FF),
         formFieldBackgroundColor: Colors.white,
         formWidthRatio: 60,
-        textFormStyle: TextStyle(
+        textFormStyle: const TextStyle(
           color: Colors.black,
           fontFamily: 'Sahel',
         ),
@@ -121,8 +121,6 @@ class _AuthenticationPageState extends State<AuthenticationPage> {
         textDirection: TextDirection.ltr,
         child: AnimatedLogin(
           onLogin: (login) async {
-            print(login.email);
-            print('4');
             Navigator.pushReplacementNamed(context, HOME_PAGE_PATH);
             return "";
           },
@@ -144,17 +142,20 @@ class _AuthenticationPageState extends State<AuthenticationPage> {
             if (((email?.length) ?? 0) < 4) {
               return 'نام کاریری باید بیش از 3 حرف باشد';
             }
+            return null;
           }),
           emailValidator: ValidatorModel(customValidator: (String? email) {
             if (!((email ?? "").isValidEmail)) {
               return 'پست الکترونیکی نامعتبر است';
             }
+            return null;
           }),
           passwordValidator: ValidatorModel(
               customValidator: (String? password) {
                 if (((password?.length) ?? 0) < 6) {
                   return 'رمز عبور حداقل باید 6 رقم باشد.';
                 }
+                return null;
               },
               checkUpperCase: true),
           onAuthModeChange: (AuthMode newMode) => currentMode = newMode,
