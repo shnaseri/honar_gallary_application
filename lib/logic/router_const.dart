@@ -1,3 +1,3 @@
-const AUTH_PAGE_PATH = '/auth';
+const authPagePath = '/auth';
 
-const HOME_PAGE_PATH = '/home';
+const homePagePath = '/home';

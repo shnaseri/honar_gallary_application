@@ -14,7 +14,7 @@ class SplashPageState extends State<SplashPage> {
   }
 
   void navigationToAuthPage() {
-    Navigator.pushReplacementNamed(context, AUTH_PAGE_PATH);
+    Navigator.pushReplacementNamed(context, authPagePath);
   }
 
   late bool startApp;

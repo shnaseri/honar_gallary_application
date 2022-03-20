@@ -121,7 +121,7 @@ class _AuthenticationPageState extends State<AuthenticationPage> {
         textDirection: TextDirection.ltr,
         child: AnimatedLogin(
           onLogin: (login) async {
-            Navigator.pushReplacementNamed(context, HOME_PAGE_PATH);
+            Navigator.pushReplacementNamed(context, homePagePath);
             return "";
           },
           onSignup: (login) async {
