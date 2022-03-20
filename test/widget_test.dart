@@ -15,7 +15,6 @@ void main() {
     await tester.pumpWidget(MyApp(router: AppRouter()));
 
     // Verify that our counter starts at 0.
-    print(tester.allWidgets);
     expect(find.byType(MaterialApp), findsOneWidget);
   });
 }
