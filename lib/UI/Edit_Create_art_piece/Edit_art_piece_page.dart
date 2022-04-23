@@ -1,8 +1,8 @@
-import 'dart:ui';
 
 import 'package:flutter/material.dart';
 // import 'package:honar_gallary/UI/Edit_Create_art_piece/image_card.dart';
 import 'package:nb_utils/nb_utils.dart';
+
 // import 'package:flutter_signature_pad/flutter_signature_pad.dart';
 // import 'package:image_form_field/image_form_field.dart';
 // import 'package:honar_gallary/UI/Art_piece/Art_piece_model.dart';
@@ -55,6 +55,7 @@ class _Edit_art_pieceState extends State<Edit_art_piece> {
       body: ListView(
         // padding: EdgeInsets.symmetric(vertical: context.height() * 0.025,
         //                               horizontal: context.width() * 0.05),
+        physics: ClampingScrollPhysics(),
         children: <Widget>[
           Stack(
             clipBehavior: Clip.none,
@@ -98,10 +99,10 @@ class _Edit_art_pieceState extends State<Edit_art_piece> {
                       Row(
                         children: [
                           Text(
-                            "نام کاربری: ",
-                            style:
-                            primaryTextStyle(color: ColorPallet
-                                .colorPalletPurpleRain, size: 15),
+                            "نام : ",
+                            style: primaryTextStyle(
+                                color: ColorPallet.colorPalletPurpleRain,
+                                size: 15),
                           ),
                           SizedBox(
                             width: context.width() * 0.23,

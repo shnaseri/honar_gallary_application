@@ -5,6 +5,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
+
 // import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 // import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 
@@ -90,7 +91,7 @@ class _ProfileListItemsState extends State<ProfileListItems> {
         key: _formKey,
         child: ListView(
           padding: EdgeInsets.zero,
-          physics: const ClampingScrollPhysics(),
+          physics: const NeverScrollableScrollPhysics(),
           controller: scrollController,
           children: [
             titleTextField(),

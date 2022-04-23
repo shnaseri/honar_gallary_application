@@ -1,8 +1,7 @@
-import 'package:flutter/material.dart';
-import 'package:nb_utils/nb_utils.dart';
-
 // import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:flutter/material.dart';
+import 'package:nb_utils/nb_utils.dart';
 
 // import 'package:flutter/material.dart';
 // import 'package:honar_gallary/const/color_const.dart';
@@ -89,12 +88,14 @@ class _ImageSliderTileState extends State<ImageSliderTile> {
           setState(() {
             showIcon = true;
             _myOpacity = 0.5;
+            print("1");
           });
         },
         onExit: (value) {
           setState(() {
             showIcon = false;
             _myOpacity = 1;
+            print("2");
           });
         },
         child: Container(
@@ -149,7 +150,7 @@ class _ImageSliderTileState extends State<ImageSliderTile> {
                         child: GestureDetector(
                             onTap: () => print("icon clicked"),
                             child: const Image(
-                              image: AssetImage("images/wrong1.png"),
+                              image: AssetImage("assets/images/wrong1.png"),
                               width: 50,
                               height: 50,
                             )))
