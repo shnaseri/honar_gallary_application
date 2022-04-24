@@ -3,11 +3,6 @@ import 'package:flutter/material.dart';
 // import 'package:honar_gallary/UI/Edit_Create_art_piece/image_card.dart';
 import 'package:nb_utils/nb_utils.dart';
 
-// import 'package:flutter_signature_pad/flutter_signature_pad.dart';
-// import 'package:image_form_field/image_form_field.dart';
-// import 'package:honar_gallary/UI/Art_piece/Art_piece_model.dart';
-
-import '../../const/color_const.dart';
 import 'Edit_page_list.dart';
 
 // import 'package:image_picker/image_picker.dart';
@@ -47,91 +42,89 @@ class _Edit_art_pieceState extends State<Edit_art_piece> {
   Widget build(BuildContext context) {
     double coverHeight = context.height() * 0.27;
     double profileHeight = context.height() * 0.2;
-    final top = coverHeight - profileHeight / 2;
+    final top = coverHeight - profileHeight / 4;
     final bottom = profileHeight / 2;
 
-
     return Scaffold(
-      body: ListView(
-        // padding: EdgeInsets.symmetric(vertical: context.height() * 0.025,
-        //                               horizontal: context.width() * 0.05),
+      body: CustomScrollView(
         physics: ClampingScrollPhysics(),
-        children: <Widget>[
-          Stack(
-            clipBehavior: Clip.none,
-            alignment: Alignment.center,
-            children: [
-              Container(
-                  margin: EdgeInsets.only(bottom: bottom),
-                  child: buildCoverImage(coverHeight)),
-              Positioned(
-                right: 50,
-                top: top,
-                child: buildProfileImage(profileHeight),
-              ),
-              Positioned(
-                left: 40,
-                bottom: 10,
-                child: Container(
-                  width: context.width() * 0.4,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SizedBox(
-                        width: context.width() * 0.4,
-                        child: Row(
-                          children: [
-                            SizedBox(
-                              width: context.width() * 0.4,
-                              child: Text(
-                                'حسین',
-                                style:
-                                boldTextStyle(
-                                    color: ColorPallet.colorPalletPurpleRain,
-                                    size: 19),
-                                overflow: TextOverflow.ellipsis,
-                                maxLines: 1,
-                              ),
-                            )
-                          ],
-                        ),
-                      ),
-                      Row(
-                        children: [
-                          Text(
-                            "نام : ",
-                            style: primaryTextStyle(
-                                color: ColorPallet.colorPalletPurpleRain,
-                                size: 15),
-                          ),
-                          SizedBox(
-                            width: context.width() * 0.23,
-                            child: Text(
-                              'بابک بهکام کیا',
-                              style:
-                              primaryTextStyle(
-                                  color: ColorPallet.colorPalletPurpleRain,
-                                  size: 15),
-                            ),
-                          ),
-                        ],
-                      )
-                    ],
-                  ),
+        slivers: [
+          SliverAppBar(
+            pinned: true,
+            snap: true,
+            floating: true,
+            expandedHeight: 280,
+            flexibleSpace: FlexibleSpaceBar(
+              title: SizedBox(
+                width: context.width() * 0.4,
+                child: Text(
+                  'حسین',
+                  style: boldTextStyle(color: Colors.white, size: 19),
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 1,
                 ),
               ),
-            ],
-          ),
-          Padding(
-            padding: EdgeInsets.symmetric(
-                vertical: context.height() * 0.008,
-                horizontal: context.width() * 0.05),
-            child: ProfileListItems(
-              changeState: () {
-                print('1');
-                setState(() {});
-              },
+              centerTitle: false,
+              background: Stack(
+                clipBehavior: Clip.none,
+                alignment: Alignment.center,
+                children: [
+                  Container(
+                      margin: EdgeInsets.only(bottom: bottom),
+                      child: buildCoverImage(coverHeight)),
+                  Positioned(
+                    right: 50,
+                    top: top,
+                    child: buildProfileImage(profileHeight),
+                  ),
+                  Positioned(
+                    left: 40,
+                    bottom: 10,
+                    child: Container(
+                      width: context.width() * 0.4,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SizedBox(
+                            width: context.width() * 0.4,
+                            child: Row(
+                              children: [],
+                            ),
+                          ),
+                          Row(
+                            children: [
+                              Text(
+                                "نام کاربری : ",
+                                style: primaryTextStyle(
+                                    color: Colors.white, size: 15),
+                              ),
+                              SizedBox(
+                                width: context.width() * 0.12,
+                                child: Text(
+                                  'bbkbe',
+                                  style: primaryTextStyle(
+                                      color: Colors.white, size: 15),
+                                ),
+                              ),
+                            ],
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
+          ),
+          SliverList(
+            delegate: SliverChildBuilderDelegate((_, int index) {
+              return ProfileListItems(
+                changeState: () {
+                  print('1');
+                  setState(() {});
+                },
+              );
+            }, childCount: 1),
           ),
         ],
       ),

@@ -52,8 +52,9 @@ class MyApp extends StatelessWidget {
             highlightColor: Colors.black45,
             fontFamily: 'Sahel',
             iconTheme: const IconThemeData(color: Colors.white),
-            colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.pink)
-                .copyWith(secondary: Colors.black12)),
+            colorScheme:
+                ColorScheme.fromSwatch(primarySwatch: Colors.deepPurple)
+                    .copyWith(secondary: Colors.black12)),
         onGenerateRoute: router.generateRoute,
         initialRoute: AUTH_PAGE_PATH, // initial route to Splash screen
       ),

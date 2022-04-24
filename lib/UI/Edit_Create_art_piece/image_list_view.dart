@@ -1,6 +1,7 @@
 // import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:honar_gallary/const/color_const.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 // import 'package:flutter/material.dart';
@@ -28,30 +29,23 @@ class _ImageSliderState extends State<ImageSlider> {
 
   @override
   Widget build(BuildContext context) {
-    return ConstrainedBox(
-        constraints: BoxConstraints.tight(const Size(450.0, 200.0)),
-        child: Container(
-          height: context.height(),
-          width: context.width(),
-          decoration: const BoxDecoration(color: Colors.white),
-          child: Stack(children: [
-            Column(children: [
-              CarouselSlider(
-                items: imageSliders,
-                carouselController: controller,
-                options: CarouselOptions(
-                    autoPlay: false,
-                    enlargeCenterPage: true,
-                    aspectRatio: 2.0,
-                    onPageChanged: (index, reason) {
-                      // setState(() {
-                      // current = index;
-                      // });
-                    }),
-              ),
-            ]),
-          ]),
-        ));
+    return Container(
+      width: context.width(),
+      child: CarouselSlider(
+        items: imageSliders,
+        carouselController: controller,
+        options: CarouselOptions(
+            autoPlay: false,
+            aspectRatio: 1,
+            enableInfiniteScroll: false,
+            disableCenter: false,
+            onPageChanged: (index, reason) {
+              // setState(() {
+              // current = index;
+              // });
+            }),
+      ),
+    );
   }
 
   final List<Widget> imageSliders =
@@ -83,19 +77,12 @@ class _ImageSliderTileState extends State<ImageSliderTile> {
     // double heigt = context.height();
     // double width = context.width();
     return Container(
-      child: MouseRegion(
-        onHover: (value) {
+      child: GestureDetector(
+        onLongPress: () {
           setState(() {
             showIcon = true;
             _myOpacity = 0.5;
             print("1");
-          });
-        },
-        onExit: (value) {
-          setState(() {
-            showIcon = false;
-            _myOpacity = 1;
-            print("2");
           });
         },
         child: Container(
@@ -106,9 +93,7 @@ class _ImageSliderTileState extends State<ImageSliderTile> {
                 children: <Widget>[
                   if (!showIcon)
                     Container(
-                      decoration: const BoxDecoration(color: Colors.white),
                       alignment: Alignment.center,
-                      height: 240,
                       child: Image(
                         image: AssetImage(widget.image),
                       ),
@@ -125,9 +110,7 @@ class _ImageSliderTileState extends State<ImageSliderTile> {
                       opacity: _myOpacity,
                       duration: const Duration(milliseconds: 20000),
                       child: Container(
-                        decoration: const BoxDecoration(color: Colors.white),
                         alignment: Alignment.center,
-                        height: 240,
                         child: Image.asset(widget.image,
                             color: Colors.white.withOpacity(0.8),
                             colorBlendMode: BlendMode.modulate),
@@ -145,15 +128,42 @@ class _ImageSliderTileState extends State<ImageSliderTile> {
                   //   ),
                   // ),
                   if (showIcon)
-                    Align(
-                        alignment: Alignment.center,
-                        child: GestureDetector(
-                            onTap: () => print("icon clicked"),
-                            child: const Image(
-                              image: AssetImage("assets/images/wrong1.png"),
-                              width: 50,
-                              height: 50,
-                            )))
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Container(
+                            width: 80,
+                            alignment: Alignment.center,
+                            child: MaterialButton(
+                              color: ColorPallet.colorPalletBlueGam,
+                              child: Text(
+                                "حذف",
+                                style: TextStyle(color: Colors.white),
+                              ),
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: new BorderRadius.circular(9)),
+                              onPressed: () {},
+                            )),
+                        10.width,
+                        Container(
+                            width: 60,
+                            alignment: Alignment.center,
+                            child: MaterialButton(
+                              color: ColorPallet.colorPalletDark.withAlpha(120),
+                              child: Text(
+                                "لغو",
+                                style: TextStyle(color: Colors.white),
+                              ),
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: new BorderRadius.circular(9)),
+                              onPressed: () {
+                                setState(() {
+                                  showIcon = false;
+                                });
+                              },
+                            )),
+                      ],
+                    )
                 ],
               )),
         ),

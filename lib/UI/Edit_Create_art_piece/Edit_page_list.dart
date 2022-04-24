@@ -86,7 +86,6 @@ class _ProfileListItemsState extends State<ProfileListItems> {
     return Container(
       height: context.height(),
       width: context.width(),
-      margin: const EdgeInsets.all(24),
       child: Form(
         key: _formKey,
         child: ListView(
@@ -94,6 +93,7 @@ class _ProfileListItemsState extends State<ProfileListItems> {
           physics: const NeverScrollableScrollPhysics(),
           controller: scrollController,
           children: [
+            20.height,
             titleTextField(),
             const SizedBox(
               height: 20,
@@ -106,25 +106,26 @@ class _ProfileListItemsState extends State<ProfileListItems> {
             // const SizedBox(
             //   height: 20,
             // ),
-            dobField('شروع'),
-            const SizedBox(
-              height: 20,
+            Row(
+              children: [
+                Expanded(child: dobField('شروع')),
+                const SizedBox(
+                  width: 20,
+                ),
+                Expanded(child: dobField('پایان')),
+              ],
             ),
-            dobField('پایان'),
             const SizedBox(
               height: 20,
             ),
             aboutTextField(),
-            const SizedBox(
-              height: 20,
-            ),
+
             // _buildNameField(),
             // _buildDescriptionField(),
             Column(
-              children:[
+              children: [
                 Container(
-                  margin: const EdgeInsets.symmetric(vertical: 20.0),
-                  height: 300,
+                  height: 280,
                   child: ListView.builder(
                     scrollDirection: Axis.horizontal,
                     itemBuilder: (BuildContext context, int index) {
@@ -295,18 +296,18 @@ class _ProfileListItemsState extends State<ProfileListItems> {
         return null;
       },
       decoration: InputDecoration(
-        border: const OutlineInputBorder(
+        border: OutlineInputBorder(
             borderSide: BorderSide(
-              color: Colors.teal,
-            )),
-        focusedBorder: const OutlineInputBorder(
+          color: ColorPallet.colorPalletSambucus,
+        )),
+        focusedBorder: OutlineInputBorder(
             borderSide: BorderSide(
-              color: Colors.orange,
-              width: 2,
-            )),
-        prefixIcon: const Icon(
-          Icons.person,
-          color: Colors.green,
+          color: ColorPallet.colorPalletSambucus,
+          width: 2,
+        )),
+        prefixIcon: Icon(
+          Icons.date_range_rounded,
+          color: ColorPallet.colorPalletNightFog,
         ),
 
         labelText: "تاریخ " + time,
@@ -324,19 +325,19 @@ class _ProfileListItemsState extends State<ProfileListItems> {
 
         return null;
       },
-      decoration: const InputDecoration(
+      decoration: InputDecoration(
         border: OutlineInputBorder(
             borderSide: BorderSide(
-              color: Colors.teal,
-            )),
+          color: ColorPallet.colorPalletSambucus,
+        )),
         focusedBorder: OutlineInputBorder(
             borderSide: BorderSide(
-              color: Colors.orange,
-              width: 2,
-            )),
+          color: ColorPallet.colorPalletSambucus,
+          width: 2,
+        )),
         prefixIcon: Icon(
-          Icons.person,
-          color: Colors.green,
+          Icons.title,
+          color: ColorPallet.colorPalletBlueGam,
         ),
         labelText: "عنوان",
         // helperText: "It can't be empty",
@@ -354,16 +355,17 @@ class _ProfileListItemsState extends State<ProfileListItems> {
         return null;
       },
       maxLines: 4,
-      decoration: const InputDecoration(
+      decoration: InputDecoration(
         border: OutlineInputBorder(
             borderSide: BorderSide(
-              color: Colors.teal,
-            )),
+          color: ColorPallet.colorPalletSambucus,
+        )),
         focusedBorder: OutlineInputBorder(
             borderSide: BorderSide(
-              color: Colors.orange,
-              width: 2,
-            )),
+          color: ColorPallet.colorPalletSambucus,
+          width: 2,
+        )),
+
         labelText: "درباره اثر",
         // helperText: "Write about yourself",
         // hintText: "I am Dev Stack",
@@ -381,11 +383,9 @@ Widget buildCoverImage(double coverHeight) => Container(
 Widget buildProfileImage(double profileHeight) {
   print('doroste');
   return CircleAvatar(
-    radius: 40,
-    backgroundColor: Colors.grey.shade800,
-    backgroundImage: const NetworkImage(
-      'https://hips.hearstapps.com/ghk.h-cdn.co/assets/17/30/2560x1280/landscape-1500925839-golden-retriever-puppy.jpg?resize=480:*'
-    ),
+    radius: 35,
+    backgroundColor: ColorPallet.colorPalletSambucus,
+    backgroundImage: const AssetImage("assets/images/sample1"),
   );
 }
 
