@@ -61,7 +61,7 @@ class _AuthenticationPageState extends State<AuthenticationPage> {
       );
 
   LoginTexts get _loginTexts => LoginTexts(
-    nameHint: _username,
+        nameHint: _username,
         login: _login,
         signUp: _signup,
         welcomeBack: _welcomeBack,
