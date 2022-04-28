@@ -6,6 +6,8 @@ import 'package:honar_gallary/const/color_const.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 
+import '../../gallary/gallery_view.dart';
+
 class NavigationBarWidget extends StatelessWidget {
   final PersistentTabController controller;
 
@@ -62,7 +64,7 @@ class NavigationBarWidget extends StatelessWidget {
       Container(),
       Container(),
       Container(),
-      Container(),
+      GalleryView(),
       Container(),
     ];
   }
