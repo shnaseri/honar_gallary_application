@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:honar_gallary/logic/router.dart';
@@ -56,7 +55,7 @@ class MyApp extends StatelessWidget {
                 ColorScheme.fromSwatch(primarySwatch: Colors.deepPurple)
                     .copyWith(secondary: Colors.black12)),
         onGenerateRoute: router.generateRoute,
-        initialRoute: AUTH_PAGE_PATH, // initial route to Splash screen
+        initialRoute: authPagePath, // initial route to Splash screen
       ),
     );
   }

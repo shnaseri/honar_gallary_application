@@ -1,16 +1,7 @@
 
-import 'package:flutter/material.dart';
-import 'package:nb_utils/nb_utils.dart';
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-// import 'package:flutter/material.dart';
-import 'package:honar_gallary/const/color_const.dart';
-
-import '../../const/color_const.dart';
-
-
-
+import 'package:flutter/material.dart';
 
 // final List<String> imgList2 = [
 //   'assets/images/mafia1.jpg',
@@ -19,9 +10,13 @@ import '../../const/color_const.dart';
 //   'assets/images/mafia1.jpg'
 // ];
 
+import 'package:honar_gallary/UI/Art_piece/art_piece_model.dart';
 
+// import 'package:flutter/material.dart';
+import 'package:honar_gallary/const/color_const.dart';
+import 'package:nb_utils/nb_utils.dart';
 
-import 'package:honar_gallary/UI/Art_piece/Art_piece_model.dart';
+import '../../const/color_const.dart';
 
 final List<AssetImage> imgList = [
   const AssetImage('assets/images/sample1.jpg'),
@@ -31,14 +26,14 @@ final List<AssetImage> imgList = [
 ];
 
 class ImageCardWidget extends StatelessWidget {
-  ImageCardWidget({Key? key,
-    required this.ap,}) : super(key: key);
+  ImageCardWidget({
+    Key? key,
+    required this.ap,
+  }) : super(key: key);
 
-
-  final Art_piece ap;
+  final ArtPiece ap;
   final String item = 'assets/images/mafia1.jpg';
 
-  int current = 0;
   final CarouselController controller = CarouselController();
 
   @override
@@ -81,7 +76,7 @@ class ImageCardWidget extends StatelessWidget {
                             imageBuilder: (context, imageProvider) {
                               return Container(
                                 decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.only(
+                                    borderRadius: const BorderRadius.only(
                                         bottomLeft: Radius.circular(8)),
                                     image: DecorationImage(
                                         fit: BoxFit.cover,
@@ -91,7 +86,7 @@ class ImageCardWidget extends StatelessWidget {
                             placeholder: (context, strImage) {
                               return Container(
                                 decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.only(
+                                  borderRadius: const BorderRadius.only(
                                       bottomLeft: Radius.circular(5)),
                                   color: Colors.grey,
                                   border: Border.all(

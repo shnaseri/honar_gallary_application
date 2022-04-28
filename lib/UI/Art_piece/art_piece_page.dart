@@ -1,32 +1,17 @@
 // import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:nb_utils/nb_utils.dart';
-// import 'package:prokit_flutter/main.dart';
-// import 'package:prokit_flutter/main/utils/AppWidget.dart';
-// import 'package:prokit_flutter/theme9/models/T9Models.dart';
-// import 'package:prokit_flutter/theme9/utils/T9Colors.dart';
-// import 'package:prokit_flutter/theme9/utils/T9Constant.dart';
-// import 'package:prokit_flutter/theme9/utils/T9DataGenerator.dart';
-// import 'package:prokit_flutter/theme9/utils/T9Images.dart';
-// import 'package:prokit_flutter/theme9/utils/T9Strings.dart';
+import 'package:honar_gallary/UI/Art_piece/art_piece_model.dart';
 
-import 'package:honar_gallary/logic/router_const.dart';
-
-import 'package:honar_gallary/UI/Art_piece/Art_piece_model.dart';
-import 'package:honar_gallary/const/color_const.dart';
-
-class Art_piece_page extends StatefulWidget {
-  const Art_piece_page({Key? key}) : super(key: key);
+class ArtPiecePage extends StatefulWidget {
+  const ArtPiecePage({Key? key}) : super(key: key);
 
   @override
-  _Art_piece_pageState createState() => _Art_piece_pageState();
+  _ArtPiecePageState createState() => _ArtPiecePageState();
 }
 
-class _Art_piece_pageState extends State<Art_piece_page> {
-
-  static List<Art_piece> mList = [
-    Art_piece(
+class _ArtPiecePageState extends State<ArtPiecePage> {
+  static List<ArtPiece> mList = [
+    ArtPiece(
       id: 1,
       name: 'بازی مافیا',
       description: 'برگزاری بازی مافیا به صورت گروهی به همراه جایزه',
@@ -37,7 +22,7 @@ class _Art_piece_pageState extends State<Art_piece_page> {
       finishTime: DateTime(2021),
       // comments: [],
     ),
-    Art_piece(
+    ArtPiece(
       id: 1,
       name: 'بازی مافیا',
       description: 'برگزاری بازی مافیا به صورت گروهی به همراه جایزه',
@@ -48,7 +33,7 @@ class _Art_piece_pageState extends State<Art_piece_page> {
       finishTime: DateTime(2021),
       // comments: [],
     ),
-    Art_piece(
+    ArtPiece(
       id: 1,
       name: 'بازی مافیا',
       description: 'برگزاری بازی مافیا به صورت گروهی به همراه جایزه',
@@ -59,7 +44,7 @@ class _Art_piece_pageState extends State<Art_piece_page> {
       finishTime: DateTime(2021),
       // comments: [],
     ),
-    Art_piece(
+    ArtPiece(
       id: 1,
       name: 'بازی مافیا',
       description: 'برگزاری بازی مافیا به صورت گروهی به همراه جایزه',
@@ -70,7 +55,7 @@ class _Art_piece_pageState extends State<Art_piece_page> {
       finishTime: DateTime(2021),
       // comments: [],
     ),
-    Art_piece(
+    ArtPiece(
       id: 1,
       name: 'بازی مافیا',
       description: 'برگزاری بازی مافیا به صورت گروهی به همراه جایزه',
@@ -81,7 +66,7 @@ class _Art_piece_pageState extends State<Art_piece_page> {
       finishTime: DateTime(2021),
       // comments: [],
     ),
-    Art_piece(
+    ArtPiece(
       id: 1,
       name: 'بازی مافیا',
       description: 'برگزاری بازی مافیا به صورت گروهی به همراه جایزه',
@@ -92,7 +77,7 @@ class _Art_piece_pageState extends State<Art_piece_page> {
       finishTime: DateTime(2021),
       // comments: [],
     ),
-    Art_piece(
+    ArtPiece(
       id: 1,
       name: 'بازی مافیا',
       description: 'برگزاری بازی مافیا به صورت گروهی به همراه جایزه',
@@ -119,13 +104,13 @@ class _Art_piece_pageState extends State<Art_piece_page> {
               children: [
                 Container(
                   height: MediaQuery.of(context).size.height / 1.3,
-                  margin: EdgeInsets.fromLTRB(16, 30, 16, 16),
+                  margin: const EdgeInsets.fromLTRB(16, 30, 16, 16),
                   child: Column(
                     children: [
                       ClipRRect(
-                        borderRadius: const BorderRadius.only(
-                            topRight: Radius.circular(16),
-                            topLeft: Radius.circular(16)),
+                          borderRadius: const BorderRadius.only(
+                              topRight: Radius.circular(16),
+                              topLeft: Radius.circular(16)),
                           // child: CachedNetworkImage(
                           //   placeholder: placeholderWidgetFn() as Widget Function(
                           //       BuildContext, String)?,
@@ -134,25 +119,24 @@ class _Art_piece_pageState extends State<Art_piece_page> {
                           //   height: MediaQuery.of(context).size.height * 0.3,
                           //   width: MediaQuery.of(context).size.width,
                           // ),
-                        child: Image.network(
-                            'https://docs.flutter.dev/assets/images/dash/dash-fainting.gif')
-                      ),
+                          child: Image.network(
+                              'https://docs.flutter.dev/assets/images/dash/dash-fainting.gif')),
                       const SizedBox(height: 16),
                       const Text('leanardo davinchi pic'),
                       const SizedBox(height: 16),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          T9OptionDescription('total', 'type'),
-                          T9OptionDescription('total', 'type'),
-                          T9OptionDescription('total', 'type'),
+                          t9OptionDescription('total', 'type'),
+                          t9OptionDescription('total', 'type'),
+                          t9OptionDescription('total', 'type'),
                         ],
                       ),
                     ],
                   ),
                 ),
                 Container(
-                  margin: EdgeInsets.only(top: 16),
+                  margin: const EdgeInsets.only(top: 16),
                   alignment: Alignment.bottomCenter,
                   child: Column(
                     children: const <Widget>[
@@ -173,8 +157,8 @@ class _Art_piece_pageState extends State<Art_piece_page> {
               children: <Widget>[
                 Container(
                     alignment: Alignment.topRight,
-                    margin: EdgeInsets.all(16.0),
-                    child: Icon(
+                    margin: const EdgeInsets.all(16.0),
+                    child: const Icon(
                       Icons.close,
                       color: Colors.red,
                       size: 20,
@@ -183,23 +167,14 @@ class _Art_piece_pageState extends State<Art_piece_page> {
                 //     textColor: appStore.textPrimaryColor,
                 //     fontSize: textSizeNormal,
                 //     fontFamily: fontMedium),
-                Text('decaprio pic'),
-                SizedBox(height: 10),
+                const Text('decaprio pic'),
+                const SizedBox(height: 10),
 
                 //hamon dokme sabze chert :)
 
-                // Container(
-                //   decoration: boxDecoration(
-                //       bgColor: t9_green, radius: 8, showShadow: false),
-                //   child: Padding(
-                //     padding: EdgeInsets.fromLTRB(10, 4, 10, 4),
-                //     child: text(t9_lbl_30_80, textColor: t9_white),
-                //   ),
-                // ),
-
-                SizedBox(height: 16),
+                const SizedBox(height: 16),
                 Container(
-                  margin: EdgeInsets.only(left: 16, right: 16),
+                  margin: const EdgeInsets.only(left: 16, right: 16),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
@@ -211,9 +186,9 @@ class _Art_piece_pageState extends State<Art_piece_page> {
                             backgroundColor: Colors.brown.shade800,
                             radius: MediaQuery.of(context).size.height * 0.025,
                           ),
-                          SizedBox(width: 16),
+                          const SizedBox(width: 16),
                           // text(t9_lbl_hannah_tran, textColor: t9_colorPrimary)
-                          Text('hosein mehdi tabar')
+                          const Text('hosein mehdi tabar')
                         ],
                       ),
                       RichText(
@@ -232,12 +207,12 @@ class _Art_piece_pageState extends State<Art_piece_page> {
                               ),
                             ),
                             TextSpan(
-                                // text: t9_lbl_5_0,
-                                text: '5.0',
-                                // style: TextStyle(
-                                //     fontSize: textSizeMedium,
-                                //     color: t9_yellow,
-                                //     fontFamily: fontMedium)
+                              // text: t9_lbl_5_0,
+                              text: '5.0',
+                              // style: TextStyle(
+                              //     fontSize: textSizeMedium,
+                              //     color: t9_yellow,
+                              //     fontFamily: fontMedium)
                             ),
                           ],
                         ),
@@ -245,7 +220,7 @@ class _Art_piece_pageState extends State<Art_piece_page> {
                     ],
                   ),
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 ListView.builder(
                     scrollDirection: Axis.vertical,
                     itemCount: mList.length,
@@ -264,24 +239,20 @@ class _Art_piece_pageState extends State<Art_piece_page> {
 }
 
 class T9Question extends StatelessWidget {
-  late Art_piece model;
+  final ArtPiece model;
 
-  T9Question(Art_piece model, int pos) {
-    this.model = model;
-  }
-
-  var i;
+  const T9Question(this.model, int pos, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
       width: MediaQuery.of(context).size.width,
-      margin: EdgeInsets.fromLTRB(16, 0, 16, 16),
+      margin: const EdgeInsets.fromLTRB(16, 0, 16, 16),
       child: Row(
         children: <Widget>[
-          Text("1"),
+          const Text("1"),
           // text("1", textColor: t9_textColorSecondary),
-          SizedBox(width: 16),
+          const SizedBox(width: 16),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -310,7 +281,7 @@ class T9Question extends StatelessWidget {
 }
 
 
-Widget T9OptionDescription(var total, var type) {
+Widget t9OptionDescription(var total, var type) {
   return Container(
     margin: const EdgeInsets.only(left: 16, right: 16),
     child: Column(

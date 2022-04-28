@@ -1,8 +1,3 @@
-
-
-
-// import 'package:carousel_slider/carousel_slider.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 
@@ -10,16 +5,18 @@ import 'package:nb_utils/nb_utils.dart';
 // import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 
 import '../../const/color_const.dart';
-import '../Art_piece/Art_piece_model.dart';
-// import 'Edit_page_list_item.dart';
+import '../Art_piece/art_piece_model.dart';
+
+// import 'edit_page_list_item2.dart';
 // import 'hover_test.dart';
 // import 'image_card.dart';
 import 'image_list_view.dart';
 
 class ProfileListItems extends StatefulWidget {
-  Function changeState;
+  final Function changeState;
 
-  ProfileListItems({Key? key, required this.changeState}) : super(key: key);
+  const ProfileListItems({Key? key, required this.changeState})
+      : super(key: key);
 
   @override
   State<ProfileListItems> createState() => _ProfileListItemsState();
@@ -28,24 +25,23 @@ class ProfileListItems extends StatefulWidget {
 class _ProfileListItemsState extends State<ProfileListItems> {
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
   // String? _description;
   ScrollController scrollController = ScrollController();
 
-
   // final networkHandler = NetworkHandler();
   bool circular = false;
+
   // PickedFile _imageFile;
   // final _globalkey = GlobalKey<FormState>();
   final TextEditingController _name = TextEditingController();
-  TextEditingController _profession = TextEditingController();
-  TextEditingController _dob = TextEditingController();
-  TextEditingController _title = TextEditingController();
-  TextEditingController _about = TextEditingController();
+  final TextEditingController _profession = TextEditingController();
+  final TextEditingController _dob = TextEditingController();
+  final TextEditingController _title = TextEditingController();
+  final TextEditingController _about = TextEditingController();
 
-
-
-  static List<Art_piece> artPieces = [
-    Art_piece(
+  static List<ArtPiece> artPieces = [
+    ArtPiece(
       id: 1,
       name: 'بازی مافیا',
       description: 'برگزاری بازی مافیا به صورت گروهی به همراه جایزه',
@@ -56,7 +52,7 @@ class _ProfileListItemsState extends State<ProfileListItems> {
       finishTime: DateTime(2021),
       // comments: [],
     ),
-    Art_piece(
+    ArtPiece(
       id: 1,
       name: 'بازی مافیا',
       description: 'برگزاری بازی مافیا به صورت گروهی به همراه جایزه',
@@ -67,7 +63,7 @@ class _ProfileListItemsState extends State<ProfileListItems> {
       finishTime: DateTime(2021),
       // comments: [],
     ),
-    Art_piece(
+    ArtPiece(
       id: 1,
       name: 'بازی مافیا',
       description: 'برگزاری بازی مافیا به صورت گروهی به همراه جایزه',
@@ -83,29 +79,21 @@ class _ProfileListItemsState extends State<ProfileListItems> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       height: context.height(),
       width: context.width(),
       child: Form(
         key: _formKey,
         child: ListView(
-          padding: EdgeInsets.zero,
+          padding: const EdgeInsets.symmetric(horizontal: 30),
           physics: const NeverScrollableScrollPhysics(),
           controller: scrollController,
           children: [
-            20.height,
+            25.height,
             titleTextField(),
             const SizedBox(
               height: 20,
             ),
-            // nameTextField(),
-            // const SizedBox(
-            //   height: 20,
-            // ),
-            // professionTextField(),
-            // const SizedBox(
-            //   height: 20,
-            // ),
             Row(
               children: [
                 Expanded(child: dobField('شروع')),
@@ -119,69 +107,63 @@ class _ProfileListItemsState extends State<ProfileListItems> {
               height: 20,
             ),
             aboutTextField(),
-
-            // _buildNameField(),
-            // _buildDescriptionField(),
             Column(
               children: [
-                Container(
+                SizedBox(
                   height: 280,
                   child: ListView.builder(
                     scrollDirection: Axis.horizontal,
                     itemBuilder: (BuildContext context, int index) {
-                      return ImageSlider();
+                      return const ImageSlider();
                     },
                     itemCount: artPieces.length,
                   ),
                 ),
-                GestureDetector(
-                  // onTap: () {},
-                  onTap: () => {
-                    if (!_formKey.currentState!.validate()) {},
-                    _formKey.currentState!.save()
-                  },
-                  child: Container(
-                    width: 100,
-                    height: 30,
-                    decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        colors: [
-                          Colors.teal,
-                          Colors.teal.shade200,
-                        ],
-                        // begin: Alignment.topLeft,
-                        // end: Alignment.bottomRight,
-                      ),
-                      borderRadius: BorderRadius.circular(20),
-                      boxShadow: const [
-                        BoxShadow(
-                          color: Colors.black12,
-                          offset: Offset(5, 5),
-                          blurRadius: 10,
-                        )
-                      ],
-                    ),
-                    child: const Center(
-                      child: Text(
-                        'اضافه کردن عکس',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 10,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
+                // GestureDetector(
+                //   // onTap: () {},
+                //   onTap: () => {
+                //     if (!_formKey.currentState!.validate()) {},
+                //     _formKey.currentState!.save()
+                //   },
+                //   child: Container(
+                //     width: 100,
+                //     height: 30,
+                //     decoration: BoxDecoration(
+                //       gradient: LinearGradient(
+                //         colors: [
+                //           Colors.teal,
+                //           Colors.teal.shade200,
+                //         ],
+                //         // begin: Alignment.topLeft,
+                //         // end: Alignment.bottomRight,
+                //       ),
+                //       borderRadius: BorderRadius.circular(20),
+                //       boxShadow: const [
+                //         BoxShadow(
+                //           color: Colors.black12,
+                //           offset: Offset(5, 5),
+                //           blurRadius: 10,
+                //         )
+                //       ],
+                //     ),
+                //     child: const Center(
+                //       child: Text(
+                //         'اضافه کردن عکس',
+                //         style: TextStyle(
+                //           color: Colors.white,
+                //           fontSize: 10,
+                //           fontWeight: FontWeight.w500,
+                //         ),
+                //       ),
+                //     ),
+                //   ),
+                // ),
               ],
             ),
 
             // _buildCategoryField(),
             // _buildImageUrlField(),
 
-            const SizedBox(
-              height: 100,
-            ),
             GestureDetector(
               // onTap: () {},
               onTap: () => {
@@ -190,7 +172,7 @@ class _ProfileListItemsState extends State<ProfileListItems> {
               },
               child: Container(
                 width: 40,
-                height: 30,
+                height: 70,
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
                     colors: [
@@ -214,7 +196,7 @@ class _ProfileListItemsState extends State<ProfileListItems> {
                     'ذخیره',
                     style: TextStyle(
                       color: Colors.white,
-                      fontSize: 10,
+                      fontSize: 22,
                       fontWeight: FontWeight.w500,
                     ),
                   ),
@@ -375,17 +357,20 @@ class _ProfileListItemsState extends State<ProfileListItems> {
 }
 
 
-Widget buildCoverImage(double coverHeight) => Container(
-  color: ColorPallet.colorPalletPurpleRain,
-  height: coverHeight,
-);
+Widget buildCoverImage() => Container(
+      decoration: BoxDecoration(
+          color: ColorPallet.colorPalletPurpleRain,
+          image: const DecorationImage(
+            fit: BoxFit.cover,
+            image: AssetImage("assets/images/photo2.jpeg"),
+          )),
+    );
 
 Widget buildProfileImage(double profileHeight) {
-  print('doroste');
   return CircleAvatar(
     radius: 35,
-    backgroundColor: ColorPallet.colorPalletSambucus,
-    backgroundImage: const AssetImage("assets/images/sample1"),
+    backgroundColor: ColorPallet.colorPalletPurpleRain,
+    backgroundImage: const AssetImage("assets/images/sample1.jpg"),
   );
 }
 

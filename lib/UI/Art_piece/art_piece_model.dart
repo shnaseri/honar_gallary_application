@@ -1,10 +1,7 @@
-// import 'package:saffrun_app/models/comment/comment.dart';
-
-// import '../../logical/general/size_function.dart';
-
-class Art_piece {
+class ArtPiece {
   int id;
   String name;
+
   // String title;
   String description;
   String imageUrl;
@@ -21,26 +18,26 @@ class Art_piece {
   int price;
   String status;
 
-  Art_piece(
+  ArtPiece(
       {required this.id,
-        required this.name,
-        this.description = "",
-        this.imageUrl = "",
-        this.discount = 0,
-        required this.ownerId,
-        required this.startTime,
-        required this.finishTime,
-        // this.comments = const [],
-        this.ownerName = "",
-        this.category = "",
-        this.imageUrls = const [],
-        // this.isParticipate = false,
-        this.price = 0,
-        this.status = "",
-        this.participantCount = 0});
+      required this.name,
+      this.description = "",
+      this.imageUrl = "",
+      this.discount = 0,
+      required this.ownerId,
+      required this.startTime,
+      required this.finishTime,
+      // this.comments = const [],
+      this.ownerName = "",
+      this.category = "",
+      this.imageUrls = const [],
+      // this.isParticipate = false,
+      this.price = 0,
+      this.status = "",
+      this.participantCount = 0});
 
-  static List<Art_piece> Art_pieces = [
-    Art_piece(
+  static List<ArtPiece> artPieces = [
+    ArtPiece(
       id: 1,
       name: 'بازی مافیا',
       description: 'برگزاری بازی مافیا به صورت گروهی به همراه جایزه',
@@ -51,7 +48,7 @@ class Art_piece {
       finishTime: DateTime(2021),
       // comments: [],
     ),
-    Art_piece(
+    ArtPiece(
       id: 1,
       name: 'بازی مافیا',
       description: 'برگزاری بازی مافیا به صورت گروهی به همراه جایزه',
@@ -62,7 +59,7 @@ class Art_piece {
       finishTime: DateTime(2021),
       // comments: [],
     ),
-    Art_piece(
+    ArtPiece(
       id: 1,
       name: 'بازی مافیا',
       description: 'برگزاری بازی مافیا به صورت گروهی به همراه جایزه',
@@ -73,7 +70,7 @@ class Art_piece {
       finishTime: DateTime(2021),
       // comments: [],
     ),
-    Art_piece(
+    ArtPiece(
       id: 1,
       name: 'بازی مافیا',
       description: 'برگزاری بازی مافیا به صورت گروهی به همراه جایزه',
@@ -84,7 +81,7 @@ class Art_piece {
       finishTime: DateTime(2021),
       // comments: [],
     ),
-    Art_piece(
+    ArtPiece(
       id: 1,
       name: 'بازی مافیا',
       description: 'برگزاری بازی مافیا به صورت گروهی به همراه جایزه',
@@ -95,7 +92,7 @@ class Art_piece {
       finishTime: DateTime(2021),
       // comments: [],
     ),
-    Art_piece(
+    ArtPiece(
       id: 1,
       name: 'بازی مافیا',
       description: 'برگزاری بازی مافیا به صورت گروهی به همراه جایزه',
@@ -106,7 +103,7 @@ class Art_piece {
       finishTime: DateTime(2021),
       // comments: [],
     ),
-    Art_piece(
+    ArtPiece(
       id: 1,
       name: 'بازی مافیا',
       description: 'برگزاری بازی مافیا به صورت گروهی به همراه جایزه',
@@ -119,10 +116,10 @@ class Art_piece {
     ),
   ];
 
-  static List<Art_piece> fromJsonList(List<dynamic> response) {
-    List<Art_piece> Art_pieces = [];
-    response.forEach((element) {
-      Art_pieces.add(Art_piece(
+  static List<ArtPiece> fromJsonList(List<dynamic> response) {
+    List<ArtPiece> artPieces = [];
+    for (var element in response) {
+      artPieces.add(ArtPiece(
           id: element['id'] ?? -1,
           name: element['name'],
           description: element['description'],
@@ -133,14 +130,14 @@ class Art_piece {
           // comments: [],
           ownerId: element['owner']['id'] ?? 0,
           ownerName: element['owner']['name']));
-    });
-    return Art_pieces;
+    }
+    return artPieces;
   }
 
   static fromJsonCalendar(response) {
-    List<Art_piece> Art_pieces = [];
+    List<ArtPiece> artPieces = [];
     response.forEach((element) {
-      Art_pieces.add(Art_piece(
+      artPieces.add(ArtPiece(
           id: element['id'] ?? -1,
           name: element['name'],
           description: element['description'],
@@ -152,7 +149,7 @@ class Art_piece {
           ownerId: element['owner']['id'] ?? -1,
           ownerName: element['owner']['username']));
     });
-    return Art_pieces;
+    return artPieces;
   }
 
   // static Art_piece fromJson(Map<String, dynamic> json) {

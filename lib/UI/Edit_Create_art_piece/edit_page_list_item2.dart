@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:nb_utils/src/extensions/context_extensions.dart';
+import 'package:nb_utils/nb_utils.dart';
 
 import '../../const/color_const.dart';
 // import 'package:saffrun_app/constants/theme_color.dart';
