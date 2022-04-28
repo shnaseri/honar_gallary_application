@@ -19,7 +19,7 @@ class _GalleryViewState extends State<GalleryView> {
         fit: StackFit.expand,
         children: [
           Container(
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               gradient: LinearGradient(
                 colors: [
                   Color.fromRGBO(4, 9, 35, 1),
@@ -34,7 +34,7 @@ class _GalleryViewState extends State<GalleryView> {
             padding: const EdgeInsets.symmetric(horizontal: 15),
             height: MediaQuery.of(context).size.height,
             child: ListView(
-              padding: EdgeInsets.only(top: 40, bottom: 70),
+              padding: const EdgeInsets.only(top: 40, bottom: 70),
               children: [
                 Container(
                   height: 250,
@@ -59,7 +59,7 @@ class _GalleryViewState extends State<GalleryView> {
                               ),
                               child: Column(
                                 children: [
-                                  SizedBox(
+                                  const SizedBox(
                                     height: 55,
                                   ),
                                   Text(
@@ -69,7 +69,7 @@ class _GalleryViewState extends State<GalleryView> {
                                       fontSize: 25,
                                     ),
                                   ),
-                                  SizedBox(
+                                  const SizedBox(
                                     height: 5,
                                   ),
                                   Row(
@@ -90,7 +90,7 @@ class _GalleryViewState extends State<GalleryView> {
                                             backgroundColor:
                                                 ColorPallet.colorPalletNightFog,
                                             radius: 14,
-                                            child: Center(
+                                            child: const Center(
                                               child: Text(
                                                 '10',
                                                 style: TextStyle(
@@ -132,7 +132,7 @@ class _GalleryViewState extends State<GalleryView> {
                                             backgroundColor:
                                                 ColorPallet.colorPalletNightFog,
                                             radius: 14,
-                                            child: Center(
+                                            child: const Center(
                                               child: Text(
                                                 '1',
                                                 style: TextStyle(
@@ -165,12 +165,10 @@ class _GalleryViewState extends State<GalleryView> {
                             left: 0,
                             right: 0,
                             child: Center(
-                              child: Container(
-                                child: Image.asset(
-                                  'assets/images/profile.png',
-                                  width: innerWidth * 0.41,
-                                  fit: BoxFit.fitWidth,
-                                ),
+                              child: Image.asset(
+                                'assets/images/profile.png',
+                                width: innerWidth * 0.41,
+                                fit: BoxFit.fitWidth,
                               ),
                             ),
                           ),
@@ -179,11 +177,11 @@ class _GalleryViewState extends State<GalleryView> {
                     },
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
                 Container(
-                  padding: EdgeInsets.all(10),
+                  padding: const EdgeInsets.all(10),
                   child: MasonryGridView.count(
                     physics: const NeverScrollableScrollPhysics(),
                     shrinkWrap: true,
