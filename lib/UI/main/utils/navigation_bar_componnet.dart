@@ -64,7 +64,7 @@ class NavigationBarWidget extends StatelessWidget {
       Container(),
       Container(),
       Container(),
-      GalleryView(),
+      const GalleryView(),
       Container(),
     ];
   }

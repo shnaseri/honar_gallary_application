@@ -49,7 +49,9 @@ class Tile extends StatelessWidget {
       decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(9),
-          boxShadow: [BoxShadow(color: Colors.black26, spreadRadius: 0.2)]),
+          boxShadow: const [
+            BoxShadow(color: Colors.black26, spreadRadius: 0.2)
+          ]),
       child: Center(child: Container()),
     );
 
