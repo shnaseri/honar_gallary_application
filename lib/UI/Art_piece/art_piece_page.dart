@@ -280,7 +280,6 @@ class T9Question extends StatelessWidget {
   }
 }
 
-
 Widget t9OptionDescription(var total, var type) {
   return Container(
     margin: const EdgeInsets.only(left: 16, right: 16),
@@ -298,13 +297,14 @@ Widget t9OptionDescription(var total, var type) {
         //     fontFamily: fontMedium,
         //     isLongText: true),
         // text(type, textColor: appStore.textSecondaryColor),
-        Icon(Icons.favorite,
+        Icon(
+          Icons.favorite,
           color: Colors.pink,
-          size: 24.0,),
+          size: 24.0,
+        ),
         Text('price'),
         Text('heading'),
       ],
     ),
   );
 }
-

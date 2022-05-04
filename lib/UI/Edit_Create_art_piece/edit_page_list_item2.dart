@@ -39,8 +39,8 @@ class ProfileListItem extends StatelessWidget {
         horizontal: width * 0.025,
       ),
       decoration: const BoxDecoration(
-        // borderRadius: BorderRadius.circular(30),
-      ),
+          // borderRadius: BorderRadius.circular(30),
+          ),
       child: InkWell(
         onTap: () {
           onTapRow();
@@ -58,9 +58,10 @@ class ProfileListItem extends StatelessWidget {
                 Text(
                   text,
                   style: kTitleTextStyle.copyWith(
-                      fontWeight: FontWeight.w800, color: ColorPallet.colorPalletPurpleRain
-                    // fontFamily: "Poppins"
-                  ),
+                      fontWeight: FontWeight.w800,
+                      color: ColorPallet.colorPalletPurpleRain
+                      // fontFamily: "Poppins"
+                      ),
                 ),
                 const Spacer(),
                 if (hasNavigation)

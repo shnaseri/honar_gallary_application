@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:honar_gallary/const/color_const.dart';
 import 'package:nb_utils/nb_utils.dart';
 
-
 final List<String> imgList = [
   'assets/images/sample1.jpg',
 ];

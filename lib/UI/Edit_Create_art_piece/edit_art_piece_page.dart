@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:honar_gallary/const/color_const.dart';
 // import 'package:honar_gallary/UI/Edit_Create_art_piece/image_card.dart';
@@ -134,7 +133,6 @@ class _EditArtPieceState extends State<EditArtPiece> {
       ),
     );
 
-
     // return Scaffold(
     //   body: Container(
     //     height: context.height(),
@@ -211,7 +209,6 @@ class _EditArtPieceState extends State<EditArtPiece> {
     //   ),
     // );
   }
-
 
 // Widget imageProfile() {
 //   return Center(

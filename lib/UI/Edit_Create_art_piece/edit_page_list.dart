@@ -22,7 +22,6 @@ class ProfileListItems extends StatefulWidget {
 }
 
 class _ProfileListItemsState extends State<ProfileListItems> {
-
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   // String? _description;
@@ -224,8 +223,6 @@ class _ProfileListItemsState extends State<ProfileListItems> {
         ),
       ),
     );
-
-
   }
 
   Widget nameTextField() {
@@ -239,13 +236,13 @@ class _ProfileListItemsState extends State<ProfileListItems> {
       decoration: const InputDecoration(
         border: OutlineInputBorder(
             borderSide: BorderSide(
-              color: Colors.teal,
-            )),
+          color: Colors.teal,
+        )),
         focusedBorder: OutlineInputBorder(
             borderSide: BorderSide(
-              color: Colors.orange,
-              width: 2,
-            )),
+          color: Colors.orange,
+          width: 2,
+        )),
         prefixIcon: Icon(
           Icons.person,
           color: Colors.green,
@@ -268,13 +265,13 @@ class _ProfileListItemsState extends State<ProfileListItems> {
       decoration: const InputDecoration(
         border: OutlineInputBorder(
             borderSide: BorderSide(
-              color: Colors.teal,
-            )),
+          color: Colors.teal,
+        )),
         focusedBorder: OutlineInputBorder(
             borderSide: BorderSide(
-              color: Colors.orange,
-              width: 2,
-            )),
+          color: Colors.orange,
+          width: 2,
+        )),
         prefixIcon: Icon(
           Icons.person,
           color: Colors.green,
@@ -373,7 +370,6 @@ class _ProfileListItemsState extends State<ProfileListItems> {
   }
 }
 
-
 Widget buildCoverImage() => Container(
       decoration: BoxDecoration(
           color: ColorPallet.colorPalletPurpleRain,
@@ -390,6 +386,3 @@ Widget buildProfileImage(double profileHeight) {
     backgroundImage: const AssetImage("assets/images/sample1.jpg"),
   );
 }
-
-
-

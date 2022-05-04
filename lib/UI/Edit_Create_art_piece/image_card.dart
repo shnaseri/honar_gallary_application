@@ -1,8 +1,6 @@
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-
 // final List<String> imgList2 = [
 //   'assets/images/mafia1.jpg',
 //   'assets/images/mafia1.jpg',
@@ -11,7 +9,6 @@ import 'package:flutter/material.dart';
 // ];
 
 import 'package:honar_gallary/UI/Art_piece/art_piece_model.dart';
-
 // import 'package:flutter/material.dart';
 import 'package:honar_gallary/const/color_const.dart';
 import 'package:nb_utils/nb_utils.dart';
@@ -67,7 +64,6 @@ class ImageCardWidget extends StatelessWidget {
                     //   height: 100,
                     // ),
 
-
                     Expanded(
                       flex: 2,
                       child: Hero(
@@ -96,14 +92,14 @@ class ImageCardWidget extends StatelessWidget {
                                 ),
                               );
                             },
-                            imageUrl: 'https://hips.hearstapps.com/ghk.h-cdn.co/assets/17/30/2560x1280/landscape-1500925839-golden-retriever-puppy.jpg?resize=480:*',
+                            imageUrl:
+                                'https://hips.hearstapps.com/ghk.h-cdn.co/assets/17/30/2560x1280/landscape-1500925839-golden-retriever-puppy.jpg?resize=480:*',
                             fit: BoxFit.fill,
                             height: context.height() * 0.15,
                             width: context.width(),
                           )),
                     ),
                     // const SizedBox(width: 10,height: 10,),
-
 
                     const SizedBox(height: 5),
 
@@ -117,5 +113,4 @@ class ImageCardWidget extends StatelessWidget {
       ),
     );
   }
-
 }
