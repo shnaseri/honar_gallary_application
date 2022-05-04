@@ -6,7 +6,6 @@ import 'package:nb_utils/nb_utils.dart';
 
 import '../../const/color_const.dart';
 import '../Art_piece/art_piece_model.dart';
-
 // import 'edit_page_list_item2.dart';
 // import 'hover_test.dart';
 // import 'image_card.dart';
@@ -73,9 +72,18 @@ class _ProfileListItemsState extends State<ProfileListItems> {
       startTime: DateTime(2020),
       finishTime: DateTime(2021),
       // comments: [],
-    ),];
+    ),
+  ];
 
+  // Initial Selected Value
+  String dropDownValue = 'عکس';
 
+  // List of items in our dropdown menu
+  var items = [
+    'عکس',
+    'فیلم',
+    'موسیقی',
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -85,7 +93,7 @@ class _ProfileListItemsState extends State<ProfileListItems> {
       child: Form(
         key: _formKey,
         child: ListView(
-          padding: const EdgeInsets.symmetric(horizontal: 30),
+          padding: const EdgeInsets.only(left: 30, right: 30, bottom: 50),
           physics: const NeverScrollableScrollPhysics(),
           controller: scrollController,
           children: [
@@ -94,18 +102,66 @@ class _ProfileListItemsState extends State<ProfileListItems> {
             const SizedBox(
               height: 20,
             ),
-            Row(
-              children: [
-                Expanded(child: dobField('شروع')),
-                const SizedBox(
-                  width: 20,
+            TextFormField(
+              controller: _dob,
+              validator: (value) {
+                // if (value.isEmpty) return "DOB can't be empty";
+
+                return null;
+              },
+              decoration: InputDecoration(
+                border: OutlineInputBorder(
+                    borderSide: BorderSide(
+                  color: ColorPallet.colorPalletSambucus,
+                )),
+                focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(
+                  color: ColorPallet.colorPalletSambucus,
+                  width: 2,
+                )),
+                prefixIcon: Icon(
+                  Icons.date_range_rounded,
+                  color: ColorPallet.colorPalletNightFog,
                 ),
-                Expanded(child: dobField('پایان')),
-              ],
+
+                labelText: "قیمت",
+                // helperText: "Provide DOB on dd/mm/yyyy",
+                // hintText: "01/01/2020",
+              ),
             ),
             const SizedBox(
               height: 20,
             ),
+            DropdownButtonFormField(
+              // Initial Value
+              value: dropDownValue,
+
+              // Down Arrow Icon
+              icon: const Icon(Icons.keyboard_arrow_down),
+
+              // Array list of items
+              items: items.map((String items) {
+                return DropdownMenuItem(
+                  value: items,
+                  child: Text(items),
+                );
+              }).toList(),
+              elevation: 5,
+              decoration: const InputDecoration(
+                border: OutlineInputBorder(),
+              ),
+              // After selecting the desired option,it will
+              // change button value to selected value
+              onChanged: (String? newValue) {
+                setState(() {
+                  dropDownValue = newValue!;
+                });
+              },
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+
             aboutTextField(),
             Column(
               children: [
@@ -119,45 +175,6 @@ class _ProfileListItemsState extends State<ProfileListItems> {
                     itemCount: artPieces.length,
                   ),
                 ),
-                // GestureDetector(
-                //   // onTap: () {},
-                //   onTap: () => {
-                //     if (!_formKey.currentState!.validate()) {},
-                //     _formKey.currentState!.save()
-                //   },
-                //   child: Container(
-                //     width: 100,
-                //     height: 30,
-                //     decoration: BoxDecoration(
-                //       gradient: LinearGradient(
-                //         colors: [
-                //           Colors.teal,
-                //           Colors.teal.shade200,
-                //         ],
-                //         // begin: Alignment.topLeft,
-                //         // end: Alignment.bottomRight,
-                //       ),
-                //       borderRadius: BorderRadius.circular(20),
-                //       boxShadow: const [
-                //         BoxShadow(
-                //           color: Colors.black12,
-                //           offset: Offset(5, 5),
-                //           blurRadius: 10,
-                //         )
-                //       ],
-                //     ),
-                //     child: const Center(
-                //       child: Text(
-                //         'اضافه کردن عکس',
-                //         style: TextStyle(
-                //           color: Colors.white,
-                //           fontSize: 10,
-                //           fontWeight: FontWeight.w500,
-                //         ),
-                //       ),
-                //     ),
-                //   ),
-                // ),
               ],
             ),
 
@@ -172,7 +189,7 @@ class _ProfileListItemsState extends State<ProfileListItems> {
               },
               child: Container(
                 width: 40,
-                height: 70,
+                height: 50,
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
                     colors: [

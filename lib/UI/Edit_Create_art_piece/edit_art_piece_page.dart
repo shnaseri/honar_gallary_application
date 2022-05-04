@@ -71,7 +71,7 @@ class _EditArtPieceState extends State<EditArtPiece> {
               pinned: true,
               snap: true,
               floating: true,
-              expandedHeight: context.height() * 0.365,
+              expandedHeight: context.height() * 0.4,
               flexibleSpace: FlexibleSpaceBar(
                 title: SizedBox(
                   width: context.width() * 0.4,
@@ -117,12 +117,17 @@ class _EditArtPieceState extends State<EditArtPiece> {
             ),
             SliverList(
               delegate: SliverChildBuilderDelegate((_, int index) {
-                return ProfileListItems(
-                  changeState: () {
-                    setState(() {});
-                  },
+                if (index == 0) {
+                  return ProfileListItems(
+                    changeState: () {
+                      setState(() {});
+                    },
+                  );
+                }
+                return const SizedBox(
+                  height: 60,
                 );
-              }, childCount: 1),
+              }, childCount: 2),
             ),
           ],
         ),

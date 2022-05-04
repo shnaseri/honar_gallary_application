@@ -95,7 +95,7 @@ class _ImageSliderTileState extends State<ImageSliderTile> {
   void initState() {
     super.initState();
     showIcon = false;
-    _myOpacity = 1.5;
+    _myOpacity = 1;
   }
 
   @override
