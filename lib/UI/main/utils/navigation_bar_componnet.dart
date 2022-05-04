@@ -6,6 +6,7 @@ import 'package:honar_gallary/const/color_const.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 
+import '../../Edit_Create_art_piece/edit_art_piece_page.dart';
 import '../../gallary/gallery_view.dart';
 
 class NavigationBarWidget extends StatelessWidget {
@@ -64,8 +65,8 @@ class NavigationBarWidget extends StatelessWidget {
       Container(),
       Container(),
       Container(),
+      const EditArtPiece(),
       const GalleryView(),
-      Container(),
     ];
   }
 
