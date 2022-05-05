@@ -49,6 +49,11 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
             dividerColor: Colors.transparent,
             highlightColor: Colors.black45,
+            textTheme: const TextTheme(
+                subtitle1: TextStyle(
+                  color: Colors.white,
+                ),
+                caption: TextStyle(color: Colors.white)),
             fontFamily: 'Sahel',
             iconTheme: const IconThemeData(color: Colors.white),
             colorScheme:

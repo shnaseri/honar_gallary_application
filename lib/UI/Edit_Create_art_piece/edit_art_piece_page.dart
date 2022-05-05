@@ -52,9 +52,9 @@ class _EditArtPieceState extends State<EditArtPiece> {
 
   @override
   Widget build(BuildContext context) {
-    double coverHeight = context.height() * 0.27;
+    // double coverHeight = context.height() * 0.27;
     double profileHeight = context.height() * 0.2;
-    final top = coverHeight - profileHeight / 6;
+    // final top = coverHeight - profileHeight / 6;
     final bottom = profileHeight / 2;
 
     return Scaffold(
@@ -75,7 +75,7 @@ class _EditArtPieceState extends State<EditArtPiece> {
                 title: SizedBox(
                   width: context.width() * 0.4,
                   child: Text(
-                    'حسین',
+                    'موسیقی ای ایران',
                     style: boldTextStyle(color: Colors.white, size: 19),
                     overflow: TextOverflow.ellipsis,
                     maxLines: 1,
@@ -89,11 +89,11 @@ class _EditArtPieceState extends State<EditArtPiece> {
                     Container(
                         margin: EdgeInsets.only(bottom: bottom),
                         child: buildCoverImage()),
-                    Positioned(
-                      right: 50,
-                      top: top,
-                      child: buildProfileImage(profileHeight),
-                    ),
+                    // Positioned(
+                    //   right: 50,
+                    //   top: top,
+                    //   child: buildProfileImage(profileHeight),
+                    // ),
                     Positioned(
                       left: 40,
                       bottom: 10,

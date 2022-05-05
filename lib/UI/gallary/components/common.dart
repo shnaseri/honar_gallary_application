@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:honar_gallary/UI/Art_piece/art_piece_page.dart';
+import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 
 const _defaultColor = Color(0xFF34568B);
 
@@ -44,16 +46,25 @@ class Tile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final child = Container(
-      height: extent,
-      decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(9),
-          boxShadow: const [
-            BoxShadow(color: Colors.black26, spreadRadius: 0.2)
-          ]),
-      child: Center(child: Container()),
-    );
+    final child = GestureDetector(
+        onTap: () {
+          pushNewScreen(
+            context,
+            screen: const ArtPiecePage(),
+            withNavBar: false, // OPTIONAL VALUE. True by default.
+            pageTransitionAnimation: PageTransitionAnimation.cupertino,
+          );
+        },
+        child: Container(
+          height: extent,
+          decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(9),
+              boxShadow: const [
+                BoxShadow(color: Colors.black26, spreadRadius: 0.2)
+              ]),
+          child: Center(child: Container()),
+        ));
 
     if (bottomSpace == null) {
       return child;
