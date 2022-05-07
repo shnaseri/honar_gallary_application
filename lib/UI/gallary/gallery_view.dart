@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:honar_gallary/const/color_const.dart';
+import 'package:honar_gallary/settings/setting_page.dart';
+import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 
 import 'components/common.dart';
 
@@ -154,10 +156,22 @@ class _GalleryViewState extends State<GalleryView> {
                           Positioned(
                             top: 90,
                             right: 20,
-                            child: Icon(
-                              Icons.settings,
-                              color: ColorPallet.colorPalletNightFog,
-                              size: 25,
+                            child: GestureDetector(
+                              onTap: () {
+                                pushNewScreen(
+                                  context,
+                                  screen: const SettingsPage(),
+                                  withNavBar: false,
+                                  // OPTIONAL VALUE. True by default.
+                                  pageTransitionAnimation:
+                                      PageTransitionAnimation.cupertino,
+                                );
+                              },
+                              child: Icon(
+                                Icons.settings,
+                                color: ColorPallet.colorPalletNightFog,
+                                size: 25,
+                              ),
                             ),
                           ),
                           Positioned(
