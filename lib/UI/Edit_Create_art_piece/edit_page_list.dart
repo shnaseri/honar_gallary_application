@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
@@ -25,14 +23,14 @@ class ProfileListItems extends StatefulWidget {
 }
 
 class _ProfileListItemsState extends State<ProfileListItems> {
-  String? _fileName;
-  String? _saveAsFileName;
-  List<PlatformFile>? _paths;
-  String? _directoryPath;
-  String? _extension;
-  bool _isLoading = false;
-  bool _userAborted = false;
-  bool _multiPick = false;
+  // String? _fileName;
+  // String? _saveAsFileName;
+  // List<PlatformFile>? _paths;
+  // String? _directoryPath;
+  // String? _extension;
+  // bool _isLoading = false;
+  // bool _userAborted = false;
+  // bool _multiPick = false;
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
@@ -135,13 +133,13 @@ class _ProfileListItemsState extends State<ProfileListItems> {
               decoration: InputDecoration(
                 border: OutlineInputBorder(
                     borderSide: BorderSide(
-                      color: ColorPallet.colorPalletSambucus,
-                    )),
+                  color: ColorPallet.colorPalletSambucus,
+                )),
                 focusedBorder: OutlineInputBorder(
                     borderSide: BorderSide(
-                      color: ColorPallet.colorPalletSambucus,
-                      width: 2,
-                    )),
+                  color: ColorPallet.colorPalletSambucus,
+                  width: 2,
+                )),
                 prefixIcon: Icon(
                   Icons.date_range_rounded,
                   color: ColorPallet.colorPalletNightFog,
@@ -195,7 +193,7 @@ class _ProfileListItemsState extends State<ProfileListItems> {
                           allowedExtensions: dataExtensions[dropDownValue]);
 
                   if (result != null) {
-                    File file = File(result.files.single.path!);
+                    // File file = File(result.files.single.path!);
                   } else {
                     // User canceled the picker
                   }
@@ -298,13 +296,13 @@ class _ProfileListItemsState extends State<ProfileListItems> {
       decoration: const InputDecoration(
         border: OutlineInputBorder(
             borderSide: BorderSide(
-              color: Colors.teal,
-            )),
+          color: Colors.teal,
+        )),
         focusedBorder: OutlineInputBorder(
             borderSide: BorderSide(
-              color: Colors.orange,
-              width: 2,
-            )),
+          color: Colors.orange,
+          width: 2,
+        )),
         prefixIcon: Icon(
           Icons.person,
           color: Colors.green,
@@ -327,13 +325,13 @@ class _ProfileListItemsState extends State<ProfileListItems> {
       decoration: const InputDecoration(
         border: OutlineInputBorder(
             borderSide: BorderSide(
-              color: Colors.teal,
-            )),
+          color: Colors.teal,
+        )),
         focusedBorder: OutlineInputBorder(
             borderSide: BorderSide(
-              color: Colors.orange,
-              width: 2,
-            )),
+          color: Colors.orange,
+          width: 2,
+        )),
         prefixIcon: Icon(
           Icons.person,
           color: Colors.green,
@@ -356,13 +354,13 @@ class _ProfileListItemsState extends State<ProfileListItems> {
       decoration: InputDecoration(
         border: OutlineInputBorder(
             borderSide: BorderSide(
-              color: ColorPallet.colorPalletSambucus,
-            )),
+          color: ColorPallet.colorPalletSambucus,
+        )),
         focusedBorder: OutlineInputBorder(
             borderSide: BorderSide(
-              color: ColorPallet.colorPalletSambucus,
-              width: 2,
-            )),
+          color: ColorPallet.colorPalletSambucus,
+          width: 2,
+        )),
         prefixIcon: Icon(
           Icons.date_range_rounded,
           color: ColorPallet.colorPalletNightFog,
@@ -386,13 +384,13 @@ class _ProfileListItemsState extends State<ProfileListItems> {
       decoration: InputDecoration(
         border: OutlineInputBorder(
             borderSide: BorderSide(
-              color: ColorPallet.colorPalletSambucus,
-            )),
+          color: ColorPallet.colorPalletSambucus,
+        )),
         focusedBorder: OutlineInputBorder(
             borderSide: BorderSide(
-              color: ColorPallet.colorPalletSambucus,
-              width: 2,
-            )),
+          color: ColorPallet.colorPalletSambucus,
+          width: 2,
+        )),
         prefixIcon: Icon(
           Icons.title,
           color: ColorPallet.colorPalletBlueGam,
@@ -416,13 +414,13 @@ class _ProfileListItemsState extends State<ProfileListItems> {
       decoration: InputDecoration(
         border: OutlineInputBorder(
             borderSide: BorderSide(
-              color: ColorPallet.colorPalletSambucus,
-            )),
+          color: ColorPallet.colorPalletSambucus,
+        )),
         focusedBorder: OutlineInputBorder(
             borderSide: BorderSide(
-              color: ColorPallet.colorPalletSambucus,
-              width: 2,
-            )),
+          color: ColorPallet.colorPalletSambucus,
+          width: 2,
+        )),
 
         labelText: "درباره اثر",
         // helperText: "Write about yourself",
@@ -433,13 +431,13 @@ class _ProfileListItemsState extends State<ProfileListItems> {
 }
 
 Widget buildCoverImage() => Container(
-  decoration: BoxDecoration(
-      color: ColorPallet.colorPalletPurpleRain,
-      image: const DecorationImage(
-        fit: BoxFit.cover,
-        image: AssetImage("assets/images/photo2.jpeg"),
-      )),
-);
+      decoration: BoxDecoration(
+          color: ColorPallet.colorPalletPurpleRain,
+          image: const DecorationImage(
+            fit: BoxFit.cover,
+            image: AssetImage("assets/images/photo2.jpeg"),
+          )),
+    );
 
 Widget buildProfileImage(double profileHeight) {
   return CircleAvatar(
