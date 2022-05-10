@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
@@ -93,11 +95,23 @@ class _ProfileListItemsState extends State<ProfileListItems> {
     'فیلم',
     'موسیقی',
   ];
+  late Map<String, List<String>> dataExtensions;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    dataExtensions = {
+      items[0]: ['bmp', 'jpg', 'png'],
+      items[1]: ['mp4', 'mkv', 'avi'],
+      items[2]: ['mp3', 'flac']
+    };
+  }
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: context.height(),
+      height: context.height() * 1.1,
       width: context.width(),
       child: Form(
         key: _formKey,
@@ -141,6 +155,7 @@ class _ProfileListItemsState extends State<ProfileListItems> {
             const SizedBox(
               height: 20,
             ),
+
             DropdownButtonFormField(
               // Initial Value
               value: dropDownValue,
@@ -166,6 +181,43 @@ class _ProfileListItemsState extends State<ProfileListItems> {
                   dropDownValue = newValue!;
                 });
               },
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            SizedBox(
+              height: 50,
+              child: ElevatedButton(
+                onPressed: () async {
+                  FilePickerResult? result = await FilePicker.platform
+                      .pickFiles(
+                          type: FileType.custom,
+                          allowedExtensions: dataExtensions[dropDownValue]);
+
+                  if (result != null) {
+                    File file = File(result.files.single.path!);
+                  } else {
+                    // User canceled the picker
+                  }
+                },
+                style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.resolveWith(
+                        (states) => ColorPallet.colorPalletDark),
+                    padding: MaterialStateProperty.resolveWith(
+                        (states) => const EdgeInsets.symmetric(horizontal: 50)),
+                    elevation: MaterialStateProperty.resolveWith((states) => 2),
+                    shape: MaterialStateProperty.resolveWith((states) =>
+                        RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20)))),
+                child: const Text(
+                  "آپلود فایل",
+                  style: TextStyle(
+                      fontFamily: 'Sahel',
+                      fontSize: 16,
+                      letterSpacing: 1.2,
+                      color: Colors.white),
+                ),
+              ),
             ),
             const SizedBox(
               height: 20,
