@@ -156,7 +156,7 @@ class _ProfilePageState extends State<ProfilePage> {
                             ),
                           ),
                           onPressed: () {},
-                          child: const Text("لغو",
+                          child: const Text("بازنشانی",
                               style: TextStyle(
                                   fontSize: 16,
                                   letterSpacing: 1.2,

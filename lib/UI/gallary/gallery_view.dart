@@ -71,6 +71,9 @@ class _GalleryViewState extends State<GalleryView> {
                                       fontSize: 25,
                                     ),
                                   ),
+                                  Container(
+                                    color: Colors.white,
+                                  ),
                                   const SizedBox(
                                     height: 5,
                                   ),
@@ -192,7 +195,30 @@ class _GalleryViewState extends State<GalleryView> {
                   ),
                 ),
                 const SizedBox(
-                  height: 10,
+                  height: 15,
+                ),
+                Container(
+                  height: 45,
+                  margin: const EdgeInsets.symmetric(horizontal: 25),
+                  padding: const EdgeInsets.symmetric(horizontal: 5),
+                  decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(10)),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      const Text(
+                        " صفحه تجاری این کاربر باز است ",
+                        style: TextStyle(
+                            color: Colors.black, fontWeight: FontWeight.w900),
+                      ),
+                      ElevatedButton(
+                          onPressed: () {}, child: const Text("مشاهده"))
+                    ],
+                  ),
+                ),
+                const SizedBox(
+                  height: 5,
                 ),
                 Container(
                   padding: const EdgeInsets.all(10),

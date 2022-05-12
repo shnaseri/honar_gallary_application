@@ -61,12 +61,12 @@ class _SettingsPageState extends State<SettingsPage> {
                 const SizedBox(
                   width: 8,
                 ),
-                Text(
+                const Text(
                   "حساب کاربری",
                   style: TextStyle(
                       fontSize: 18,
-                      color: ColorPallet.colorPalletDark,
-                      fontWeight: FontWeight.bold),
+                      color: Colors.white,
+                      fontWeight: FontWeight.w900),
                 ),
               ],
             ),
@@ -101,7 +101,10 @@ class _SettingsPageState extends State<SettingsPage> {
                 ),
                 const Text(
                   "اعلانات",
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.w900,
+                      color: Colors.white),
                 ),
               ],
             ),
@@ -152,6 +155,7 @@ class _SettingsPageState extends State<SettingsPage> {
         Transform.scale(
             scale: 0.7,
             child: CupertinoSwitch(
+              activeColor: Colors.amber,
               value: isActive,
               onChanged: (bool val) {
                 setState(() {
@@ -177,9 +181,9 @@ class _SettingsPageState extends State<SettingsPage> {
               color: Colors.white,
             ),
           ),
-          Icon(
+          const Icon(
             Icons.arrow_forward_ios,
-            color: ColorPallet.colorPalletDark,
+            color: Colors.amber,
           ),
         ],
       ),

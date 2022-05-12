@@ -1,6 +1,9 @@
 import 'package:animated_login/animated_login.dart';
+import 'package:chopper/chopper.dart';
 import 'package:flutter/material.dart';
 import 'package:honar_gallary/const/color_const.dart';
+import 'package:honar_gallary/generated_code/swagger1.swagger.dart';
+import 'package:honar_gallary/logic/consts.dart';
 import 'package:honar_gallary/logic/extenstion_methods.dart';
 import 'package:honar_gallary/logic/router_const.dart';
 
@@ -77,7 +80,7 @@ class _AuthenticationPageState extends State<AuthenticationPage> {
         passwordMatchingError: _matchPassError,
       );
 
-  String get _username => 'نام کاربری';
+  String get _username => 'نام و نام خانوادگی';
 
   String get _login => 'ورود';
 
@@ -109,6 +112,13 @@ class _AuthenticationPageState extends State<AuthenticationPage> {
   String get _matchPassError => 'تاییدیه رمز عبور مطابقت ندارد';
 
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    interfaceOfUser = Swagger1.create();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Theme(
       data: ThemeData(
@@ -121,11 +131,70 @@ class _AuthenticationPageState extends State<AuthenticationPage> {
         textDirection: TextDirection.ltr,
         child: AnimatedLogin(
           onLogin: (login) async {
-            Navigator.pushReplacementNamed(context, homePagePath);
-            return "";
+            try {
+              Response<AccessRefresh> token =
+                  await interfaceOfUser.authLoginPost(
+                      data: TokenObtainPair(
+                          email: login.email, password: login.password));
+
+              if (token.statusCode == 200) {
+                Navigator.pushReplacementNamed(context, homePagePath);
+
+                return '';
+              }
+            } catch (e) {
+              return "";
+            }
+            final snackBar = SnackBar(
+              padding: const EdgeInsets.only(left: 20),
+              content: const Text(
+                "نام کاربری یا رمز عبور نادرست وارد شده است.",
+                textAlign: TextAlign.start,
+              ),
+              backgroundColor: (Colors.black12),
+              action: SnackBarAction(
+                label: 'dismiss',
+                onPressed: () {},
+              ),
+            );
+            ScaffoldMessenger.of(context).showSnackBar(snackBar);
+            return "نام کاربری یا رمز عبور نادرست وارد شده است";
           },
           onSignup: (login) async {
-            return "";
+            try {
+              Response<UserId> userId = await interfaceOfUser.authRegisterPost(
+                  data: Register(
+                      email: login.email,
+                      password: login.password,
+                      firstName: "s",
+                      lastName: login.name));
+              if (userId.isSuccessful) {
+                Response<AccessRefresh> token =
+                    await interfaceOfUser.authLoginPost(
+                        data: TokenObtainPair(
+                            email: login.email, password: login.password));
+                if (token.isSuccessful) {
+                  Navigator.pushReplacementNamed(context, homePagePath);
+                  return "";
+                }
+              }
+            } catch (e) {
+              return "";
+            }
+            final snackBar = SnackBar(
+              padding: const EdgeInsets.only(left: 20),
+              content: const Text(
+                "اطلاعات را به درستی وارد نمایید.",
+                textAlign: TextAlign.start,
+              ),
+              backgroundColor: (Colors.black12),
+              action: SnackBarAction(
+                label: 'dismiss',
+                onPressed: () {},
+              ),
+            );
+            ScaffoldMessenger.of(context).showSnackBar(snackBar);
+            return "اطلاعات را به درستی وارد نمایید.";
           },
           onForgotPassword: (login) async {
             return "";
@@ -135,12 +204,13 @@ class _AuthenticationPageState extends State<AuthenticationPage> {
           signUpMode: SignUpModes.both,
           // socialLogins: _socialLogins(context),
           loginDesktopTheme: _desktopTheme,
+
           loginMobileTheme: _mobileTheme,
           loginTexts: _loginTexts,
           initialMode: currentMode,
           nameValidator: ValidatorModel(customValidator: (String? email) {
             if (((email?.length) ?? 0) < 4) {
-              return 'نام کاریری باید بیش از 3 حرف باشد';
+              return 'تعداد حروف باید بیشتر باشد';
             }
             return null;
           }),

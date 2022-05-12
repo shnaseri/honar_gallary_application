@@ -1,0 +1,573 @@
+---
+swagger: '2.0'
+info:
+  title: Snippets API
+  description: Test description
+  termsOfService: https://www.google.com/policies/terms/
+  contact:
+    email: contact@snippets.local
+  license:
+    name: BSD License
+  version: v1
+host: localhost:8000
+schemes:
+  - http
+basePath: "/api"
+consumes:
+  - application/json
+produces:
+  - application/json
+securityDefinitions:
+  Bearer:
+    type: apiKey
+    name: Authorization
+    in: header
+security:
+  - Bearer: [ ]
+paths:
+  "/art/art-piece/cover/":
+    post:
+      operationId: art_art-piece_cover_create
+      description: ''
+      parameters:
+        - name: data
+          in: body
+          required: true
+          schema:
+            "$ref": "#/definitions/ArtPieceCover"
+      responses:
+        '200':
+          description: ''
+          schema:
+            type: object
+            properties:
+              art_piece_id:
+                type: integer
+        '406':
+          description: ''
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                default: false
+              error:
+                type: string
+                default: invalid data
+      tags:
+        - art
+    parameters: [ ]
+  "/art/art-piece/{id}/":
+    get:
+      operationId: art_art-piece_read
+      description: ''
+      parameters: [ ]
+      responses:
+        '200':
+          description: ''
+          schema:
+            "$ref": "#/definitions/ArtPiece"
+        '404':
+          description: ''
+          schema:
+            type: object
+            properties:
+              detail:
+                type: string
+                readOnly: true
+                default: Not Found.
+      tags:
+        - art
+    put:
+      operationId: art_art-piece_update
+      description: ''
+      parameters:
+        - name: data
+          in: body
+          required: true
+          schema:
+            "$ref": "#/definitions/ArtPieceDetail"
+      responses:
+        '200':
+          description: ''
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                default: true
+        '404':
+          description: ''
+          schema:
+            type: object
+            properties:
+              detail:
+                type: string
+                readOnly: true
+                default: Not Found.
+      tags:
+        - art
+    parameters:
+      - name: id
+        in: path
+        required: true
+        type: string
+  "/art/art-piece/{id}/content/":
+    put:
+      operationId: art_art-piece_content_update
+      description: ''
+      parameters:
+        - name: file
+          in: formData
+          required: true
+          type: file
+      responses:
+        '200':
+          description: ''
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                default: true
+        '404':
+          description: ''
+          schema:
+            type: object
+            properties:
+              detail:
+                type: string
+                readOnly: true
+                default: Not Found.
+        '406':
+          description: ''
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                default: false
+              error:
+                type: string
+                default: invalid data
+      consumes:
+        - multipart/form-data
+      tags:
+        - art
+    parameters:
+      - name: id
+        in: path
+        required: true
+        type: string
+  "/art/art-piece/{id}/like/":
+    put:
+      operationId: art_art-piece_like_update
+      description: ''
+      parameters: [ ]
+      responses:
+        '200':
+          description: ''
+          schema:
+            type: object
+            properties:
+              like:
+                type: boolean
+                default: true
+        '404':
+          description: ''
+          schema:
+            type: object
+            properties:
+              detail:
+                type: string
+                readOnly: true
+                default: Not Found.
+      tags:
+        - art
+    parameters:
+      - name: id
+        in: path
+        required: true
+        type: string
+  "/auth/login/":
+    post:
+      operationId: auth_login_create
+      description: ''
+      parameters:
+        - name: data
+          in: body
+          required: true
+          schema:
+            "$ref": "#/definitions/TokenObtainPair"
+      responses:
+        '201':
+          description: ''
+          schema:
+            "$ref": "#/definitions/AccessRefresh"
+        '401':
+          description: ''
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                default: false
+              error:
+                type: string
+                default: invalid data
+      tags:
+        - auth
+    parameters: [ ]
+  "/auth/logout/":
+    post:
+      operationId: auth_logout_create
+      description: |-
+        Takes a refresh type JSON web token and returns an access type JSON web
+        token if the refresh token is valid.
+      parameters:
+        - name: data
+          in: body
+          required: true
+          schema:
+            "$ref": "#/definitions/TokenRefresh"
+      responses:
+        '201':
+          description: ''
+          schema:
+            "$ref": "#/definitions/TokenRefresh"
+      tags:
+        - auth
+    parameters: [ ]
+  "/auth/register/":
+    post:
+      operationId: auth_register_create
+      description: ''
+      parameters:
+        - name: data
+          in: body
+          required: true
+          schema:
+            "$ref": "#/definitions/Register"
+      responses:
+        '201':
+          description: ''
+          schema:
+            "$ref": "#/definitions/UserId"
+        '406':
+          description: ''
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                default: false
+              error:
+                type: string
+                default: invalid data
+      tags:
+        - auth
+    parameters: [ ]
+  "/auth/verify/":
+    post:
+      operationId: auth_verify_create
+      description: |-
+        Takes a token and indicates if it is valid.  This view provides no
+        information about a token's fitness for a particular use.
+      parameters:
+        - name: data
+          in: body
+          required: true
+          schema:
+            "$ref": "#/definitions/TokenVerify"
+      responses:
+        '201':
+          description: ''
+          schema:
+            "$ref": "#/definitions/TokenVerify"
+      tags:
+        - auth
+    parameters: [ ]
+  "/core/image/upload/":
+    get:
+      operationId: core_image_upload_list
+      description: Examines request and allows certain fields to be expanded within
+        the list view.
+      parameters: [ ]
+      responses:
+        '200':
+          description: ''
+          schema:
+            type: array
+            items:
+              "$ref": "#/definitions/image_serializer"
+      tags:
+        - core
+    post:
+      operationId: core_image_upload_create
+      description: ''
+      parameters:
+        - name: data
+          in: body
+          required: true
+          schema:
+            "$ref": "#/definitions/image_serializer"
+      responses:
+        '201':
+          description: ''
+          schema:
+            "$ref": "#/definitions/image_serializer"
+      tags:
+        - core
+    parameters: [ ]
+  "/core/image/upload/{id}/":
+    get:
+      operationId: core_image_upload_read
+      description: ''
+      parameters: [ ]
+      responses:
+        '200':
+          description: ''
+          schema:
+            "$ref": "#/definitions/image_serializer"
+      tags:
+        - core
+    put:
+      operationId: core_image_upload_update
+      description: ''
+      parameters:
+        - name: data
+          in: body
+          required: true
+          schema:
+            "$ref": "#/definitions/image_serializer"
+      responses:
+        '200':
+          description: ''
+          schema:
+            "$ref": "#/definitions/image_serializer"
+      tags:
+        - core
+    patch:
+      operationId: core_image_upload_partial_update
+      description: ''
+      parameters:
+        - name: data
+          in: body
+          required: true
+          schema:
+            "$ref": "#/definitions/image_serializer"
+      responses:
+        '200':
+          description: ''
+          schema:
+            "$ref": "#/definitions/image_serializer"
+      tags:
+        - core
+    delete:
+      operationId: core_image_upload_delete
+      description: ''
+      parameters: [ ]
+      responses:
+        '204':
+          description: ''
+      tags:
+        - core
+    parameters:
+      - name: id
+        in: path
+        description: A unique integer value identifying this image.
+        required: true
+        type: integer
+definitions:
+  ArtPieceCover:
+    required:
+      - cover
+    type: object
+    properties:
+      cover:
+        title: Cover
+        type: integer
+      type:
+        title: Type
+        type: string
+        enum:
+          - M
+          - V
+          - P
+        default: P
+  image_serializer:
+    type: object
+    properties:
+      id:
+        title: ID
+        type: integer
+        readOnly: true
+      image:
+        title: Image
+        type: string
+        readOnly: true
+        x-nullable: true
+        format: uri
+  User:
+    type: object
+    properties:
+      id:
+        title: ID
+        type: integer
+        readOnly: true
+      full_name:
+        title: Full name
+        type: string
+        readOnly: true
+  ArtPiece:
+    required:
+      - cover
+      - owner
+    type: object
+    properties:
+      id:
+        title: ID
+        type: integer
+        readOnly: true
+      title:
+        title: Title
+        type: string
+        maxLength: 150
+      price:
+        title: Price
+        type: integer
+        maximum: 2147483647
+        minimum: -2147483648
+      description:
+        title: Description
+        type: string
+      cover:
+        "$ref": "#/definitions/image_serializer"
+      owner:
+        "$ref": "#/definitions/User"
+      like_count:
+        title: Like count
+        type: string
+        readOnly: true
+      type:
+        title: Type
+        type: string
+        readOnly: true
+      is_user_liked:
+        title: Is user liked
+        type: string
+        readOnly: true
+      url:
+        title: Url
+        type: string
+        readOnly: true
+  ArtPieceDetail:
+    required:
+      - price
+      - title
+      - description
+    type: object
+    properties:
+      price:
+        title: Price
+        type: integer
+        x-nullable: true
+      title:
+        title: Title
+        type: string
+        maxLength: 200
+        minLength: 1
+        x-nullable: true
+      description:
+        title: Description
+        type: string
+        maxLength: 1000
+        minLength: 1
+        x-nullable: true
+  TokenObtainPair:
+    required:
+      - email
+      - password
+    type: object
+    properties:
+      email:
+        title: Email
+        type: string
+        minLength: 1
+      password:
+        title: Password
+        type: string
+        minLength: 1
+  AccessRefresh:
+    required:
+      - access
+      - refresh
+    type: object
+    properties:
+      access:
+        title: Access
+        type: string
+        minLength: 1
+      refresh:
+        title: Refresh
+        type: string
+        minLength: 1
+  TokenRefresh:
+    required:
+      - refresh
+    type: object
+    properties:
+      refresh:
+        title: Refresh
+        type: string
+        minLength: 1
+      access:
+        title: Access
+        type: string
+        readOnly: true
+        minLength: 1
+  Register:
+    required:
+      - email
+      - password
+      - first_name
+      - last_name
+    type: object
+    properties:
+      email:
+        title: Email
+        type: string
+        format: email
+        maxLength: 200
+        minLength: 1
+      password:
+        title: Password
+        type: string
+        maxLength: 200
+        minLength: 1
+      first_name:
+        title: First name
+        type: string
+        maxLength: 100
+        minLength: 1
+      last_name:
+        title: Last name
+        type: string
+        maxLength: 300
+        minLength: 1
+  UserId:
+    type: object
+    properties:
+      id:
+        title: ID
+        type: integer
+        readOnly: true
+  TokenVerify:
+    required:
+      - token
+    type: object
+    properties:
+      token:
+        title: Token
+        type: string
+        minLength: 1

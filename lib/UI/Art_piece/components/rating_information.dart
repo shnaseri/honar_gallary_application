@@ -33,11 +33,14 @@ class RatingInformation extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Text(
-          movie.rating.toString(),
-          style: textTheme.titleMedium!.copyWith(
-            fontWeight: FontWeight.bold,
-            color: Colors.amber,
+        Container(
+          padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+          child: Text(
+            movie.rating.toString(),
+            style: textTheme.titleMedium!.copyWith(
+              fontWeight: FontWeight.bold,
+              color: Colors.amber,
+            ),
           ),
         ),
         const SizedBox(height: 4.0),
@@ -76,6 +79,7 @@ class RatingInformation extends StatelessWidget {
     );
 
     return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Row(
           crossAxisAlignment: CrossAxisAlignment.end,
@@ -85,7 +89,7 @@ class RatingInformation extends StatelessWidget {
             starRating,
           ],
         ),
-        const SizedBox(width: 25.0),
+        const SizedBox(width: 26.0),
         Align(
           alignment: Alignment.center,
           child: Container(
