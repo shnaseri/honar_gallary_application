@@ -89,7 +89,7 @@ class RatingInformation extends StatelessWidget {
             starRating,
           ],
         ),
-        const SizedBox(width: 25.0),
+        const SizedBox(width: 26.0),
         Align(
           alignment: Alignment.center,
           child: Container(
