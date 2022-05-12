@@ -86,6 +86,8 @@ class BodySearchWidget extends StatefulWidget {
 }
 
 class _BodySearchWidgetState extends State<BodySearchWidget> {
+  int categoryItemSelectedId = -1;
+
   @override
   Widget build(BuildContext context) {
     return ListView(
@@ -100,14 +102,35 @@ class _BodySearchWidgetState extends State<BodySearchWidget> {
           child: ListView.builder(
             physics: const ClampingScrollPhysics(),
             itemBuilder: (BuildContext context, int index) {
-              return Container(
-                margin: const EdgeInsets.symmetric(horizontal: 7),
-                width: 60,
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(5),
-                    border: Border.all(
-                        color: ColorPallet.colorPalletDark.withOpacity(0.8),
-                        width: 1)),
+              return GestureDetector(
+                onTap: () {
+                  setState(() {
+                    categoryItemSelectedId = index;
+                  });
+                },
+                child: Container(
+                  margin: const EdgeInsets.symmetric(horizontal: 6),
+                  padding: const EdgeInsets.symmetric(horizontal: 6),
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(5),
+                      color: categoryItemSelectedId == index
+                          ? ColorPallet.colorPalletDark.withOpacity(0.8)
+                          : Colors.white,
+                      border: Border.all(
+                          color: categoryItemSelectedId == index
+                              ? Colors.white70
+                              : ColorPallet.colorPalletDark.withOpacity(0.8),
+                          width: 1)),
+                  child: Center(
+                    child: Text(
+                      'موسیقی',
+                      style: TextStyle(
+                          color: categoryItemSelectedId == index
+                              ? Colors.white
+                              : Colors.black),
+                    ),
+                  ),
+                ),
               );
             },
             itemCount: 10,
