@@ -2,7 +2,6 @@ import 'package:animated_login/animated_login.dart';
 import 'package:chopper/chopper.dart';
 import 'package:flutter/material.dart';
 import 'package:honar_gallary/const/color_const.dart';
-import 'package:honar_gallary/generated_code/client_index.dart';
 import 'package:honar_gallary/generated_code/swagger1.swagger.dart';
 import 'package:honar_gallary/logic/consts.dart';
 import 'package:honar_gallary/logic/extenstion_methods.dart';
@@ -133,16 +132,12 @@ class _AuthenticationPageState extends State<AuthenticationPage> {
         child: AnimatedLogin(
           onLogin: (login) async {
             try {
-              print('sdfds');
               Response<AccessRefresh> token =
                   await interfaceOfUser.authLoginPost(
                       data: TokenObtainPair(
                           email: login.email, password: login.password));
-              print(token.statusCode);
 
               if (token.statusCode == 200) {
-                print(token.body!.access);
-                print(token.body!.refresh);
                 Navigator.pushReplacementNamed(context, homePagePath);
 
                 return '';
@@ -151,7 +146,7 @@ class _AuthenticationPageState extends State<AuthenticationPage> {
               return "";
             }
             final snackBar = SnackBar(
-              padding: EdgeInsets.only(left: 20),
+              padding: const EdgeInsets.only(left: 20),
               content: const Text(
                 "نام کاربری یا رمز عبور نادرست وارد شده است.",
                 textAlign: TextAlign.start,
@@ -187,7 +182,7 @@ class _AuthenticationPageState extends State<AuthenticationPage> {
               return "";
             }
             final snackBar = SnackBar(
-              padding: EdgeInsets.only(left: 20),
+              padding: const EdgeInsets.only(left: 20),
               content: const Text(
                 "اطلاعات را به درستی وارد نمایید.",
                 textAlign: TextAlign.start,

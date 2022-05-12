@@ -181,7 +181,7 @@ class _SettingsPageState extends State<SettingsPage> {
               color: Colors.white,
             ),
           ),
-          Icon(
+          const Icon(
             Icons.arrow_forward_ios,
             color: Colors.amber,
           ),
