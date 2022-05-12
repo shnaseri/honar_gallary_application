@@ -99,7 +99,7 @@ class RatingInformation extends StatelessWidget {
             child: const Text(
               'بمرانی',
               style:
-              TextStyle(fontWeight: FontWeight.w900, color: Colors.white),
+                  TextStyle(fontWeight: FontWeight.w900, color: Colors.white),
             ),
           ),
         ),
