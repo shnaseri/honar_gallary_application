@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:honar_gallary/UI/comment/comment_page.dart';
+import 'package:honar_gallary/state_managment/art_piece/art_piece_cubit.dart';
 
 import 'components/art_piece_header.dart';
 import 'components/models.dart';
@@ -51,60 +53,104 @@ class _ArtPiecePageState extends State<ArtPiecePage> {
       ),
     ],
   );
+  late bool startApp;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    startApp = true;
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Container(
-        height: MediaQuery.of(context).size.height,
-        width: MediaQuery.of(context).size.width,
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            colors: [
-              Color.fromRGBO(4, 9, 35, 1),
-              Color.fromRGBO(39, 105, 171, 1),
-            ],
-            begin: FractionalOffset.bottomCenter,
-            end: FractionalOffset.topCenter,
-          ),
-        ),
-        child: SingleChildScrollView(
-          physics: const ClampingScrollPhysics(),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              MovieDetailHeader(testMovie),
-              Padding(
-                padding: const EdgeInsets.all(20.0),
-                child: Storyline(testMovie.storyline),
-              ),
-              PhotoScroller(testMovie.photoUrls),
-              // SizedBox(height: 20.0),
-              // ActorScroller(testMovie.actors),
-              const SizedBox(height: 60.0),
-
-              Padding(
-                padding: const EdgeInsets.only(right: 10, bottom: 50),
-                child: TextButton(
-                  onPressed: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (_) => const CommentPage()));
-                  },
-                  child: const Text("نظرات"),
-                  style: ButtonStyle(foregroundColor:
-                      MaterialStateProperty.resolveWith((states) {
-                    return Colors.white;
-                  }), textStyle: MaterialStateProperty.resolveWith((states) {
-                    return const TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                        fontFamily: 'Sahel',
-                        fontSize: 22);
-                  })),
+    return BlocProvider<ArtPieceCubit>(
+      create: (context) => ArtPieceCubit(),
+      child: Scaffold(
+        body: BlocBuilder<ArtPieceCubit, ArtPieceState>(
+          builder: (context, state) {
+            if (state is ArtPieceInitial && startApp) {
+              startApp = false;
+              BlocProvider.of<ArtPieceCubit>(context).fetchArtPiece();
+            }
+            if (state is ArtPieceLoaded) {
+              return Container(
+                height: MediaQuery.of(context).size.height,
+                width: MediaQuery.of(context).size.width,
+                decoration: const BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [
+                      Color.fromRGBO(4, 9, 35, 1),
+                      Color.fromRGBO(39, 105, 171, 1),
+                    ],
+                    begin: FractionalOffset.bottomCenter,
+                    end: FractionalOffset.topCenter,
+                  ),
                 ),
-              )
-            ],
-          ),
+                child: SingleChildScrollView(
+                  physics: const ClampingScrollPhysics(),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      MovieDetailHeader(testMovie),
+                      Padding(
+                        padding: const EdgeInsets.all(20.0),
+                        child: Storyline(testMovie.storyline),
+                      ),
+                      PhotoScroller(testMovie.photoUrls),
+                      // SizedBox(height: 20.0),
+                      // ActorScroller(testMovie.actors),
+                      const SizedBox(height: 60.0),
+
+                      Padding(
+                        padding: const EdgeInsets.only(right: 10, bottom: 50),
+                        child: TextButton(
+                          onPressed: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (_) => const CommentPage()));
+                          },
+                          child: const Text("نظرات"),
+                          style: ButtonStyle(foregroundColor:
+                              MaterialStateProperty.resolveWith((states) {
+                            return Colors.white;
+                          }), textStyle:
+                              MaterialStateProperty.resolveWith((states) {
+                            return const TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white,
+                                fontFamily: 'Sahel',
+                                fontSize: 22);
+                          })),
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+              );
+            }
+            return Container(
+              height: MediaQuery.of(context).size.height,
+              width: MediaQuery.of(context).size.width,
+              decoration: const BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [
+                    Color.fromRGBO(4, 9, 35, 1),
+                    Color.fromRGBO(39, 105, 171, 1),
+                  ],
+                  begin: FractionalOffset.bottomCenter,
+                  end: FractionalOffset.topCenter,
+                ),
+              ),
+              child: const Center(
+                child: Text(
+                  "لطفا منتظر بمانید...",
+                  style: TextStyle(color: Colors.white),
+                ),
+              ),
+            );
+          },
         ),
       ),
     );

@@ -1,3 +1,3 @@
-import 'package:honar_gallary/generated_code/client_index.dart';
+import 'package:petstore_api/api.dart';
 
-late final Swagger1 interfaceOfUser;
+late ApiClient interfaceOfUser;
