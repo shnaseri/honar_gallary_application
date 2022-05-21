@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
+import 'package:honar_gallary/logic/general_values.dart';
 import 'package:honar_gallary/logic/router.dart';
 import 'package:honar_gallary/logic/router_const.dart';
 import 'package:responsive_framework/responsive_wrapper.dart';
@@ -24,6 +25,10 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // initialize Config GeneralValues
+    ConfigGeneralValues.getInstance();
+    // end initialize Config GeneralValues
+
     return Directionality(
       textDirection: TextDirection.rtl,
       child: MaterialApp(
@@ -60,7 +65,7 @@ class MyApp extends StatelessWidget {
                 ColorScheme.fromSwatch(primarySwatch: Colors.deepPurple)
                     .copyWith(secondary: Colors.black12)),
         onGenerateRoute: router.generateRoute,
-        initialRoute: authPagePath, // initial route to Splash screen
+        initialRoute: splashPagePath, // initial route to Splash screen
       ),
     );
   }

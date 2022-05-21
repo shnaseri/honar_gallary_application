@@ -1,11 +1,11 @@
 import 'package:animated_login/animated_login.dart';
-import 'package:chopper/chopper.dart';
 import 'package:flutter/material.dart';
 import 'package:honar_gallary/const/color_const.dart';
-import 'package:honar_gallary/generated_code/swagger1.swagger.dart';
 import 'package:honar_gallary/logic/consts.dart';
 import 'package:honar_gallary/logic/extenstion_methods.dart';
+import 'package:honar_gallary/logic/general_values.dart';
 import 'package:honar_gallary/logic/router_const.dart';
+import 'package:petstore_api/api.dart';
 
 class AuthenticationPage extends StatefulWidget {
   const AuthenticationPage({Key? key}) : super(key: key);
@@ -110,12 +110,14 @@ class _AuthenticationPageState extends State<AuthenticationPage> {
   String get _descWelcomeBack => 'بزن بریم برای عمق دریای هنر';
 
   String get _matchPassError => 'تاییدیه رمز عبور مطابقت ندارد';
+  late AuthApi authApi;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    interfaceOfUser = Swagger1.create();
+    interfaceOfUser = ApiClient();
+    authApi = AuthApi(interfaceOfUser);
   }
 
   @override
@@ -132,69 +134,66 @@ class _AuthenticationPageState extends State<AuthenticationPage> {
         child: AnimatedLogin(
           onLogin: (login) async {
             try {
-              Response<AccessRefresh> token =
-                  await interfaceOfUser.authLoginPost(
-                      data: TokenObtainPair(
-                          email: login.email, password: login.password));
+              AccessRefresh token = await authApi.authLoginCreate(
+                  TokenObtainPair(
+                      email: login.email, password: login.password));
 
-              if (token.statusCode == 200) {
-                Navigator.pushReplacementNamed(context, homePagePath);
-
-                return '';
-              }
+              Navigator.pushReplacementNamed(context, homePagePath);
+              ConfigGeneralValues.getInstance().putToken(token.access);
+              interfaceOfUser.getAuthentication<ApiKeyAuth>(r'Bearer')
+                ..apiKeyPrefix = 'Bearer'
+                ..apiKey = token.access;
+              return '';
             } catch (e) {
-              return "";
+              final snackBar = SnackBar(
+                padding: const EdgeInsets.only(left: 20),
+                content: const Text(
+                  "نام کاربری یا رمز عبور نادرست وارد شده است.",
+                  textAlign: TextAlign.start,
+                ),
+                backgroundColor: (Colors.black12),
+                action: SnackBarAction(
+                  label: 'dismiss',
+                  onPressed: () {},
+                ),
+              );
+              ScaffoldMessenger.of(context).showSnackBar(snackBar);
+              return "نام کاربری یا رمز عبور نادرست وارد شده است";
             }
-            final snackBar = SnackBar(
-              padding: const EdgeInsets.only(left: 20),
-              content: const Text(
-                "نام کاربری یا رمز عبور نادرست وارد شده است.",
-                textAlign: TextAlign.start,
-              ),
-              backgroundColor: (Colors.black12),
-              action: SnackBarAction(
-                label: 'dismiss',
-                onPressed: () {},
-              ),
-            );
-            ScaffoldMessenger.of(context).showSnackBar(snackBar);
-            return "نام کاربری یا رمز عبور نادرست وارد شده است";
           },
           onSignup: (login) async {
             try {
-              Response<UserId> userId = await interfaceOfUser.authRegisterPost(
-                  data: Register(
-                      email: login.email,
-                      password: login.password,
-                      firstName: "s",
-                      lastName: login.name));
-              if (userId.isSuccessful) {
-                Response<AccessRefresh> token =
-                    await interfaceOfUser.authLoginPost(
-                        data: TokenObtainPair(
-                            email: login.email, password: login.password));
-                if (token.isSuccessful) {
-                  Navigator.pushReplacementNamed(context, homePagePath);
-                  return "";
-                }
-              }
-            } catch (e) {
+              UserId userId = await authApi.authRegisterCreate(Register(
+                  email: login.email,
+                  password: login.password,
+                  firstName: "s",
+                  lastName: login.name));
+              AccessRefresh token = await authApi.authLoginCreate(
+                  TokenObtainPair(
+                      email: login.email, password: login.password));
+              Navigator.pushReplacementNamed(context, homePagePath);
+              ConfigGeneralValues.getInstance().putToken(token.access);
+              interfaceOfUser.getAuthentication<ApiKeyAuth>(r'Bearer')
+                ..apiKeyPrefix = 'Bearer'
+                ..apiKey = token.access;
+
               return "";
+            } catch (e) {
+              final snackBar = SnackBar(
+                padding: const EdgeInsets.only(left: 20),
+                content: const Text(
+                  "اطلاعات را به درستی وارد نمایید.",
+                  textAlign: TextAlign.start,
+                ),
+                backgroundColor: (Colors.black12),
+                action: SnackBarAction(
+                  label: 'dismiss',
+                  onPressed: () {},
+                ),
+              );
+              ScaffoldMessenger.of(context).showSnackBar(snackBar);
+              return "اطلاعات را به درستی وارد نمایید.";
             }
-            final snackBar = SnackBar(
-              padding: const EdgeInsets.only(left: 20),
-              content: const Text(
-                "اطلاعات را به درستی وارد نمایید.",
-                textAlign: TextAlign.start,
-              ),
-              backgroundColor: (Colors.black12),
-              action: SnackBarAction(
-                label: 'dismiss',
-                onPressed: () {},
-              ),
-            );
-            ScaffoldMessenger.of(context).showSnackBar(snackBar);
-            return "اطلاعات را به درستی وارد نمایید.";
           },
           onForgotPassword: (login) async {
             return "";

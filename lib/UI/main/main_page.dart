@@ -17,6 +17,7 @@ class MainPageState extends State<MainPage> {
     // TODO: implement initState
     super.initState();
     _controller = PersistentTabController(initialIndex: 0);
+    _controller.jumpToTab(0);
   }
 
   @override

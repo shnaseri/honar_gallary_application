@@ -9,7 +9,7 @@ info:
   license:
     name: BSD License
   version: v1
-host: localhost:8000
+host: 188.121.110.151:8000
 schemes:
   - http
 basePath: "/api"
