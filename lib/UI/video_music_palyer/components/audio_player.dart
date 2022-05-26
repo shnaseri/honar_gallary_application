@@ -1,8 +1,6 @@
-import 'package:audio_service/audio_service.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 
-import '../../Art_piece/components/arc_banner_image.dart';
 import 'arc_banner.dart';
 
 AudioPlayer audioPlayer = AudioPlayer();
@@ -12,6 +10,18 @@ playonline() async {
   ap.clearAll();
   await audioPlayer.play(
       'https://raw.githubusercontent.com/sparsh308/sample_musics/master/Alan%20Walker%20-%20Faded.mp3');
+}
+
+pause() async {
+  await audioPlayer.pause();
+}
+
+stop() async {
+  await audioPlayer.stop();
+}
+
+resume() async {
+  await audioPlayer.resume();
 }
 
 class AudioPlayerPage extends StatefulWidget {
@@ -27,7 +37,6 @@ class AudioPlayerPage extends StatefulWidget {
 
 class AudioPlayerPageState extends State<AudioPlayerPage> {
   late bool playAudio;
-
   @override
   void initState() {
     playonline();
@@ -35,14 +44,12 @@ class AudioPlayerPageState extends State<AudioPlayerPage> {
     playAudio = true;
     super.initState();
   }
-
   @override
   Future<void> dispose() async {
     // TODO: implement dispose
     await stop();
     super.dispose();
   }
-
   @override
   Widget build(BuildContext context) {
     return Padding(

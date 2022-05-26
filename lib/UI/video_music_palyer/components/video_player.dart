@@ -4,7 +4,6 @@ import 'package:video_player/video_player.dart';
 
 class MoviePlayerPage extends StatefulWidget {
   final String content;
-
   const MoviePlayerPage({Key? key, required this.content}) : super(key: key);
 
   @override
@@ -13,7 +12,6 @@ class MoviePlayerPage extends StatefulWidget {
 
 class _MoviePlayerPageState extends State<MoviePlayerPage> {
   late FlickManager flickManager;
-
   @override
   void initState() {
     super.initState();

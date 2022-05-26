@@ -4,7 +4,6 @@ import 'package:nb_utils/nb_utils.dart';
 
 class ImageShowPage extends StatefulWidget {
   final String content;
-
   const ImageShowPage({Key? key, required this.content}) : super(key: key);
 
   @override

@@ -7,7 +7,6 @@ import 'components/video_player.dart';
 class PlayerContentPage extends StatefulWidget {
   final String type;
   final String content;
-
   const PlayerContentPage({Key? key, required this.type, required this.content})
       : super(key: key);
 
