@@ -171,7 +171,7 @@ class _AuthenticationPageState extends State<AuthenticationPage> {
               AccessRefresh token = await authApi.authLoginCreate(
                   TokenObtainPair(
                       email: login.email, password: login.password));
-              Navigator.pushReplacementNamed(context, homePagePath);
+              Navigator.pushReplacementNamed(context, otpPagePath);
               ConfigGeneralValues.getInstance().putToken(token.access);
               interfaceOfUser.getAuthentication<ApiKeyAuth>(r'Bearer')
                 ..apiKeyPrefix = 'Bearer'
