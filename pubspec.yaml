@@ -55,6 +55,7 @@ dependencies:
   intl: ^0.17.0
   petstore_api:
     path: ./api/petstore_api
+  shamsi_date: ^1.0.1
 
 
 dev_dependencies:
