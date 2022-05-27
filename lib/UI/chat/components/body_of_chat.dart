@@ -37,7 +37,7 @@ class _BodyOfChatPageState extends State<BodyOfChatPage> {
           WidgetsBinding.instance!.addPostFrameCallback((_) => _endOfScroll());
           return ListView.builder(
             controller: controller,
-            padding: const EdgeInsets.only(bottom: 50),
+            padding: const EdgeInsets.only(bottom: 50, top: 10),
             itemBuilder: (context, index) {
               Message message = state.messages[index];
               var date = Gregorian(message.createdAt.year,

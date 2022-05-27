@@ -26,7 +26,7 @@ class ChatRepository {
     try {
       // String otpToken = GeneralValues.generalValues.token;
       // await chatNetworkService.pushMessageToServer(otpToken,user.token,messageText);
-      Message message = await getNewMessageAdd(user, messageText, true);
+      Message message = await getNewMessageAdd(user, messageText, false);
       return message;
     } catch (error) {
       rethrow;
