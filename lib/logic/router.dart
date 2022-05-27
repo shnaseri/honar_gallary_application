@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:honar_gallary/UI/Authentication/otp/otp_page.dart';
 import 'package:honar_gallary/logic/router_const.dart';
 
 import '../UI/Authentication/authentication_page.dart';
@@ -21,6 +22,9 @@ class AppRouter {
         return MaterialPageRoute(builder: (context) => const MainPage());
       case splashPagePath:
         return MaterialPageRoute(builder: (context) => const SplashPage());
+      case otpPagePath:
+        return MaterialPageRoute(builder: (context) => const OTPPage());
+
       default:
         return null;
     }
