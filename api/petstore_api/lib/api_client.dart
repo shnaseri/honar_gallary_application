@@ -11,7 +11,7 @@
 part of openapi.api;
 
 class ApiClient {
-  ApiClient({this.basePath = 'http://127.0.0.1:8000/api'}) {
+  ApiClient({this.basePath = 'http://188.121.110.151:8000/api'}) {
     // Setup authentications (key: authentication name, value: authentication).
     _authentications[r'Bearer'] = ApiKeyAuth('header', 'Authorization');
   }

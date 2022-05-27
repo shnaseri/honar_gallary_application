@@ -145,6 +145,7 @@ class _AuthenticationPageState extends State<AuthenticationPage> {
                 ..apiKey = token.access;
               return '';
             } catch (e) {
+              print(e);
               final snackBar = SnackBar(
                 padding: const EdgeInsets.only(left: 20),
                 content: const Text(

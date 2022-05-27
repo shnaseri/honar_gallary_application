@@ -1,0 +1,3 @@
+class ChatNetworkService {
+  ChatNetworkService();
+}

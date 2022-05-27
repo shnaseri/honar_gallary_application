@@ -56,6 +56,7 @@ dependencies:
   petstore_api:
     path: ./api/petstore_api
   shamsi_date: ^1.0.1
+  flutter_chat_bubble: ^2.0.0
 
 
 dev_dependencies:

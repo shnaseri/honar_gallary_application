@@ -40,7 +40,9 @@ class MessageTile extends StatelessWidget {
                 child: Text(
                   message.content ?? " ",
                   style: const TextStyle(
-                      fontSize: 15, fontWeight: FontWeight.w700),
+                      color: Colors.white,
+                      fontSize: 15,
+                      fontWeight: FontWeight.w700),
                 ),
               ),
             ),

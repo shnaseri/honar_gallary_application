@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:honar_gallary/data_managment/chat_repository.dart';
 import 'package:meta/meta.dart';
 import 'package:petstore_api/api.dart';
 
@@ -6,8 +7,11 @@ part 'chat_state.dart';
 
 class ChatCubit extends Cubit<ChatState> {
   User contact;
+  late ChatRepository chatRepository;
 
-  ChatCubit({required this.contact}) : super(ChatInitial());
+  ChatCubit({required this.contact}) : super(ChatInitial()) {
+    chatRepository = ChatRepository();
+  }
 
   Future<void> fetchConnect() async {
     try {
@@ -24,14 +28,17 @@ class ChatCubit extends Cubit<ChatState> {
     // chatRepository.disConnectMQTT();
   }
 
-  Future<void> publishMessage(User user, String message) async {
+  Future<void> publishMessage(
+      User user, String message, List<Message> oldMessages) async {
     try {
       // emit(ChatSendMessage());
-      // await chatRepository.pushMessage(user, message);
+      Message newMessage = await chatRepository.pushMessage(user, message);
       // await chatRepository.subscribeMessage(user);
 
       // List<Message> messages = await chatRepository.getMessages(user.id);
-      // emit(ChatConnectToServer(messages));
+      List<Message> messages = oldMessages.toList();
+      messages.add(newMessage);
+      emit(ChatConnectToServer(messages));
     } catch (error) {
       emit(ChatErrorState());
     }

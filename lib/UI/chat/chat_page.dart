@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:honar_gallary/state_managment/chat/chat_cubit.dart';
 import 'package:petstore_api/api.dart';
 
+import '../utils/appbar/appbar_title_profile.dart';
 import 'components/body_of_chat.dart';
 import 'components/text_field_component.dart';
 
@@ -31,45 +32,48 @@ class _ChatPageState extends State<ChatPage> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<ChatCubit>(
-      create: (context) => ChatCubit(contact: widget.contact),
-      child: WillPopScope(
-        onWillPop: onWillScope,
-        child: Scaffold(
-            // appBar: AppBarTitleProfile(context, widget.index,
-            //     title: widget.contact.name, functionBack: onWillScope),
-            body: Container(
-          decoration: const BoxDecoration(
-            gradient: LinearGradient(
-              colors: [
-                Color.fromRGBO(4, 9, 35, 1),
-                Color.fromRGBO(39, 105, 171, 1),
-              ],
-              begin: FractionalOffset.bottomCenter,
-              end: FractionalOffset.topCenter,
-            ),
-          ),
-          child: BlocBuilder<ChatCubit, ChatState>(
-            builder: (context, state) {
-              chatContext = context;
-              if (state is ChatErrorState) {
-                // toast(hasErrorChatPage);
-                BlocProvider.of<ChatCubit>(context).emit(ChatInitial());
-              }
-              if (state is ChatInitial) {
-                BlocProvider.of<ChatCubit>(context).fetchConnect();
-              }
-              return Stack(
-                children: [
-                  const BodyOfChatPage(),
-                  TextFieldForChatPage(
-                    contact: widget.contact,
-                  )
-                ],
-              );
-            },
-          ),
-        )),
+    return Directionality(
+      textDirection: TextDirection.ltr,
+      child: BlocProvider<ChatCubit>(
+        create: (context) => ChatCubit(contact: widget.contact),
+        child: WillPopScope(
+          onWillPop: onWillScope,
+          child: Scaffold(
+              appBar: AppBarTitleProfile(context, widget.index,
+                  title: widget.contact.fullName, functionBack: onWillScope),
+              body: Container(
+                decoration: const BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [
+                      Color.fromRGBO(4, 9, 35, 1),
+                      Color.fromRGBO(39, 105, 171, 1),
+                    ],
+                    begin: FractionalOffset.bottomCenter,
+                    end: FractionalOffset.topCenter,
+                  ),
+                ),
+                child: BlocBuilder<ChatCubit, ChatState>(
+                  builder: (context, state) {
+                    chatContext = context;
+                    if (state is ChatErrorState) {
+                      // toast(hasErrorChatPage);
+                      BlocProvider.of<ChatCubit>(context).emit(ChatInitial());
+                    }
+                    if (state is ChatInitial) {
+                      BlocProvider.of<ChatCubit>(context).fetchConnect();
+                    }
+                    return Stack(
+                      children: [
+                        const BodyOfChatPage(),
+                        TextFieldForChatPage(
+                          contact: widget.contact,
+                        )
+                      ],
+                    );
+                  },
+                ),
+              )),
+        ),
       ),
     );
   }
