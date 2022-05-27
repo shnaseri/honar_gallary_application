@@ -1,15 +1,15 @@
-import 'package:behtrino_test/UI/chat/chat_page.dart';
-import 'package:behtrino_test/constant/string_repository.dart';
-import 'package:behtrino_test/models/contact.dart';
-import 'package:behtrino_test/state_managment/chat/chat_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nb_utils/src/extensions/context_extensions.dart';
+import 'package:petstore_api/api.dart';
+
+import '../../../state_managment/chat/chat_cubit.dart';
+import '../chat_page.dart';
 
 class TextFieldForChatPage extends StatelessWidget {
-  final Contact contact;
+  final User contact;
 
-  TextFieldForChatPage({
+  const TextFieldForChatPage({
     Key? key,
     required this.contact,
   }) : super(key: key);
@@ -54,7 +54,7 @@ class TextFieldForChatPage extends StatelessWidget {
                       // textAlign: TextAlign.end,
                       textDirection: TextDirection.rtl,
                       decoration: const InputDecoration(
-                          hintText: hintTextTextField,
+                          hintText: "وارد کنید...",
                           hintTextDirection: TextDirection.rtl,
                           contentPadding: EdgeInsets.all(10),
                           border: InputBorder.none),

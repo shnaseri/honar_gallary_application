@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
 class BlankPageComponent extends StatelessWidget {
-  String noMessageChatPage = "هیچ پیامی هنوز ارسال نشده یه پیام بهش بده";
+  final String noMessageChatPage = "هیچ پیامی هنوز ارسال نشده یه پیام بهش بده";
 
-  BlankPageComponent({
+  const BlankPageComponent({
     Key? key,
   }) : super(key: key);
 

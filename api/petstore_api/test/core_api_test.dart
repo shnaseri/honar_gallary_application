@@ -1,7 +1,7 @@
 //
 // AUTO-GENERATED FILE, DO NOT MODIFY!
 //
-// @dart = 2.8
+// @dart=2.0
 
 // ignore_for_file: unused_element, unused_import
 // ignore_for_file: always_put_required_named_parameters_first
@@ -16,6 +16,11 @@ void main() {
   final instance = CoreApi();
 
   group('tests for CoreApi', () {
+    //Future<InlineResponse2003> coreContentUpdate(MultipartFile file) async
+    test('test coreContentUpdate', () async {
+      // TODO
+    });
+
     //Future<ImageSerializer> coreImageUploadCreate(ImageSerializer data) async
     test('test coreImageUploadCreate', () async {
       // TODO

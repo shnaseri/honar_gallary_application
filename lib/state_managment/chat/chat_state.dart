@@ -4,7 +4,7 @@ part of 'chat_cubit.dart';
 abstract class ChatState {
   final List<Message> messages;
 
-  ChatState({required this.messages});
+  const ChatState({required this.messages});
 }
 
 class ChatInitial extends ChatState {
@@ -12,11 +12,11 @@ class ChatInitial extends ChatState {
 }
 
 class ChatConnectToServer extends ChatState {
-  ChatConnectToServer(List<Message> messages) : super(messages: messages);
+  const ChatConnectToServer(List<Message> messages) : super(messages: messages);
 }
 
 class ChatSendMessage extends ChatState {
-  ChatSendMessage(List<Message> messages) : super(messages: messages);
+  const ChatSendMessage(List<Message> messages) : super(messages: messages);
 }
 
 class ChatErrorState extends ChatState {

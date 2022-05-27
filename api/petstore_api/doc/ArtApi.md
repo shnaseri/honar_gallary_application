@@ -6,7 +6,7 @@
 import 'package:petstore_api/api.dart';
 ```
 
-All URIs are relative to *http://188.121.110.151:8000/api*
+All URIs are relative to *http://127.0.0.1:8000/api*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -19,12 +19,13 @@ PUT** /art/art-piece/{id}/content/ |
 
 # **artArtPieceContentUpdate**
 
-> InlineResponse2001 artArtPieceContentUpdate(id, file)
+> InlineResponse2001 artArtPieceContentUpdate(id, data)
 
 ### Example
 
 ```dart
 import 'package:petstore_api/api.dart';
+
 // TODO Configure API key authorization: Bearer
 //defaultApiClient.getAuthentication<ApiKeyAuth>('Bearer').apiKey = 'YOUR_API_KEY';
 // uncomment below to setup prefix (e.g. Bearer) for API key, if needed
@@ -32,13 +33,15 @@ import 'package:petstore_api/api.dart';
 
 final api_instance = ArtApi();
 final id = id_example; // String | 
-final file = BINARY_DATA_HERE; // MultipartFile | 
+final data = ArtPieceContent(); // ArtPieceContent | 
 
 try {
-    final result = api_instance.artArtPieceContentUpdate(id, file);
-    print(result);
-} catch (e) {
-    print('Exception when calling ArtApi->artArtPieceContentUpdate: $e\n');
+final result = api_instance.artArtPieceContentUpdate(id, data);
+print(result);
+} catch
+(
+e) {
+print('Exception when calling ArtApi->artArtPieceContentUpdate: $e\n');
 }
 ```
 
@@ -47,7 +50,7 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 **id** | **String**|  |
-**file** | **MultipartFile**|  |
+**data** | [**ArtPieceContent**](ArtPieceContent.md)|  |
 
 ### Return type
 
@@ -59,17 +62,15 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
-- **Content-Type**: multipart/form-data
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **artArtPieceCoverCreate**
-
 > InlineResponse200 artArtPieceCoverCreate(data)
 
 ### Example
-
 ```dart
 import 'package:petstore_api/api.dart';
 // TODO Configure API key authorization: Bearer
@@ -110,11 +111,9 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **artArtPieceLikeUpdate**
-
 > InlineResponse2002 artArtPieceLikeUpdate(id)
 
 ### Example
-
 ```dart
 import 'package:petstore_api/api.dart';
 // TODO Configure API key authorization: Bearer
@@ -155,11 +154,9 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **artArtPieceRead**
-
 > ArtPiece artArtPieceRead(id)
 
 ### Example
-
 ```dart
 import 'package:petstore_api/api.dart';
 // TODO Configure API key authorization: Bearer
@@ -200,11 +197,9 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **artArtPieceUpdate**
-
 > InlineResponse2001 artArtPieceUpdate(id, data)
 
 ### Example
-
 ```dart
 import 'package:petstore_api/api.dart';
 // TODO Configure API key authorization: Bearer

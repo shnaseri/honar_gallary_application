@@ -6,7 +6,7 @@
 import 'package:petstore_api/api.dart';
 ```
 
-All URIs are relative to *http://188.121.110.151:8000/api*
+All URIs are relative to *http://127.0.0.1:8000/api*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -33,9 +33,11 @@ final data = TokenObtainPair(); // TokenObtainPair |
 
 try {
     final result = api_instance.authLoginCreate(data);
-    print(result);
-} catch (e) {
-    print('Exception when calling AuthApi->authLoginCreate: $e\n');
+print(result);
+} catch
+(
+e) {
+print('Exception when calling AuthApi->authLoginCreate: $e\n');
 }
 ```
 
@@ -61,7 +63,6 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **authLogoutCreate**
-
 > TokenRefresh authLogoutCreate(data)
 
 
@@ -70,7 +71,6 @@ Takes a refresh type JSON web token and returns an access type JSON web token if
 is valid.
 
 ### Example
-
 ```dart
 import 'package:petstore_api/api.dart';
 // TODO Configure API key authorization: Bearer
@@ -111,11 +111,9 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **authRegisterCreate**
-
 > UserId authRegisterCreate(data)
 
 ### Example
-
 ```dart
 import 'package:petstore_api/api.dart';
 // TODO Configure API key authorization: Bearer
@@ -156,7 +154,6 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **authVerifyCreate**
-
 > TokenVerify authVerifyCreate(data)
 
 
@@ -165,7 +162,6 @@ Takes a token and indicates if it is valid. This view provides no information ab
 fitness for a particular use.
 
 ### Example
-
 ```dart
 import 'package:petstore_api/api.dart';
 // TODO Configure API key authorization: Bearer

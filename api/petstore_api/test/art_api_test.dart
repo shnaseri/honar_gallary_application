@@ -1,7 +1,7 @@
 //
 // AUTO-GENERATED FILE, DO NOT MODIFY!
 //
-// @dart = 2.8
+// @dart=2.0
 
 // ignore_for_file: unused_element, unused_import
 // ignore_for_file: always_put_required_named_parameters_first
@@ -16,7 +16,7 @@ void main() {
   final instance = ArtApi();
 
   group('tests for ArtApi', () {
-    //Future<InlineResponse2001> artArtPieceContentUpdate(String id, MultipartFile file) async
+    //Future<InlineResponse2001> artArtPieceContentUpdate(String id, ArtPieceContent data) async
     test('test artArtPieceContentUpdate', () async {
       // TODO
     });

@@ -9,7 +9,7 @@ info:
   license:
     name: BSD License
   version: v1
-host: 188.121.110.151:8000
+host: 127.0.0.1:8000
 schemes:
   - http
 basePath: "/api"
@@ -117,10 +117,11 @@ paths:
       operationId: art_art-piece_content_update
       description: ''
       parameters:
-        - name: file
-          in: formData
+        - name: data
+          in: body
           required: true
-          type: file
+          schema:
+            "$ref": "#/definitions/ArtPieceContent"
       responses:
         '200':
           description: ''
@@ -150,8 +151,6 @@ paths:
               error:
                 type: string
                 default: invalid data
-      consumes:
-        - multipart/form-data
       tags:
         - art
     parameters:
@@ -286,6 +285,92 @@ paths:
             "$ref": "#/definitions/TokenVerify"
       tags:
         - auth
+    parameters: [ ]
+  "/chat/get-all-chat-messages/":
+    get:
+      operationId: chat_get-all-chat-messages_list
+      description: ''
+      parameters:
+        - name: chat_code
+          in: query
+          required: true
+          type: string
+          maxLength: 200
+          minLength: 1
+      responses:
+        '200':
+          description: ''
+          schema:
+            type: array
+            items:
+              "$ref": "#/definitions/Message"
+        '403':
+          description: ''
+          schema:
+            type: object
+            properties: { }
+        '404':
+          description: ''
+          schema:
+            type: object
+            properties:
+              detail:
+                type: string
+                readOnly: true
+                default: Not Found.
+      tags:
+        - chat
+    parameters: [ ]
+  "/chat/get-all-chats/":
+    get:
+      operationId: chat_get-all-chats_list
+      description: ''
+      parameters: [ ]
+      responses:
+        '200':
+          description: ''
+          schema:
+            type: array
+            items:
+              "$ref": "#/definitions/Chat"
+      tags:
+        - chat
+    parameters: [ ]
+  "/core/content/":
+    put:
+      operationId: core_content_update
+      description: ''
+      parameters:
+        - name: file
+          in: formData
+          required: true
+          type: file
+      responses:
+        '200':
+          description: ''
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                default: true
+              content_id:
+                type: integer
+        '406':
+          description: ''
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                default: false
+              error:
+                type: string
+                default: invalid data
+      consumes:
+        - multipart/form-data
+      tags:
+        - core
     parameters: [ ]
   "/core/image/upload/":
     get:
@@ -484,6 +569,14 @@ definitions:
         maxLength: 1000
         minLength: 1
         x-nullable: true
+  ArtPieceContent:
+    required:
+      - content_id
+    type: object
+    properties:
+      content_id:
+        title: Content id
+        type: integer
   TokenObtainPair:
     required:
       - email
@@ -571,3 +664,64 @@ definitions:
         title: Token
         type: string
         minLength: 1
+  Message:
+    type: object
+    properties:
+      id:
+        title: ID
+        type: integer
+        readOnly: true
+      type:
+        title: Type
+        type: string
+        readOnly: true
+      is_user_sender:
+        title: Is user sender
+        type: string
+        readOnly: true
+      content:
+        title: Content
+        type: string
+        readOnly: true
+      updated_at:
+        title: Updated at
+        type: string
+        format: date-time
+        readOnly: true
+      created_at:
+        title: Created at
+        type: string
+        format: date-time
+        readOnly: true
+  Chat:
+    required:
+      - chat_code
+    type: object
+    properties:
+      id:
+        title: ID
+        type: integer
+        readOnly: true
+      chat_code:
+        title: Chat code
+        type: string
+        maxLength: 200
+        minLength: 1
+      user:
+        title: User
+        type: string
+        readOnly: true
+      last_message:
+        title: Last message
+        type: string
+        readOnly: true
+      updated_at:
+        title: Updated at
+        type: string
+        format: date-time
+        readOnly: true
+      created_at:
+        title: Created at
+        type: string
+        format: date-time
+        readOnly: true

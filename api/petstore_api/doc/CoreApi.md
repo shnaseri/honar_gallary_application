@@ -6,10 +6,11 @@
 import 'package:petstore_api/api.dart';
 ```
 
-All URIs are relative to *http://188.121.110.151:8000/api*
+All URIs are relative to *http://127.0.0.1:8000/api*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
+[**coreContentUpdate**](CoreApi.md#corecontentupdate) | **PUT** /core/content/ |
 [**coreImageUploadCreate**](CoreApi.md#coreimageuploadcreate) | **POST** /core/image/upload/ |
 [**coreImageUploadDelete**](CoreApi.md#coreimageuploaddelete) | **
 DELETE** /core/image/upload/{id}/ |
@@ -19,6 +20,54 @@ PATCH** /core/image/upload/{id}/ |
 [**coreImageUploadRead**](CoreApi.md#coreimageuploadread) | **GET** /core/image/upload/{id}/ |
 [**coreImageUploadUpdate**](CoreApi.md#coreimageuploadupdate) | **PUT** /core/image/upload/{id}/ |
 
+# **coreContentUpdate**
+
+> InlineResponse2003 coreContentUpdate(file)
+
+### Example
+
+```dart
+import 'package:petstore_api/api.dart';
+
+// TODO Configure API key authorization: Bearer
+//defaultApiClient.getAuthentication<ApiKeyAuth>('Bearer').apiKey = 'YOUR_API_KEY';
+// uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+//defaultApiClient.getAuthentication<ApiKeyAuth>('Bearer').apiKeyPrefix = 'Bearer';
+
+final api_instance = CoreApi();
+final file = BINARY_DATA_HERE; // MultipartFile | 
+
+try {
+final result = api_instance.coreContentUpdate(file);
+print(result);
+} catch
+(
+e) {
+print('Exception when calling CoreApi->coreContentUpdate: $e\n');
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**file** | **MultipartFile**|  |
+
+### Return type
+
+[**InlineResponse2003**](InlineResponse2003.md)
+
+### Authorization
+
+[Bearer](../README.md#Bearer)
+
+### HTTP request headers
+
+- **Content-Type**: multipart/form-data
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
 # **coreImageUploadCreate**
 
 > ImageSerializer coreImageUploadCreate(data)
@@ -27,6 +76,7 @@ PATCH** /core/image/upload/{id}/ |
 
 ```dart
 import 'package:petstore_api/api.dart';
+
 // TODO Configure API key authorization: Bearer
 //defaultApiClient.getAuthentication<ApiKeyAuth>('Bearer').apiKey = 'YOUR_API_KEY';
 // uncomment below to setup prefix (e.g. Bearer) for API key, if needed
@@ -37,9 +87,11 @@ final data = ImageSerializer(); // ImageSerializer |
 
 try {
     final result = api_instance.coreImageUploadCreate(data);
-    print(result);
-} catch (e) {
-    print('Exception when calling CoreApi->coreImageUploadCreate: $e\n');
+print(result);
+} catch
+(
+e) {
+print('Exception when calling CoreApi->coreImageUploadCreate: $e\n');
 }
 ```
 
@@ -65,11 +117,9 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **coreImageUploadDelete**
-
 > coreImageUploadDelete(id)
 
 ### Example
-
 ```dart
 import 'package:petstore_api/api.dart';
 // TODO Configure API key authorization: Bearer
@@ -109,7 +159,6 @@ void (empty response body)
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **coreImageUploadList**
-
 > List<ImageSerializer> coreImageUploadList()
 
 
@@ -117,7 +166,6 @@ void (empty response body)
 Examines request and allows certain fields to be expanded within the list view.
 
 ### Example
-
 ```dart
 import 'package:petstore_api/api.dart';
 // TODO Configure API key authorization: Bearer
@@ -136,7 +184,6 @@ try {
 ```
 
 ### Parameters
-
 This endpoint does not need any parameter.
 
 ### Return type
@@ -155,11 +202,9 @@ This endpoint does not need any parameter.
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **coreImageUploadPartialUpdate**
-
 > ImageSerializer coreImageUploadPartialUpdate(id, data)
 
 ### Example
-
 ```dart
 import 'package:petstore_api/api.dart';
 // TODO Configure API key authorization: Bearer
@@ -202,11 +247,9 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **coreImageUploadRead**
-
 > ImageSerializer coreImageUploadRead(id)
 
 ### Example
-
 ```dart
 import 'package:petstore_api/api.dart';
 // TODO Configure API key authorization: Bearer
@@ -247,11 +290,9 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **coreImageUploadUpdate**
-
 > ImageSerializer coreImageUploadUpdate(id, data)
 
 ### Example
-
 ```dart
 import 'package:petstore_api/api.dart';
 // TODO Configure API key authorization: Bearer

@@ -1,8 +1,9 @@
-import 'package:behtrino_test/constant/color_repository.dart';
-import 'package:behtrino_test/models/message.dart';
-import 'package:behtrino_test/state_managment/chat/chat_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:honar_gallary/const/color_const.dart';
+import 'package:petstore_api/api.dart';
+
+import '../../../state_managment/chat/chat_cubit.dart';
 
 class MessageTile extends StatelessWidget {
   const MessageTile({
@@ -26,18 +27,18 @@ class MessageTile extends StatelessWidget {
             padding:
                 const EdgeInsets.only(left: 14, right: 14, top: 10, bottom: 10),
             child: Align(
-              alignment: (!message.ownMessage
+              alignment: (!message.isUserSender
                   ? Alignment.topRight
                   : Alignment.topLeft),
               child: Container(
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(8),
-                    color: (!message.ownMessage
-                        ? receiverColorContainer
-                        : senderColorContainer)),
+                    color: (!(message.isUserSender)
+                        ? ColorPallet.colorPalletNightFog
+                        : ColorPallet.colorPalletPurpleRain)),
                 padding: const EdgeInsets.all(16),
                 child: Text(
-                  message.message,
+                  message.content ?? " ",
                   style: const TextStyle(
                       fontSize: 15, fontWeight: FontWeight.w700),
                 ),

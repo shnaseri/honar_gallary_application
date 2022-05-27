@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nb_utils/nb_utils.dart';
+import 'package:petstore_api/api.dart';
 import 'package:shamsi_date/shamsi_date.dart';
 
+import '../../../state_managment/chat/chat_cubit.dart';
 import 'blank_component.dart';
+import 'message_tile.dart';
 
 class BodyOfChatPage extends StatefulWidget {
   const BodyOfChatPage({Key? key}) : super(key: key);
@@ -29,7 +32,7 @@ class _BodyOfChatPageState extends State<BodyOfChatPage> {
         lastDate = "";
         if (state is ChatConnectToServer) {
           if (state.messages.isEmpty) {
-            return const BlankPageComponnet().paddingBottom(100);
+            return BlankPageComponent().paddingBottom(100);
           }
           WidgetsBinding.instance!.addPostFrameCallback((_) => _endOfScroll());
           return ListView.builder(
@@ -37,8 +40,8 @@ class _BodyOfChatPageState extends State<BodyOfChatPage> {
             padding: const EdgeInsets.only(bottom: 50),
             itemBuilder: (context, index) {
               Message message = state.messages[index];
-              var date = Gregorian(message.dateTime.year,
-                  message.dateTime.month, message.dateTime.day);
+              var date = Gregorian(message.createdAt.year,
+                  message.createdAt.month, message.createdAt.day);
               var dateFormatter = date.toJalali().formatter;
               String dateString = "${dateFormatter.d} ${dateFormatter.mN}";
               bool showDate = lastDate != dateString;
