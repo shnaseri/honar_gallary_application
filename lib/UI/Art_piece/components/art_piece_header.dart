@@ -62,8 +62,8 @@ class MovieDetailHeader extends StatelessWidget {
                       context,
                       MaterialPageRoute(
                           builder: (context) => const PlayerContentPage(
-                                type: "music",
-                                content: "",
+                                type: "picture",
+                                content: "https://picsum.photos/id/1/200/300",
                               )));
                 },
                 child: Poster(

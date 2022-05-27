@@ -29,6 +29,8 @@ class _ImageShowPageState extends State<ImageShowPage> {
           },
           placeholder: (context, url) {
             return Container(
+              height: context.height() * 0.3,
+              width: context.width(),
               decoration: const BoxDecoration(color: Colors.grey),
             );
           }),

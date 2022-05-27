@@ -12,7 +12,7 @@ class ArcBannerImageOnline extends StatelessWidget {
     var screenWidth = MediaQuery.of(context).size.width;
 
     return Container(
-      height: MediaQuery.of(context).size.height * 0.25,
+      height: MediaQuery.of(context).size.height * 0.35,
       child: ClipPath(
           clipper: ArcClipper(),
           child: CachedNetworkImage(

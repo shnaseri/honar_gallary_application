@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'components/audio_player.dart';
@@ -7,6 +8,7 @@ import 'components/video_player.dart';
 class PlayerContentPage extends StatefulWidget {
   final String type;
   final String content;
+
   const PlayerContentPage({Key? key, required this.type, required this.content})
       : super(key: key);
 
@@ -41,9 +43,12 @@ class _PlayerContentPageState extends State<PlayerContentPage> {
   }
 
   Widget playerContentSelector() {
-    if (widget.type == "moviee") {
-      return MoviePlayerPage(
-        content: widget.content,
+    if (widget.type == "movie") {
+      return Directionality(
+        textDirection: TextDirection.ltr,
+        child: MoviePlayerPage(
+          content: widget.content,
+        ),
       );
     }
     if (widget.type == "music") {
