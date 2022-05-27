@@ -1,7 +1,7 @@
 //
 // AUTO-GENERATED FILE, DO NOT MODIFY!
 //
-// @dart = 2.8
+// @dart=2.0
 
 // ignore_for_file: unused_element, unused_import
 // ignore_for_file: always_put_required_named_parameters_first
@@ -20,42 +20,31 @@ class ArtApi {
   ///
   /// * [String] id (required):
   ///
-  /// * [MultipartFile] file (required):
+  /// * [ArtPieceContent] data (required):
   Future<Response> artArtPieceContentUpdateWithHttpInfo(
     String id,
-    MultipartFile file,
+    ArtPieceContent data,
   ) async {
     // Verify required params are set.
     if (id == null) {
       throw ApiException(HttpStatus.badRequest, 'Missing required param: id');
     }
-    if (file == null) {
-      throw ApiException(HttpStatus.badRequest, 'Missing required param: file');
+    if (data == null) {
+      throw ApiException(HttpStatus.badRequest, 'Missing required param: data');
     }
 
     // ignore: prefer_const_declarations
     final path = r'/art/art-piece/{id}/content/'.replaceAll('{id}', id);
 
     // ignore: prefer_final_locals
-    Object postBody;
+    Object postBody = data;
 
     final queryParams = <QueryParam>[];
     final headerParams = <String, String>{};
     final formParams = <String, String>{};
 
     const authNames = <String>['Bearer'];
-    const contentTypes = <String>['multipart/form-data'];
-
-    bool hasFields = false;
-    final mp = MultipartRequest('PUT', Uri.parse(path));
-    if (file != null) {
-      hasFields = true;
-      mp.fields[r'file'] = file.field;
-      mp.files.add(file);
-    }
-    if (hasFields) {
-      postBody = mp;
-    }
+    const contentTypes = <String>['application/json'];
 
     return apiClient.invokeAPI(
       path,
@@ -73,14 +62,14 @@ class ArtApi {
   ///
   /// * [String] id (required):
   ///
-  /// * [MultipartFile] file (required):
+  /// * [ArtPieceContent] data (required):
   Future<InlineResponse2001> artArtPieceContentUpdate(
     String id,
-    MultipartFile file,
+    ArtPieceContent data,
   ) async {
     final response = await artArtPieceContentUpdateWithHttpInfo(
       id,
-      file,
+      data,
     );
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException(response.statusCode, await _decodeBodyBytes(response));

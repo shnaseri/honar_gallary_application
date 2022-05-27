@@ -55,6 +55,10 @@ dependencies:
   intl: ^0.17.0
   petstore_api:
     path: ./api/petstore_api
+  shamsi_date: ^1.0.1
+  flutter_chat_bubble: ^2.0.0
+  image_picker: ^0.8.5+3
+  web_socket_channel: ^2.2.0
   audioplayers: ^0.20.1
   flick_video_player: ^0.4.0-dev.4
   just_audio: ^0.9.21

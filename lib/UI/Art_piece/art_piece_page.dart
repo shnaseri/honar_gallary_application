@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:honar_gallary/UI/chat/chat_page.dart';
 import 'package:honar_gallary/UI/comment/comment_page.dart';
 import 'package:honar_gallary/state_managment/art_piece/art_piece_cubit.dart';
+import 'package:nb_utils/nb_utils.dart';
+import 'package:petstore_api/api.dart';
 
 import 'components/art_piece_header.dart';
 import 'components/models.dart';
@@ -93,6 +96,20 @@ class _ArtPiecePageState extends State<ArtPiecePage> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       MovieDetailHeader(testMovie),
+
+                      ElevatedButton(
+                              onPressed: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (_) => ChatPage(
+                                            contact:
+                                                User(fullName: "hosein", id: 1),
+                                            index: 1)));
+                              },
+                              child: Text("صفحه چت"))
+                          .paddingAll(10),
+
                       Padding(
                         padding: const EdgeInsets.all(20.0),
                         child: Storyline(testMovie.storyline),

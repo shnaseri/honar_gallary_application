@@ -1,7 +1,7 @@
 //
 // AUTO-GENERATED FILE, DO NOT MODIFY!
 //
-// @dart = 2.8
+// @dart=2.0
 
 // ignore_for_file: unused_element, unused_import
 // ignore_for_file: always_put_required_named_parameters_first
@@ -261,10 +261,14 @@ class ApiClient {
           return AccessRefresh.fromJson(value);
         case 'ArtPiece':
           return ArtPiece.fromJson(value);
+        case 'ArtPieceContent':
+          return ArtPieceContent.fromJson(value);
         case 'ArtPieceCover':
           return ArtPieceCover.fromJson(value);
         case 'ArtPieceDetail':
           return ArtPieceDetail.fromJson(value);
+        case 'Chat':
+          return Chat.fromJson(value);
         case 'ImageSerializer':
           return ImageSerializer.fromJson(value);
         case 'InlineResponse200':
@@ -273,10 +277,14 @@ class ApiClient {
           return InlineResponse2001.fromJson(value);
         case 'InlineResponse2002':
           return InlineResponse2002.fromJson(value);
+        case 'InlineResponse2003':
+          return InlineResponse2003.fromJson(value);
         case 'InlineResponse404':
           return InlineResponse404.fromJson(value);
         case 'InlineResponse406':
           return InlineResponse406.fromJson(value);
+        case 'Message':
+          return Message.fromJson(value);
         case 'Register':
           return Register.fromJson(value);
         case 'TokenObtainPair':
