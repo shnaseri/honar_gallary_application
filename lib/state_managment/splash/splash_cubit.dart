@@ -27,7 +27,6 @@ class SplashCubit extends Cubit<SplashState> {
             token: ConfigGeneralValues.getInstance()
                 .sharedPreferencesHandler
                 .getToken()!));
-
         interfaceOfUser.getAuthentication<ApiKeyAuth>(r'Bearer')
           ..apiKeyPrefix = 'Bearer'
           ..apiKey = ConfigGeneralValues.getInstance()
