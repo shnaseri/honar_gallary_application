@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:honar_gallary/UI/Art_piece/components/poster.dart';
 import 'package:honar_gallary/UI/Art_piece/components/rating_information.dart';
+import 'package:honar_gallary/UI/video_music_palyer/player_content.dart';
 import 'package:honar_gallary/const/color_const.dart';
 
 import 'arc_banner_image.dart';
@@ -55,9 +56,20 @@ class MovieDetailHeader extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.end,
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              Poster(
-                movie.posterUrl,
-                height: 180.0,
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const PlayerContentPage(
+                                type: "picture",
+                                content: "https://picsum.photos/id/1/200/300",
+                              )));
+                },
+                child: Poster(
+                  movie.posterUrl,
+                  height: 180.0,
+                ),
               ),
               const SizedBox(width: 16.0),
               Expanded(child: movieInformation),
