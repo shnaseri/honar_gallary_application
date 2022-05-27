@@ -113,4 +113,3 @@ class Register {
     return map;
   }
 }
-
