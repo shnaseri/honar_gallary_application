@@ -29,7 +29,7 @@ class _BodyOfChatPageState extends State<BodyOfChatPage> {
   Widget build(BuildContext context) {
     return BlocBuilder<ChatCubit, ChatState>(
       builder: (context, state) {
-        lastDate = "";
+        lastDate = " ";
         if (state is ChatConnectToServer) {
           if (state.messages.isEmpty) {
             return BlankPageComponent().paddingBottom(100);
