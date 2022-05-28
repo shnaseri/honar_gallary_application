@@ -324,12 +324,12 @@ class _ProfileListItemsState extends State<ProfileListItems> {
                       if (state is! EditArtPieceInitial) {
                         return;
                       }
-                      if (fileSelected == null) {
+                      if (fileSelected == null || imageSliderFiles.isEmpty) {
                         return;
                       }
                       await BlocProvider.of<EditArtPieceCubit>(context)
                           .flowOfCreateArtPiece(fileSelected!, dropDownValue,
-                              _title.text, _about.text,
+                              _title.text, _about.text, imageSliderFiles,
                               price: _dob.text.toInt());
                     },
                     child: Container(

@@ -1,8 +1,9 @@
 import 'dart:io';
 
 import 'package:bloc/bloc.dart';
+import 'package:honar_api/api.dart';
+import 'package:http/http.dart' as http;
 import 'package:meta/meta.dart';
-import 'package:petstore_api/api.dart';
 
 import '../../data_managment/core/upload_networkservice.dart';
 import '../../logic/consts.dart';
@@ -12,22 +13,32 @@ part 'edit_art_piece_state.dart';
 class EditArtPieceCubit extends Cubit<EditArtPieceState> {
   late UploadNetworkService uploadNetworkService;
   late ArtApi artApi;
+  late CoreApi coreApi;
 
   EditArtPieceCubit() : super(EditArtPieceInitial()) {
     uploadNetworkService = UploadNetworkService();
     artApi = ArtApi(interfaceOfUser);
+    coreApi = CoreApi(interfaceOfUser);
   }
 
-  Future<void> flowOfCreateArtPiece(
-      File cover, String type, String title, String description,
+  Future<void> flowOfCreateArtPiece(File file, String type, String title,
+      String description, List<File> imageSliderFiles,
       {int price = 0}) async {
-    int? coverId = await uploadImage(cover);
+    int? coverId = await uploadImage(
+        getTypeOfArtPiece(type) == ArtPieceCoverTypeEnum.P
+            ? file
+            : imageSliderFiles[0]);
     int? artId;
     if (coverId != null) {
       artId = await sendInfoConver(coverId, type);
     }
     if (artId != null) {
       await sendInfoArtPiece(artId, title, description, price);
+    }
+    if (ArtPieceCoverTypeEnum.V == getTypeOfArtPiece(type) ||
+        ArtPieceCoverTypeEnum.M == getTypeOfArtPiece(type)) {
+      await coreApi.coreContentUpdate(
+          await http.MultipartFile.fromPath('file', file.path));
     }
   }
 
