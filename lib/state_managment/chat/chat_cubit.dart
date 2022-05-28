@@ -1,5 +1,5 @@
 import 'package:bloc/bloc.dart';
-import 'package:honar_gallary/data_managment/chat_repository.dart';
+import 'package:honar_gallary/data_managment/chat/chat_repository.dart';
 import 'package:meta/meta.dart';
 import 'package:petstore_api/api.dart';
 

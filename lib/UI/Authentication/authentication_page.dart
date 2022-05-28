@@ -180,19 +180,7 @@ class _AuthenticationPageState extends State<AuthenticationPage> {
 
               return "";
             } catch (e) {
-              final snackBar = SnackBar(
-                padding: const EdgeInsets.only(left: 20),
-                content: const Text(
-                  "اطلاعات را به درستی وارد نمایید.",
-                  textAlign: TextAlign.start,
-                ),
-                backgroundColor: (Colors.black12),
-                action: SnackBarAction(
-                  label: 'dismiss',
-                  onPressed: () {},
-                ),
-              );
-              ScaffoldMessenger.of(context).showSnackBar(snackBar);
+              showSnackBar(context, "اطلاعات را به درستی وارد نمایید.");
               return "اطلاعات را به درستی وارد نمایید.";
             }
           },
@@ -232,5 +220,21 @@ class _AuthenticationPageState extends State<AuthenticationPage> {
         ),
       ),
     );
+  }
+
+  void showSnackBar(BuildContext context, String text) {
+    final snackBar = SnackBar(
+      padding: const EdgeInsets.only(left: 20),
+      content: Text(
+        text,
+        textAlign: TextAlign.start,
+      ),
+      backgroundColor: (Colors.black12),
+      action: SnackBarAction(
+        label: 'dismiss',
+        onPressed: () {},
+      ),
+    );
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 }

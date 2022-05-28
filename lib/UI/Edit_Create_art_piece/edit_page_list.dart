@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:path/path.dart';
 
@@ -9,6 +10,7 @@ import 'package:path/path.dart';
 // import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 
 import '../../const/color_const.dart';
+import '../../state_managment/create_edit_art_piece/edit_art_piece_cubit.dart';
 import '../Art_piece/art_piece_model.dart';
 // import 'edit_page_list_item2.dart';
 // import 'hover_test.dart';
@@ -314,44 +316,63 @@ class _ProfileListItemsState extends State<ProfileListItems> {
               const SizedBox(
                 height: 50,
               ),
-              GestureDetector(
-                // onTap: () {},
-                onTap: () => {
-                  if (!_formKey.currentState!.validate()) {},
-                  _formKey.currentState!.save()
-                },
-                child: Container(
-                  width: context.width() * 0.7,
-                  height: 50,
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      colors: [
-                        Colors.teal,
-                        Colors.teal.shade200,
-                      ],
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                    ),
-                    borderRadius: BorderRadius.circular(20),
-                    boxShadow: const [
-                      BoxShadow(
-                        color: Colors.black12,
-                        offset: Offset(5, 5),
-                        blurRadius: 10,
-                      )
-                    ],
-                  ),
-                  child: const Center(
-                    child: Text(
-                      'ذخیره',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 22,
-                        fontWeight: FontWeight.w500,
+              BlocBuilder<EditArtPieceCubit, EditArtPieceState>(
+                builder: (context, state) {
+                  return GestureDetector(
+                    // onTap: () {},
+                    onTap: () async {
+                      if (state is! EditArtPieceInitial) {
+                        return;
+                      }
+                      if (fileSelected == null) {
+                        return;
+                      }
+                      await BlocProvider.of<EditArtPieceCubit>(context)
+                          .flowOfCreateArtPiece(fileSelected!, dropDownValue,
+                              _title.text, _about.text,
+                              price: _dob.text.toInt());
+                    },
+                    child: Container(
+                      width: context.width() * 0.7,
+                      height: 50,
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          colors: [
+                            Colors.teal,
+                            Colors.teal.shade200,
+                          ],
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
+                        ),
+                        borderRadius: BorderRadius.circular(20),
+                        boxShadow: const [
+                          BoxShadow(
+                            color: Colors.black12,
+                            offset: Offset(5, 5),
+                            blurRadius: 10,
+                          )
+                        ],
                       ),
+                      child: state is EditArtPieceInitial
+                          ? const Center(
+                              child: Text(
+                                'ذخیره',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 22,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                            )
+                          : Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                CircularProgressIndicator(),
+                              ],
+                            ),
                     ),
-                  ),
-                ),
+                  );
+                },
               ),
               70.height,
             ],
