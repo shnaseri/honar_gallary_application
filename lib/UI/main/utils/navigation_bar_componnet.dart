@@ -65,7 +65,6 @@ class NavigationBarWidget extends StatelessWidget {
     return [
       Container(),
       const SearchPage(),
-      Container(),
       const EditArtPiece(),
       const GalleryView(),
     ];
@@ -93,20 +92,11 @@ class NavigationBarWidget extends StatelessWidget {
       ),
       PersistentBottomNavBarItem(
         icon: const Icon(
-          CupertinoIcons.calendar_circle_fill,
+          CupertinoIcons.add_circled_solid,
         ),
         inactiveIcon: const Icon(
-          CupertinoIcons.calendar_circle,
+          CupertinoIcons.add_circled,
           // key: IntroRepository.introHomePage.keys[6] ,
-        ),
-        // title: ("Settings"),
-        activeColorPrimary: ColorPallet.colorPalletNightFog,
-        inactiveColorPrimary: CupertinoColors.inactiveGray,
-      ),
-      PersistentBottomNavBarItem(
-        icon: const Icon(
-          CupertinoIcons.profile_circled,
-          // key: IntroRepository.introHomePage.keys[7] ,
         ),
         // title: ("Settings"),
         activeColorPrimary: ColorPallet.colorPalletNightFog,
