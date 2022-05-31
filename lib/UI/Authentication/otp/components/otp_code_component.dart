@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:honar_gallary/UI/Authentication/otp/components/text_field_otp_component.dart';
-import 'package:honar_gallary/const/color_const.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../../../../logic/router_const.dart';
@@ -121,14 +120,13 @@ class _OtpCodeComponentState extends State<OtpCodeComponent> {
       child: Column(
         children: [
           state is OtpBadCode
-              ? SizedBox(
+              ? const SizedBox(
                   height: 30,
                   child: Text(
-                    "errorTextForOtpPage",
+                    "کد وارد شده اشتباه است",
                     textDirection: TextDirection.rtl,
                     style: TextStyle(
-                        color: ColorPallet.colorPalletDark,
-                        fontWeight: FontWeight.w600),
+                        color: Colors.white, fontWeight: FontWeight.w600),
                   ),
                 )
               : Container(),
