@@ -62,7 +62,6 @@ class _ImageSliderState extends State<ImageSlider> {
       ),
     );
   }
-
 }
 
 class AddImageWidget extends StatefulWidget {

@@ -39,7 +39,7 @@ class ApiClient {
   final _authentications = <String, Authentication>{};
 
   void addDefaultHeader(String key, String value) {
-     _defaultHeaderMap[key] = value;
+    _defaultHeaderMap[key] = value;
   }
 
   Map<String, String> get defaultHeaderMap => _defaultHeaderMap;

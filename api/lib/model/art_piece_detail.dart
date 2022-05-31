@@ -105,4 +105,3 @@ class ArtPieceDetail {
     return map;
   }
 }
-
