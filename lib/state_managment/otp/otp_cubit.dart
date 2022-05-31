@@ -15,10 +15,16 @@ class OtpCubit extends Cubit<OtpState> {
   Future<bool> sendCodeOtp(int userId, String code) async {
     emit(OtpLoadingCodeState());
     try {
+      print("--- sending otp ----");
       InlineResponse2003 response2003 = await authApi.authVerifyOtpCodeCreate(
           userId.toString(), OtpCode(otpCode: code));
-      if (response2003.success && response2003.valid) return true;
-      return false;
+      if (response2003.success && response2003.valid) {
+        emit(OtpLoadedCodeState());
+        return true;
+      } else {
+        emit(OtpBadCode());
+        return false;
+      }
     } catch (error) {
       print(error);
       emit(OtpBadCode());
