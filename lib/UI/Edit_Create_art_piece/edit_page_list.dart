@@ -284,32 +284,39 @@ class _ProfileListItemsState extends State<ProfileListItems> {
                     SizedBox(
                       height: 20,
                     ),
-                    SizedBox(
-                      height: 280,
-                      child: ListView.builder(
-                        scrollDirection: Axis.horizontal,
-                        itemBuilder: (BuildContext context, int index) {
-                          if (index == 0) {
-                            return SizedBox(
-                              width: 300,
-                              child: AddImageWidget(onChanged: (file) {
+                    BlocBuilder<EditArtPieceCubit, EditArtPieceState>(
+                      builder: (context, state) {
+                        return SizedBox(
+                          height: 280,
+                          child: ListView.builder(
+                            scrollDirection: Axis.horizontal,
+                            itemBuilder: (BuildContext context, int index) {
+                              if (index == 0) {
+                                if (state is EditArtPieceInitial) {
+                                  return SizedBox(
+                                    width: 300,
+                                    child: AddImageWidget(onChanged: (file) {
+                                      setState(() {
+                                        imageSliderFiles.add(file);
+                                      });
+                                      print(imageSliderFiles.length);
+                                      print(imageSliderFiles);
+                                    }),
+                                  );
+                                }
+                                return Container();
+                              }
+                              return ImageSliderTile(
+                                  imageSliderFiles[index - 1], onRemove: () {
                                 setState(() {
-                                  imageSliderFiles.add(file);
+                                  imageSliderFiles.removeAt(index - 1);
                                 });
-                                print(imageSliderFiles.length);
-                                print(imageSliderFiles);
-                              }),
-                            );
-                          }
-                          return ImageSliderTile(imageSliderFiles[index - 1],
-                              onRemove: () {
-                            setState(() {
-                              imageSliderFiles.removeAt(index - 1);
-                            });
-                          }).paddingSymmetric(horizontal: 15);
-                        },
-                        itemCount: (imageSliderFiles.length) + 1,
-                      ),
+                              }).paddingSymmetric(horizontal: 15);
+                            },
+                            itemCount: (imageSliderFiles.length) + 1,
+                          ),
+                        );
+                      },
                     ),
                   ],
                 ),
@@ -366,8 +373,10 @@ class _ProfileListItemsState extends State<ProfileListItems> {
                             )
                           : Row(
                               mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                CircularProgressIndicator(),
+                              children: const [
+                                CircularProgressIndicator(
+                                  color: Colors.white,
+                                ),
                               ],
                             ),
                     ),

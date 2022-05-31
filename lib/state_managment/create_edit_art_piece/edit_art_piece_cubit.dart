@@ -24,21 +24,29 @@ class EditArtPieceCubit extends Cubit<EditArtPieceState> {
   Future<void> flowOfCreateArtPiece(File file, String type, String title,
       String description, List<File> imageSliderFiles,
       {int price = 0}) async {
-    int? coverId = await uploadImage(
-        getTypeOfArtPiece(type) == ArtPieceCoverTypeEnum.P
-            ? file
-            : imageSliderFiles[0]);
-    int? artId;
-    if (coverId != null) {
-      artId = await sendInfoConver(coverId, type);
-    }
-    if (artId != null) {
-      await sendInfoArtPiece(artId, title, description, price);
-    }
-    if (ArtPieceCoverTypeEnum.V == getTypeOfArtPiece(type) ||
-        ArtPieceCoverTypeEnum.M == getTypeOfArtPiece(type)) {
-      await coreApi.coreContentUpdate(
-          await http.MultipartFile.fromPath('file', file.path));
+    try {
+      int? coverId = await uploadImage(
+          getTypeOfArtPiece(type) == ArtPieceCoverTypeEnum.P
+              ? file
+              : imageSliderFiles[0]);
+      int? artId;
+      if (coverId != null) {
+        artId = await sendInfoConver(coverId, type);
+      }
+      if (artId != null) {
+        await sendInfoArtPiece(artId, title, description, price);
+      }
+      if (ArtPieceCoverTypeEnum.V == getTypeOfArtPiece(type) ||
+          ArtPieceCoverTypeEnum.M == getTypeOfArtPiece(type)) {
+        print('---- Start Uploading ------');
+        InlineResponse2003 response = await coreApi.coreContentUpdate(
+            await http.MultipartFile.fromPath('file', file.path));
+        print(response.success);
+        print('---- End Uploading ------');
+      }
+    } catch (e) {
+      emit(EditArtPieceInitial());
+      print(e);
     }
   }
 
