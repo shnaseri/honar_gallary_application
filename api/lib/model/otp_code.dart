@@ -10,78 +10,76 @@
 
 part of openapi.api;
 
-class UserId {
-  /// Returns a new [UserId] instance.
-  UserId({
-    this.id,
+class OtpCode {
+  /// Returns a new [OtpCode] instance.
+  OtpCode({
+    @required this.otpCode,
   });
 
-  int id;
+  String otpCode;
 
   @override
   bool operator ==(Object other) =>
-      identical(this, other) || other is UserId && other.id == id;
+      identical(this, other) || other is OtpCode && other.otpCode == otpCode;
 
   @override
   int get hashCode =>
       // ignore: unnecessary_parenthesis
-      (id == null ? 0 : id.hashCode);
+      (otpCode == null ? 0 : otpCode.hashCode);
 
   @override
-  String toString() => 'UserId[id=$id]';
+  String toString() => 'OtpCode[otpCode=$otpCode]';
 
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
-    if (id != null) {
-      json[r'id'] = id;
-    }
+    json[r'otp_code'] = otpCode;
     return json;
   }
 
-  /// Returns a new [UserId] instance and imports its values from
+  /// Returns a new [OtpCode] instance and imports its values from
   /// [value] if it's a [Map], null otherwise.
   // ignore: prefer_constructors_over_static_methods
-  static UserId fromJson(dynamic value) {
+  static OtpCode fromJson(dynamic value) {
     if (value is Map) {
       final json = value.cast<String, dynamic>();
-      return UserId(
-        id: mapValueOfType<int>(json, r'id'),
+      return OtpCode(
+        otpCode: mapValueOfType<String>(json, r'otp_code'),
       );
     }
     return null;
   }
 
-  static List<UserId> listFromJson(
+  static List<OtpCode> listFromJson(
     dynamic json, {
     bool emptyIsNull,
     bool growable,
   }) =>
       json is List && json.isNotEmpty
-          ? json.map(UserId.fromJson).toList(growable: true == growable)
+          ? json.map(OtpCode.fromJson).toList(growable: true == growable)
           : true == emptyIsNull
               ? null
-              : <UserId>[];
+              : <OtpCode>[];
 
-  static Map<String, UserId> mapFromJson(dynamic json) {
-    final map = <String, UserId>{};
+  static Map<String, OtpCode> mapFromJson(dynamic json) {
+    final map = <String, OtpCode>{};
     if (json is Map && json.isNotEmpty) {
       json
           .cast<String, dynamic>()
-          .forEach((key, dynamic value) => map[key] = UserId.fromJson(value));
+          .forEach((key, dynamic value) => map[key] = OtpCode.fromJson(value));
     }
     return map;
   }
 
-  // maps a json object with a list of UserId-objects as value to a dart map
-  static Map<String, List<UserId>> mapListFromJson(
+  // maps a json object with a list of OtpCode-objects as value to a dart map
+  static Map<String, List<OtpCode>> mapListFromJson(
     dynamic json, {
     bool emptyIsNull,
     bool growable,
   }) {
-    final map = <String, List<UserId>>{};
+    final map = <String, List<OtpCode>>{};
     if (json is Map && json.isNotEmpty) {
       json.cast<String, dynamic>().forEach((key, dynamic value) {
-        map[key] = UserId.listFromJson(
+        map[key] = OtpCode.listFromJson(
           value,
           emptyIsNull: emptyIsNull,
           growable: growable,
@@ -91,4 +89,3 @@ class UserId {
     return map;
   }
 }
-

@@ -205,6 +205,8 @@ Name | Type | Description  | Notes
 # **artArtPieceUpdate**
 > InlineResponse2001 artArtPieceUpdate(id, data)
 
+
+
 ### Example
 ```dart
 import 'package:honar_api/api.dart';

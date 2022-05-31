@@ -6,7 +6,6 @@ import 'package:honar_api/api.dart';
 ```
 
 ## Properties
-
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **id** | **int** |  | [optional] [readonly]

@@ -32,7 +32,7 @@ final api_instance = ChatApi();
 final chatCode = chatCode_example; // String | 
 
 try {
-    final result = api_instance.chatGetAllChatMessagesList(chatCode);
+final result = api_instance.chatGetAllChatMessagesList(chatCode);
 print(result);
 } catch
 (

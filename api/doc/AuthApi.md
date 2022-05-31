@@ -13,7 +13,10 @@ Method | HTTP request | Description
 [**authLoginCreate**](AuthApi.md#authlogincreate) | **POST** /auth/login/ |
 [**authLogoutCreate**](AuthApi.md#authlogoutcreate) | **POST** /auth/logout/ |
 [**authRegisterCreate**](AuthApi.md#authregistercreate) | **POST** /auth/register/ |
+[**authSendOtpCodeCreate**](AuthApi.md#authsendotpcodecreate) | **POST** /auth/send-otp-code/{id}/ |
 [**authVerifyCreate**](AuthApi.md#authverifycreate) | **POST** /auth/verify/ |
+[**authVerifyOtpCodeCreate**](AuthApi.md#authverifyotpcodecreate) | **
+POST** /auth/verify-otp-code/{id}/ |
 
 # **authLoginCreate**
 
@@ -156,7 +159,53 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
+# **authSendOtpCodeCreate**
+
+> InlineResponse2001 authSendOtpCodeCreate(id)
+
+### Example
+
+```dart
+import 'package:honar_api/api.dart';
+// TODO Configure API key authorization: Bearer
+//defaultApiClient.getAuthentication<ApiKeyAuth>('Bearer').apiKey = 'YOUR_API_KEY';
+// uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+//defaultApiClient.getAuthentication<ApiKeyAuth>('Bearer').apiKeyPrefix = 'Bearer';
+
+final api_instance = AuthApi();
+final id = id_example; // String | 
+
+try {
+    final result = api_instance.authSendOtpCodeCreate(id);
+    print(result);
+} catch (e) {
+    print('Exception when calling AuthApi->authSendOtpCodeCreate: $e\n');
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**id** | **String**|  |
+
+### Return type
+
+[**InlineResponse2001**](InlineResponse2001.md)
+
+### Authorization
+
+[Bearer](../README.md#Bearer)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
 # **authVerifyCreate**
+
 > TokenVerify authVerifyCreate(data)
 
 
@@ -192,6 +241,53 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**TokenVerify**](TokenVerify.md)
+
+### Authorization
+
+[Bearer](../README.md#Bearer)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **authVerifyOtpCodeCreate**
+
+> InlineResponse2003 authVerifyOtpCodeCreate(id, data)
+
+### Example
+
+```dart
+import 'package:honar_api/api.dart';
+// TODO Configure API key authorization: Bearer
+//defaultApiClient.getAuthentication<ApiKeyAuth>('Bearer').apiKey = 'YOUR_API_KEY';
+// uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+//defaultApiClient.getAuthentication<ApiKeyAuth>('Bearer').apiKeyPrefix = 'Bearer';
+
+final api_instance = AuthApi();
+final id = id_example; // String | 
+final data = OtpCode(); // OtpCode | 
+
+try {
+    final result = api_instance.authVerifyOtpCodeCreate(id, data);
+    print(result);
+} catch (e) {
+    print('Exception when calling AuthApi->authVerifyOtpCodeCreate: $e\n');
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**id** | **String**|  |
+**data** | [**OtpCode**](OtpCode.md)|  |
+
+### Return type
+
+[**InlineResponse2003**](InlineResponse2003.md)
 
 ### Authorization
 

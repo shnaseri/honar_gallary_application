@@ -91,3 +91,4 @@ class ArtPieceContent {
     return map;
   }
 }
+

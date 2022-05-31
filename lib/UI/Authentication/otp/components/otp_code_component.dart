@@ -20,7 +20,9 @@ List<TextEditingController> numbers = [
 ];
 
 class OtpCodeComponent extends StatefulWidget {
-  OtpCodeComponent({Key? key}) : super(key: key);
+  final int userId;
+
+  OtpCodeComponent({Key? key, required this.userId}) : super(key: key);
 
   @override
   State<OtpCodeComponent> createState() => _OtpCodeComponentState();
@@ -143,7 +145,8 @@ class _OtpCodeComponentState extends State<OtpCodeComponent> {
                           tryAgain = false;
                           sendAgainTime = timeSendAgain;
                         });
-                        await BlocProvider.of<OtpCubit>(context).resendCode();
+                        await BlocProvider.of<OtpCubit>(context)
+                            .resendCode(widget.userId);
                         await resetState();
                       },
                       child: const Text("ارسال مجدد",
@@ -196,8 +199,8 @@ class _OtpCodeComponentState extends State<OtpCodeComponent> {
     }
     if (isFillCode) {
       if (otpState is! OtpLoadingCodeState) {
-        bool status =
-            await BlocProvider.of<OtpCubit>(blocContext).sendCodeOtp(codeOtp);
+        bool status = await BlocProvider.of<OtpCubit>(blocContext)
+            .sendCodeOtp(widget.userId, codeOtp);
         if (status) {
           Navigator.pushNamedAndRemoveUntil(
               context, homePagePath, (e) => false);

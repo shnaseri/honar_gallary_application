@@ -6,7 +6,9 @@ import 'components/otp_code_component.dart';
 import 'components/text_top_page.dart';
 
 class OTPPage extends StatefulWidget {
-  const OTPPage({Key? key}) : super(key: key);
+  final int userId;
+
+  const OTPPage({Key? key, required this.userId}) : super(key: key);
 
   @override
   _OTPPageState createState() => _OTPPageState();
@@ -43,7 +45,7 @@ class _OTPPageState extends State<OTPPage> {
                   Expanded(
                     child: Directionality(
                         textDirection: TextDirection.ltr,
-                        child: OtpCodeComponent()),
+                        child: OtpCodeComponent(userId: widget.userId)),
                     flex: 3,
                   ),
                   ExpandedBlank(
