@@ -16,7 +16,7 @@ void main() {
   final instance = CoreApi();
 
   group('tests for CoreApi', () {
-    //Future<InlineResponse2003> coreContentUpdate(MultipartFile file) async
+    //Future<InlineResponse2004> coreContentUpdate(MultipartFile file) async
     test('test coreContentUpdate', () async {
       // TODO
     });

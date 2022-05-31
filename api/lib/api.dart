@@ -41,9 +41,16 @@ part 'model/inline_response200.dart';
 part 'model/inline_response2001.dart';
 part 'model/inline_response2002.dart';
 part 'model/inline_response2003.dart';
+
+part 'model/inline_response2004.dart';
+
 part 'model/inline_response404.dart';
 part 'model/inline_response406.dart';
+
 part 'model/message.dart';
+
+part 'model/otp_code.dart';
+
 part 'model/register.dart';
 part 'model/token_obtain_pair.dart';
 part 'model/token_refresh.dart';

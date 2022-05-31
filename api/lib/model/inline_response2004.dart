@@ -10,90 +10,91 @@
 
 part of openapi.api;
 
-class InlineResponse2003 {
-  /// Returns a new [InlineResponse2003] instance.
-  InlineResponse2003({
+class InlineResponse2004 {
+  /// Returns a new [InlineResponse2004] instance.
+  InlineResponse2004({
     this.success = true,
-    this.valid,
+    this.contentId,
   });
 
   bool success;
 
-  bool valid;
+  int contentId;
 
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is InlineResponse2003 &&
+      other is InlineResponse2004 &&
           other.success == success &&
-          other.valid == valid;
+          other.contentId == contentId;
 
   @override
   int get hashCode =>
       // ignore: unnecessary_parenthesis
       (success == null ? 0 : success.hashCode) +
-      (valid == null ? 0 : valid.hashCode);
+      (contentId == null ? 0 : contentId.hashCode);
 
   @override
-  String toString() => 'InlineResponse2003[success=$success, valid=$valid]';
+  String toString() =>
+      'InlineResponse2004[success=$success, contentId=$contentId]';
 
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
     if (success != null) {
       json[r'success'] = success;
     }
-    if (valid != null) {
-      json[r'valid'] = valid;
+    if (contentId != null) {
+      json[r'content_id'] = contentId;
     }
     return json;
   }
 
-  /// Returns a new [InlineResponse2003] instance and imports its values from
+  /// Returns a new [InlineResponse2004] instance and imports its values from
   /// [value] if it's a [Map], null otherwise.
   // ignore: prefer_constructors_over_static_methods
-  static InlineResponse2003 fromJson(dynamic value) {
+  static InlineResponse2004 fromJson(dynamic value) {
     if (value is Map) {
       final json = value.cast<String, dynamic>();
-      return InlineResponse2003(
+      return InlineResponse2004(
         success: mapValueOfType<bool>(json, r'success'),
-        valid: mapValueOfType<bool>(json, r'valid'),
+        contentId: mapValueOfType<int>(json, r'content_id'),
       );
     }
     return null;
   }
 
-  static List<InlineResponse2003> listFromJson(
+  static List<InlineResponse2004> listFromJson(
     dynamic json, {
     bool emptyIsNull,
     bool growable,
   }) =>
       json is List && json.isNotEmpty
           ? json
-              .map(InlineResponse2003.fromJson)
+              .map(InlineResponse2004.fromJson)
               .toList(growable: true == growable)
           : true == emptyIsNull
               ? null
-              : <InlineResponse2003>[];
+              : <InlineResponse2004>[];
 
-  static Map<String, InlineResponse2003> mapFromJson(dynamic json) {
-    final map = <String, InlineResponse2003>{};
+  static Map<String, InlineResponse2004> mapFromJson(dynamic json) {
+    final map = <String, InlineResponse2004>{};
     if (json is Map && json.isNotEmpty) {
       json.cast<String, dynamic>().forEach((key, dynamic value) =>
-          map[key] = InlineResponse2003.fromJson(value));
+          map[key] = InlineResponse2004.fromJson(value));
     }
     return map;
   }
 
-  // maps a json object with a list of InlineResponse2003-objects as value to a dart map
-  static Map<String, List<InlineResponse2003>> mapListFromJson(
+  // maps a json object with a list of InlineResponse2004-objects as value to a dart map
+  static Map<String, List<InlineResponse2004>> mapListFromJson(
     dynamic json, {
     bool emptyIsNull,
     bool growable,
   }) {
-    final map = <String, List<InlineResponse2003>>{};
+    final map = <String, List<InlineResponse2004>>{};
     if (json is Map && json.isNotEmpty) {
       json.cast<String, dynamic>().forEach((key, dynamic value) {
-        map[key] = InlineResponse2003.listFromJson(
+        map[key] = InlineResponse2004.listFromJson(
           value,
           emptyIsNull: emptyIsNull,
           growable: growable,
@@ -103,4 +104,3 @@ class InlineResponse2003 {
     return map;
   }
 }
-

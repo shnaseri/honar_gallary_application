@@ -39,7 +39,7 @@ class ApiClient {
   final _authentications = <String, Authentication>{};
 
   void addDefaultHeader(String key, String value) {
-    _defaultHeaderMap[key] = value;
+     _defaultHeaderMap[key] = value;
   }
 
   Map<String, String> get defaultHeaderMap => _defaultHeaderMap;
@@ -279,12 +279,16 @@ class ApiClient {
           return InlineResponse2002.fromJson(value);
         case 'InlineResponse2003':
           return InlineResponse2003.fromJson(value);
+        case 'InlineResponse2004':
+          return InlineResponse2004.fromJson(value);
         case 'InlineResponse404':
           return InlineResponse404.fromJson(value);
         case 'InlineResponse406':
           return InlineResponse406.fromJson(value);
         case 'Message':
           return Message.fromJson(value);
+        case 'OtpCode':
+          return OtpCode.fromJson(value);
         case 'Register':
           return Register.fromJson(value);
         case 'TokenObtainPair':

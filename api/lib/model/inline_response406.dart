@@ -103,3 +103,4 @@ class InlineResponse406 {
     return map;
   }
 }
+

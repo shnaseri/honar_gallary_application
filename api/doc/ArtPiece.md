@@ -1,13 +1,11 @@
 # honar_api.model.ArtPiece
 
 ## Load the model package
-
 ```dart
 import 'package:honar_api/api.dart';
 ```
 
 ## Properties
-
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **id** | **int** |  | [optional] [readonly]

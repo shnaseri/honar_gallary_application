@@ -22,7 +22,7 @@ PATCH** /core/image/upload/{id}/ |
 
 # **coreContentUpdate**
 
-> InlineResponse2003 coreContentUpdate(file)
+> InlineResponse2004 coreContentUpdate(file)
 
 ### Example
 
@@ -55,7 +55,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**InlineResponse2003**](InlineResponse2003.md)
+[**InlineResponse2004**](InlineResponse2004.md)
 
 ### Authorization
 
@@ -294,6 +294,8 @@ Name | Type | Description  | Notes
 
 # **coreImageUploadUpdate**
 > ImageSerializer coreImageUploadUpdate(id, data)
+
+
 
 ### Example
 ```dart
