@@ -2,24 +2,25 @@ class Movie {
   Movie({
     required this.bannerUrl,
     required this.posterUrl,
-    required this.title,
-    required this.rating,
-    required this.starRating,
-    required this.categories,
-    required this.storyline,
-    required this.photoUrls,
-    required this.actors,
-  });
+      required this.title,
+      required this.rating,
+      required this.starRating,
+      required this.categories,
+      required this.storyline,
+      required this.photoUrls,
+      required this.actors,
+      required this.price});
 
-  final String bannerUrl;
-  final String posterUrl;
-  final String title;
-  final double rating;
-  final int starRating;
-  final List<String> categories;
-  final String storyline;
-  final List<String> photoUrls;
-  final List<Actor> actors;
+  String bannerUrl;
+  String posterUrl;
+  String title;
+  double rating;
+  int starRating;
+  List<String> categories;
+  String storyline;
+  List<String> photoUrls;
+  List<Actor> actors;
+  int price;
 }
 
 class Actor {

@@ -33,7 +33,8 @@ class MovieDetailHeader extends StatelessWidget {
       children: [
         Text(
           movie.title,
-          style: textTheme.titleMedium,
+          style: textTheme.titleMedium!.copyWith(
+              fontWeight: FontWeight.bold, fontStyle: FontStyle.italic),
         ),
         const SizedBox(height: 8.0),
         RatingInformation(movie),

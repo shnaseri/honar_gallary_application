@@ -27,6 +27,7 @@ class _ArtPiecePageState extends State<ArtPiecePage> {
     starRating: 4,
     categories: ['سنتی', 'حماسی'],
     storyline: 'عججججب صوحبتی کردن چچچچیززززززز',
+    price: 0,
     photoUrls: [
       'assets/images/1.png',
       'assets/images/2.png',
@@ -77,6 +78,9 @@ class _ArtPiecePageState extends State<ArtPiecePage> {
               BlocProvider.of<ArtPieceCubit>(context).fetchArtPiece();
             }
             if (state is ArtPieceLoaded) {
+              testMovie.title = state.artPiece.title;
+              testMovie.storyline = state.artPiece.description;
+              testMovie.price = state.artPiece.price;
               return Container(
                 height: MediaQuery.of(context).size.height,
                 width: MediaQuery.of(context).size.width,
@@ -98,16 +102,16 @@ class _ArtPiecePageState extends State<ArtPiecePage> {
                       MovieDetailHeader(testMovie),
 
                       ElevatedButton(
-                              onPressed: () {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (_) => ChatPage(
-                                            contact:
-                                                User(fullName: "hosein", id: 1),
-                                            index: 1)));
-                              },
-                              child: Text("صفحه چت"))
+                          onPressed: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (_) => ChatPage(
+                                        contact:
+                                        User(fullName: "hosein", id: 1),
+                                        index: 1)));
+                          },
+                          child: Text("صفحه چت"))
                           .paddingAll(10),
 
                       Padding(
@@ -130,10 +134,10 @@ class _ArtPiecePageState extends State<ArtPiecePage> {
                           },
                           child: const Text("نظرات"),
                           style: ButtonStyle(foregroundColor:
-                              MaterialStateProperty.resolveWith((states) {
+                          MaterialStateProperty.resolveWith((states) {
                             return Colors.white;
                           }), textStyle:
-                              MaterialStateProperty.resolveWith((states) {
+                          MaterialStateProperty.resolveWith((states) {
                             return const TextStyle(
                                 fontWeight: FontWeight.bold,
                                 color: Colors.white,
