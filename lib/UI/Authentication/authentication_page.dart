@@ -1,11 +1,11 @@
 import 'package:animated_login/animated_login.dart';
 import 'package:flutter/material.dart';
+import 'package:honar_api/api.dart';
 import 'package:honar_gallary/const/color_const.dart';
 import 'package:honar_gallary/logic/consts.dart';
 import 'package:honar_gallary/logic/extenstion_methods.dart';
 import 'package:honar_gallary/logic/general_values.dart';
 import 'package:honar_gallary/logic/router_const.dart';
-import 'package:petstore_api/api.dart';
 
 class AuthenticationPage extends StatefulWidget {
   const AuthenticationPage({Key? key}) : super(key: key);
@@ -180,19 +180,7 @@ class _AuthenticationPageState extends State<AuthenticationPage> {
 
               return "";
             } catch (e) {
-              final snackBar = SnackBar(
-                padding: const EdgeInsets.only(left: 20),
-                content: const Text(
-                  "اطلاعات را به درستی وارد نمایید.",
-                  textAlign: TextAlign.start,
-                ),
-                backgroundColor: (Colors.black12),
-                action: SnackBarAction(
-                  label: 'dismiss',
-                  onPressed: () {},
-                ),
-              );
-              ScaffoldMessenger.of(context).showSnackBar(snackBar);
+              showSnackBar(context, "اطلاعات را به درستی وارد نمایید.");
               return "اطلاعات را به درستی وارد نمایید.";
             }
           },
@@ -232,5 +220,21 @@ class _AuthenticationPageState extends State<AuthenticationPage> {
         ),
       ),
     );
+  }
+
+  void showSnackBar(BuildContext context, String text) {
+    final snackBar = SnackBar(
+      padding: const EdgeInsets.only(left: 20),
+      content: Text(
+        text,
+        textAlign: TextAlign.start,
+      ),
+      backgroundColor: (Colors.black12),
+      action: SnackBarAction(
+        label: 'dismiss',
+        onPressed: () {},
+      ),
+    );
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 }

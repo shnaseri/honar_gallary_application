@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
+import 'package:honar_api/api.dart';
 import 'package:honar_gallary/logic/general_values.dart';
 import 'package:meta/meta.dart';
-import 'package:petstore_api/api.dart';
 
 import '../../logic/consts.dart';
 
@@ -27,7 +27,6 @@ class SplashCubit extends Cubit<SplashState> {
             token: ConfigGeneralValues.getInstance()
                 .sharedPreferencesHandler
                 .getToken()!));
-
         interfaceOfUser.getAuthentication<ApiKeyAuth>(r'Bearer')
           ..apiKeyPrefix = 'Bearer'
           ..apiKey = ConfigGeneralValues.getInstance()

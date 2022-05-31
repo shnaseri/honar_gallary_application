@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:honar_gallary/UI/Art_piece/components/arc_banner_image.dart';
 import 'package:honar_gallary/const/color_const.dart';
 // import 'package:honar_gallary/UI/Edit_Create_art_piece/image_card.dart';
 import 'package:nb_utils/nb_utils.dart';
 
+import '../../state_managment/create_edit_art_piece/edit_art_piece_cubit.dart';
 import 'edit_page_list.dart';
 
 // import 'package:image_picker/image_picker.dart';
@@ -18,7 +21,6 @@ class _EditArtPieceState extends State<EditArtPiece> {
   // String? _name;
   // String? _description;
   ScrollController scrollController = ScrollController();
-
   // final networkHandler = NetworkHandler();
   bool circular = false;
 
@@ -51,85 +53,38 @@ class _EditArtPieceState extends State<EditArtPiece> {
   };
 
   @override
-  Widget build(BuildContext context) {
-    // double coverHeight = context.height() * 0.27;
-    double profileHeight = context.height() * 0.2;
-    // final top = coverHeight - profileHeight / 6;
-    final bottom = profileHeight / 2;
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
 
-    return Scaffold(
-      body: Theme(
-        data: ThemeData(
-            primaryColor: ColorPallet.colorPalletDark,
-            primarySwatch: MaterialColor(0xff181830, color),
-            fontFamily: 'Sahel'),
-        child: CustomScrollView(
-          physics: const ClampingScrollPhysics(),
-          slivers: [
-            SliverAppBar(
-              pinned: true,
-              snap: true,
-              floating: true,
-              expandedHeight: context.height() * 0.4,
-              flexibleSpace: FlexibleSpaceBar(
-                title: SizedBox(
-                  width: context.width() * 0.4,
-                  child: Text(
-                    'موسیقی ای ایران',
-                    style: boldTextStyle(color: Colors.white, size: 19),
-                    overflow: TextOverflow.ellipsis,
-                    maxLines: 1,
+  @override
+  Widget build(BuildContext context) {
+    return BlocProvider<EditArtPieceCubit>(
+      create: (context) => EditArtPieceCubit(),
+      child: Scaffold(
+        body: Theme(
+            data: ThemeData(
+                primaryColor: ColorPallet.colorPalletDark,
+                primarySwatch: MaterialColor(0xff181830, color),
+                fontFamily: 'Sahel'),
+            child: Container(
+              width: context.width(),
+              child: ListView(
+                physics: const ClampingScrollPhysics(),
+                children: [
+                  const Padding(
+                    padding: EdgeInsets.only(bottom: 1.0),
+                    child: ArcBannerImage("assets/images/sample1.jpg"),
                   ),
-                ),
-                centerTitle: false,
-                background: Stack(
-                  clipBehavior: Clip.none,
-                  alignment: Alignment.center,
-                  children: [
-                    Container(
-                        margin: EdgeInsets.only(bottom: bottom),
-                        child: buildCoverImage()),
-                    // Positioned(
-                    //   right: 50,
-                    //   top: top,
-                    //   child: buildProfileImage(profileHeight),
-                    // ),
-                    Positioned(
-                      left: 40,
-                      bottom: 10,
-                      child: SizedBox(
-                        width: context.width() * 0.4,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            SizedBox(
-                              width: context.width() * 0.4,
-                              child: Row(),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            SliverList(
-              delegate: SliverChildBuilderDelegate((_, int index) {
-                if (index == 0) {
-                  return ProfileListItems(
+                  ProfileListItems(
                     changeState: () {
                       setState(() {});
                     },
-                  );
-                }
-                return const SizedBox(
-                  height: 60,
-                );
-              }, childCount: 2),
-            ),
-          ],
-        ),
+                  ),
+                ],
+              ),
+            )),
       ),
     );
 

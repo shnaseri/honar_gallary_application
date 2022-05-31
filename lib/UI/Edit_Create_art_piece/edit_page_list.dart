@@ -1,11 +1,16 @@
+import 'dart:io';
+
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nb_utils/nb_utils.dart';
+import 'package:path/path.dart';
 
 // import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 // import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 
 import '../../const/color_const.dart';
+import '../../state_managment/create_edit_art_piece/edit_art_piece_cubit.dart';
 import '../Art_piece/art_piece_model.dart';
 // import 'edit_page_list_item2.dart';
 // import 'hover_test.dart';
@@ -31,7 +36,9 @@ class _ProfileListItemsState extends State<ProfileListItems> {
   // bool _isLoading = false;
   // bool _userAborted = false;
   // bool _multiPick = false;
-
+  late bool selected;
+  File? fileSelected;
+  List<File> imageSliderFiles = [];
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   // String? _description;
@@ -104,182 +111,281 @@ class _ProfileListItemsState extends State<ProfileListItems> {
       items[1]: ['mp4', 'mkv', 'avi'],
       items[2]: ['mp3', 'flac']
     };
+    selected = false;
   }
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: context.height() * 1.1,
       width: context.width(),
       child: Form(
         key: _formKey,
-        child: ListView(
-          padding: const EdgeInsets.only(left: 30, right: 30, bottom: 50),
-          physics: const NeverScrollableScrollPhysics(),
-          controller: scrollController,
-          children: [
-            25.height,
-            titleTextField(),
-            const SizedBox(
-              height: 20,
-            ),
-            TextFormField(
-              controller: _dob,
-              validator: (value) {
-                // if (value.isEmpty) return "DOB can't be empty";
-
-                return null;
-              },
-              decoration: InputDecoration(
-                border: OutlineInputBorder(
-                    borderSide: BorderSide(
-                  color: ColorPallet.colorPalletSambucus,
-                )),
-                focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                  color: ColorPallet.colorPalletSambucus,
-                  width: 2,
-                )),
-                prefixIcon: Icon(
-                  Icons.date_range_rounded,
-                  color: ColorPallet.colorPalletNightFog,
-                ),
-
-                labelText: "قیمت",
-                // helperText: "Provide DOB on dd/mm/yyyy",
-                // hintText: "01/01/2020",
+        child: Padding(
+          padding: const EdgeInsets.only(left: 30, right: 30),
+          child: Column(
+            children: [
+              25.height,
+              titleTextField(),
+              const SizedBox(
+                height: 20,
               ),
-            ),
-            const SizedBox(
-              height: 20,
-            ),
+              TextFormField(
+                controller: _dob,
+                validator: (value) {
+                  // if (value.isEmpty) return "DOB can't be empty";
 
-            DropdownButtonFormField(
-              // Initial Value
-              value: dropDownValue,
-
-              // Down Arrow Icon
-              icon: const Icon(Icons.keyboard_arrow_down),
-
-              // Array list of items
-              items: items.map((String items) {
-                return DropdownMenuItem(
-                  value: items,
-                  child: Text(items),
-                );
-              }).toList(),
-              elevation: 5,
-              decoration: const InputDecoration(
-                border: OutlineInputBorder(),
-              ),
-              // After selecting the desired option,it will
-              // change button value to selected value
-              onChanged: (String? newValue) {
-                setState(() {
-                  dropDownValue = newValue!;
-                });
-              },
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            SizedBox(
-              height: 50,
-              child: ElevatedButton(
-                onPressed: () async {
-                  FilePickerResult? result = await FilePicker.platform
-                      .pickFiles(
-                          type: FileType.custom,
-                          allowedExtensions: dataExtensions[dropDownValue]);
-
-                  if (result != null) {
-                    // File file = File(result.files.single.path!);
-                  } else {
-                    // User canceled the picker
-                  }
+                  return null;
                 },
-                style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.resolveWith(
-                        (states) => ColorPallet.colorPalletDark),
-                    padding: MaterialStateProperty.resolveWith(
-                        (states) => const EdgeInsets.symmetric(horizontal: 50)),
-                    elevation: MaterialStateProperty.resolveWith((states) => 2),
-                    shape: MaterialStateProperty.resolveWith((states) =>
-                        RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20)))),
-                child: const Text(
-                  "آپلود فایل",
-                  style: TextStyle(
-                      fontFamily: 'Sahel',
-                      fontSize: 16,
-                      letterSpacing: 1.2,
-                      color: Colors.white),
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(
+                      borderSide: BorderSide(
+                    color: ColorPallet.colorPalletSambucus,
+                  )),
+                  focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                    color: ColorPallet.colorPalletSambucus,
+                    width: 2,
+                  )),
+                  prefixIcon: Icon(
+                    Icons.date_range_rounded,
+                    color: ColorPallet.colorPalletNightFog,
+                  ),
+
+                  labelText: "قیمت",
+                  // helperText: "Provide DOB on dd/mm/yyyy",
+                  // hintText: "01/01/2020",
                 ),
               ),
-            ),
-            const SizedBox(
-              height: 20,
-            ),
+              const SizedBox(
+                height: 20,
+              ),
+              DropdownButtonFormField(
+                // Initial Value
+                value: dropDownValue,
 
-            aboutTextField(),
-            Column(
-              children: [
-                SizedBox(
-                  height: 280,
-                  child: ListView.builder(
-                    scrollDirection: Axis.horizontal,
-                    itemBuilder: (BuildContext context, int index) {
-                      return const ImageSlider();
-                    },
-                    itemCount: artPieces.length,
-                  ),
+                // Down Arrow Icon
+                icon: const Icon(Icons.keyboard_arrow_down),
+
+                // Array list of items
+                items: items.map((String items) {
+                  return DropdownMenuItem(
+                    value: items,
+                    child: Text(items),
+                  );
+                }).toList(),
+                elevation: 5,
+                decoration: const InputDecoration(
+                  border: OutlineInputBorder(),
                 ),
-              ],
-            ),
-
-            // _buildCategoryField(),
-            // _buildImageUrlField(),
-
-            GestureDetector(
-              // onTap: () {},
-              onTap: () => {
-                if (!_formKey.currentState!.validate()) {},
-                _formKey.currentState!.save()
-              },
-              child: Container(
-                width: 40,
+                // After selecting the desired option,it will
+                // change button value to selected value
+                onChanged: (String? newValue) {
+                  if (dropDownValue == newValue) {
+                    return;
+                  }
+                  setState(() {
+                    dropDownValue = newValue!;
+                    selected = false;
+                    fileSelected = null;
+                  });
+                },
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              SizedBox(
                 height: 50,
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    colors: [
-                      Colors.teal,
-                      Colors.teal.shade200,
-                    ],
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                  ),
-                  borderRadius: BorderRadius.circular(20),
-                  boxShadow: const [
-                    BoxShadow(
-                      color: Colors.black12,
-                      offset: Offset(5, 5),
-                      blurRadius: 10,
-                    )
+                child: selected && fileSelected != null
+                    ? Row(
+                        children: [
+                          Expanded(
+                            flex: 4,
+                            child: Text(
+                              basename(fileSelected!.path),
+                              style: TextStyle(
+                                color: ColorPallet.colorPalletDark,
+                                fontWeight: FontWeight.w900,
+                              ),
+                            ),
+                          ),
+                          Expanded(
+                              flex: 2,
+                              child: TextButton(
+                                onPressed: () {
+                                  setState(() {
+                                    selected = false;
+                                    fileSelected = null;
+                                  });
+                                },
+                                child: const Text('حذف'),
+                                style: ButtonStyle(foregroundColor:
+                                    MaterialStateProperty.resolveWith((states) {
+                                  return ColorPallet.colorPalletSambucus;
+                                }), textStyle:
+                                    MaterialStateProperty.resolveWith((states) {
+                                  return TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: ColorPallet.colorPalletDark,
+                                    fontFamily: 'Sahel',
+                                  );
+                                })),
+                              ))
+                        ],
+                      )
+                    : ElevatedButton(
+                        onPressed: () async {
+                          FilePickerResult? result = await FilePicker.platform
+                              .pickFiles(
+                                  type: FileType.custom,
+                                  allowedExtensions:
+                                      dataExtensions[dropDownValue]);
+
+                          if (result != null) {
+                            print(result);
+                            fileSelected = File(result.files.single.path!);
+                            setState(() {
+                              selected = true;
+                            });
+                          } else {
+                            // User canceled the picker
+                            setState(() {
+                              selected = false;
+                            });
+                          }
+                        },
+                        style: ButtonStyle(
+                            backgroundColor: MaterialStateProperty.resolveWith(
+                                (states) => ColorPallet.colorPalletDark),
+                            padding: MaterialStateProperty.resolveWith(
+                                (states) =>
+                                    const EdgeInsets.symmetric(horizontal: 50)),
+                            elevation: MaterialStateProperty.resolveWith(
+                                (states) => 2),
+                            shape: MaterialStateProperty.resolveWith((states) =>
+                                RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(20)))),
+                        child: const Text(
+                          "آپلود فایل",
+                          style: TextStyle(
+                              fontFamily: 'Sahel',
+                              fontSize: 16,
+                              letterSpacing: 1.2,
+                              color: Colors.white),
+                        ),
+                      ),
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              aboutTextField(),
+              if (dropDownValue != items[0])
+                Column(
+                  children: [
+                    SizedBox(
+                      height: 20,
+                    ),
+                    BlocBuilder<EditArtPieceCubit, EditArtPieceState>(
+                      builder: (context, state) {
+                        return SizedBox(
+                          height: 280,
+                          child: ListView.builder(
+                            scrollDirection: Axis.horizontal,
+                            itemBuilder: (BuildContext context, int index) {
+                              if (index == 0) {
+                                if (state is EditArtPieceInitial) {
+                                  return SizedBox(
+                                    width: 300,
+                                    child: AddImageWidget(onChanged: (file) {
+                                      setState(() {
+                                        imageSliderFiles.add(file);
+                                      });
+                                      print(imageSliderFiles.length);
+                                      print(imageSliderFiles);
+                                    }),
+                                  );
+                                }
+                                return Container();
+                              }
+                              return ImageSliderTile(
+                                  imageSliderFiles[index - 1], onRemove: () {
+                                setState(() {
+                                  imageSliderFiles.removeAt(index - 1);
+                                });
+                              }).paddingSymmetric(horizontal: 15);
+                            },
+                            itemCount: (imageSliderFiles.length) + 1,
+                          ),
+                        );
+                      },
+                    ),
                   ],
                 ),
-                child: const Center(
-                  child: Text(
-                    'ذخیره',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 22,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                ),
+              const SizedBox(
+                height: 50,
               ),
-            ),
-          ],
+              BlocBuilder<EditArtPieceCubit, EditArtPieceState>(
+                builder: (context, state) {
+                  return GestureDetector(
+                    // onTap: () {},
+                    onTap: () async {
+                      if (state is! EditArtPieceInitial) {
+                        return;
+                      }
+                      if (fileSelected == null || imageSliderFiles.isEmpty) {
+                        return;
+                      }
+                      await BlocProvider.of<EditArtPieceCubit>(context)
+                          .flowOfCreateArtPiece(fileSelected!, dropDownValue,
+                              _title.text, _about.text, imageSliderFiles,
+                              price: _dob.text.toInt());
+                    },
+                    child: Container(
+                      width: context.width() * 0.7,
+                      height: 50,
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          colors: [
+                            Colors.teal,
+                            Colors.teal.shade200,
+                          ],
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
+                        ),
+                        borderRadius: BorderRadius.circular(20),
+                        boxShadow: const [
+                          BoxShadow(
+                            color: Colors.black12,
+                            offset: Offset(5, 5),
+                            blurRadius: 10,
+                          )
+                        ],
+                      ),
+                      child: state is EditArtPieceInitial
+                          ? const Center(
+                              child: Text(
+                                'ذخیره',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 22,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                            )
+                          : Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: const [
+                                CircularProgressIndicator(
+                                  color: Colors.white,
+                                ),
+                              ],
+                            ),
+                    ),
+                  );
+                },
+              ),
+              70.height,
+            ],
+          ),
         ),
       ),
     );
