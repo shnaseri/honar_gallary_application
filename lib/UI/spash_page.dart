@@ -64,6 +64,15 @@ class SplashPageState extends State<SplashPage> {
                         widthFactor: 0.6,
                         child: Container(
                           decoration: const BoxDecoration(),
+                          child: const Center(
+                            child: Text(
+                              "نگاره",
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 40,
+                                  fontWeight: FontWeight.w900),
+                            ),
+                          ),
                         ),
                       ),
                     ),
