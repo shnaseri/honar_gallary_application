@@ -15,27 +15,33 @@ class InlineResponse2003 {
   InlineResponse2003({
     this.success = true,
     this.valid,
+    this.accessToken,
   });
 
   bool success;
 
   bool valid;
 
+  String accessToken;
+
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       other is InlineResponse2003 &&
           other.success == success &&
-          other.valid == valid;
+          other.valid == valid &&
+          other.accessToken == accessToken;
 
   @override
   int get hashCode =>
       // ignore: unnecessary_parenthesis
       (success == null ? 0 : success.hashCode) +
-      (valid == null ? 0 : valid.hashCode);
+      (valid == null ? 0 : valid.hashCode) +
+      (accessToken == null ? 0 : accessToken.hashCode);
 
   @override
-  String toString() => 'InlineResponse2003[success=$success, valid=$valid]';
+  String toString() =>
+      'InlineResponse2003[success=$success, valid=$valid, accessToken=$accessToken]';
 
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
@@ -44,6 +50,9 @@ class InlineResponse2003 {
     }
     if (valid != null) {
       json[r'valid'] = valid;
+    }
+    if (accessToken != null) {
+      json[r'access_token'] = accessToken;
     }
     return json;
   }
@@ -57,6 +66,7 @@ class InlineResponse2003 {
       return InlineResponse2003(
         success: mapValueOfType<bool>(json, r'success'),
         valid: mapValueOfType<bool>(json, r'valid'),
+        accessToken: mapValueOfType<String>(json, r'access_token'),
       );
     }
     return null;

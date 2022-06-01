@@ -485,7 +485,7 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.0"
-  honar_api:
+  honar_api_v3:
     dependency: "direct main"
     description:
       path: api

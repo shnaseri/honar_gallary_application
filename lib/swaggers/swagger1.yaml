@@ -317,6 +317,8 @@ paths:
                 default: true
               valid:
                 type: boolean
+              access_token:
+                type: string
         '404':
           description: ''
           schema:

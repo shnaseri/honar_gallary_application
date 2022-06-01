@@ -1,9 +1,9 @@
-# honar_api.model.Register
+# honar_api_v3.model.Register
 
 ## Load the model package
 
 ```dart
-import 'package:honar_api/api.dart';
+import 'package:honar_api_v3/api.dart';
 ```
 
 ## Properties
