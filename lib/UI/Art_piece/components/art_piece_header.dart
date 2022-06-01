@@ -50,7 +50,17 @@ class MovieDetailHeader extends StatelessWidget {
       children: [
         Padding(
           padding: const EdgeInsets.only(bottom: 165.0),
-          child: ArcBannerImageOnline(movie.bannerUrl),
+          child: GestureDetector(
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => PlayerContentPage(
+                              type: "picture",
+                              content: artPiece.cover.image,
+                            )));
+              },
+              child: ArcBannerImageOnline(movie.bannerUrl)),
         ),
         Positioned(
           bottom: 0,
