@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:path/path.dart';
@@ -11,10 +12,10 @@ import 'package:path/path.dart';
 
 import '../../const/color_const.dart';
 import '../../state_managment/create_edit_art_piece/edit_art_piece_cubit.dart';
-import '../Art_piece/art_piece_model.dart';
 // import 'edit_page_list_item2.dart';
 // import 'hover_test.dart';
 // import 'image_card.dart';
+import '../Authentication/authentication_page.dart';
 import 'image_list_view.dart';
 
 class ProfileListItems extends StatefulWidget {
@@ -55,41 +56,6 @@ class _ProfileListItemsState extends State<ProfileListItems> {
   final TextEditingController _title = TextEditingController();
   final TextEditingController _about = TextEditingController();
 
-  static List<ArtPiece> artPieces = [
-    ArtPiece(
-      id: 1,
-      name: 'بازی مافیا',
-      description: 'برگزاری بازی مافیا به صورت گروهی به همراه جایزه',
-      imageUrl: '',
-      discount: 10,
-      ownerId: 2,
-      startTime: DateTime(2020),
-      finishTime: DateTime(2021),
-      // comments: [],
-    ),
-    ArtPiece(
-      id: 1,
-      name: 'بازی مافیا',
-      description: 'برگزاری بازی مافیا به صورت گروهی به همراه جایزه',
-      imageUrl: '',
-      discount: 10,
-      ownerId: 2,
-      startTime: DateTime(2020),
-      finishTime: DateTime(2021),
-      // comments: [],
-    ),
-    ArtPiece(
-      id: 1,
-      name: 'بازی مافیا',
-      description: 'برگزاری بازی مافیا به صورت گروهی به همراه جایزه',
-      imageUrl: '',
-      discount: 10,
-      ownerId: 2,
-      startTime: DateTime(2020),
-      finishTime: DateTime(2021),
-      // comments: [],
-    ),
-  ];
 
   // Initial Selected Value
   String dropDownValue = 'عکس';
@@ -136,6 +102,10 @@ class _ProfileListItemsState extends State<ProfileListItems> {
 
                   return null;
                 },
+                keyboardType: TextInputType.number,
+                inputFormatters: <TextInputFormatter>[
+                  FilteringTextInputFormatter.digitsOnly
+                ],
                 decoration: InputDecoration(
                   border: OutlineInputBorder(
                       borderSide: BorderSide(
@@ -147,7 +117,7 @@ class _ProfileListItemsState extends State<ProfileListItems> {
                     width: 2,
                   )),
                   prefixIcon: Icon(
-                    Icons.date_range_rounded,
+                    Icons.monetization_on_outlined,
                     color: ColorPallet.colorPalletNightFog,
                   ),
 
@@ -286,6 +256,20 @@ class _ProfileListItemsState extends State<ProfileListItems> {
                     ),
                     BlocBuilder<EditArtPieceCubit, EditArtPieceState>(
                       builder: (context, state) {
+                        print("---- current state -----");
+                        print(state);
+                        if (state is EditArtPieceSuccessfully) {
+                          imageSliderFiles = [];
+                          _title.clear();
+                          _dob.clear();
+                          _about.clear();
+                          fileSelected = null;
+                          selected = false;
+                          setState(() {});
+                          showSnackBar(context, "با موفقیت انجام شد");
+                          BlocProvider.of<EditArtPieceCubit>(context)
+                              .emit(EditArtPieceInitial());
+                        }
                         return SizedBox(
                           height: 280,
                           child: ListView.builder(
@@ -325,19 +309,31 @@ class _ProfileListItemsState extends State<ProfileListItems> {
               ),
               BlocBuilder<EditArtPieceCubit, EditArtPieceState>(
                 builder: (context, state) {
+                  if (state is EditArtPieceSuccessfully) {
+                    imageSliderFiles = [];
+                    _title.text = "";
+                    _dob.text = "";
+                    _about.text = "";
+                    fileSelected = null;
+                    selected = false;
+
+                    BlocProvider.of<EditArtPieceCubit>(context).resetState();
+                  }
                   return GestureDetector(
                     // onTap: () {},
                     onTap: () async {
                       if (state is! EditArtPieceInitial) {
                         return;
                       }
-                      if (fileSelected == null || imageSliderFiles.isEmpty) {
+                      if (fileSelected == null ||
+                          (imageSliderFiles.isEmpty &&
+                              dropDownValue != items[0])) {
                         return;
                       }
                       await BlocProvider.of<EditArtPieceCubit>(context)
                           .flowOfCreateArtPiece(fileSelected!, dropDownValue,
-                              _title.text, _about.text, imageSliderFiles,
-                              price: _dob.text.toInt());
+                          _title.text, _about.text, imageSliderFiles,
+                          price: _dob.text.toInt());
                     },
                     child: Container(
                       width: context.width() * 0.7,
@@ -362,23 +358,23 @@ class _ProfileListItemsState extends State<ProfileListItems> {
                       ),
                       child: state is EditArtPieceInitial
                           ? const Center(
-                              child: Text(
-                                'ذخیره',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 22,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              ),
-                            )
+                        child: Text(
+                          'ذخیره',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 22,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      )
                           : Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: const [
-                                CircularProgressIndicator(
-                                  color: Colors.white,
-                                ),
-                              ],
-                            ),
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: const [
+                          CircularProgressIndicator(
+                            color: Colors.white,
+                          ),
+                        ],
+                      ),
                     ),
                   );
                 },

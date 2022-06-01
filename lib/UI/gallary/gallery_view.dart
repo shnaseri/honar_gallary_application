@@ -178,6 +178,18 @@ class _GalleryViewState extends State<GalleryView> {
                             ),
                           ),
                           Positioned(
+                            top: 90,
+                            left: 20,
+                            child: GestureDetector(
+                              onTap: () {},
+                              child: Icon(
+                                Icons.business_center_sharp,
+                                color: ColorPallet.colorPalletNightFog,
+                                size: 25,
+                              ),
+                            ),
+                          ),
+                          Positioned(
                             top: 0,
                             left: 0,
                             right: 0,
@@ -197,26 +209,26 @@ class _GalleryViewState extends State<GalleryView> {
                 const SizedBox(
                   height: 15,
                 ),
-                Container(
-                  height: 45,
-                  margin: const EdgeInsets.symmetric(horizontal: 25),
-                  padding: const EdgeInsets.symmetric(horizontal: 5),
-                  decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(10)),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      const Text(
-                        " صفحه تجاری این کاربر باز است ",
-                        style: TextStyle(
-                            color: Colors.black, fontWeight: FontWeight.w900),
-                      ),
-                      ElevatedButton(
-                          onPressed: () {}, child: const Text("مشاهده"))
-                    ],
-                  ),
-                ),
+                // Container(
+                //   height: 45,
+                //   margin: const EdgeInsets.symmetric(horizontal: 25),
+                //   padding: const EdgeInsets.symmetric(horizontal: 5),
+                //   decoration: BoxDecoration(
+                //       color: Colors.white,
+                //       borderRadius: BorderRadius.circular(10)),
+                //   child: Row(
+                //     mainAxisAlignment: MainAxisAlignment.spaceAround,
+                //     children: [
+                //       const Text(
+                //         " صفحه تجاری این کاربر باز است ",
+                //         style: TextStyle(
+                //             color: Colors.black, fontWeight: FontWeight.w900),
+                //       ),
+                //       ElevatedButton(
+                //           onPressed: () {}, child: const Text("مشاهده"))
+                //     ],
+                //   ),
+                // ),
                 const SizedBox(
                   height: 5,
                 ),

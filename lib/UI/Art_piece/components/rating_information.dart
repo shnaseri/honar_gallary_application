@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:honar_api_v3/api.dart';
+import 'package:honar_gallary/UI/utils/numeral/Numeral.dart';
 import 'package:honar_gallary/const/color_const.dart';
-
-import 'models.dart';
 
 class RatingInformation extends StatelessWidget {
   const RatingInformation(this.movie, {Key? key}) : super(key: key);
-  final Movie movie;
+  final ArtPiece movie;
 
   // Widget _buildRatingBar(ThemeData theme) {
   //   var stars = <Widget>[];
@@ -33,20 +33,20 @@ class RatingInformation extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
+        Text(
+          ' لایک ها',
+          style: ratingCaptionStyle,
+        ),
+        const SizedBox(height: 4.0),
         Container(
           padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
           child: Text(
-            movie.rating.toString(),
+            movie.likeCount ?? "رای داده نشده",
             style: textTheme.titleMedium!.copyWith(
               fontWeight: FontWeight.bold,
               color: Colors.amber,
             ),
           ),
-        ),
-        const SizedBox(height: 4.0),
-        Text(
-          'تعداد لایک ها',
-          style: ratingCaptionStyle,
         ),
       ],
     );
@@ -55,25 +55,28 @@ class RatingInformation extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
+        Text(
+          'قیمت',
+          style: ratingCaptionStyle,
+        ),
+        const SizedBox(
+          height: 4,
+        ),
         Container(
           decoration: BoxDecoration(
               color: ColorPallet.colorPalletNightFog,
               borderRadius: BorderRadius.circular(12)),
           padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
           child: Text(
-            "9.0",
+            Numeral(movie.price).toString(),
             style: textTheme.titleMedium!.copyWith(
               fontWeight: FontWeight.bold,
               color: Colors.white,
+              fontSize: 13,
             ),
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
           ),
-        ),
-        const SizedBox(
-          height: 4,
-        ),
-        Text(
-          'قیمت',
-          style: ratingCaptionStyle,
         ),
       ],
     );
@@ -81,28 +84,34 @@ class RatingInformation extends StatelessWidget {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.end,
-          children: [
-            numericRating,
-            const SizedBox(width: 16.0),
-            starRating,
-          ],
-        ),
-        const SizedBox(width: 26.0),
-        Align(
-          alignment: Alignment.center,
-          child: Container(
-            padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
-            decoration: BoxDecoration(
-                color: Colors.red, borderRadius: BorderRadius.circular(12)),
-            child: const Text(
-              'بمرانی',
-              style:
-                  TextStyle(fontWeight: FontWeight.w900, color: Colors.white),
-            ),
+        Expanded(
+          flex: 2,
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              numericRating,
+              const SizedBox(width: 16.0),
+              Expanded(child: starRating),
+            ],
           ),
         ),
+        const SizedBox(width: 26.0),
+        // Expanded(
+        //   flex: 1,
+        //   child: Align(
+        //     alignment: Alignment.center,
+        //     child: Container(
+        //       padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+        //       decoration: BoxDecoration(
+        //           color: Colors.red, borderRadius: BorderRadius.circular(12)),
+        //       child: const Text(
+        //         'بمرانی',
+        //         style:
+        //             TextStyle(fontWeight: FontWeight.w900, color: Colors.white),
+        //       ),
+        //     ),
+        //   ),
+        // ),
       ],
     );
   }

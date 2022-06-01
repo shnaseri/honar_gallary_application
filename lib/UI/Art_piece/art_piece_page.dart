@@ -27,6 +27,7 @@ class _ArtPiecePageState extends State<ArtPiecePage> {
     starRating: 4,
     categories: ['سنتی', 'حماسی'],
     storyline: 'عججججب صوحبتی کردن چچچچیززززززز',
+    price: 0,
     photoUrls: [
       'assets/images/1.png',
       'assets/images/2.png',
@@ -77,6 +78,10 @@ class _ArtPiecePageState extends State<ArtPiecePage> {
               BlocProvider.of<ArtPieceCubit>(context).fetchArtPiece();
             }
             if (state is ArtPieceLoaded) {
+              testMovie.title = state.artPiece.title;
+              testMovie.storyline = state.artPiece.description;
+              testMovie.price = state.artPiece.price;
+              testMovie.bannerUrl = state.artPiece.cover.image;
               return Container(
                 height: MediaQuery.of(context).size.height,
                 width: MediaQuery.of(context).size.width,
@@ -95,7 +100,7 @@ class _ArtPiecePageState extends State<ArtPiecePage> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      MovieDetailHeader(testMovie),
+                      MovieDetailHeader(testMovie, state.artPiece),
 
                       ElevatedButton(
                               onPressed: () {
@@ -130,10 +135,10 @@ class _ArtPiecePageState extends State<ArtPiecePage> {
                           },
                           child: const Text("نظرات"),
                           style: ButtonStyle(foregroundColor:
-                              MaterialStateProperty.resolveWith((states) {
+                          MaterialStateProperty.resolveWith((states) {
                             return Colors.white;
                           }), textStyle:
-                              MaterialStateProperty.resolveWith((states) {
+                          MaterialStateProperty.resolveWith((states) {
                             return const TextStyle(
                                 fontWeight: FontWeight.bold,
                                 color: Colors.white,

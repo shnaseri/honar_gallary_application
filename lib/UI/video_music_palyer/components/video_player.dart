@@ -17,7 +17,7 @@ class _MoviePlayerPageState extends State<MoviePlayerPage> {
     super.initState();
     flickManager = FlickManager(
         videoPlayerController: VideoPlayerController.network(
-            "http://188.121.110.151:9006/art-pieces/2022-5-27/2022-05-27_11.41.47.mp4?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=negare-user%2F20220527%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20220527T071210Z&X-Amz-Expires=604800&X-Amz-SignedHeaders=host&X-Amz-Signature=fd222d9045e43f1fe158ad57c1b4f2ad274ebaef17982d0566b52bce52b6aa93",
+          widget.content,
             videoPlayerOptions: VideoPlayerOptions(
               allowBackgroundPlayback: true,
             )),

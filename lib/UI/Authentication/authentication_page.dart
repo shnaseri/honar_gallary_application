@@ -225,20 +225,20 @@ class _AuthenticationPageState extends State<AuthenticationPage> {
       ),
     );
   }
+}
 
-  void showSnackBar(BuildContext context, String text) {
-    final snackBar = SnackBar(
-      padding: const EdgeInsets.only(left: 20),
-      content: Text(
-        text,
-        textAlign: TextAlign.start,
-      ),
-      backgroundColor: (Colors.black12),
-      action: SnackBarAction(
-        label: 'dismiss',
-        onPressed: () {},
-      ),
-    );
-    ScaffoldMessenger.of(context).showSnackBar(snackBar);
-  }
+void showSnackBar(BuildContext context, String text) {
+  final snackBar = SnackBar(
+    padding: const EdgeInsets.only(left: 20),
+    content: Text(
+      text,
+      textAlign: TextAlign.start,
+    ),
+    backgroundColor: (Colors.black12),
+    action: SnackBarAction(
+      label: 'dismiss',
+      onPressed: () {},
+    ),
+  );
+  ScaffoldMessenger.of(context).showSnackBar(snackBar);
 }
