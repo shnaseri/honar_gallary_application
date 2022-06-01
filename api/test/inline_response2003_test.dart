@@ -8,7 +8,7 @@
 // ignore_for_file: constant_identifier_names
 // ignore_for_file: lines_longer_than_80_chars
 
-import 'package:honar_api/api.dart';
+import 'package:honar_api_v3/api.dart';
 import 'package:test/test.dart';
 
 // tests for InlineResponse2003
@@ -23,6 +23,11 @@ void main() {
 
     // bool valid
     test('to test the property `valid`', () async {
+      // TODO
+    });
+
+    // String accessToken
+    test('to test the property `accessToken`', () async {
       // TODO
     });
   });

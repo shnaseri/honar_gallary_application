@@ -1,11 +1,12 @@
-# honar_api.model.ArtPieceCover
+# honar_api_v3.model.ArtPieceCover
 
 ## Load the model package
 ```dart
-import 'package:honar_api/api.dart';
+import 'package:honar_api_v3/api.dart';
 ```
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **cover** | **int** |  |

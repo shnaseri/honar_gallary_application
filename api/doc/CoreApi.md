@@ -1,9 +1,9 @@
-# honar_api.api.CoreApi
+# honar_api_v3.api.CoreApi
 
 ## Load the API package
 
 ```dart
-import 'package:honar_api/api.dart';
+import 'package:honar_api_v3/api.dart';
 ```
 
 All URIs are relative to *http://188.121.110.151:8000/api*
@@ -27,7 +27,7 @@ PATCH** /core/image/upload/{id}/ |
 ### Example
 
 ```dart
-import 'package:honar_api/api.dart';
+import 'package:honar_api_v3/api.dart';
 
 // TODO Configure API key authorization: Bearer
 //defaultApiClient.getAuthentication<ApiKeyAuth>('Bearer').apiKey = 'YOUR_API_KEY';
@@ -75,7 +75,7 @@ Name | Type | Description  | Notes
 
 ### Example
 ```dart
-import 'package:honar_api/api.dart';
+import 'package:honar_api_v3/api.dart';
 // TODO Configure API key authorization: Bearer
 //defaultApiClient.getAuthentication<ApiKeyAuth>('Bearer').apiKey = 'YOUR_API_KEY';
 // uncomment below to setup prefix (e.g. Bearer) for API key, if needed
@@ -120,7 +120,7 @@ Name | Type | Description  | Notes
 
 ### Example
 ```dart
-import 'package:honar_api/api.dart';
+import 'package:honar_api_v3/api.dart';
 // TODO Configure API key authorization: Bearer
 //defaultApiClient.getAuthentication<ApiKeyAuth>('Bearer').apiKey = 'YOUR_API_KEY';
 // uncomment below to setup prefix (e.g. Bearer) for API key, if needed
@@ -166,7 +166,7 @@ Examines request and allows certain fields to be expanded within the list view.
 
 ### Example
 ```dart
-import 'package:honar_api/api.dart';
+import 'package:honar_api_v3/api.dart';
 // TODO Configure API key authorization: Bearer
 //defaultApiClient.getAuthentication<ApiKeyAuth>('Bearer').apiKey = 'YOUR_API_KEY';
 // uncomment below to setup prefix (e.g. Bearer) for API key, if needed
@@ -207,7 +207,7 @@ This endpoint does not need any parameter.
 
 ### Example
 ```dart
-import 'package:honar_api/api.dart';
+import 'package:honar_api_v3/api.dart';
 // TODO Configure API key authorization: Bearer
 //defaultApiClient.getAuthentication<ApiKeyAuth>('Bearer').apiKey = 'YOUR_API_KEY';
 // uncomment below to setup prefix (e.g. Bearer) for API key, if needed
@@ -254,7 +254,7 @@ Name | Type | Description  | Notes
 
 ### Example
 ```dart
-import 'package:honar_api/api.dart';
+import 'package:honar_api_v3/api.dart';
 // TODO Configure API key authorization: Bearer
 //defaultApiClient.getAuthentication<ApiKeyAuth>('Bearer').apiKey = 'YOUR_API_KEY';
 // uncomment below to setup prefix (e.g. Bearer) for API key, if needed
@@ -299,7 +299,7 @@ Name | Type | Description  | Notes
 
 ### Example
 ```dart
-import 'package:honar_api/api.dart';
+import 'package:honar_api_v3/api.dart';
 // TODO Configure API key authorization: Bearer
 //defaultApiClient.getAuthentication<ApiKeyAuth>('Bearer').apiKey = 'YOUR_API_KEY';
 // uncomment below to setup prefix (e.g. Bearer) for API key, if needed

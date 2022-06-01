@@ -1,7 +1,9 @@
 import 'package:bloc/bloc.dart';
-import 'package:honar_api/api.dart';
+import 'package:honar_api_v3/api.dart';
 import 'package:honar_gallary/logic/consts.dart';
 import 'package:meta/meta.dart';
+
+import '../../logic/general_values.dart';
 
 part 'otp_state.dart';
 
@@ -20,6 +22,10 @@ class OtpCubit extends Cubit<OtpState> {
           userId.toString(), OtpCode(otpCode: code));
       if (response2003.success && response2003.valid) {
         emit(OtpLoadedCodeState());
+        ConfigGeneralValues.getInstance().putToken(response2003.accessToken);
+        interfaceOfUser.getAuthentication<ApiKeyAuth>(r'Bearer')
+          ..apiKeyPrefix = 'Bearer'
+          ..apiKey = response2003.accessToken;
         return true;
       } else {
         emit(OtpBadCode());

@@ -1,8 +1,8 @@
-# honar_api.model.InlineResponse200
+# honar_api_v3.model.InlineResponse200
 
 ## Load the model package
 ```dart
-import 'package:honar_api/api.dart';
+import 'package:honar_api_v3/api.dart';
 ```
 
 ## Properties
