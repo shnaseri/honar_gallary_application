@@ -124,28 +124,32 @@ class _ArtPiecePageState extends State<ArtPiecePage> {
                       // ActorScroller(testMovie.actors),
                       const SizedBox(height: 60.0),
 
-                      Padding(
-                        padding: const EdgeInsets.only(right: 10, bottom: 50),
-                        child: TextButton(
-                          onPressed: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (_) => const CommentPage()));
-                          },
-                          child: const Text("نظرات"),
-                          style: ButtonStyle(foregroundColor:
-                          MaterialStateProperty.resolveWith((states) {
-                            return Colors.white;
-                          }), textStyle:
-                          MaterialStateProperty.resolveWith((states) {
-                            return const TextStyle(
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white,
-                                fontFamily: 'Sahel',
-                                fontSize: 22);
-                          })),
-                        ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(right: 10),
+                            child: const Text(
+                              "نظرات",
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 20),
+                            ),
+                          ),
+                          TextButton(
+                            onPressed: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (_) => const CommentPage()));
+                            },
+                            child: const Text("مشاهده همه"),
+                          ),
+                        ],
+                      ),
+                      SizedBox(
+                        height: 20,
                       )
                     ],
                   ),

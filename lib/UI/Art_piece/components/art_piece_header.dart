@@ -71,7 +71,7 @@ class MovieDetailHeader extends StatelessWidget {
                               )));
                 },
                 child: Poster(
-                  movie.posterUrl,
+                  artPiece,
                   height: 180.0,
                 ),
               ),
