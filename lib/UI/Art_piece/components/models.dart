@@ -1,7 +1,7 @@
 class Movie {
-  Movie({
-    required this.bannerUrl,
-    required this.posterUrl,
+  Movie(
+      {required this.bannerUrl,
+      required this.posterUrl,
       required this.title,
       required this.rating,
       required this.starRating,

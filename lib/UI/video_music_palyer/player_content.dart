@@ -43,7 +43,7 @@ class _PlayerContentPageState extends State<PlayerContentPage> {
   }
 
   Widget playerContentSelector() {
-    if (widget.type == "movie") {
+    if (widget.type == "video") {
       return Directionality(
         textDirection: TextDirection.ltr,
         child: MoviePlayerPage(

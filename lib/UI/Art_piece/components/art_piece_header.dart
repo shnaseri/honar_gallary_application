@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:honar_api_v3/api.dart';
 import 'package:honar_gallary/UI/Art_piece/components/poster.dart';
 import 'package:honar_gallary/UI/Art_piece/components/rating_information.dart';
+import 'package:honar_gallary/UI/video_music_palyer/components/arc_banner.dart';
 import 'package:honar_gallary/UI/video_music_palyer/player_content.dart';
 import 'package:honar_gallary/const/color_const.dart';
 
-import 'arc_banner_image.dart';
 import 'models.dart';
 
 class MovieDetailHeader extends StatelessWidget {
-  const MovieDetailHeader(this.movie, {Key? key}) : super(key: key);
+  const MovieDetailHeader(this.movie, this.artPiece, {Key? key})
+      : super(key: key);
   final Movie movie;
+  final ArtPiece artPiece;
 
   List<Widget> _buildCategoryChips(TextTheme textTheme) {
     return movie.categories.map((category) {
@@ -37,7 +40,7 @@ class MovieDetailHeader extends StatelessWidget {
               fontWeight: FontWeight.bold, fontStyle: FontStyle.italic),
         ),
         const SizedBox(height: 8.0),
-        RatingInformation(movie),
+        RatingInformation(artPiece),
         const SizedBox(height: 12.0),
         Row(children: _buildCategoryChips(textTheme)),
       ],
@@ -47,7 +50,7 @@ class MovieDetailHeader extends StatelessWidget {
       children: [
         Padding(
           padding: const EdgeInsets.only(bottom: 165.0),
-          child: ArcBannerImage(movie.bannerUrl),
+          child: ArcBannerImageOnline(movie.bannerUrl),
         ),
         Positioned(
           bottom: 0,
@@ -62,9 +65,9 @@ class MovieDetailHeader extends StatelessWidget {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => const PlayerContentPage(
-                                type: "picture",
-                                content: "https://picsum.photos/id/1/200/300",
+                          builder: (context) => PlayerContentPage(
+                                type: artPiece.type,
+                                content: artPiece.url,
                               )));
                 },
                 child: Poster(

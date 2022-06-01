@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:honar_api_v3/api.dart';
 import 'package:honar_gallary/UI/utils/numeral/Numeral.dart';
 import 'package:honar_gallary/const/color_const.dart';
 
-import 'models.dart';
-
 class RatingInformation extends StatelessWidget {
   const RatingInformation(this.movie, {Key? key}) : super(key: key);
-  final Movie movie;
+  final ArtPiece movie;
 
   // Widget _buildRatingBar(ThemeData theme) {
   //   var stars = <Widget>[];
@@ -42,7 +41,7 @@ class RatingInformation extends StatelessWidget {
         Container(
           padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
           child: Text(
-            movie.rating.toString(),
+            movie.likeCount ?? "رای داده نشده",
             style: textTheme.titleMedium!.copyWith(
               fontWeight: FontWeight.bold,
               color: Colors.amber,

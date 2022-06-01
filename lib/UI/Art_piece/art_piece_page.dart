@@ -81,6 +81,7 @@ class _ArtPiecePageState extends State<ArtPiecePage> {
               testMovie.title = state.artPiece.title;
               testMovie.storyline = state.artPiece.description;
               testMovie.price = state.artPiece.price;
+              testMovie.bannerUrl = state.artPiece.cover.image;
               return Container(
                 height: MediaQuery.of(context).size.height,
                 width: MediaQuery.of(context).size.width,
@@ -99,19 +100,19 @@ class _ArtPiecePageState extends State<ArtPiecePage> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      MovieDetailHeader(testMovie),
+                      MovieDetailHeader(testMovie, state.artPiece),
 
                       ElevatedButton(
-                          onPressed: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (_) => ChatPage(
-                                        contact:
-                                        User(fullName: "hosein", id: 1),
-                                        index: 1)));
-                          },
-                          child: Text("صفحه چت"))
+                              onPressed: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (_) => ChatPage(
+                                            contact:
+                                                User(fullName: "hosein", id: 1),
+                                            index: 1)));
+                              },
+                              child: Text("صفحه چت"))
                           .paddingAll(10),
 
                       Padding(
