@@ -18,9 +18,11 @@ doc/InlineResponse200.md
 doc/InlineResponse2001.md
 doc/InlineResponse2002.md
 doc/InlineResponse2003.md
+doc/InlineResponse2004.md
 doc/InlineResponse404.md
 doc/InlineResponse406.md
 doc/Message.md
+doc/OtpCode.md
 doc/Register.md
 doc/TokenObtainPair.md
 doc/TokenRefresh.md
@@ -52,9 +54,11 @@ lib/model/inline_response200.dart
 lib/model/inline_response2001.dart
 lib/model/inline_response2002.dart
 lib/model/inline_response2003.dart
+lib/model/inline_response2004.dart
 lib/model/inline_response404.dart
 lib/model/inline_response406.dart
 lib/model/message.dart
+lib/model/otp_code.dart
 lib/model/register.dart
 lib/model/token_obtain_pair.dart
 lib/model/token_refresh.dart
@@ -76,10 +80,12 @@ test/image_serializer_test.dart
 test/inline_response2001_test.dart
 test/inline_response2002_test.dart
 test/inline_response2003_test.dart
+test/inline_response2004_test.dart
 test/inline_response200_test.dart
 test/inline_response404_test.dart
 test/inline_response406_test.dart
 test/message_test.dart
+test/otp_code_test.dart
 test/register_test.dart
 test/token_obtain_pair_test.dart
 test/token_refresh_test.dart

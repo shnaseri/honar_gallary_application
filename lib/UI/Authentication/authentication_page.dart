@@ -1,6 +1,7 @@
 import 'package:animated_login/animated_login.dart';
 import 'package:flutter/material.dart';
 import 'package:honar_api/api.dart';
+import 'package:honar_gallary/UI/Authentication/otp/otp_page.dart';
 import 'package:honar_gallary/const/color_const.dart';
 import 'package:honar_gallary/logic/consts.dart';
 import 'package:honar_gallary/logic/extenstion_methods.dart';
@@ -169,17 +170,24 @@ class _AuthenticationPageState extends State<AuthenticationPage> {
                   password: login.password,
                   firstName: "s",
                   lastName: login.name));
-              AccessRefresh token = await authApi.authLoginCreate(
-                  TokenObtainPair(
-                      email: login.email, password: login.password));
-              Navigator.pushReplacementNamed(context, otpPagePath);
-              ConfigGeneralValues.getInstance().putToken(token.access);
-              interfaceOfUser.getAuthentication<ApiKeyAuth>(r'Bearer')
-                ..apiKeyPrefix = 'Bearer'
-                ..apiKey = token.access;
+              try {
+                await authApi.authSendOtpCodeCreate(userId.id.toString());
+              } catch (e) {}
+              // AccessRefresh token = await authApi.authLoginCreate(
+              //     TokenObtainPair(
+              //         email: login.email, password: login.password));
+              Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                      builder: (_) => OTPPage(userId: userId.id)));
+              // ConfigGeneralValues.getInstance().putToken(token.access);
+              // interfaceOfUser.getAuthentication<ApiKeyAuth>(r'Bearer')
+              //   ..apiKeyPrefix = 'Bearer'
+              //   ..apiKey = token.access;
 
               return "";
             } catch (e) {
+              print(e);
               showSnackBar(context, "اطلاعات را به درستی وارد نمایید.");
               return "اطلاعات را به درستی وارد نمایید.";
             }

@@ -1,17 +1,18 @@
+---
 swagger: '2.0'
 info:
   title: Snippets API
   description: Test description
-  termsOfService: 'https://www.google.com/policies/terms/'
+  termsOfService: https://www.google.com/policies/terms/
   contact:
     email: contact@snippets.local
   license:
     name: BSD License
   version: v1
-host: '188.121.110.151:8000'
+host: 188.121.110.151:8000
 schemes:
   - http
-basePath: /api
+basePath: "/api"
 consumes:
   - application/json
 produces:
@@ -24,7 +25,7 @@ securityDefinitions:
 security:
   - Bearer: [ ]
 paths:
-  /art/art-piece/cover/:
+  "/art/art-piece/cover/":
     post:
       operationId: art_art-piece_cover_create
       description: ''
@@ -33,7 +34,7 @@ paths:
           in: body
           required: true
           schema:
-            $ref: '#/definitions/ArtPieceCover'
+            "$ref": "#/definitions/ArtPieceCover"
       responses:
         '200':
           description: ''
@@ -56,7 +57,7 @@ paths:
       tags:
         - art
     parameters: [ ]
-  '/art/art-piece/{id}/':
+  "/art/art-piece/{id}/":
     get:
       operationId: art_art-piece_read
       description: ''
@@ -65,7 +66,7 @@ paths:
         '200':
           description: ''
           schema:
-            $ref: '#/definitions/ArtPiece'
+            "$ref": "#/definitions/ArtPiece"
         '404':
           description: ''
           schema:
@@ -85,7 +86,7 @@ paths:
           in: body
           required: true
           schema:
-            $ref: '#/definitions/ArtPieceDetail'
+            "$ref": "#/definitions/ArtPieceDetail"
       responses:
         '200':
           description: ''
@@ -111,7 +112,7 @@ paths:
         in: path
         required: true
         type: string
-  '/art/art-piece/{id}/content/':
+  "/art/art-piece/{id}/content/":
     put:
       operationId: art_art-piece_content_update
       description: ''
@@ -120,7 +121,7 @@ paths:
           in: body
           required: true
           schema:
-            $ref: '#/definitions/ArtPieceContent'
+            "$ref": "#/definitions/ArtPieceContent"
       responses:
         '200':
           description: ''
@@ -157,7 +158,7 @@ paths:
         in: path
         required: true
         type: string
-  '/art/art-piece/{id}/like/':
+  "/art/art-piece/{id}/like/":
     put:
       operationId: art_art-piece_like_update
       description: ''
@@ -187,7 +188,7 @@ paths:
         in: path
         required: true
         type: string
-  /auth/login/:
+  "/auth/login/":
     post:
       operationId: auth_login_create
       description: ''
@@ -196,12 +197,12 @@ paths:
           in: body
           required: true
           schema:
-            $ref: '#/definitions/TokenObtainPair'
+            "$ref": "#/definitions/TokenObtainPair"
       responses:
         '201':
           description: ''
           schema:
-            $ref: '#/definitions/AccessRefresh'
+            "$ref": "#/definitions/AccessRefresh"
         '401':
           description: ''
           schema:
@@ -216,7 +217,7 @@ paths:
       tags:
         - auth
     parameters: [ ]
-  /auth/logout/:
+  "/auth/logout/":
     post:
       operationId: auth_logout_create
       description: |-
@@ -227,16 +228,16 @@ paths:
           in: body
           required: true
           schema:
-            $ref: '#/definitions/TokenRefresh'
+            "$ref": "#/definitions/TokenRefresh"
       responses:
         '201':
           description: ''
           schema:
-            $ref: '#/definitions/TokenRefresh'
+            "$ref": "#/definitions/TokenRefresh"
       tags:
         - auth
     parameters: [ ]
-  /auth/register/:
+  "/auth/register/":
     post:
       operationId: auth_register_create
       description: ''
@@ -245,12 +246,12 @@ paths:
           in: body
           required: true
           schema:
-            $ref: '#/definitions/Register'
+            "$ref": "#/definitions/Register"
       responses:
         '201':
           description: ''
           schema:
-            $ref: '#/definitions/UserId'
+            "$ref": "#/definitions/UserId"
         '406':
           description: ''
           schema:
@@ -265,7 +266,74 @@ paths:
       tags:
         - auth
     parameters: [ ]
-  /auth/verify/:
+  "/auth/send-otp-code/{id}/":
+    post:
+      operationId: auth_send-otp-code_create
+      description: ''
+      parameters: [ ]
+      responses:
+        '200':
+          description: ''
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                default: true
+        '404':
+          description: ''
+          schema:
+            type: object
+            properties:
+              detail:
+                type: string
+                readOnly: true
+                default: Not Found.
+      tags:
+        - auth
+    parameters:
+      - name: id
+        in: path
+        required: true
+        type: string
+  "/auth/verify-otp-code/{id}/":
+    post:
+      operationId: auth_verify-otp-code_create
+      description: ''
+      parameters:
+        - name: data
+          in: body
+          required: true
+          schema:
+            "$ref": "#/definitions/OtpCode"
+      responses:
+        '200':
+          description: ''
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                default: true
+              valid:
+                type: boolean
+        '404':
+          description: ''
+          schema:
+            type: object
+            properties:
+              detail:
+                type: string
+                readOnly: true
+                default: Not Found.
+      tags:
+        - auth
+    parameters:
+      - name: id
+        in: path
+        required: true
+        type: string
+  "/auth/verify/":
     post:
       operationId: auth_verify_create
       description: |-
@@ -276,16 +344,16 @@ paths:
           in: body
           required: true
           schema:
-            $ref: '#/definitions/TokenVerify'
+            "$ref": "#/definitions/TokenVerify"
       responses:
         '201':
           description: ''
           schema:
-            $ref: '#/definitions/TokenVerify'
+            "$ref": "#/definitions/TokenVerify"
       tags:
         - auth
     parameters: [ ]
-  /chat/get-all-chat-messages/:
+  "/chat/get-all-chat-messages/":
     get:
       operationId: chat_get-all-chat-messages_list
       description: ''
@@ -302,7 +370,7 @@ paths:
           schema:
             type: array
             items:
-              $ref: '#/definitions/Message'
+              "$ref": "#/definitions/Message"
         '403':
           description: ''
           schema:
@@ -320,7 +388,7 @@ paths:
       tags:
         - chat
     parameters: [ ]
-  /chat/get-all-chats/:
+  "/chat/get-all-chats/":
     get:
       operationId: chat_get-all-chats_list
       description: ''
@@ -331,11 +399,11 @@ paths:
           schema:
             type: array
             items:
-              $ref: '#/definitions/Chat'
+              "$ref": "#/definitions/Chat"
       tags:
         - chat
     parameters: [ ]
-  /core/content/:
+  "/core/content/":
     put:
       operationId: core_content_update
       description: ''
@@ -371,12 +439,11 @@ paths:
       tags:
         - core
     parameters: [ ]
-  /core/image/upload/:
+  "/core/image/upload/":
     get:
       operationId: core_image_upload_list
-      description: >-
-        Examines request and allows certain fields to be expanded within the
-        list view.
+      description: Examines request and allows certain fields to be expanded within
+        the list view.
       parameters: [ ]
       responses:
         '200':
@@ -384,7 +451,7 @@ paths:
           schema:
             type: array
             items:
-              $ref: '#/definitions/image_serializer'
+              "$ref": "#/definitions/image_serializer"
       tags:
         - core
     post:
@@ -395,16 +462,16 @@ paths:
           in: body
           required: true
           schema:
-            $ref: '#/definitions/image_serializer'
+            "$ref": "#/definitions/image_serializer"
       responses:
         '201':
           description: ''
           schema:
-            $ref: '#/definitions/image_serializer'
+            "$ref": "#/definitions/image_serializer"
       tags:
         - core
     parameters: [ ]
-  '/core/image/upload/{id}/':
+  "/core/image/upload/{id}/":
     get:
       operationId: core_image_upload_read
       description: ''
@@ -413,7 +480,7 @@ paths:
         '200':
           description: ''
           schema:
-            $ref: '#/definitions/image_serializer'
+            "$ref": "#/definitions/image_serializer"
       tags:
         - core
     put:
@@ -424,12 +491,12 @@ paths:
           in: body
           required: true
           schema:
-            $ref: '#/definitions/image_serializer'
+            "$ref": "#/definitions/image_serializer"
       responses:
         '200':
           description: ''
           schema:
-            $ref: '#/definitions/image_serializer'
+            "$ref": "#/definitions/image_serializer"
       tags:
         - core
     patch:
@@ -440,12 +507,12 @@ paths:
           in: body
           required: true
           schema:
-            $ref: '#/definitions/image_serializer'
+            "$ref": "#/definitions/image_serializer"
       responses:
         '200':
           description: ''
           schema:
-            $ref: '#/definitions/image_serializer'
+            "$ref": "#/definitions/image_serializer"
       tags:
         - core
     delete:
@@ -527,9 +594,9 @@ definitions:
         title: Description
         type: string
       cover:
-        $ref: '#/definitions/image_serializer'
+        "$ref": "#/definitions/image_serializer"
       owner:
-        $ref: '#/definitions/User'
+        "$ref": "#/definitions/User"
       like_count:
         title: Like count
         type: string
@@ -655,6 +722,16 @@ definitions:
         title: ID
         type: integer
         readOnly: true
+  OtpCode:
+    required:
+      - otp_code
+    type: object
+    properties:
+      otp_code:
+        title: Otp code
+        type: string
+        maxLength: 300
+        minLength: 1
   TokenVerify:
     required:
       - token

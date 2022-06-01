@@ -11,18 +11,18 @@
 import 'package:honar_api/api.dart';
 import 'package:test/test.dart';
 
-// tests for InlineResponse2003
+// tests for InlineResponse2004
 void main() {
-  final instance = InlineResponse2003();
+  final instance = InlineResponse2004();
 
-  group('test InlineResponse2003', () {
+  group('test InlineResponse2004', () {
     // bool success (default value: true)
     test('to test the property `success`', () async {
       // TODO
     });
 
-    // bool valid
-    test('to test the property `valid`', () async {
+    // int contentId
+    test('to test the property `contentId`', () async {
       // TODO
     });
   });

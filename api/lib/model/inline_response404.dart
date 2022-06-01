@@ -93,3 +93,4 @@ class InlineResponse404 {
     return map;
   }
 }
+

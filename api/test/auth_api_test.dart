@@ -33,10 +33,20 @@ void main() {
       // TODO
     });
 
+    //Future<InlineResponse2001> authSendOtpCodeCreate(String id) async
+    test('test authSendOtpCodeCreate', () async {
+      // TODO
+    });
+
     // Takes a token and indicates if it is valid.  This view provides no information about a token's fitness for a particular use.
     //
     //Future<TokenVerify> authVerifyCreate(TokenVerify data) async
     test('test authVerifyCreate', () async {
+      // TODO
+    });
+
+    //Future<InlineResponse2003> authVerifyOtpCodeCreate(String id, OtpCode data) async
+    test('test authVerifyOtpCodeCreate', () async {
       // TODO
     });
   });

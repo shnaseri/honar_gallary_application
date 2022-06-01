@@ -1,24 +1,43 @@
 import 'package:bloc/bloc.dart';
+import 'package:honar_api/api.dart';
+import 'package:honar_gallary/logic/consts.dart';
 import 'package:meta/meta.dart';
 
 part 'otp_state.dart';
 
 class OtpCubit extends Cubit<OtpState> {
-  OtpCubit() : super(OtpInitial());
+  late AuthApi authApi;
 
-  Future<bool> sendCodeOtp(String code) async {
+  OtpCubit() : super(OtpInitial()) {
+    authApi = AuthApi(interfaceOfUser);
+  }
+
+  Future<bool> sendCodeOtp(int userId, String code) async {
     emit(OtpLoadingCodeState());
     try {
-      return true;
+      print("--- sending otp ----");
+      InlineResponse2003 response2003 = await authApi.authVerifyOtpCodeCreate(
+          userId.toString(), OtpCode(otpCode: code));
+      if (response2003.success && response2003.valid) {
+        emit(OtpLoadedCodeState());
+        return true;
+      } else {
+        emit(OtpBadCode());
+        return false;
+      }
     } catch (error) {
+      print(error);
+      emit(OtpBadCode());
       return false;
     }
   }
 
-  Future<bool> resendCode() async {
+  Future<bool> resendCode(int userId) async {
     try {
+      await authApi.authSendOtpCodeCreate(userId.toString());
       return true;
     } catch (error) {
+      print(error);
       return false;
     }
   }

@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:honar_gallary/UI/Authentication/otp/components/text_field_otp_component.dart';
-import 'package:honar_gallary/const/color_const.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../../../../logic/router_const.dart';
@@ -20,7 +19,9 @@ List<TextEditingController> numbers = [
 ];
 
 class OtpCodeComponent extends StatefulWidget {
-  OtpCodeComponent({Key? key}) : super(key: key);
+  final int userId;
+
+  OtpCodeComponent({Key? key, required this.userId}) : super(key: key);
 
   @override
   State<OtpCodeComponent> createState() => _OtpCodeComponentState();
@@ -119,14 +120,13 @@ class _OtpCodeComponentState extends State<OtpCodeComponent> {
       child: Column(
         children: [
           state is OtpBadCode
-              ? SizedBox(
+              ? const SizedBox(
                   height: 30,
                   child: Text(
-                    "errorTextForOtpPage",
+                    "کد وارد شده اشتباه است",
                     textDirection: TextDirection.rtl,
                     style: TextStyle(
-                        color: ColorPallet.colorPalletDark,
-                        fontWeight: FontWeight.w600),
+                        color: Colors.white, fontWeight: FontWeight.w600),
                   ),
                 )
               : Container(),
@@ -143,7 +143,8 @@ class _OtpCodeComponentState extends State<OtpCodeComponent> {
                           tryAgain = false;
                           sendAgainTime = timeSendAgain;
                         });
-                        await BlocProvider.of<OtpCubit>(context).resendCode();
+                        await BlocProvider.of<OtpCubit>(context)
+                            .resendCode(widget.userId);
                         await resetState();
                       },
                       child: const Text("ارسال مجدد",
@@ -196,8 +197,8 @@ class _OtpCodeComponentState extends State<OtpCodeComponent> {
     }
     if (isFillCode) {
       if (otpState is! OtpLoadingCodeState) {
-        bool status =
-            await BlocProvider.of<OtpCubit>(blocContext).sendCodeOtp(codeOtp);
+        bool status = await BlocProvider.of<OtpCubit>(blocContext)
+            .sendCodeOtp(widget.userId, codeOtp);
         if (status) {
           Navigator.pushNamedAndRemoveUntil(
               context, homePagePath, (e) => false);
