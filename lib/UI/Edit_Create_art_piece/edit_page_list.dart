@@ -56,7 +56,6 @@ class _ProfileListItemsState extends State<ProfileListItems> {
   final TextEditingController _title = TextEditingController();
   final TextEditingController _about = TextEditingController();
 
-
   // Initial Selected Value
   String dropDownValue = 'عکس';
 
@@ -332,8 +331,8 @@ class _ProfileListItemsState extends State<ProfileListItems> {
                       }
                       await BlocProvider.of<EditArtPieceCubit>(context)
                           .flowOfCreateArtPiece(fileSelected!, dropDownValue,
-                          _title.text, _about.text, imageSliderFiles,
-                          price: _dob.text.toInt());
+                              _title.text, _about.text, imageSliderFiles,
+                              price: _dob.text.toInt());
                     },
                     child: Container(
                       width: context.width() * 0.7,
@@ -358,23 +357,23 @@ class _ProfileListItemsState extends State<ProfileListItems> {
                       ),
                       child: state is EditArtPieceInitial
                           ? const Center(
-                        child: Text(
-                          'ذخیره',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 22,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                      )
+                              child: Text(
+                                'ذخیره',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 22,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                            )
                           : Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: const [
-                          CircularProgressIndicator(
-                            color: Colors.white,
-                          ),
-                        ],
-                      ),
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: const [
+                                CircularProgressIndicator(
+                                  color: Colors.white,
+                                ),
+                              ],
+                            ),
                     ),
                   );
                 },
