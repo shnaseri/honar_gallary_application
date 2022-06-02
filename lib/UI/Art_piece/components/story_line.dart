@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../video_music_palyer/player_content.dart';
+
 class Storyline extends StatelessWidget {
   const Storyline(this.storyline, {Key? key}) : super(key: key);
   final String storyline;
@@ -12,9 +14,20 @@ class Storyline extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          'دل نوشته',
-          style: textTheme.subtitle1!.copyWith(fontSize: 18.0),
+        GestureDetector(
+          onTap: () {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (_) => PlayerContentPage(
+                          content: '',
+                          type: 'music',
+                        )));
+          },
+          child: Text(
+            'دل نوشته',
+            style: textTheme.subtitle1!.copyWith(fontSize: 18.0),
+          ),
         ),
         const SizedBox(height: 8.0),
         Text(

@@ -16,12 +16,15 @@ class MovieDetailHeader extends StatelessWidget {
 
   List<Widget> _buildCategoryChips(TextTheme textTheme) {
     return movie.categories.map((category) {
-      return Padding(
-        padding: const EdgeInsets.only(right: 8.0),
-        child: Chip(
-          label: Text(category),
-          labelStyle: TextStyle(color: ColorPallet.colorPalletBlueGam),
-          backgroundColor: Colors.black12,
+      return GestureDetector(
+        onTap: () {},
+        child: Padding(
+          padding: const EdgeInsets.only(right: 8.0),
+          child: Chip(
+            label: Text(category),
+            labelStyle: TextStyle(color: ColorPallet.colorPalletBlueGam),
+            backgroundColor: Colors.black12,
+          ),
         ),
       );
     }).toList();

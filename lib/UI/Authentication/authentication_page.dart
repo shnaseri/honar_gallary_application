@@ -33,7 +33,7 @@ class _AuthenticationPageState extends State<AuthenticationPage> {
   LoginViewTheme get _mobileTheme => LoginViewTheme(
         // showLabelTexts: false,
 
-        backgroundColor: ColorPallet.colorPalletNightFog,
+    backgroundColor: Color.fromRGBO(4, 9, 35, 1),
         // const Color(0xFF6666FF),
         formFieldBackgroundColor: Colors.white,
         formWidthRatio: 60,
