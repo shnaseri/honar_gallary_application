@@ -80,7 +80,9 @@ class MovieDetailHeader extends StatelessWidget {
                       MaterialPageRoute(
                           builder: (context) => PlayerContentPage(
                                 type: artPiece.type,
-                                content: artPiece.url,
+                                content: artPiece.type == "picture"
+                                    ? artPiece.cover.image
+                                    : artPiece.url,
                               )));
                 },
                 child: Poster(

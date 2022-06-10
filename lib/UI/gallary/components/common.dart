@@ -33,7 +33,7 @@ class AppScaffold extends StatelessWidget {
   }
 }
 
-class Tile extends StatelessWidget {
+class Tile extends StatefulWidget {
   const Tile({
     Key? key,
     required this.index,
@@ -50,47 +50,108 @@ class Tile extends StatelessWidget {
   final InlineResponse2003Posts post;
 
   @override
+  State<Tile> createState() => _TileState();
+}
+
+class _TileState extends State<Tile> {
+  late bool showTitle;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    showTitle = false;
+  }
+
+  @override
   Widget build(BuildContext context) {
     final child = GestureDetector(
         onTap: () {
+          if (showTitle) {
+            setState(() {
+              showTitle = !showTitle;
+            });
+            return;
+          }
           pushNewScreen(
             context,
-            screen: ArtPiecePage(artId: post.id),
+            screen: ArtPiecePage(artId: widget.post.id),
             withNavBar: false, // OPTIONAL VALUE. True by default.
             pageTransitionAnimation: PageTransitionAnimation.cupertino,
           );
         },
+        onLongPress: () {
+          setState(() {
+            showTitle = !showTitle;
+          });
+        },
         child: Container(
-          height: extent,
+          height: widget.extent,
           decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.circular(9),
               boxShadow: const [
                 BoxShadow(color: Colors.black26, spreadRadius: 0.2)
               ]),
-          child: Center(
-              child: CachedNetworkImage(
-                  color: Colors.white,
-                  imageUrl: post.image,
-                  imageBuilder: (context, imageProvider) {
-                    return Container(
-                      width: context.width(),
-                      height: context.height() * 0.3,
-                      decoration: BoxDecoration(
-                          image: DecorationImage(
-                              fit: BoxFit.cover, image: imageProvider)),
-                    );
-                  },
-                  placeholder: (context, url) {
-                    return Container(
-                      height: context.height() * 0.3,
-                      width: context.width(),
-                      decoration: const BoxDecoration(color: Colors.grey),
-                    );
-                  })),
+          child: Stack(
+            children: [
+              Center(
+                  child: CachedNetworkImage(
+                      color: Colors.white,
+                      imageUrl: widget.post.image,
+                      imageBuilder: (context, imageProvider) {
+                        return Container(
+                          width: context.width(),
+                          height: context.height() * 0.3,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(9),
+                              image: DecorationImage(
+                                  fit: BoxFit.cover, image: imageProvider)),
+                        );
+                      },
+                      placeholder: (context, url) {
+                        return Container(
+                          height: context.height() * 0.3,
+                          width: context.width(),
+                          decoration: const BoxDecoration(color: Colors.grey),
+                        );
+                      })),
+              Positioned(
+                child: Row(
+                  children: [
+                    Text(
+                      (widget.post.countLIKE ?? 0).toString(),
+                      style: const TextStyle(
+                          fontWeight: FontWeight.w900, fontSize: 20),
+                    ),
+                    const Icon(
+                      Icons.favorite_border_rounded,
+                      color: Colors.pinkAccent,
+                    ),
+                  ],
+                ),
+                top: 0,
+                left: 5,
+              ),
+              if (showTitle)
+                Container(
+                  decoration: BoxDecoration(
+                    color: Colors.black54,
+                    borderRadius: BorderRadius.circular(9),
+                  ),
+                  child: Center(
+                    child: Text(
+                      widget.post.title,
+                      style: const TextStyle(
+                          color: Colors.white, fontWeight: FontWeight.w700),
+                    ),
+                  ),
+                )
+            ],
+          ),
         ));
 
-    if (bottomSpace == null) {
+    if (widget.bottomSpace == null) {
       return child;
     }
 
@@ -98,7 +159,7 @@ class Tile extends StatelessWidget {
       children: [
         Expanded(child: child),
         Container(
-          height: bottomSpace,
+          height: widget.bottomSpace,
           color: Colors.green,
         )
       ],
