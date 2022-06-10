@@ -1,7 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:honar_api_v4/api.dart';
 import 'package:honar_gallary/UI/Art_piece/art_piece_page.dart';
+import 'package:honar_gallary/state_managment/gallery/gallery_cubit.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 
@@ -79,7 +81,9 @@ class _TileState extends State<Tile> {
             screen: ArtPiecePage(artId: widget.post.id),
             withNavBar: false, // OPTIONAL VALUE. True by default.
             pageTransitionAnimation: PageTransitionAnimation.cupertino,
-          );
+          ).then((value) {
+            BlocProvider.of<GalleryCubit>(context).fetchGallery(21);
+          });
         },
         onLongPress: () {
           setState(() {
@@ -123,7 +127,9 @@ class _TileState extends State<Tile> {
                     Text(
                       (widget.post.countLIKE ?? 0).toString(),
                       style: const TextStyle(
-                          fontWeight: FontWeight.w900, fontSize: 15),
+                          fontWeight: FontWeight.w900,
+                          fontSize: 15,
+                          color: Colors.pink),
                     ),
                     2.width,
                     const Icon(
