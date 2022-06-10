@@ -97,4 +97,3 @@ class AccessRefresh {
     return map;
   }
 }
-

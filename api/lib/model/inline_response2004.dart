@@ -113,4 +113,3 @@ class InlineResponse2004 {
     return map;
   }
 }
-
