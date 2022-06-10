@@ -64,7 +64,7 @@ class NavigationBarWidget extends StatelessWidget {
   _buildScreens() {
     return [
       Container(),
-      const SearchPage(),
+      const ExplorerPage(),
       const EditArtPiece(),
       const GalleryView(),
     ];

@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:honar_gallary/const/color_const.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import 'components/search_text_field.dart';
 
-class SearchPage extends StatefulWidget {
-  const SearchPage({Key? key}) : super(key: key);
+class ExplorerPage extends StatefulWidget {
+  const ExplorerPage({Key? key}) : super(key: key);
 
   @override
-  State<SearchPage> createState() => _SearchPageState();
+  State<ExplorerPage> createState() => _ExplorerPageState();
 }
 
-class _SearchPageState extends State<SearchPage> {
+class _ExplorerPageState extends State<ExplorerPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -93,6 +94,8 @@ class _BodySearchWidgetState extends State<BodySearchWidget> {
     return ListView(
       controller: widget.controller,
       scrollDirection: Axis.vertical,
+      padding: const EdgeInsets.only(bottom: 70),
+      physics: const ClampingScrollPhysics(),
       children: [
         const SizedBox(
           height: 25,
@@ -136,8 +139,41 @@ class _BodySearchWidgetState extends State<BodySearchWidget> {
             itemCount: 10,
             scrollDirection: Axis.horizontal,
           ),
-        )
+        ),
+        const BodyOfExplorerPage()
       ],
+    );
+  }
+}
+
+class BodyOfExplorerPage extends StatefulWidget {
+  const BodyOfExplorerPage({Key? key}) : super(key: key);
+
+  @override
+  State<BodyOfExplorerPage> createState() => _BodyOfExplorerPageState();
+}
+
+class _BodyOfExplorerPageState extends State<BodyOfExplorerPage> {
+  @override
+  Widget build(BuildContext context) {
+    // TODO: implement build
+    return Container(
+      padding: const EdgeInsets.only(top: 40),
+      child: MasonryGridView.count(
+        physics: const NeverScrollableScrollPhysics(),
+        shrinkWrap: true,
+        crossAxisCount: 2,
+        mainAxisSpacing: 4,
+        crossAxisSpacing: 4,
+        itemCount: 20,
+        itemBuilder: (context, index) {
+          return Container(
+            height: (index % 3 + 1) * 100,
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10), color: Colors.yellow),
+          );
+        },
+      ),
     );
   }
 }
