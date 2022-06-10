@@ -55,7 +55,7 @@ class Tile extends StatelessWidget {
         onTap: () {
           pushNewScreen(
             context,
-            screen: const ArtPiecePage(),
+            screen: ArtPiecePage(artId: post.id),
             withNavBar: false, // OPTIONAL VALUE. True by default.
             pageTransitionAnimation: PageTransitionAnimation.cupertino,
           );

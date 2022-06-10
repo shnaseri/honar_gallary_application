@@ -20,7 +20,7 @@ class InlineResponse2003Posts {
     this.countLIKE,
   });
 
-  String id;
+  int id;
 
   String title;
 
@@ -80,7 +80,7 @@ class InlineResponse2003Posts {
     if (value is Map) {
       final json = value.cast<String, dynamic>();
       return InlineResponse2003Posts(
-        id: mapValueOfType<String>(json, r'id'),
+        id: mapValueOfType<int>(json, r'id'),
         title: mapValueOfType<String>(json, r'title'),
         type: mapValueOfType<String>(json, r'type'),
         image: mapValueOfType<String>(json, r'image'),

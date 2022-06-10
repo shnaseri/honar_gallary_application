@@ -12,7 +12,9 @@ import 'components/photo_scroller.dart';
 import 'components/story_line.dart';
 
 class ArtPiecePage extends StatefulWidget {
-  const ArtPiecePage({Key? key}) : super(key: key);
+  final int artId;
+
+  const ArtPiecePage({Key? key, required this.artId}) : super(key: key);
 
   @override
   State<ArtPiecePage> createState() => _ArtPiecePageState();
@@ -75,7 +77,8 @@ class _ArtPiecePageState extends State<ArtPiecePage> {
           builder: (context, state) {
             if (state is ArtPieceInitial && startApp) {
               startApp = false;
-              BlocProvider.of<ArtPieceCubit>(context).fetchArtPiece();
+              BlocProvider.of<ArtPieceCubit>(context)
+                  .fetchArtPiece(widget.artId);
             }
             if (state is ArtPieceLoaded) {
               testMovie.title = state.artPiece.title;

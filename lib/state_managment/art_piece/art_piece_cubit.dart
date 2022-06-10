@@ -8,13 +8,15 @@ part 'art_piece_state.dart';
 class ArtPieceCubit extends Cubit<ArtPieceState> {
   ArtPieceCubit() : super(ArtPieceInitial());
 
-  Future<void> fetchArtPiece({int id = 1}) async {
+  Future<void> fetchArtPiece(int id) async {
     emit(ArtPieceLoading());
     ArtApi artApi = ArtApi(interfaceOfUser);
     try {
-      ArtPiece artPiece = await artApi.artArtPieceRead("29");
+      print(id);
+      ArtPiece artPiece = await artApi.artArtPieceRead(id.toString());
       emit(ArtPieceLoaded(artPiece));
     } catch (e) {
+      print(e);
       emit(ArtPieceError());
     }
   }

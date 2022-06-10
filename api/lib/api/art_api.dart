@@ -254,6 +254,7 @@ class ArtApi {
     final response = await artArtPieceReadWithHttpInfo(
       id,
     );
+    print(response.body);
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException(response.statusCode, await _decodeBodyBytes(response));
     }
@@ -386,6 +387,7 @@ class ArtApi {
     final response = await artGalleryReadWithHttpInfo(
       id,
     );
+    print(response.body);
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException(response.statusCode, await _decodeBodyBytes(response));
     }
