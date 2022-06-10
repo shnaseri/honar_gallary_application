@@ -100,4 +100,3 @@ class ImageSerializer {
     return map;
   }
 }
-
