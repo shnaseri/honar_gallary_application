@@ -12,7 +12,7 @@ class ArtPieceCubit extends Cubit<ArtPieceState> {
     emit(ArtPieceLoading());
     ArtApi artApi = ArtApi(interfaceOfUser);
     try {
-      ArtPiece artPiece = await artApi.artArtPieceRead("6");
+      ArtPiece artPiece = await artApi.artArtPieceRead("29");
       emit(ArtPieceLoaded(artPiece));
     } catch (e) {
       emit(ArtPieceError());

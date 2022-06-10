@@ -60,7 +60,8 @@ class _ChatPageState extends State<ChatPage> {
                       BlocProvider.of<ChatCubit>(context).emit(ChatInitial());
                     }
                     if (state is ChatInitial) {
-                      BlocProvider.of<ChatCubit>(context).fetchConnect();
+                      BlocProvider.of<ChatCubit>(context)
+                          .fetchConnect("MjBfMjE=");
                     }
                     return Stack(
                       children: [

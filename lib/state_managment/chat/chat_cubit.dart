@@ -1,25 +1,59 @@
+import 'dart:convert';
+
 import 'package:bloc/bloc.dart';
+import 'package:flutter/foundation.dart';
 import 'package:honar_api_v3/api.dart';
 import 'package:honar_gallary/data_managment/chat/chat_repository.dart';
+import 'package:honar_gallary/logic/consts.dart';
 import 'package:meta/meta.dart';
+import 'package:web_socket_channel/io.dart';
 
 part 'chat_state.dart';
 
 class ChatCubit extends Cubit<ChatState> {
   User contact;
   late ChatRepository chatRepository;
+  late IOWebSocketChannel channel;
+  bool isWebSocketRunning = false;
+  int retryLimit = 3;
 
   ChatCubit({required this.contact}) : super(ChatInitial()) {
     chatRepository = ChatRepository();
   }
 
-  Future<void> fetchConnect() async {
+  Future<void> fetchConnect(String chatCode) async {
     try {
+      if (isWebSocketRunning) return; //chaech if its already running
       contact = contact;
       // await chatRepository.connectMMQT(contact.token);
       // List<Message> messages = await chatRepository.getMessages(contact.id);
       // emit(ChatConnectToServer(messages));
+      channel = IOWebSocketChannel.connect(
+          Uri.parse(
+              "ws://188.121.110.151:8000/socket/chat/$chatCode/?token=${(interfaceOfUser.authentications['Bearer'] as ApiKeyAuth).apiKey}"),
+          headers: {'Connection': 'Upgrade', 'Upgrade': 'websocket'});
+
+      channel.stream.listen(
+        (event) {
+          if (kDebugMode) {
+            print(event);
+          }
+        },
+        onDone: () {
+          print("Done");
+          isWebSocketRunning = true;
+        },
+        onError: (err) {
+          print(err);
+          isWebSocketRunning = false;
+          if (retryLimit > 0) {
+            retryLimit--;
+            fetchConnect(chatCode);
+          }
+        },
+      );
     } catch (error) {
+      print(error);
       rethrow;
     }
   }
@@ -28,18 +62,20 @@ class ChatCubit extends Cubit<ChatState> {
     // chatRepository.disConnectMQTT();
   }
 
-  Future<void> publishMessage(
-      User user, String message, List<Message> oldMessages) async {
+  Future<void> publishMessage(User user, String message, List<Message> oldMessages) async {
     try {
+      print('---- Send Message ------');
       // emit(ChatSendMessage());
       Message newMessage = await chatRepository.pushMessage(user, message);
-      // await chatRepository.subscribeMessage(user);
+      channel.sink.add(jsonEncode({"message": newMessage.content}));
 
       // List<Message> messages = await chatRepository.getMessages(user.id);
       List<Message> messages = oldMessages.toList();
       messages.add(newMessage);
+      print('---- End Send Message ------');
       emit(ChatConnectToServer(messages));
     } catch (error) {
+      print(error);
       emit(ChatErrorState());
     }
   }
