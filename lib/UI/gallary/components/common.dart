@@ -61,6 +61,7 @@ class _TileState extends State<Tile> {
     // TODO: implement initState
     super.initState();
     showTitle = false;
+    print(widget.post.countLIKE);
   }
 
   @override
@@ -122,8 +123,9 @@ class _TileState extends State<Tile> {
                     Text(
                       (widget.post.countLIKE ?? 0).toString(),
                       style: const TextStyle(
-                          fontWeight: FontWeight.w900, fontSize: 20),
+                          fontWeight: FontWeight.w900, fontSize: 15),
                     ),
+                    2.width,
                     const Icon(
                       Icons.favorite_border_rounded,
                       color: Colors.pinkAccent,

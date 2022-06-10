@@ -25,6 +25,7 @@ class RatingInformation extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print(movie.likeCount);
     var theme = Theme.of(context);
     var textTheme = theme.textTheme;
     var ratingCaptionStyle = textTheme.caption!.copyWith(color: Colors.white);
@@ -41,7 +42,7 @@ class RatingInformation extends StatelessWidget {
         Container(
           padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
           child: Text(
-            movie.likeCount ?? "رای داده نشده",
+            (movie.likeCount ?? "رای داده نشده").toString(),
             style: textTheme.titleMedium!.copyWith(
               fontWeight: FontWeight.bold,
               color: Colors.amber,

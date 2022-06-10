@@ -39,11 +39,11 @@ class ArtPiece {
 
   User owner;
 
-  String likeCount;
+  int likeCount;
 
   String type;
 
-  String isUserLiked;
+  bool isUserLiked;
 
   String url;
 
@@ -124,9 +124,9 @@ class ArtPiece {
         description: mapValueOfType<String>(json, r'description'),
         cover: ImageSerializer.fromJson(json[r'cover']),
         owner: User.fromJson(json[r'owner']),
-        likeCount: mapValueOfType<String>(json, r'like_count'),
+        likeCount: mapValueOfType<int>(json, r'like_count'),
         type: mapValueOfType<String>(json, r'type'),
-        isUserLiked: mapValueOfType<String>(json, r'is_user_liked'),
+        isUserLiked: mapValueOfType<bool>(json, r'is_user_liked'),
         url: mapValueOfType<String>(json, r'url'),
       );
     }
