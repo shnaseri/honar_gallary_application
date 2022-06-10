@@ -19,8 +19,6 @@ class AppRouter {
             builder: (context) => const AuthenticationPage());
       case homePagePath:
         return MaterialPageRoute(builder: (context) => const MainPage());
-      case splashPagePath:
-        return MaterialPageRoute(builder: (context) => const SplashPage());
 
       default:
         return null;

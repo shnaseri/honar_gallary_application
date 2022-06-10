@@ -63,7 +63,7 @@ class AudioPlayerPageState extends State<AudioPlayerPage> {
   void initState() {
     playonline();
     // TODO: implement initState
-    playAudio = true;
+    playAudio = false;
     super.initState();
     _mediaListener = audioPlayer.onAudioPositionChanged.listen((Duration p) {
       currentPos = p; //get the current position of playing audio

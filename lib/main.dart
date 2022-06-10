@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:honar_gallary/logic/general_values.dart';
 import 'package:honar_gallary/logic/router.dart';
-import 'package:honar_gallary/logic/router_const.dart';
 import 'package:responsive_framework/responsive_wrapper.dart';
 import 'package:responsive_framework/utils/scroll_behavior.dart';
 
@@ -65,7 +64,7 @@ class MyApp extends StatelessWidget {
                 ColorScheme.fromSwatch(primarySwatch: Colors.deepPurple)
                     .copyWith(secondary: Colors.black12)),
         onGenerateRoute: router.generateRoute,
-        initialRoute: splashPagePath, // initial route to Splash screen
+        initialRoute: '/', // initial route to Splash screen
       ),
     );
   }
