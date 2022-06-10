@@ -11,18 +11,23 @@
 import 'package:honar_api_v4/api.dart';
 import 'package:test/test.dart';
 
-// tests for TokenRefresh
+// tests for InlineResponse2003Owner
 void main() {
-  final instance = TokenRefresh();
+  final instance = InlineResponse2003Owner();
 
-  group('test TokenRefresh', () {
-    // String refresh
-    test('to test the property `refresh`', () async {
+  group('test InlineResponse2003Owner', () {
+    // String id
+    test('to test the property `id`', () async {
       // TODO
     });
 
-    // String access
-    test('to test the property `access`', () async {
+    // String profilePhoto
+    test('to test the property `profilePhoto`', () async {
+      // TODO
+    });
+
+    // String fullName
+    test('to test the property `fullName`', () async {
       // TODO
     });
   });

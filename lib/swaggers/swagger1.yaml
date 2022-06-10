@@ -188,6 +188,70 @@ paths:
         in: path
         required: true
         type: string
+  "/art/gallery/{id}/":
+    get:
+      operationId: art_gallery_read
+      description: ''
+      parameters: [ ]
+      responses:
+        '200':
+          description: ''
+          schema:
+            type: object
+            properties:
+              owner:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  profile_photo:
+                    type: string
+                  full_name:
+                    type: string
+              posts_count:
+                type: integer
+              posts:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                    title:
+                      type: string
+                    type:
+                      type: string
+                    image:
+                      type: string
+                    count_LIKE:
+                      type: integer
+        '404':
+          description: ''
+          schema:
+            type: object
+            properties:
+              detail:
+                type: string
+                readOnly: true
+                default: Not Found.
+        '406':
+          description: ''
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                default: false
+              error:
+                type: string
+                default: invalid data
+      tags:
+        - art
+    parameters:
+      - name: id
+        in: path
+        required: true
+        type: string
   "/auth/login/":
     post:
       operationId: auth_login_create
@@ -571,6 +635,10 @@ definitions:
         readOnly: true
       full_name:
         title: Full name
+        type: string
+        readOnly: true
+      profile_photo:
+        title: Profile photo
         type: string
         readOnly: true
   ArtPiece:

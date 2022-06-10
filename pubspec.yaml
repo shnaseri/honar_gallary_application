@@ -53,7 +53,7 @@ dependencies:
   file_picker: ^4.5.1
   openapi_generator_annotations: ^3.3.0
   intl: ^0.17.0
-  honar_api_v3:
+  honar_api_v4:
     path: ./api
   shamsi_date: ^1.0.1
   flutter_chat_bubble: ^2.0.0

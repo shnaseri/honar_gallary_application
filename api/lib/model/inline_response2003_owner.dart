@@ -10,99 +10,100 @@
 
 part of openapi.api;
 
-class User {
-  /// Returns a new [User] instance.
-  User({
+class InlineResponse2003Owner {
+  /// Returns a new [InlineResponse2003Owner] instance.
+  InlineResponse2003Owner({
     this.id,
-    this.fullName,
     this.profilePhoto,
+    this.fullName,
   });
 
-  int id;
-
-  String fullName;
+  String id;
 
   String profilePhoto;
+
+  String fullName;
 
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is User &&
+      other is InlineResponse2003Owner &&
           other.id == id &&
-          other.fullName == fullName &&
-          other.profilePhoto == profilePhoto;
+          other.profilePhoto == profilePhoto &&
+          other.fullName == fullName;
 
   @override
   int get hashCode =>
       // ignore: unnecessary_parenthesis
       (id == null ? 0 : id.hashCode) +
-      (fullName == null ? 0 : fullName.hashCode) +
-      (profilePhoto == null ? 0 : profilePhoto.hashCode);
+      (profilePhoto == null ? 0 : profilePhoto.hashCode) +
+      (fullName == null ? 0 : fullName.hashCode);
 
   @override
   String toString() =>
-      'User[id=$id, fullName=$fullName, profilePhoto=$profilePhoto]';
+      'InlineResponse2003Owner[id=$id, profilePhoto=$profilePhoto, fullName=$fullName]';
 
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
     if (id != null) {
       json[r'id'] = id;
     }
-    if (fullName != null) {
-      json[r'full_name'] = fullName;
-    }
     if (profilePhoto != null) {
       json[r'profile_photo'] = profilePhoto;
+    }
+    if (fullName != null) {
+      json[r'full_name'] = fullName;
     }
     return json;
   }
 
-  /// Returns a new [User] instance and imports its values from
+  /// Returns a new [InlineResponse2003Owner] instance and imports its values from
   /// [value] if it's a [Map], null otherwise.
   // ignore: prefer_constructors_over_static_methods
-  static User fromJson(dynamic value) {
+  static InlineResponse2003Owner fromJson(dynamic value) {
     if (value is Map) {
       final json = value.cast<String, dynamic>();
-      return User(
-        id: mapValueOfType<int>(json, r'id'),
-        fullName: mapValueOfType<String>(json, r'full_name'),
+      return InlineResponse2003Owner(
+        id: mapValueOfType<String>(json, r'id'),
         profilePhoto: mapValueOfType<String>(json, r'profile_photo'),
+        fullName: mapValueOfType<String>(json, r'full_name'),
       );
     }
     return null;
   }
 
-  static List<User> listFromJson(
+  static List<InlineResponse2003Owner> listFromJson(
     dynamic json, {
     bool emptyIsNull,
     bool growable,
   }) =>
       json is List && json.isNotEmpty
-          ? json.map(User.fromJson).toList(growable: true == growable)
+          ? json
+              .map(InlineResponse2003Owner.fromJson)
+              .toList(growable: true == growable)
           : true == emptyIsNull
               ? null
-              : <User>[];
+              : <InlineResponse2003Owner>[];
 
-  static Map<String, User> mapFromJson(dynamic json) {
-    final map = <String, User>{};
+  static Map<String, InlineResponse2003Owner> mapFromJson(dynamic json) {
+    final map = <String, InlineResponse2003Owner>{};
     if (json is Map && json.isNotEmpty) {
-      json
-          .cast<String, dynamic>()
-          .forEach((key, dynamic value) => map[key] = User.fromJson(value));
+      json.cast<String, dynamic>().forEach((key, dynamic value) =>
+          map[key] = InlineResponse2003Owner.fromJson(value));
     }
     return map;
   }
 
-  // maps a json object with a list of User-objects as value to a dart map
-  static Map<String, List<User>> mapListFromJson(
+  // maps a json object with a list of InlineResponse2003Owner-objects as value to a dart map
+  static Map<String, List<InlineResponse2003Owner>> mapListFromJson(
     dynamic json, {
     bool emptyIsNull,
     bool growable,
   }) {
-    final map = <String, List<User>>{};
+    final map = <String, List<InlineResponse2003Owner>>{};
     if (json is Map && json.isNotEmpty) {
       json.cast<String, dynamic>().forEach((key, dynamic value) {
-        map[key] = User.listFromJson(
+        map[key] = InlineResponse2003Owner.listFromJson(
           value,
           emptyIsNull: emptyIsNull,
           growable: growable,
@@ -112,4 +113,3 @@ class User {
     return map;
   }
 }
-

@@ -1,4 +1,4 @@
-# honar_api_v3
+# honar_api_v4
 
 Test description
 
@@ -18,7 +18,7 @@ Dart 2.0 or later
 If this Dart package is published to Github, add the following dependency to your pubspec.yaml
 ```
 dependencies:
-  honar_api_v3:
+  honar_api_v4:
     git: https://github.com/GIT_USER_ID/GIT_REPO_ID.git
 ```
 
@@ -27,8 +27,8 @@ To use the package in your local drive, add the following dependency to your pub
 
 ```
 dependencies:
-  honar_api_v3:
-    path: /path/to/honar_api_v3
+  honar_api_v4:
+    path: /path/to/honar_api_v4
 ```
 
 ## Tests
@@ -40,7 +40,7 @@ TODO
 Please follow the [installation procedure](#installation--usage) and then run the following:
 
 ```dart
-import 'package:honar_api_v3/api.dart';
+import 'package:honar_api_v4/api.dart';
 
 // TODO Configure API key authorization: Bearer
 //defaultApiClient.getAuthentication<ApiKeyAuth>('Bearer').apiKey = 'YOUR_API_KEY';
@@ -75,6 +75,7 @@ PUT** /art/art-piece/{id}/like/ |
 *ArtApi* | [**artArtPieceRead**](doc//ArtApi.md#artartpieceread) | **GET** /art/art-piece/{id}/ |
 *ArtApi* | [**artArtPieceUpdate**](doc//ArtApi.md#artartpieceupdate) | **
 PUT** /art/art-piece/{id}/ |
+*ArtApi* | [**artGalleryRead**](doc//ArtApi.md#artgalleryread) | **GET** /art/gallery/{id}/ |
 *AuthApi* | [**authLoginCreate**](doc//AuthApi.md#authlogincreate) | **POST** /auth/login/ |
 *AuthApi* | [**authLogoutCreate**](doc//AuthApi.md#authlogoutcreate) | **POST** /auth/logout/ |
 *AuthApi* | [**authRegisterCreate**](doc//AuthApi.md#authregistercreate) | **
@@ -115,7 +116,10 @@ PUT** /core/image/upload/{id}/ |
 - [InlineResponse2001](doc//InlineResponse2001.md)
 - [InlineResponse2002](doc//InlineResponse2002.md)
 - [InlineResponse2003](doc//InlineResponse2003.md)
+- [InlineResponse2003Owner](doc//InlineResponse2003Owner.md)
+- [InlineResponse2003Posts](doc//InlineResponse2003Posts.md)
 - [InlineResponse2004](doc//InlineResponse2004.md)
+- [InlineResponse2005](doc//InlineResponse2005.md)
 - [InlineResponse404](doc//InlineResponse404.md)
 - [InlineResponse406](doc//InlineResponse406.md)
 - [Message](doc//Message.md)

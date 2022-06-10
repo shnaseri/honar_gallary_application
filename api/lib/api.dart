@@ -32,23 +32,47 @@ part 'auth/http_bearer_auth.dart';
 part 'auth/oauth.dart';
 part 'model/access_refresh.dart';
 part 'model/art_piece.dart';
+
 part 'model/art_piece_content.dart';
+
 part 'model/art_piece_cover.dart';
+
 part 'model/art_piece_detail.dart';
+
 part 'model/chat.dart';
+
 part 'model/image_serializer.dart';
+
 part 'model/inline_response200.dart';
+
 part 'model/inline_response2001.dart';
+
 part 'model/inline_response2002.dart';
+
 part 'model/inline_response2003.dart';
+
+part 'model/inline_response2003_owner.dart';
+
+part 'model/inline_response2003_posts.dart';
+
 part 'model/inline_response2004.dart';
+
+part 'model/inline_response2005.dart';
+
 part 'model/inline_response404.dart';
+
 part 'model/inline_response406.dart';
+
 part 'model/message.dart';
+
 part 'model/otp_code.dart';
+
 part 'model/register.dart';
+
 part 'model/token_obtain_pair.dart';
+
 part 'model/token_refresh.dart';
+
 part 'model/token_verify.dart';
 part 'model/user.dart';
 part 'model/user_id.dart';

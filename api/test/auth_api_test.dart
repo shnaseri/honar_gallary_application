@@ -8,7 +8,7 @@
 // ignore_for_file: constant_identifier_names
 // ignore_for_file: lines_longer_than_80_chars
 
-import 'package:honar_api_v3/api.dart';
+import 'package:honar_api_v4/api.dart';
 import 'package:test/test.dart';
 
 /// tests for AuthApi
@@ -45,7 +45,7 @@ void main() {
       // TODO
     });
 
-    //Future<InlineResponse2003> authVerifyOtpCodeCreate(String id, OtpCode data) async
+    //Future<InlineResponse2004> authVerifyOtpCodeCreate(String id, OtpCode data) async
     test('test authVerifyOtpCodeCreate', () async {
       // TODO
     });

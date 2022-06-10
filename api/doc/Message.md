@@ -1,8 +1,8 @@
-# honar_api_v3.model.Message
+# honar_api_v4.model.Message
 
 ## Load the model package
 ```dart
-import 'package:honar_api_v3/api.dart';
+import 'package:honar_api_v4/api.dart';
 ```
 
 ## Properties

@@ -8,7 +8,7 @@
 // ignore_for_file: constant_identifier_names
 // ignore_for_file: lines_longer_than_80_chars
 
-import 'package:honar_api_v3/api.dart';
+import 'package:honar_api_v4/api.dart';
 import 'package:test/test.dart';
 
 // tests for InlineResponse2003
@@ -16,18 +16,18 @@ void main() {
   final instance = InlineResponse2003();
 
   group('test InlineResponse2003', () {
-    // bool success (default value: true)
-    test('to test the property `success`', () async {
+    // InlineResponse2003Owner owner
+    test('to test the property `owner`', () async {
       // TODO
     });
 
-    // bool valid
-    test('to test the property `valid`', () async {
+    // int postsCount
+    test('to test the property `postsCount`', () async {
       // TODO
     });
 
-    // String accessToken
-    test('to test the property `accessToken`', () async {
+    // List<InlineResponse2003Posts> posts (default value: const [])
+    test('to test the property `posts`', () async {
       // TODO
     });
   });

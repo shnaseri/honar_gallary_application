@@ -378,7 +378,7 @@ class AuthApi {
   /// * [String] id (required):
   ///
   /// * [OtpCode] data (required):
-  Future<InlineResponse2003> authVerifyOtpCodeCreate(
+  Future<InlineResponse2004> authVerifyOtpCodeCreate(
     String id,
     OtpCode data,
   ) async {
@@ -395,9 +395,9 @@ class AuthApi {
     if (response.body != null && response.statusCode != HttpStatus.noContent) {
       return await apiClient.deserializeAsync(
         await _decodeBodyBytes(response),
-        'InlineResponse2003',
-      ) as InlineResponse2003;
+        'InlineResponse2004',
+      ) as InlineResponse2004;
     }
-    return Future<InlineResponse2003>.value();
+    return Future<InlineResponse2004>.value();
   }
 }

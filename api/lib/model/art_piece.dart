@@ -173,3 +173,4 @@ class ArtPiece {
     return map;
   }
 }
+

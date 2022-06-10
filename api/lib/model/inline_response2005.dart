@@ -10,100 +10,91 @@
 
 part of openapi.api;
 
-class InlineResponse2004 {
-  /// Returns a new [InlineResponse2004] instance.
-  InlineResponse2004({
+class InlineResponse2005 {
+  /// Returns a new [InlineResponse2005] instance.
+  InlineResponse2005({
     this.success = true,
-    this.valid,
-    this.accessToken,
+    this.contentId,
   });
 
   bool success;
 
-  bool valid;
-
-  String accessToken;
+  int contentId;
 
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is InlineResponse2004 &&
+      other is InlineResponse2005 &&
           other.success == success &&
-          other.valid == valid &&
-          other.accessToken == accessToken;
+          other.contentId == contentId;
 
   @override
   int get hashCode =>
       // ignore: unnecessary_parenthesis
       (success == null ? 0 : success.hashCode) +
-      (valid == null ? 0 : valid.hashCode) +
-      (accessToken == null ? 0 : accessToken.hashCode);
+      (contentId == null ? 0 : contentId.hashCode);
 
   @override
   String toString() =>
-      'InlineResponse2004[success=$success, valid=$valid, accessToken=$accessToken]';
+      'InlineResponse2005[success=$success, contentId=$contentId]';
 
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
     if (success != null) {
       json[r'success'] = success;
     }
-    if (valid != null) {
-      json[r'valid'] = valid;
-    }
-    if (accessToken != null) {
-      json[r'access_token'] = accessToken;
+    if (contentId != null) {
+      json[r'content_id'] = contentId;
     }
     return json;
   }
 
-  /// Returns a new [InlineResponse2004] instance and imports its values from
+  /// Returns a new [InlineResponse2005] instance and imports its values from
   /// [value] if it's a [Map], null otherwise.
   // ignore: prefer_constructors_over_static_methods
-  static InlineResponse2004 fromJson(dynamic value) {
+  static InlineResponse2005 fromJson(dynamic value) {
     if (value is Map) {
       final json = value.cast<String, dynamic>();
-      return InlineResponse2004(
+      return InlineResponse2005(
         success: mapValueOfType<bool>(json, r'success'),
-        valid: mapValueOfType<bool>(json, r'valid'),
-        accessToken: mapValueOfType<String>(json, r'access_token'),
+        contentId: mapValueOfType<int>(json, r'content_id'),
       );
     }
     return null;
   }
 
-  static List<InlineResponse2004> listFromJson(
+  static List<InlineResponse2005> listFromJson(
     dynamic json, {
     bool emptyIsNull,
     bool growable,
   }) =>
       json is List && json.isNotEmpty
           ? json
-              .map(InlineResponse2004.fromJson)
+              .map(InlineResponse2005.fromJson)
               .toList(growable: true == growable)
           : true == emptyIsNull
               ? null
-              : <InlineResponse2004>[];
+              : <InlineResponse2005>[];
 
-  static Map<String, InlineResponse2004> mapFromJson(dynamic json) {
-    final map = <String, InlineResponse2004>{};
+  static Map<String, InlineResponse2005> mapFromJson(dynamic json) {
+    final map = <String, InlineResponse2005>{};
     if (json is Map && json.isNotEmpty) {
       json.cast<String, dynamic>().forEach((key, dynamic value) =>
-          map[key] = InlineResponse2004.fromJson(value));
+          map[key] = InlineResponse2005.fromJson(value));
     }
     return map;
   }
 
-  // maps a json object with a list of InlineResponse2004-objects as value to a dart map
-  static Map<String, List<InlineResponse2004>> mapListFromJson(
+  // maps a json object with a list of InlineResponse2005-objects as value to a dart map
+  static Map<String, List<InlineResponse2005>> mapListFromJson(
     dynamic json, {
     bool emptyIsNull,
     bool growable,
   }) {
-    final map = <String, List<InlineResponse2004>>{};
+    final map = <String, List<InlineResponse2005>>{};
     if (json is Map && json.isNotEmpty) {
       json.cast<String, dynamic>().forEach((key, dynamic value) {
-        map[key] = InlineResponse2004.listFromJson(
+        map[key] = InlineResponse2005.listFromJson(
           value,
           emptyIsNull: emptyIsNull,
           growable: growable,
@@ -113,4 +104,3 @@ class InlineResponse2004 {
     return map;
   }
 }
-

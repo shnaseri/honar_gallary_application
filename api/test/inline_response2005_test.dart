@@ -11,13 +11,18 @@
 import 'package:honar_api_v4/api.dart';
 import 'package:test/test.dart';
 
-// tests for OtpCode
+// tests for InlineResponse2005
 void main() {
-  final instance = OtpCode();
+  final instance = InlineResponse2005();
 
-  group('test OtpCode', () {
-    // String otpCode
-    test('to test the property `otpCode`', () async {
+  group('test InlineResponse2005', () {
+    // bool success (default value: true)
+    test('to test the property `success`', () async {
+      // TODO
+    });
+
+    // int contentId
+    test('to test the property `contentId`', () async {
       // TODO
     });
   });

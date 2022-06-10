@@ -11,38 +11,33 @@
 import 'package:honar_api_v4/api.dart';
 import 'package:test/test.dart';
 
-// tests for Chat
+// tests for InlineResponse2003Posts
 void main() {
-  final instance = Chat();
+  final instance = InlineResponse2003Posts();
 
-  group('test Chat', () {
-    // int id
+  group('test InlineResponse2003Posts', () {
+    // String id
     test('to test the property `id`', () async {
       // TODO
     });
 
-    // String chatCode
-    test('to test the property `chatCode`', () async {
+    // String title
+    test('to test the property `title`', () async {
       // TODO
     });
 
-    // String user
-    test('to test the property `user`', () async {
+    // String type
+    test('to test the property `type`', () async {
       // TODO
     });
 
-    // String lastMessage
-    test('to test the property `lastMessage`', () async {
+    // String image
+    test('to test the property `image`', () async {
       // TODO
     });
 
-    // DateTime updatedAt
-    test('to test the property `updatedAt`', () async {
-      // TODO
-    });
-
-    // DateTime createdAt
-    test('to test the property `createdAt`', () async {
+    // int countLIKE
+    test('to test the property `countLIKE`', () async {
       // TODO
     });
   });

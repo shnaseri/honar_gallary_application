@@ -1,15 +1,17 @@
-# honar_api_v3.model.InlineResponse2004
+# honar_api_v4.model.InlineResponse2004
 
 ## Load the model package
 ```dart
-import 'package:honar_api_v3/api.dart';
+import 'package:honar_api_v4/api.dart';
 ```
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **success** | **bool** |  | [optional] [default to true]
-**contentId** | **int** |  | [optional]
+**valid** | **bool** |  | [optional]
+**accessToken** | **String** |  | [optional]
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 
