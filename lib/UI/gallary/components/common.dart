@@ -1,5 +1,8 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:honar_api_v4/api.dart';
 import 'package:honar_gallary/UI/Art_piece/art_piece_page.dart';
+import 'package:nb_utils/nb_utils.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 
 const _defaultColor = Color(0xFF34568B);
@@ -37,12 +40,14 @@ class Tile extends StatelessWidget {
     this.extent,
     this.backgroundColor,
     this.bottomSpace,
+    required this.post,
   }) : super(key: key);
 
   final int index;
   final double? extent;
   final double? bottomSpace;
   final Color? backgroundColor;
+  final InlineResponse2003Posts post;
 
   @override
   Widget build(BuildContext context) {
@@ -63,7 +68,26 @@ class Tile extends StatelessWidget {
               boxShadow: const [
                 BoxShadow(color: Colors.black26, spreadRadius: 0.2)
               ]),
-          child: Center(child: Container()),
+          child: Center(
+              child: CachedNetworkImage(
+                  color: Colors.white,
+                  imageUrl: post.image,
+                  imageBuilder: (context, imageProvider) {
+                    return Container(
+                      width: context.width(),
+                      height: context.height() * 0.3,
+                      decoration: BoxDecoration(
+                          image: DecorationImage(
+                              fit: BoxFit.cover, image: imageProvider)),
+                    );
+                  },
+                  placeholder: (context, url) {
+                    return Container(
+                      height: context.height() * 0.3,
+                      width: context.width(),
+                      decoration: const BoxDecoration(color: Colors.grey),
+                    );
+                  })),
         ));
 
     if (bottomSpace == null) {
@@ -105,43 +129,43 @@ class ImageTile extends StatelessWidget {
   }
 }
 
-class InteractiveTile extends StatefulWidget {
-  const InteractiveTile({
-    Key? key,
-    required this.index,
-    this.extent,
-    this.bottomSpace,
-  }) : super(key: key);
-
-  final int index;
-  final double? extent;
-  final double? bottomSpace;
-
-  @override
-  _InteractiveTileState createState() => _InteractiveTileState();
-}
-
-class _InteractiveTileState extends State<InteractiveTile> {
-  Color color = _defaultColor;
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        setState(() {
-          if (color == _defaultColor) {
-            color = Colors.red;
-          } else {
-            color = _defaultColor;
-          }
-        });
-      },
-      child: Tile(
-        index: widget.index,
-        extent: widget.extent,
-        backgroundColor: color,
-        bottomSpace: widget.bottomSpace,
-      ),
-    );
-  }
-}
+// class InteractiveTile extends StatefulWidget {
+//   const InteractiveTile({
+//     Key? key,
+//     required this.index,
+//     this.extent,
+//     this.bottomSpace,
+//   }) : super(key: key);
+//
+//   final int index;
+//   final double? extent;
+//   final double? bottomSpace;
+//
+//   @override
+//   _InteractiveTileState createState() => _InteractiveTileState();
+// }
+//
+// class _InteractiveTileState extends State<InteractiveTile> {
+//   Color color = _defaultColor;
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return GestureDetector(
+//       onTap: () {
+//         setState(() {
+//           if (color == _defaultColor) {
+//             color = Colors.red;
+//           } else {
+//             color = _defaultColor;
+//           }
+//         });
+//       },
+//       child: Tile(
+//         index: widget.index,
+//         extent: widget.extent,
+//         backgroundColor: color,
+//         bottomSpace: widget.bottomSpace,
+//       ),
+//     );
+//   }
+// }
