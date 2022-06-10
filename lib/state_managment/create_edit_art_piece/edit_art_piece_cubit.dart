@@ -40,11 +40,19 @@ class EditArtPieceCubit extends Cubit<EditArtPieceState> {
       if (ArtPieceCoverTypeEnum.V == getTypeOfArtPiece(type) ||
           ArtPieceCoverTypeEnum.M == getTypeOfArtPiece(type)) {
         print('---- Start Uploading ------');
-        InlineResponse2004 response = await coreApi.coreContentUpdate(
+        InlineResponse2004 responseContent = await coreApi.coreContentUpdate(
             await http.MultipartFile.fromPath('file', file.path));
-        print(response.success);
+        print(responseContent.success);
         print('---- End Uploading ------');
+
+        if (responseContent.success) {
+          print('---- Send Content Id ------');
+          await artApi.artArtPieceContentUpdate(artId.toString(),
+              ArtPieceContent(contentId: responseContent.contentId));
+          print('---- End Content Id ------');
+        }
       }
+
       emit(EditArtPieceSuccessfully());
     } catch (e) {
       emit(EditArtPieceInitial());
