@@ -15,25 +15,33 @@ class User {
   User({
     this.id,
     this.fullName,
+    this.profilePhoto,
   });
 
   int id;
 
   String fullName;
 
+  String profilePhoto;
+
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is User && other.id == id && other.fullName == fullName;
+      other is User &&
+          other.id == id &&
+          other.fullName == fullName &&
+          other.profilePhoto == profilePhoto;
 
   @override
   int get hashCode =>
       // ignore: unnecessary_parenthesis
       (id == null ? 0 : id.hashCode) +
-      (fullName == null ? 0 : fullName.hashCode);
+      (fullName == null ? 0 : fullName.hashCode) +
+      (profilePhoto == null ? 0 : profilePhoto.hashCode);
 
   @override
-  String toString() => 'User[id=$id, fullName=$fullName]';
+  String toString() =>
+      'User[id=$id, fullName=$fullName, profilePhoto=$profilePhoto]';
 
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
@@ -42,6 +50,9 @@ class User {
     }
     if (fullName != null) {
       json[r'full_name'] = fullName;
+    }
+    if (profilePhoto != null) {
+      json[r'profile_photo'] = profilePhoto;
     }
     return json;
   }
@@ -55,6 +66,7 @@ class User {
       return User(
         id: mapValueOfType<int>(json, r'id'),
         fullName: mapValueOfType<String>(json, r'full_name'),
+        profilePhoto: mapValueOfType<String>(json, r'profile_photo'),
       );
     }
     return null;
@@ -100,3 +112,4 @@ class User {
     return map;
   }
 }
+

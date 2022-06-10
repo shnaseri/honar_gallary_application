@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:honar_gallary/const/color_const.dart';
+import 'package:honar_gallary/logic/general_values.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import 'components/search_text_field.dart';
@@ -91,6 +92,7 @@ class _BodySearchWidgetState extends State<BodySearchWidget> {
 
   @override
   Widget build(BuildContext context) {
+    var categories = ConfigGeneralValues.configGeneralValues?.getCategories();
     return ListView(
       controller: widget.controller,
       scrollDirection: Axis.vertical,
@@ -126,7 +128,7 @@ class _BodySearchWidgetState extends State<BodySearchWidget> {
                           width: 1)),
                   child: Center(
                     child: Text(
-                      'موسیقی',
+                      categories![index].name,
                       style: TextStyle(
                           color: categoryItemSelectedId == index
                               ? Colors.white
@@ -136,7 +138,7 @@ class _BodySearchWidgetState extends State<BodySearchWidget> {
                 ),
               );
             },
-            itemCount: 10,
+            itemCount: categories?.length,
             scrollDirection: Axis.horizontal,
           ),
         ),

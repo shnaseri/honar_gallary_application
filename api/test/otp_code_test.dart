@@ -8,7 +8,7 @@
 // ignore_for_file: constant_identifier_names
 // ignore_for_file: lines_longer_than_80_chars
 
-import 'package:honar_api_v3/api.dart';
+import 'package:honar_api_v5/api.dart';
 import 'package:test/test.dart';
 
 // tests for OtpCode

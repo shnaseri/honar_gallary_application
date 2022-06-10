@@ -1,9 +1,9 @@
-# honar_api_v3.api.ChatApi
+# honar_api_v5.api.ChatApi
 
 ## Load the API package
 
 ```dart
-import 'package:honar_api_v3/api.dart';
+import 'package:honar_api_v5/api.dart';
 ```
 
 All URIs are relative to *http://188.121.110.151:8000/api*
@@ -21,7 +21,7 @@ GET** /chat/get-all-chat-messages/ |
 ### Example
 
 ```dart
-import 'package:honar_api_v3/api.dart';
+import 'package:honar_api_v5/api.dart';
 
 // TODO Configure API key authorization: Bearer
 //defaultApiClient.getAuthentication<ApiKeyAuth>('Bearer').apiKey = 'YOUR_API_KEY';
@@ -69,7 +69,7 @@ Name | Type | Description  | Notes
 
 ### Example
 ```dart
-import 'package:honar_api_v3/api.dart';
+import 'package:honar_api_v5/api.dart';
 // TODO Configure API key authorization: Bearer
 //defaultApiClient.getAuthentication<ApiKeyAuth>('Bearer').apiKey = 'YOUR_API_KEY';
 // uncomment below to setup prefix (e.g. Bearer) for API key, if needed

@@ -1,8 +1,8 @@
-# honar_api_v3.model.ArtPiece
+# honar_api_v5.model.ArtPiece
 
 ## Load the model package
 ```dart
-import 'package:honar_api_v3/api.dart';
+import 'package:honar_api_v5/api.dart';
 ```
 
 ## Properties
@@ -12,6 +12,7 @@ Name | Type | Description | Notes
 **id** | **int** |  | [optional] [readonly]
 **title** | **String** |  | [optional]
 **price** | **int** |  | [optional]
+**category** | [**Category**](Category.md) |  |
 **description** | **String** |  | [optional]
 **cover** | [**ImageSerializer**](ImageSerializer.md) |  |
 **owner** | [**User**](User.md) |  |
