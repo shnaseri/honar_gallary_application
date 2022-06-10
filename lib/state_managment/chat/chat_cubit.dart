@@ -30,8 +30,8 @@ class ChatCubit extends Cubit<ChatState> {
       // emit(ChatConnectToServer(messages));
       channel = IOWebSocketChannel.connect(
           Uri.parse(
-              "ws://188.121.110.151:8000/socket/chat/$chatCode/?token=${(interfaceOfUser.authentications['Bearer'] as ApiKeyAuth).apiKey}"),
-          headers: {'Connection': 'Upgrade', 'Upgrade': 'websocket'});
+              "ws://10.0.2.2:8000/socket/chat/$chatCode/?token=${(interfaceOfUser.authentications['Bearer'] as ApiKeyAuth).apiKey}"),
+          headers: {"Connection": "upgrade", "Upgrade": "websocket"});
 
       channel.stream.listen(
         (event) {
@@ -62,7 +62,8 @@ class ChatCubit extends Cubit<ChatState> {
     // chatRepository.disConnectMQTT();
   }
 
-  Future<void> publishMessage(User user, String message, List<Message> oldMessages) async {
+  Future<void> publishMessage(
+      User user, String message, List<Message> oldMessages) async {
     try {
       print('---- Send Message ------');
       // emit(ChatSendMessage());
