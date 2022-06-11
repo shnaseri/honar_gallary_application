@@ -1,6 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:honar_api_v5/api.dart';
+import 'package:honar_api_v8/api.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 class Poster extends StatelessWidget {

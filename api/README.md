@@ -1,4 +1,4 @@
-# honar_api_v5
+# honar_api_v8
 
 Test description
 
@@ -18,7 +18,7 @@ Dart 2.0 or later
 If this Dart package is published to Github, add the following dependency to your pubspec.yaml
 ```
 dependencies:
-  honar_api_v5:
+  honar_api_v8:
     git: https://github.com/GIT_USER_ID/GIT_REPO_ID.git
 ```
 
@@ -27,8 +27,8 @@ To use the package in your local drive, add the following dependency to your pub
 
 ```
 dependencies:
-  honar_api_v5:
-    path: /path/to/honar_api_v5
+  honar_api_v8:
+    path: /path/to/honar_api_v8
 ```
 
 ## Tests
@@ -40,7 +40,7 @@ TODO
 Please follow the [installation procedure](#installation--usage) and then run the following:
 
 ```dart
-import 'package:honar_api_v5/api.dart';
+import 'package:honar_api_v8/api.dart';
 
 // TODO Configure API key authorization: Bearer
 //defaultApiClient.getAuthentication<ApiKeyAuth>('Bearer').apiKey = 'YOUR_API_KEY';
@@ -75,6 +75,7 @@ PUT** /art/art-piece/{id}/like/ |
 *ArtApi* | [**artArtPieceRead**](doc//ArtApi.md#artartpieceread) | **GET** /art/art-piece/{id}/ |
 *ArtApi* | [**artArtPieceUpdate**](doc//ArtApi.md#artartpieceupdate) | **
 PUT** /art/art-piece/{id}/ |
+*ArtApi* | [**artExploreList**](doc//ArtApi.md#artexplorelist) | **GET** /art/explore/ |
 *ArtApi* | [**artGalleryRead**](doc//ArtApi.md#artgalleryread) | **GET** /art/gallery/{id}/ |
 *AuthApi* | [**authLoginCreate**](doc//AuthApi.md#authlogincreate) | **POST** /auth/login/ |
 *AuthApi* | [**authLogoutCreate**](doc//AuthApi.md#authlogoutcreate) | **POST** /auth/logout/ |

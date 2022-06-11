@@ -1,6 +1,6 @@
 import 'package:animated_login/animated_login.dart';
 import 'package:flutter/material.dart';
-import 'package:honar_api_v5/api.dart';
+import 'package:honar_api_v8/api.dart';
 import 'package:honar_gallary/UI/Authentication/otp/otp_page.dart';
 import 'package:honar_gallary/const/color_const.dart';
 import 'package:honar_gallary/logic/consts.dart';
@@ -144,6 +144,9 @@ class _AuthenticationPageState extends State<AuthenticationPage> {
               interfaceOfUser.getAuthentication<ApiKeyAuth>(r'Bearer')
                 ..apiKeyPrefix = 'Bearer'
                 ..apiKey = token.access;
+              CategoryApi categoryApi = CategoryApi(interfaceOfUser);
+              ConfigGeneralValues.configGeneralValues
+                  ?.setListCategory(await categoryApi.categoryGetAllList());
               return '';
             } catch (e) {
               print(e);

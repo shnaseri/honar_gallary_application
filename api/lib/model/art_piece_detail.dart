@@ -112,3 +112,4 @@ class ArtPieceDetail {
     return map;
   }
 }
+

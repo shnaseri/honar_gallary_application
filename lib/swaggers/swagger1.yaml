@@ -188,6 +188,47 @@ paths:
         in: path
         required: true
         type: string
+  "/art/explore/":
+    get:
+      operationId: art_explore_list
+      description: ''
+      parameters:
+        - name: page
+          in: query
+          required: false
+          type: integer
+          default: 1
+        - name: page_count
+          in: query
+          required: false
+          type: integer
+          default: 15
+        - name: category_id
+          in: query
+          required: false
+          type: integer
+          x-nullable: true
+      responses:
+        '200':
+          description: ''
+          schema:
+            type: array
+            items:
+              "$ref": "#/definitions/ArtPiece"
+        '406':
+          description: ''
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                default: false
+              error:
+                type: string
+                default: invalid data
+      tags:
+        - art
+    parameters: [ ]
   "/art/gallery/{id}/":
     get:
       operationId: art_gallery_read

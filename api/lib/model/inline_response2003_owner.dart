@@ -113,3 +113,4 @@ class InlineResponse2003Owner {
     return map;
   }
 }
+
