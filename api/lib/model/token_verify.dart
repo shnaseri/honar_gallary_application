@@ -88,4 +88,3 @@ class TokenVerify {
     return map;
   }
 }
-

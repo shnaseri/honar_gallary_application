@@ -97,4 +97,3 @@ class Category {
     return map;
   }
 }
-

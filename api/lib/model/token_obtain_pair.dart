@@ -99,4 +99,3 @@ class TokenObtainPair {
     return map;
   }
 }
-
