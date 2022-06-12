@@ -28,10 +28,8 @@ class ChatCubit extends Cubit<ChatState> {
       // await chatRepository.connectMMQT(contact.token);
       // List<Message> messages = await chatRepository.getMessages(contact.id);
       // emit(ChatConnectToServer(messages));
-      channel = IOWebSocketChannel.connect(
-          Uri.parse(
-              "ws://10.0.2.2:8000/socket/chat/$chatCode/?token=${(interfaceOfUser.authentications['Bearer'] as ApiKeyAuth).apiKey}"),
-          headers: {"Connection": "upgrade", "Upgrade": "websocket"});
+      channel = IOWebSocketChannel.connect(Uri.parse(
+          "wss://188.121.110.151:8000/188/socket/chat/$chatCode/?token=${(interfaceOfUser.authentications['Bearer'] as ApiKeyAuth).apiKey}"));
 
       channel.stream.listen(
         (event) {
@@ -41,7 +39,7 @@ class ChatCubit extends Cubit<ChatState> {
         },
         onDone: () {
           print("Done");
-          isWebSocketRunning = true;
+          isWebSocketRunning = false;
         },
         onError: (err) {
           print(err);
@@ -68,7 +66,8 @@ class ChatCubit extends Cubit<ChatState> {
       print('---- Send Message ------');
       // emit(ChatSendMessage());
       Message newMessage = await chatRepository.pushMessage(user, message);
-      channel.sink.add(jsonEncode({"message": newMessage.content}));
+      channel.sink
+          .add(jsonEncode({"message": newMessage.content, "type": "T"}));
 
       // List<Message> messages = await chatRepository.getMessages(user.id);
       List<Message> messages = oldMessages.toList();
