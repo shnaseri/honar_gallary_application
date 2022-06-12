@@ -112,7 +112,7 @@ class _BodySearchWidgetState extends State<BodySearchWidget> {
     return BlocBuilder<ExplorerCubit, ExplorerState>(
       builder: (context, state) {
         if (state is ExplorerInitial && startApp) {
-          BlocProvider.of<ExplorerCubit>(context).fetchExplorer();
+          BlocProvider.of<ExplorerCubit>(context).fetchExplorer(-1);
         }
         if (state is ExplorerLoaded) {
           return ListView(
@@ -130,21 +130,23 @@ class _BodySearchWidgetState extends State<BodySearchWidget> {
                   physics: const ClampingScrollPhysics(),
                   itemBuilder: (BuildContext context, int index) {
                     return GestureDetector(
-                      onTap: () {
+                      onTap: () async {
                         setState(() {
-                          categoryItemSelectedId = index;
+                          categoryItemSelectedId = categories![index].id;
                         });
+                        await BlocProvider.of<ExplorerCubit>(context)
+                            .fetchExplorer(categoryItemSelectedId);
                       },
                       child: Container(
                         margin: const EdgeInsets.symmetric(horizontal: 6),
                         padding: const EdgeInsets.symmetric(horizontal: 6),
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(5),
-                            color: categoryItemSelectedId == index
+                            color: checIndex(index)
                                 ? ColorPallet.colorPalletDark.withOpacity(0.8)
                                 : Colors.white,
                             border: Border.all(
-                                color: categoryItemSelectedId == index
+                                color: checIndex(index)
                                     ? Colors.white70
                                     : ColorPallet.colorPalletDark
                                         .withOpacity(0.8),
@@ -153,7 +155,7 @@ class _BodySearchWidgetState extends State<BodySearchWidget> {
                           child: Text(
                             categories![index].name,
                             style: TextStyle(
-                                color: categoryItemSelectedId == index
+                                color: checIndex(index)
                                     ? Colors.white
                                     : Colors.black),
                           ),
@@ -182,6 +184,10 @@ class _BodySearchWidgetState extends State<BodySearchWidget> {
       },
     );
   }
+
+  bool checIndex(int index) =>
+      categoryItemSelectedId == index ||
+      (categoryItemSelectedId == -1 && index == 0);
 }
 
 class BodyOfExplorerPage extends StatefulWidget {

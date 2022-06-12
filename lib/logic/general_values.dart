@@ -20,7 +20,7 @@ class ConfigGeneralValues {
   }
 
   void setListCategory(List<Category> categoryGetAllList) {
-    categories = [Category(name: "همه", id: 0), ...categoryGetAllList];
+    categories = [Category(name: "همه", id: -1), ...categoryGetAllList];
   }
 
   List<Category> getCategories() {
