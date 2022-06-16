@@ -6,16 +6,16 @@ import 'package:honar_api_v3/api.dart';
 import 'package:honar_gallary/data_managment/chat/chat_repository.dart';
 import 'package:honar_gallary/logic/consts.dart';
 import 'package:meta/meta.dart';
-import 'package:web_socket_channel/io.dart';
+import 'package:web_socket_channel/web_socket_channel.dart';
 
 part 'chat_state.dart';
 
 class ChatCubit extends Cubit<ChatState> {
   User contact;
   late ChatRepository chatRepository;
-  late IOWebSocketChannel channel;
+  late WebSocketChannel channel;
   bool isWebSocketRunning = false;
-  int retryLimit = 3;
+  int retryLimit = 1;
 
   ChatCubit({required this.contact}) : super(ChatInitial()) {
     chatRepository = ChatRepository();
@@ -28,14 +28,15 @@ class ChatCubit extends Cubit<ChatState> {
       // await chatRepository.connectMMQT(contact.token);
       // List<Message> messages = await chatRepository.getMessages(contact.id);
       // emit(ChatConnectToServer(messages));
-      channel = IOWebSocketChannel.connect(Uri.parse(
-          "wss://188.121.110.151:8000/188/socket/chat/$chatCode/?token=${(interfaceOfUser.authentications['Bearer'] as ApiKeyAuth).apiKey}"));
+      var url =
+          "ws://188.121.110.151:8000/socket/chat/$chatCode/?token=${(interfaceOfUser.authentications['Bearer'] as ApiKeyAuth).apiKey}";
+      channel = WebSocketChannel.connect(Uri.parse(url));
+      print(url);
 
       channel.stream.listen(
         (event) {
-          if (kDebugMode) {
-            print(event);
-          }
+          print("-- listen response ");
+          print(event);
         },
         onDone: () {
           print("Done");
@@ -66,8 +67,10 @@ class ChatCubit extends Cubit<ChatState> {
       print('---- Send Message ------');
       // emit(ChatSendMessage());
       Message newMessage = await chatRepository.pushMessage(user, message);
-      channel.sink
-          .add(jsonEncode({"message": newMessage.content, "type": "T"}));
+      var jsonEncode2 =
+          jsonEncode({"message": newMessage.content, "type": "T"});
+      print(jsonEncode2);
+      channel.sink.add(jsonEncode2);
 
       // List<Message> messages = await chatRepository.getMessages(user.id);
       List<Message> messages = oldMessages.toList();

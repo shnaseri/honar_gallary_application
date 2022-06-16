@@ -22,12 +22,14 @@ class ChatPage extends StatefulWidget {
 
 class _ChatPageState extends State<ChatPage> {
   late BuildContext chatContext;
+  late bool startapp;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     controller.text = "";
+    startapp = true;
   }
 
   @override
@@ -59,9 +61,9 @@ class _ChatPageState extends State<ChatPage> {
                       // toast(hasErrorChatPage);
                       BlocProvider.of<ChatCubit>(context).emit(ChatInitial());
                     }
-                    if (state is ChatInitial) {
-                      BlocProvider.of<ChatCubit>(context)
-                          .fetchConnect("MV8yMQ==");
+                    if (state is ChatInitial && startapp) {
+                      BlocProvider.of<ChatCubit>(context).fetchConnect("20-21");
+                      startapp = false;
                     }
                     return Stack(
                       children: [
