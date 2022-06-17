@@ -1,9 +1,9 @@
-# honar_api_v4.api.ArtApi
+# honar_api_v11.api.ArtApi
 
 ## Load the API package
 
 ```dart
-import 'package:honar_api_v4/api.dart';
+import 'package:honar_api_v11/api.dart';
 ```
 
 All URIs are relative to *http://188.121.110.151:8000/api*
@@ -16,6 +16,7 @@ PUT** /art/art-piece/{id}/content/ |
 [**artArtPieceLikeUpdate**](ArtApi.md#artartpiecelikeupdate) | **PUT** /art/art-piece/{id}/like/ |
 [**artArtPieceRead**](ArtApi.md#artartpieceread) | **GET** /art/art-piece/{id}/ |
 [**artArtPieceUpdate**](ArtApi.md#artartpieceupdate) | **PUT** /art/art-piece/{id}/ |
+[**artExploreList**](ArtApi.md#artexplorelist) | **GET** /art/explore/ |
 [**artGalleryRead**](ArtApi.md#artgalleryread) | **GET** /art/gallery/{id}/ |
 
 # **artArtPieceContentUpdate**
@@ -25,7 +26,7 @@ PUT** /art/art-piece/{id}/content/ |
 ### Example
 
 ```dart
-import 'package:honar_api_v4/api.dart';
+import 'package:honar_api_v11/api.dart';
 
 // TODO Configure API key authorization: Bearer
 //defaultApiClient.getAuthentication<ApiKeyAuth>('Bearer').apiKey = 'YOUR_API_KEY';
@@ -75,7 +76,7 @@ Name | Type | Description  | Notes
 
 ### Example
 ```dart
-import 'package:honar_api_v4/api.dart';
+import 'package:honar_api_v11/api.dart';
 // TODO Configure API key authorization: Bearer
 //defaultApiClient.getAuthentication<ApiKeyAuth>('Bearer').apiKey = 'YOUR_API_KEY';
 // uncomment below to setup prefix (e.g. Bearer) for API key, if needed
@@ -120,7 +121,7 @@ Name | Type | Description  | Notes
 
 ### Example
 ```dart
-import 'package:honar_api_v4/api.dart';
+import 'package:honar_api_v11/api.dart';
 // TODO Configure API key authorization: Bearer
 //defaultApiClient.getAuthentication<ApiKeyAuth>('Bearer').apiKey = 'YOUR_API_KEY';
 // uncomment below to setup prefix (e.g. Bearer) for API key, if needed
@@ -165,7 +166,7 @@ Name | Type | Description  | Notes
 
 ### Example
 ```dart
-import 'package:honar_api_v4/api.dart';
+import 'package:honar_api_v11/api.dart';
 // TODO Configure API key authorization: Bearer
 //defaultApiClient.getAuthentication<ApiKeyAuth>('Bearer').apiKey = 'YOUR_API_KEY';
 // uncomment below to setup prefix (e.g. Bearer) for API key, if needed
@@ -210,7 +211,7 @@ Name | Type | Description  | Notes
 
 ### Example
 ```dart
-import 'package:honar_api_v4/api.dart';
+import 'package:honar_api_v11/api.dart';
 // TODO Configure API key authorization: Bearer
 //defaultApiClient.getAuthentication<ApiKeyAuth>('Bearer').apiKey = 'YOUR_API_KEY';
 // uncomment below to setup prefix (e.g. Bearer) for API key, if needed
@@ -250,6 +251,55 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
+# **artExploreList**
+
+> List<ArtPiece> artExploreList(page, pageCount, categoryId)
+
+### Example
+
+```dart
+import 'package:honar_api_v11/api.dart';
+// TODO Configure API key authorization: Bearer
+//defaultApiClient.getAuthentication<ApiKeyAuth>('Bearer').apiKey = 'YOUR_API_KEY';
+// uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+//defaultApiClient.getAuthentication<ApiKeyAuth>('Bearer').apiKeyPrefix = 'Bearer';
+
+final api_instance = ArtApi();
+final page = 56; // int | 
+final pageCount = 56; // int | 
+final categoryId = 56; // int | 
+
+try {
+    final result = api_instance.artExploreList(page, pageCount, categoryId);
+    print(result);
+} catch (e) {
+    print('Exception when calling ArtApi->artExploreList: $e\n');
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**page** | **int**|  | [optional] [default to 1]
+**pageCount** | **int**|  | [optional] [default to 15]
+**categoryId** | **int**|  | [optional]
+
+### Return type
+
+[**List<ArtPiece>**](ArtPiece.md)
+
+### Authorization
+
+[Bearer](../README.md#Bearer)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
 # **artGalleryRead**
 
 > InlineResponse2003 artGalleryRead(id)
@@ -257,7 +307,7 @@ Name | Type | Description  | Notes
 ### Example
 
 ```dart
-import 'package:honar_api_v4/api.dart';
+import 'package:honar_api_v11/api.dart';
 // TODO Configure API key authorization: Bearer
 //defaultApiClient.getAuthentication<ApiKeyAuth>('Bearer').apiKey = 'YOUR_API_KEY';
 // uncomment below to setup prefix (e.g. Bearer) for API key, if needed

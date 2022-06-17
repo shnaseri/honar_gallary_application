@@ -39,7 +39,7 @@ class ApiClient {
   final _authentications = <String, Authentication>{};
 
   void addDefaultHeader(String key, String value) {
-    _defaultHeaderMap[key] = value;
+     _defaultHeaderMap[key] = value;
   }
 
   Map<String, String> get defaultHeaderMap => _defaultHeaderMap;
@@ -267,6 +267,8 @@ class ApiClient {
           return ArtPieceCover.fromJson(value);
         case 'ArtPieceDetail':
           return ArtPieceDetail.fromJson(value);
+        case 'Category':
+          return Category.fromJson(value);
         case 'Chat':
           return Chat.fromJson(value);
         case 'ImageSerializer':
@@ -287,6 +289,8 @@ class ApiClient {
           return InlineResponse2004.fromJson(value);
         case 'InlineResponse2005':
           return InlineResponse2005.fromJson(value);
+        case 'InlineResponse2006':
+          return InlineResponse2006.fromJson(value);
         case 'InlineResponse404':
           return InlineResponse404.fromJson(value);
         case 'InlineResponse406':

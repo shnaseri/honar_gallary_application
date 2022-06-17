@@ -1,9 +1,9 @@
-# honar_api_v4.model.TokenObtainPair
+# honar_api_v11.model.TokenObtainPair
 
 ## Load the model package
 
 ```dart
-import 'package:honar_api_v4/api.dart';
+import 'package:honar_api_v11/api.dart';
 ```
 
 ## Properties

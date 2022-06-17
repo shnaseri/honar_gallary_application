@@ -1,4 +1,4 @@
-# honar_api_v4
+# honar_api_v11
 
 Test description
 
@@ -18,7 +18,7 @@ Dart 2.0 or later
 If this Dart package is published to Github, add the following dependency to your pubspec.yaml
 ```
 dependencies:
-  honar_api_v4:
+  honar_api_v11:
     git: https://github.com/GIT_USER_ID/GIT_REPO_ID.git
 ```
 
@@ -27,8 +27,8 @@ To use the package in your local drive, add the following dependency to your pub
 
 ```
 dependencies:
-  honar_api_v4:
-    path: /path/to/honar_api_v4
+  honar_api_v11:
+    path: /path/to/honar_api_v11
 ```
 
 ## Tests
@@ -40,7 +40,7 @@ TODO
 Please follow the [installation procedure](#installation--usage) and then run the following:
 
 ```dart
-import 'package:honar_api_v4/api.dart';
+import 'package:honar_api_v11/api.dart';
 
 // TODO Configure API key authorization: Bearer
 //defaultApiClient.getAuthentication<ApiKeyAuth>('Bearer').apiKey = 'YOUR_API_KEY';
@@ -75,9 +75,11 @@ PUT** /art/art-piece/{id}/like/ |
 *ArtApi* | [**artArtPieceRead**](doc//ArtApi.md#artartpieceread) | **GET** /art/art-piece/{id}/ |
 *ArtApi* | [**artArtPieceUpdate**](doc//ArtApi.md#artartpieceupdate) | **
 PUT** /art/art-piece/{id}/ |
+*ArtApi* | [**artExploreList**](doc//ArtApi.md#artexplorelist) | **GET** /art/explore/ |
 *ArtApi* | [**artGalleryRead**](doc//ArtApi.md#artgalleryread) | **GET** /art/gallery/{id}/ |
 *AuthApi* | [**authLoginCreate**](doc//AuthApi.md#authlogincreate) | **POST** /auth/login/ |
 *AuthApi* | [**authLogoutCreate**](doc//AuthApi.md#authlogoutcreate) | **POST** /auth/logout/ |
+*AuthApi* | [**authMeList**](doc//AuthApi.md#authmelist) | **GET** /auth/me/ |
 *AuthApi* | [**authRegisterCreate**](doc//AuthApi.md#authregistercreate) | **
 POST** /auth/register/ |
 *AuthApi* | [**authSendOtpCodeCreate**](doc//AuthApi.md#authsendotpcodecreate) | **
@@ -85,6 +87,8 @@ POST** /auth/send-otp-code/{id}/ |
 *AuthApi* | [**authVerifyCreate**](doc//AuthApi.md#authverifycreate) | **POST** /auth/verify/ |
 *AuthApi* | [**authVerifyOtpCodeCreate**](doc//AuthApi.md#authverifyotpcodecreate) | **
 POST** /auth/verify-otp-code/{id}/ |
+*CategoryApi* | [**categoryGetAllList**](doc//CategoryApi.md#categorygetalllist) | **
+GET** /category/get-all/ |
 *ChatApi* | [**chatGetAllChatMessagesList**](doc//ChatApi.md#chatgetallchatmessageslist) | **
 GET** /chat/get-all-chat-messages/ |
 *ChatApi* | [**chatGetAllChatsList**](doc//ChatApi.md#chatgetallchatslist) | **
@@ -110,6 +114,7 @@ PUT** /core/image/upload/{id}/ |
 - [ArtPieceContent](doc//ArtPieceContent.md)
 - [ArtPieceCover](doc//ArtPieceCover.md)
 - [ArtPieceDetail](doc//ArtPieceDetail.md)
+- [Category](doc//Category.md)
 - [Chat](doc//Chat.md)
 - [ImageSerializer](doc//ImageSerializer.md)
 - [InlineResponse200](doc//InlineResponse200.md)
@@ -120,6 +125,7 @@ PUT** /core/image/upload/{id}/ |
 - [InlineResponse2003Posts](doc//InlineResponse2003Posts.md)
 - [InlineResponse2004](doc//InlineResponse2004.md)
 - [InlineResponse2005](doc//InlineResponse2005.md)
+- [InlineResponse2006](doc//InlineResponse2006.md)
 - [InlineResponse404](doc//InlineResponse404.md)
 - [InlineResponse406](doc//InlineResponse406.md)
 - [Message](doc//Message.md)

@@ -79,13 +79,12 @@ class InlineResponse2003Posts {
   static InlineResponse2003Posts fromJson(dynamic value) {
     if (value is Map) {
       final json = value.cast<String, dynamic>();
-      print(json);
       return InlineResponse2003Posts(
         id: mapValueOfType<int>(json, r'id'),
         title: mapValueOfType<String>(json, r'title'),
         type: mapValueOfType<String>(json, r'type'),
         image: mapValueOfType<String>(json, r'image'),
-        countLIKE: mapValueOfType<int>(json, r'count_like'),
+        countLIKE: mapValueOfType<int>(json, r'count_LIKE'),
       );
     }
     return null;
@@ -132,3 +131,4 @@ class InlineResponse2003Posts {
     return map;
   }
 }
+

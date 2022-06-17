@@ -254,7 +254,6 @@ class ArtApi {
     final response = await artArtPieceReadWithHttpInfo(
       id,
     );
-    print(response.body);
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException(response.statusCode, await _decodeBodyBytes(response));
     }
@@ -341,6 +340,92 @@ class ArtApi {
     return Future<InlineResponse2001>.value();
   }
 
+  /// Performs an HTTP 'GET /art/explore/' operation and returns the [Response].
+  /// Parameters:
+  ///
+  /// * [int] page:
+  ///
+  /// * [int] pageCount:
+  ///
+  /// * [int] categoryId:
+  Future<Response> artExploreListWithHttpInfo({
+    int page,
+    int pageCount,
+    int categoryId,
+  }) async {
+    // Verify required params are set.
+
+    // ignore: prefer_const_declarations
+    final path = r'/art/explore/';
+
+    // ignore: prefer_final_locals
+    Object postBody;
+
+    final queryParams = <QueryParam>[];
+    final headerParams = <String, String>{};
+    final formParams = <String, String>{};
+
+    if (page != null) {
+      queryParams
+          .addAll(_convertParametersForCollectionFormat('', 'page', page));
+    }
+    if (pageCount != null) {
+      queryParams.addAll(
+          _convertParametersForCollectionFormat('', 'page_count', pageCount));
+    }
+    if (categoryId != null) {
+      queryParams.addAll(
+          _convertParametersForCollectionFormat('', 'category_id', categoryId));
+    }
+
+    const authNames = <String>['Bearer'];
+    const contentTypes = <String>[];
+
+    return apiClient.invokeAPI(
+      path,
+      'GET',
+      queryParams,
+      postBody,
+      headerParams,
+      formParams,
+      contentTypes.isEmpty ? null : contentTypes[0],
+      authNames,
+    );
+  }
+
+  /// Parameters:
+  ///
+  /// * [int] page:
+  ///
+  /// * [int] pageCount:
+  ///
+  /// * [int] categoryId:
+  Future<List<ArtPiece>> artExploreList({
+    int page,
+    int pageCount,
+    int categoryId,
+  }) async {
+    final response = await artExploreListWithHttpInfo(
+      page: page,
+      pageCount: pageCount,
+      categoryId: categoryId,
+    );
+    if (response.statusCode >= HttpStatus.badRequest) {
+      throw ApiException(response.statusCode, await _decodeBodyBytes(response));
+    }
+    // When a remote server returns no body with a status of 204, we shall not decode it.
+    // At the time of writing this, `dart:convert` will throw an "Unexpected end of input"
+    // FormatException when trying to decode an empty string.
+    if (response.body != null && response.statusCode != HttpStatus.noContent) {
+      final responseBody = await _decodeBodyBytes(response);
+      return (await apiClient.deserializeAsync(responseBody, 'List<ArtPiece>')
+              as List)
+          .cast<ArtPiece>()
+          .toList(growable: false);
+    }
+    return Future<List<ArtPiece>>.value();
+  }
+
   /// Performs an HTTP 'GET /art/gallery/{id}/' operation and returns the [Response].
   /// Parameters:
   ///
@@ -387,7 +472,6 @@ class ArtApi {
     final response = await artGalleryReadWithHttpInfo(
       id,
     );
-    print(response.body);
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException(response.statusCode, await _decodeBodyBytes(response));
     }

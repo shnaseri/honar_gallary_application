@@ -1,5 +1,5 @@
 import 'package:bloc/bloc.dart';
-import 'package:honar_api_v4/api.dart';
+import 'package:honar_api_v11/api.dart';
 import 'package:honar_gallary/logic/consts.dart';
 import 'package:meta/meta.dart';
 
@@ -18,7 +18,7 @@ class OtpCubit extends Cubit<OtpState> {
     emit(OtpLoadingCodeState());
     try {
       print("--- sending otp ----");
-      InlineResponse2004 response2004 = await authApi.authVerifyOtpCodeCreate(
+      InlineResponse2005 response2004 = await authApi.authVerifyOtpCodeCreate(
           userId.toString(), OtpCode(otpCode: code));
       if (response2004.success && response2004.valid) {
         emit(OtpLoadedCodeState());

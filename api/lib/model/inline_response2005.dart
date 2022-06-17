@@ -14,37 +14,45 @@ class InlineResponse2005 {
   /// Returns a new [InlineResponse2005] instance.
   InlineResponse2005({
     this.success = true,
-    this.contentId,
+    this.valid,
+    this.accessToken,
   });
 
   bool success;
 
-  int contentId;
+  bool valid;
+
+  String accessToken;
 
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       other is InlineResponse2005 &&
           other.success == success &&
-          other.contentId == contentId;
+          other.valid == valid &&
+          other.accessToken == accessToken;
 
   @override
   int get hashCode =>
       // ignore: unnecessary_parenthesis
       (success == null ? 0 : success.hashCode) +
-      (contentId == null ? 0 : contentId.hashCode);
+      (valid == null ? 0 : valid.hashCode) +
+      (accessToken == null ? 0 : accessToken.hashCode);
 
   @override
   String toString() =>
-      'InlineResponse2005[success=$success, contentId=$contentId]';
+      'InlineResponse2005[success=$success, valid=$valid, accessToken=$accessToken]';
 
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
     if (success != null) {
       json[r'success'] = success;
     }
-    if (contentId != null) {
-      json[r'content_id'] = contentId;
+    if (valid != null) {
+      json[r'valid'] = valid;
+    }
+    if (accessToken != null) {
+      json[r'access_token'] = accessToken;
     }
     return json;
   }
@@ -57,7 +65,8 @@ class InlineResponse2005 {
       final json = value.cast<String, dynamic>();
       return InlineResponse2005(
         success: mapValueOfType<bool>(json, r'success'),
-        contentId: mapValueOfType<int>(json, r'content_id'),
+        valid: mapValueOfType<bool>(json, r'valid'),
+        accessToken: mapValueOfType<String>(json, r'access_token'),
       );
     }
     return null;
@@ -104,3 +113,4 @@ class InlineResponse2005 {
     return map;
   }
 }
+
