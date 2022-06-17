@@ -54,7 +54,8 @@ dependencies:
   openapi_generator_annotations: ^3.3.0
   intl: ^0.17.0
   honar_api_v11:
-    path: ./api
+    git:
+      url: https://github.com/jlouage/flutter-carousel-pro.git
   shamsi_date: ^1.0.1
   flutter_chat_bubble: ^2.0.0
   image_picker: ^0.8.5+3
