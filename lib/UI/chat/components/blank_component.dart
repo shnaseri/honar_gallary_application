@@ -12,17 +12,15 @@ class BlankPageComponent extends StatelessWidget {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        // Container(
-        //   height: 200,
-        //   decoration: const BoxDecoration(
-        //       image: DecorationImage(
-        //           image: AssetImage(baseOfPathMedia + 'no_chat.png'))),
-        // ),
+        Container(
+          height: 200,
+          decoration: const BoxDecoration(),
+        ),
         Text(
           noMessageChatPage,
           textAlign: TextAlign.center,
           textDirection: TextDirection.rtl,
-          style: TextStyle(fontWeight: FontWeight.w800),
+          style: TextStyle(fontWeight: FontWeight.w800, color: Colors.white),
         )
       ],
     );
