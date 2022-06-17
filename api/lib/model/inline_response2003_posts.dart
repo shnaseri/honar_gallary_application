@@ -131,4 +131,3 @@ class InlineResponse2003Posts {
     return map;
   }
 }
-

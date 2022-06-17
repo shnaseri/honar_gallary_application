@@ -20,9 +20,7 @@ import 'package:meta/meta.dart';
 
 part 'api/art_api.dart';
 part 'api/auth_api.dart';
-
 part 'api/category_api.dart';
-
 part 'api/chat_api.dart';
 part 'api/core_api.dart';
 part 'api_client.dart';
@@ -37,11 +35,8 @@ part 'model/access_refresh.dart';
 part 'model/art_piece.dart';
 part 'model/art_piece_content.dart';
 part 'model/art_piece_cover.dart';
-
 part 'model/art_piece_detail.dart';
-
 part 'model/category.dart';
-
 part 'model/chat.dart';
 part 'model/image_serializer.dart';
 part 'model/inline_response200.dart';
@@ -51,11 +46,8 @@ part 'model/inline_response2003.dart';
 part 'model/inline_response2003_owner.dart';
 part 'model/inline_response2003_posts.dart';
 part 'model/inline_response2004.dart';
-
 part 'model/inline_response2005.dart';
-
 part 'model/inline_response2006.dart';
-
 part 'model/inline_response404.dart';
 part 'model/inline_response406.dart';
 part 'model/message.dart';
