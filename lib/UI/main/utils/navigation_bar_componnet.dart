@@ -2,7 +2,7 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:honar_gallary/UI/search/search_page.dart';
+import 'package:honar_gallary/UI/explorer/explorer_page.dart';
 import 'package:honar_gallary/const/color_const.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
@@ -64,7 +64,7 @@ class NavigationBarWidget extends StatelessWidget {
   _buildScreens() {
     return [
       Container(),
-      const SearchPage(),
+      const ExplorerPage(),
       const EditArtPiece(),
       const GalleryView(),
     ];

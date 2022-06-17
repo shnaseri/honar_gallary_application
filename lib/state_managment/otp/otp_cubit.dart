@@ -1,5 +1,5 @@
 import 'package:bloc/bloc.dart';
-import 'package:honar_api_v3/api.dart';
+import 'package:honar_api_v11/api.dart';
 import 'package:honar_gallary/logic/consts.dart';
 import 'package:meta/meta.dart';
 
@@ -18,14 +18,15 @@ class OtpCubit extends Cubit<OtpState> {
     emit(OtpLoadingCodeState());
     try {
       print("--- sending otp ----");
-      InlineResponse2003 response2003 = await authApi.authVerifyOtpCodeCreate(
+
+      InlineResponse2005 response2004 = await authApi.authVerifyOtpCodeCreate(
           userId.toString(), OtpCode(otpCode: code));
-      if (response2003.success && response2003.valid) {
+      if (response2004.success && response2004.valid) {
         emit(OtpLoadedCodeState());
-        ConfigGeneralValues.getInstance().putToken(response2003.accessToken);
+        ConfigGeneralValues.getInstance().putToken(response2004.accessToken);
         interfaceOfUser.getAuthentication<ApiKeyAuth>(r'Bearer')
           ..apiKeyPrefix = 'Bearer'
-          ..apiKey = response2003.accessToken;
+          ..apiKey = response2004.accessToken;
         return true;
       } else {
         emit(OtpBadCode());

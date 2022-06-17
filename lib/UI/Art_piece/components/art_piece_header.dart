@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:honar_api_v3/api.dart';
+import 'package:honar_api_v11/api.dart';
 import 'package:honar_gallary/UI/Art_piece/components/poster.dart';
 import 'package:honar_gallary/UI/Art_piece/components/rating_information.dart';
 import 'package:honar_gallary/UI/video_music_palyer/components/arc_banner.dart';
@@ -80,7 +80,9 @@ class MovieDetailHeader extends StatelessWidget {
                       MaterialPageRoute(
                           builder: (context) => PlayerContentPage(
                                 type: artPiece.type,
-                                content: artPiece.url,
+                                content: artPiece.type == "picture"
+                                    ? artPiece.cover.image
+                                    : artPiece.url,
                               )));
                 },
                 child: Poster(

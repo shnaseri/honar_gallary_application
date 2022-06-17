@@ -1,5 +1,10 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:honar_api_v11/api.dart';
 import 'package:honar_gallary/UI/Art_piece/art_piece_page.dart';
+import 'package:honar_gallary/state_managment/gallery/gallery_cubit.dart';
+import 'package:nb_utils/nb_utils.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 
 const _defaultColor = Color(0xFF34568B);
@@ -30,43 +35,131 @@ class AppScaffold extends StatelessWidget {
   }
 }
 
-class Tile extends StatelessWidget {
+class Tile extends StatefulWidget {
   const Tile({
     Key? key,
     required this.index,
     this.extent,
     this.backgroundColor,
     this.bottomSpace,
+    required this.post,
   }) : super(key: key);
 
   final int index;
   final double? extent;
   final double? bottomSpace;
   final Color? backgroundColor;
+  final InlineResponse2003Posts post;
+
+  @override
+  State<Tile> createState() => _TileState();
+}
+
+class _TileState extends State<Tile> {
+  late bool showTitle;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    showTitle = false;
+    print(widget.post.countLIKE);
+  }
 
   @override
   Widget build(BuildContext context) {
     final child = GestureDetector(
         onTap: () {
+          if (showTitle) {
+            setState(() {
+              showTitle = !showTitle;
+            });
+            return;
+          }
           pushNewScreen(
             context,
-            screen: const ArtPiecePage(),
+            screen: ArtPiecePage(artId: widget.post.id),
             withNavBar: false, // OPTIONAL VALUE. True by default.
             pageTransitionAnimation: PageTransitionAnimation.cupertino,
-          );
+          ).then((value) {
+            BlocProvider.of<GalleryCubit>(context).fetchGallery(21);
+          });
+        },
+        onLongPress: () {
+          setState(() {
+            showTitle = !showTitle;
+          });
         },
         child: Container(
-          height: extent,
+          height: widget.extent,
           decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.circular(9),
               boxShadow: const [
                 BoxShadow(color: Colors.black26, spreadRadius: 0.2)
               ]),
-          child: Center(child: Container()),
+          child: Stack(
+            children: [
+              Center(
+                  child: CachedNetworkImage(
+                      color: Colors.white,
+                      imageUrl: widget.post.image,
+                      imageBuilder: (context, imageProvider) {
+                        return Container(
+                          width: context.width(),
+                          height: context.height() * 0.3,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(9),
+                              image: DecorationImage(
+                                  fit: BoxFit.cover, image: imageProvider)),
+                        );
+                      },
+                      placeholder: (context, url) {
+                        return Container(
+                          height: context.height() * 0.3,
+                          width: context.width(),
+                          decoration: const BoxDecoration(color: Colors.grey),
+                        );
+                      })),
+              Positioned(
+                child: Row(
+                  children: [
+                    Text(
+                      (widget.post.countLIKE ?? 0).toString(),
+                      style: const TextStyle(
+                          fontWeight: FontWeight.w900,
+                          fontSize: 15,
+                          color: Colors.pink),
+                    ),
+                    2.width,
+                    const Icon(
+                      Icons.favorite_border_rounded,
+                      color: Colors.pinkAccent,
+                    ),
+                  ],
+                ),
+                top: 0,
+                left: 5,
+              ),
+              if (showTitle)
+                Container(
+                  decoration: BoxDecoration(
+                    color: Colors.black54,
+                    borderRadius: BorderRadius.circular(9),
+                  ),
+                  child: Center(
+                    child: Text(
+                      widget.post.title,
+                      style: const TextStyle(
+                          color: Colors.white, fontWeight: FontWeight.w700),
+                    ),
+                  ),
+                )
+            ],
+          ),
         ));
 
-    if (bottomSpace == null) {
+    if (widget.bottomSpace == null) {
       return child;
     }
 
@@ -74,7 +167,7 @@ class Tile extends StatelessWidget {
       children: [
         Expanded(child: child),
         Container(
-          height: bottomSpace,
+          height: widget.bottomSpace,
           color: Colors.green,
         )
       ],
@@ -105,43 +198,172 @@ class ImageTile extends StatelessWidget {
   }
 }
 
-class InteractiveTile extends StatefulWidget {
-  const InteractiveTile({
-    Key? key,
-    required this.index,
-    this.extent,
-    this.bottomSpace,
-  }) : super(key: key);
+// class InteractiveTile extends StatefulWidget {
+//   const InteractiveTile({
+//     Key? key,
+//     required this.index,
+//     this.extent,
+//     this.bottomSpace,
+//   }) : super(key: key);
+//
+//   final int index;
+//   final double? extent;
+//   final double? bottomSpace;
+//
+//   @override
+//   _InteractiveTileState createState() => _InteractiveTileState();
+// }
+//
+// class _InteractiveTileState extends State<InteractiveTile> {
+//   Color color = _defaultColor;
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return GestureDetector(
+//       onTap: () {
+//         setState(() {
+//           if (color == _defaultColor) {
+//             color = Colors.red;
+//           } else {
+//             color = _defaultColor;
+//           }
+//         });
+//       },
+//       child: Tile(
+//         index: widget.index,
+//         extent: widget.extent,
+//         backgroundColor: color,
+//         bottomSpace: widget.bottomSpace,
+//       ),
+//     );
+//   }
+// }
+
+class ExplorerTile extends StatefulWidget {
+  const ExplorerTile(
+      {Key? key,
+      required this.index,
+      this.extent,
+      this.backgroundColor,
+      this.bottomSpace,
+      required this.artPiece})
+      : super(key: key);
 
   final int index;
   final double? extent;
   final double? bottomSpace;
+  final Color? backgroundColor;
+  final ArtPiece artPiece;
 
   @override
-  _InteractiveTileState createState() => _InteractiveTileState();
+  State<ExplorerTile> createState() => _ExplorerTileState();
 }
 
-class _InteractiveTileState extends State<InteractiveTile> {
-  Color color = _defaultColor;
-
+class _ExplorerTileState extends State<ExplorerTile> {
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        setState(() {
-          if (color == _defaultColor) {
-            color = Colors.red;
-          } else {
-            color = _defaultColor;
-          }
-        });
-      },
-      child: Tile(
-        index: widget.index,
-        extent: widget.extent,
-        backgroundColor: color,
-        bottomSpace: widget.bottomSpace,
-      ),
+    final child = GestureDetector(
+        onTap: () {
+          pushNewScreen(
+            context,
+            screen: ArtPiecePage(
+              artId: widget.artPiece.id,
+            ),
+            withNavBar: false, // OPTIONAL VALUE. True by default.
+            pageTransitionAnimation: PageTransitionAnimation.cupertino,
+          );
+        },
+        child: Container(
+          height: widget.extent,
+          decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(9),
+              boxShadow: const [
+                BoxShadow(color: Colors.black26, spreadRadius: 0.2)
+              ]),
+          child: Center(
+              child: Container(
+            height: widget.extent,
+            decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(9),
+                boxShadow: const [
+                  BoxShadow(color: Colors.black26, spreadRadius: 0.2)
+                ]),
+            child: Stack(
+              children: [
+                Center(
+                    child: CachedNetworkImage(
+                        color: Colors.white,
+                        imageUrl: widget.artPiece.cover.image,
+                        imageBuilder: (context, imageProvider) {
+                          return Container(
+                            width: context.width(),
+                            height: context.height() * 0.3,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(9),
+                                image: DecorationImage(
+                                    fit: BoxFit.cover, image: imageProvider)),
+                          );
+                        },
+                        placeholder: (context, url) {
+                          return Container(
+                            height: context.height() * 0.3,
+                            width: context.width(),
+                            decoration: const BoxDecoration(color: Colors.grey),
+                          );
+                        })),
+                Positioned(
+                  child: Row(
+                    children: [
+                      Text(
+                        (widget.artPiece.likeCount ?? 0).toString(),
+                        style: const TextStyle(
+                            fontWeight: FontWeight.w900,
+                            fontSize: 15,
+                            color: Colors.pink),
+                      ),
+                      2.width,
+                      const Icon(
+                        Icons.favorite_border_rounded,
+                        color: Colors.pinkAccent,
+                      ),
+                    ],
+                  ),
+                  top: 0,
+                  left: 5,
+                ),
+                // if (showTitle)
+                //   Container(
+                //     decoration: BoxDecoration(
+                //       color: Colors.black54,
+                //       borderRadius: BorderRadius.circular(9),
+                //     ),
+                //     child: Center(
+                //       child: Text(
+                //         widget.post.title,
+                //         style: const TextStyle(
+                //             color: Colors.white, fontWeight: FontWeight.w700),
+                //       ),
+                //     ),
+                //   )
+              ],
+            ),
+          )),
+        ));
+
+    if (widget.bottomSpace == null) {
+      return child;
+    }
+
+    return Column(
+      children: [
+        Expanded(child: child),
+        Container(
+          height: widget.bottomSpace,
+          color: Colors.green,
+        )
+      ],
     );
   }
 }
