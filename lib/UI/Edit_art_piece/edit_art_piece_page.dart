@@ -81,6 +81,7 @@ class _EditArtPieceState extends State<EditArtPiece> {
                     child: ArcBannerImage("assets/images/sample1.jpg"),
                   ),
                   ProfileListItems(
+                    artPiece: widget.artPiece,
                     changeState: () {
                       setState(() {});
                     },

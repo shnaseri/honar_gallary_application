@@ -4,24 +4,23 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:honar_api_v11/api.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:path/path.dart';
 
 // import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 // import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 
 import '../../const/color_const.dart';
 import '../../state_managment/create_edit_art_piece/edit_art_piece_cubit.dart';
-// import 'edit_page_list_item2.dart';
-// import 'hover_test.dart';
-// import 'image_card.dart';
-import '../Authentication/authentication_page.dart';
+import '../video_music_palyer/player_content.dart';
 import 'image_list_view.dart';
 
 class ProfileListItems extends StatefulWidget {
   final Function changeState;
+  final ArtPiece artPiece;
 
-  const ProfileListItems({Key? key, required this.changeState})
+  const ProfileListItems(
+      {Key? key, required this.changeState, required this.artPiece})
       : super(key: key);
 
   @override
@@ -50,14 +49,9 @@ class _ProfileListItemsState extends State<ProfileListItems> {
 
   // PickedFile _imageFile;
   // final _globalkey = GlobalKey<FormState>();
-  final TextEditingController _name = TextEditingController();
-  final TextEditingController _profession = TextEditingController();
-  final TextEditingController _dob = TextEditingController();
-  final TextEditingController _title = TextEditingController();
-  final TextEditingController _about = TextEditingController();
 
   // Initial Selected Value
-  String dropDownValue = 'عکس';
+  late String dropDownValue;
 
   // List of items in our dropdown menu
   var items = [
@@ -66,6 +60,12 @@ class _ProfileListItemsState extends State<ProfileListItems> {
     'موسیقی',
   ];
   late Map<String, List<String>> dataExtensions;
+  late TextEditingController _name;
+  late TextEditingController _profession;
+  late TextEditingController _dob;
+
+  late TextEditingController _title;
+  late TextEditingController _about;
 
   @override
   void initState() {
@@ -76,7 +76,12 @@ class _ProfileListItemsState extends State<ProfileListItems> {
       items[1]: ['mp4', 'mkv', 'avi'],
       items[2]: ['mp3', 'flac']
     };
-    selected = false;
+    _title = TextEditingController(text: widget.artPiece.title);
+    _dob = TextEditingController(text: widget.artPiece.price.toString());
+    _about = TextEditingController(text: widget.artPiece.description);
+
+    selected = true;
+    dropDownValue = getContentType(widget.artPiece.type);
   }
 
   @override
@@ -148,57 +153,93 @@ class _ProfileListItemsState extends State<ProfileListItems> {
                 ),
                 // After selecting the desired option,it will
                 // change button value to selected value
-                onChanged: (String? newValue) {
-                  if (dropDownValue == newValue) {
-                    return;
-                  }
-                  setState(() {
-                    dropDownValue = newValue!;
-                    selected = false;
-                    fileSelected = null;
-                  });
-                },
+                // onChanged: (String? newValue) {
+                //   if (dropDownValue == newValue) {
+                //     return;
+                //   }
+                //   setState(() {
+                //     dropDownValue = newValue!;
+                //     selected = false;
+                //     fileSelected = null;
+                //   });
+                // },
+                onChanged: null,
               ),
               const SizedBox(
                 height: 20,
               ),
               SizedBox(
                 height: 50,
-                child: selected && fileSelected != null
+                child: selected
                     ? Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Expanded(
-                            flex: 4,
+                          ElevatedButton(
+                            onPressed: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => PlayerContentPage(
+                                            type: widget.artPiece.type,
+                                            content: widget.artPiece.type ==
+                                                    "picture"
+                                                ? widget.artPiece.cover.image
+                                                : widget.artPiece.url,
+                                          )));
+                            },
+                            style: ButtonStyle(
+                                backgroundColor: MaterialStateProperty.resolveWith(
+                                    (states) => ColorPallet.colorPalletDark),
+                                padding: MaterialStateProperty.resolveWith(
+                                    (states) => const EdgeInsets.symmetric(
+                                        horizontal: 50)),
+                                elevation: MaterialStateProperty.resolveWith(
+                                    (states) => 2),
+                                shape: MaterialStateProperty.resolveWith(
+                                    (states) => RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(20)))),
                             child: Text(
-                              basename(fileSelected!.path),
+                              " مشاهده " + dropDownValue,
                               style: TextStyle(
-                                color: ColorPallet.colorPalletDark,
-                                fontWeight: FontWeight.w900,
-                              ),
+                                  fontFamily: 'Sahel',
+                                  fontSize: 16,
+                                  letterSpacing: 1.2,
+                                  color: Colors.white),
                             ),
-                          ),
-                          Expanded(
-                              flex: 2,
-                              child: TextButton(
-                                onPressed: () {
-                                  setState(() {
-                                    selected = false;
-                                    fileSelected = null;
-                                  });
-                                },
-                                child: const Text('حذف'),
-                                style: ButtonStyle(foregroundColor:
-                                    MaterialStateProperty.resolveWith((states) {
-                                  return ColorPallet.colorPalletSambucus;
-                                }), textStyle:
-                                    MaterialStateProperty.resolveWith((states) {
-                                  return TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    color: ColorPallet.colorPalletDark,
-                                    fontFamily: 'Sahel',
-                                  );
-                                })),
-                              ))
+                          )
+                          // Expanded(
+                          //   flex: 4,
+                          //   child: Text(
+                          //     basename(fileSelected!.path),
+                          //     style: TextStyle(
+                          //       color: ColorPallet.colorPalletDark,
+                          //       fontWeight: FontWeight.w900,
+                          //     ),
+                          //   ),
+                          // ),
+                          // Expanded(
+                          //     flex: 2,
+                          //     child: TextButton(
+                          //       onPressed: () {
+                          //         setState(() {
+                          //           selected = false;
+                          //           fileSelected = null;
+                          //         });
+                          //       },
+                          //       child: const Text('حذف'),
+                          //       style: ButtonStyle(foregroundColor:
+                          //           MaterialStateProperty.resolveWith((states) {
+                          //         return ColorPallet.colorPalletSambucus;
+                          //       }), textStyle:
+                          //           MaterialStateProperty.resolveWith((states) {
+                          //         return TextStyle(
+                          //           fontWeight: FontWeight.bold,
+                          //           color: ColorPallet.colorPalletDark,
+                          //           fontFamily: 'Sahel',
+                          //         );
+                          //       })),
+                          //     ))
                         ],
                       )
                     : ElevatedButton(
@@ -258,9 +299,9 @@ class _ProfileListItemsState extends State<ProfileListItems> {
                         print("---- current state -----");
                         print(state);
                         if (state is EditArtPieceSuccessfully) {
-                          showSnackBar(context, "با موفقیت انجام شد");
-                          BlocProvider.of<EditArtPieceCubit>(context)
-                              .emit(EditArtPieceInitial());
+                          // showSnackBar(context, "با موفقیت انجام شد");
+                          // BlocProvider.of<EditArtPieceCubit>(context)
+                          //     .emit(EditArtPieceInitial());
                         }
                         return SizedBox(
                           height: 280,
@@ -317,15 +358,15 @@ class _ProfileListItemsState extends State<ProfileListItems> {
                       if (state is! EditArtPieceInitial) {
                         return;
                       }
-                      if (fileSelected == null ||
-                          (imageSliderFiles.isEmpty &&
-                              dropDownValue != items[0])) {
-                        return;
-                      }
+                      // if (fileSelected == null ||
+                      //     (imageSliderFiles.isEmpty &&
+                      //         dropDownValue != items[0])) {
+                      //   return;
+                      // }
                       bool status =
                           await BlocProvider.of<EditArtPieceCubit>(context)
-                              .flowOfCreateArtPiece(
-                                  fileSelected!,
+                              .flowOfEditArtPiece(
+                                  widget.artPiece.id,
                                   dropDownValue,
                                   _title.text,
                                   _about.text,
@@ -338,7 +379,7 @@ class _ProfileListItemsState extends State<ProfileListItems> {
                       _about.text = "";
                       fileSelected = null;
                       selected = false;
-                      widget.changeState();
+                      Navigator.pop(context);
                     },
                     child: Container(
                       width: context.width() * 0.7,
@@ -535,6 +576,17 @@ class _ProfileListItemsState extends State<ProfileListItems> {
         // hintText: "I am Dev Stack",
       ),
     );
+  }
+
+  String getContentType(String type) {
+    print(type);
+    if (type == "picture") {
+      return items[0];
+    }
+    if (type == "video") {
+      return items[1];
+    }
+    return items[2];
   }
 }
 

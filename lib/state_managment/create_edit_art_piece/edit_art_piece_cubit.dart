@@ -56,6 +56,41 @@ class EditArtPieceCubit extends Cubit<EditArtPieceState> {
     }
   }
 
+  Future<bool> flowOfEditArtPiece(int artId, String type, String title,
+      String description, List<File> imageSliderFiles,
+      {int price = 0}) async {
+    try {
+      int? coverId = 1;
+      // if (getTypeOfArtPiece(type) != ArtPieceCoverTypeEnum.P) {
+      //   coverId = await uploadImage(imageSliderFiles[0]);
+      //   if (coverId != null) {
+      //     artId = await sendInfoConver(coverId, type);
+      //   }
+      // }
+      // int? artId;
+
+      if (artId != null) {
+        await sendInfoArtPiece(artId, title, description, price);
+      }
+      // if (ArtPieceCoverTypeEnum.V == getTypeOfArtPiece(type) ||
+      //     ArtPieceCoverTypeEnum.M == getTypeOfArtPiece(type)) {
+      //   print('---- Start Uploading ------');
+      //   InlineResponse2006 response = await coreApi.coreContentUpdate(
+      //       await http.MultipartFile.fromPath('file', file.path));
+      //   print(response.success);
+      //   InlineResponse2001 response2001 = await artApi.artArtPieceContentUpdate(
+      //       artId.toString(), ArtPieceContent(contentId: response.contentId));
+      //   print('---- End Uploading ------');
+      // }
+      emit(EditArtPieceSuccessfully());
+      return true;
+    } catch (e) {
+      emit(EditArtPieceInitial());
+      print(e);
+      return false;
+    }
+  }
+
   Future<int?> uploadImage(File file) async {
     try {
       emit(EditArtPieceUploadingCover());
