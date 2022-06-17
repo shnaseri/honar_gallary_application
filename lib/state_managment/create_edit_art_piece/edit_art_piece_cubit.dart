@@ -22,7 +22,7 @@ class EditArtPieceCubit extends Cubit<EditArtPieceState> {
     coreApi = CoreApi(interfaceOfUser);
   }
 
-  Future<void> flowOfCreateArtPiece(File file, String type, String title,
+  Future<bool> flowOfCreateArtPiece(File file, String type, String title,
       String description, List<File> imageSliderFiles,
       {int price = 0}) async {
     try {
@@ -46,9 +46,11 @@ class EditArtPieceCubit extends Cubit<EditArtPieceState> {
         print('---- End Uploading ------');
       }
       emit(EditArtPieceSuccessfully());
+      return true;
     } catch (e) {
       emit(EditArtPieceInitial());
       print(e);
+      return false;
     }
   }
 
