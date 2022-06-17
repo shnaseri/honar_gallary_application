@@ -1,5 +1,5 @@
 import 'package:bloc/bloc.dart';
-import 'package:honar_api_v11/api.dart';
+import 'package:honar_api_v13/api.dart';
 import 'package:honar_gallary/logic/consts.dart';
 import 'package:meta/meta.dart';
 
@@ -14,7 +14,7 @@ class ChatListCubit extends Cubit<ChatListState> {
 
   Future<void> fetchChatList() async {
     try {
-      List<Chat> chats = await chatApi.chatGetAllChatsList();
+      List<InlineResponse2006> chats = await chatApi.chatGetAllChatsList();
       print(chats);
       emit(ChatListLoaded(chats));
     } catch (e) {

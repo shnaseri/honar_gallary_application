@@ -1,7 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:honar_api_v11/api.dart';
+import 'package:honar_api_v13/api.dart';
 import 'package:honar_gallary/UI/Art_piece/art_piece_page.dart';
 import 'package:honar_gallary/state_managment/gallery/gallery_cubit.dart';
 import 'package:nb_utils/nb_utils.dart';
@@ -63,7 +63,7 @@ class _TileState extends State<Tile> {
     // TODO: implement initState
     super.initState();
     showTitle = false;
-    print(widget.post.countLIKE);
+    print(widget.post.countLike);
   }
 
   @override
@@ -125,7 +125,7 @@ class _TileState extends State<Tile> {
                 child: Row(
                   children: [
                     Text(
-                      (widget.post.countLIKE ?? 0).toString(),
+                      (widget.post.countLike ?? 0).toString(),
                       style: const TextStyle(
                           fontWeight: FontWeight.w900,
                           fontSize: 15,
