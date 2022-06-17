@@ -72,7 +72,8 @@ class _ChatPageState extends State<ChatPage> {
                       BlocProvider.of<ChatCubit>(context).emit(ChatInitial());
                     }
                     if (state is ChatInitial && startapp) {
-                      BlocProvider.of<ChatCubit>(context).fetchConnect("20-21");
+                      BlocProvider.of<ChatCubit>(context)
+                          .fetchConnect(widget.chatCode);
                       startapp = false;
                     }
                     return Stack(
