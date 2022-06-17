@@ -198,43 +198,170 @@ class ImageTile extends StatelessWidget {
   }
 }
 
-// class InteractiveTile extends StatefulWidget {
-//   const InteractiveTile({
-//     Key? key,
-//     required this.index,
-//     this.extent,
-//     this.bottomSpace,
-//   }) : super(key: key);
-//
-//   final int index;
-//   final double? extent;
-//   final double? bottomSpace;
-//
-//   @override
-//   _InteractiveTileState createState() => _InteractiveTileState();
-// }
-//
-// class _InteractiveTileState extends State<InteractiveTile> {
-//   Color color = _defaultColor;
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return GestureDetector(
-//       onTap: () {
-//         setState(() {
-//           if (color == _defaultColor) {
-//             color = Colors.red;
-//           } else {
-//             color = _defaultColor;
-//           }
-//         });
-//       },
-//       child: Tile(
-//         index: widget.index,
-//         extent: widget.extent,
-//         backgroundColor: color,
-//         bottomSpace: widget.bottomSpace,
-//       ),
-//     );
-//   }
-// }
+class InteractiveTile extends StatefulWidget {
+  const InteractiveTile({
+    Key? key,
+    required this.index,
+    this.extent,
+    this.bottomSpace,
+  }) : super(key: key);
+
+  final int index;
+  final double? extent;
+  final double? bottomSpace;
+
+  @override
+  _InteractiveTileState createState() => _InteractiveTileState();
+}
+
+class _InteractiveTileState extends State<InteractiveTile> {
+  Color color = _defaultColor;
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        setState(() {
+          if (color == _defaultColor) {
+            color = Colors.red;
+          } else {
+            color = _defaultColor;
+          }
+        });
+      },
+      child: Tile(
+        index: widget.index,
+        extent: widget.extent,
+        backgroundColor: color,
+        bottomSpace: widget.bottomSpace,
+      ),
+    );
+  }
+}
+
+class ExplorerTile extends StatefulWidget {
+  const ExplorerTile(
+      {Key? key,
+      required this.index,
+      this.extent,
+      this.backgroundColor,
+      this.bottomSpace,
+      required this.artPiece})
+      : super(key: key);
+
+  final int index;
+  final double? extent;
+  final double? bottomSpace;
+  final Color? backgroundColor;
+  final ArtPiece artPiece;
+
+  @override
+  State<ExplorerTile> createState() => _ExplorerTileState();
+}
+
+class _ExplorerTileState extends State<ExplorerTile> {
+  @override
+  Widget build(BuildContext context) {
+    final child = GestureDetector(
+        onTap: () {
+          pushNewScreen(
+            context,
+            screen: const ArtPiecePage(),
+            withNavBar: false, // OPTIONAL VALUE. True by default.
+            pageTransitionAnimation: PageTransitionAnimation.cupertino,
+          );
+        },
+        child: Container(
+          height: widget.extent,
+          decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(9),
+              boxShadow: const [
+                BoxShadow(color: Colors.black26, spreadRadius: 0.2)
+              ]),
+          child: Center(
+              child: Container(
+            height: widget.extent,
+            decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(9),
+                boxShadow: const [
+                  BoxShadow(color: Colors.black26, spreadRadius: 0.2)
+                ]),
+            child: Stack(
+              children: [
+                Center(
+                    child: CachedNetworkImage(
+                        color: Colors.white,
+                        imageUrl: widget.artPiece.cover.image,
+                        imageBuilder: (context, imageProvider) {
+                          return Container(
+                            width: context.width(),
+                            height: context.height() * 0.3,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(9),
+                                image: DecorationImage(
+                                    fit: BoxFit.cover, image: imageProvider)),
+                          );
+                        },
+                        placeholder: (context, url) {
+                          return Container(
+                            height: context.height() * 0.3,
+                            width: context.width(),
+                            decoration: const BoxDecoration(color: Colors.grey),
+                          );
+                        })),
+                Positioned(
+                  child: Row(
+                    children: [
+                      Text(
+                        (widget.artPiece.likeCount ?? 0).toString(),
+                        style: const TextStyle(
+                            fontWeight: FontWeight.w900,
+                            fontSize: 15,
+                            color: Colors.pink),
+                      ),
+                      2.width,
+                      const Icon(
+                        Icons.favorite_border_rounded,
+                        color: Colors.pinkAccent,
+                      ),
+                    ],
+                  ),
+                  top: 0,
+                  left: 5,
+                ),
+                // if (showTitle)
+                //   Container(
+                //     decoration: BoxDecoration(
+                //       color: Colors.black54,
+                //       borderRadius: BorderRadius.circular(9),
+                //     ),
+                //     child: Center(
+                //       child: Text(
+                //         widget.post.title,
+                //         style: const TextStyle(
+                //             color: Colors.white, fontWeight: FontWeight.w700),
+                //       ),
+                //     ),
+                //   )
+              ],
+            ),
+          )),
+        ));
+
+    if (widget.bottomSpace == null) {
+      return child;
+    }
+
+    return Column(
+      children: [
+        Expanded(child: child),
+        Container(
+          height: widget.bottomSpace,
+          color: Colors.green,
+        )
+      ],
+    );
+  }
+}

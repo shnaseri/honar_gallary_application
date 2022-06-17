@@ -32,6 +32,9 @@ class SplashCubit extends Cubit<SplashState> {
           ..apiKey = ConfigGeneralValues.getInstance()
               .sharedPreferencesHandler
               .getToken()!;
+        CategoryApi categoryApi = CategoryApi(interfaceOfUser);
+        ConfigGeneralValues.configGeneralValues
+            ?.setListCategory(await categoryApi.categoryGetAllList());
         emit(SplashGoToHome());
         return;
       } catch (e) {

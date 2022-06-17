@@ -608,9 +608,9 @@ class LoggingAudioHandler extends CompositeAudioHandler {
   @override
   Future<List<MediaItem>> search(String query,
       [Map<String, dynamic>? extras]) async {
-    _log('search($query, $extras)');
+    _log('explorer($query, $extras)');
     final result = await super.search(query, extras);
-    _log('search -> $result');
+    _log('explorer -> $result');
     return result;
   }
 

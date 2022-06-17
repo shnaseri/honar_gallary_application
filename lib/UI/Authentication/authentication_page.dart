@@ -144,6 +144,9 @@ class _AuthenticationPageState extends State<AuthenticationPage> {
               interfaceOfUser.getAuthentication<ApiKeyAuth>(r'Bearer')
                 ..apiKeyPrefix = 'Bearer'
                 ..apiKey = token.access;
+              CategoryApi categoryApi = CategoryApi(interfaceOfUser);
+              ConfigGeneralValues.configGeneralValues
+                  ?.setListCategory(await categoryApi.categoryGetAllList());
               return '';
             } catch (e) {
               print(e);

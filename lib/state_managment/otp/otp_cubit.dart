@@ -18,6 +18,7 @@ class OtpCubit extends Cubit<OtpState> {
     emit(OtpLoadingCodeState());
     try {
       print("--- sending otp ----");
+
       InlineResponse2005 response2004 = await authApi.authVerifyOtpCodeCreate(
           userId.toString(), OtpCode(otpCode: code));
       if (response2004.success && response2004.valid) {
