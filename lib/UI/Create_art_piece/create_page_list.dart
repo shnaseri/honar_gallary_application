@@ -332,6 +332,7 @@ class _ProfileListItemsState extends State<ProfileListItems> {
                       _about.text = "";
                       fileSelected = null;
                       selected = false;
+                      BlocProvider.of<EditArtPieceCubit>(context).resetState();
                       widget.changeState();
                     },
                     child: Container(

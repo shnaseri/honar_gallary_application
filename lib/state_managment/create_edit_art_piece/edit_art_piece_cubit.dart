@@ -62,6 +62,7 @@ class EditArtPieceCubit extends Cubit<EditArtPieceState> {
       print(output);
       return output['id'];
     } catch (e) {
+      print(e);
       emit(EditArtPieceError());
       return null;
     }
@@ -77,6 +78,7 @@ class EditArtPieceCubit extends Cubit<EditArtPieceState> {
       print(response200.artPieceId);
       return response200.artPieceId;
     } catch (e) {
+      print(e);
       emit(EditArtPieceError());
       return null;
     }
@@ -109,6 +111,7 @@ class EditArtPieceCubit extends Cubit<EditArtPieceState> {
       print(response200.success);
       return response200.success;
     } catch (e) {
+      print(e);
       emit(EditArtPieceError());
       return null;
     }
