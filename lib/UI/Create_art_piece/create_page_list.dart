@@ -12,7 +12,6 @@ import 'package:path/path.dart';
 
 import '../../const/color_const.dart';
 import '../../state_managment/create_edit_art_piece/edit_art_piece_cubit.dart';
-
 // import 'edit_page_list_item2.dart';
 // import 'hover_test.dart';
 // import 'image_card.dart';
@@ -153,11 +152,10 @@ class _ProfileListItemsState extends State<ProfileListItems> {
                   if (dropDownValue == newValue) {
                     return;
                   }
-                  setState(() {
-                    dropDownValue = newValue!;
-                    selected = false;
-                    fileSelected = null;
-                  });
+                  dropDownValue = newValue!;
+                  selected = false;
+                  fileSelected = null;
+                  widget.changeState();
                 },
               ),
               const SizedBox(
@@ -182,10 +180,9 @@ class _ProfileListItemsState extends State<ProfileListItems> {
                               flex: 2,
                               child: TextButton(
                                 onPressed: () {
-                                  setState(() {
-                                    selected = false;
-                                    fileSelected = null;
-                                  });
+                                  selected = false;
+                                  fileSelected = null;
+                                  widget.changeState();
                                 },
                                 child: const Text('حذف'),
                                 style: ButtonStyle(foregroundColor:
@@ -213,14 +210,12 @@ class _ProfileListItemsState extends State<ProfileListItems> {
                           if (result != null) {
                             print(result);
                             fileSelected = File(result.files.single.path!);
-                            setState(() {
-                              selected = true;
-                            });
+                            selected = true;
+                            widget.changeState();
                           } else {
                             // User canceled the picker
-                            setState(() {
-                              selected = false;
-                            });
+                            selected = false;
+                            widget.changeState();
                           }
                         },
                         style: ButtonStyle(
@@ -273,9 +268,8 @@ class _ProfileListItemsState extends State<ProfileListItems> {
                                   return SizedBox(
                                     width: 300,
                                     child: AddImageWidget(onChanged: (file) {
-                                      setState(() {
-                                        imageSliderFiles.add(file);
-                                      });
+                                      imageSliderFiles.add(file);
+                                      widget.changeState();
                                       print(imageSliderFiles.length);
                                       print(imageSliderFiles);
                                     }),
@@ -285,9 +279,8 @@ class _ProfileListItemsState extends State<ProfileListItems> {
                               }
                               return ImageSliderTile(
                                   imageSliderFiles[index - 1], onRemove: () {
-                                setState(() {
-                                  imageSliderFiles.removeAt(index - 1);
-                                });
+                                imageSliderFiles.removeAt(index - 1);
+                                widget.changeState();
                               }).paddingSymmetric(horizontal: 15);
                             },
                             itemCount: (imageSliderFiles.length) + 1,
