@@ -1,4 +1,6 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:nb_utils/nb_utils.dart';
 
 ListTile tile({required String msg,required IconData im}) {
   return ListTile(
@@ -9,10 +11,30 @@ ListTile tile({required String msg,required IconData im}) {
 
 ListTile list({required String url,required String name,required String tym,required String desc,required String msg,required bool isRead}) {
   return ListTile(
-    contentPadding: const EdgeInsets.only(top: 5, left: 10),
+    contentPadding: EdgeInsets.only(top: 5, left: 10),
     leading: CircleAvatar(
       radius: 30,
-      backgroundImage: ExactAssetImage(url),
+      child: CachedNetworkImage(
+          color: Colors.white,
+          imageUrl: url,
+          imageBuilder: (context, imageProvider) {
+            return Container(
+              width: context.width(),
+              height: context.height() * 0.3,
+              decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  image: DecorationImage(
+                      fit: BoxFit.contain, image: imageProvider)),
+            );
+          },
+          placeholder: (context, url) {
+            return Container(
+              height: context.height() * 0.3,
+              width: context.width(),
+              decoration: const BoxDecoration(
+                  shape: BoxShape.circle, color: Colors.grey),
+            );
+          }),
     ),
     title: Padding(
       padding: const EdgeInsets.only(right: 10),
@@ -48,7 +70,7 @@ ListTile list({required String url,required String name,required String tym,requ
             decoration: BoxDecoration(
               // border: isRead ? Border.all(width: 1) : Border.all(width: 0),
               borderRadius: BorderRadius.circular(500),
-              color: isRead ? Colors.green : Colors.white,
+              color: isRead ? Colors.green : Colors.transparent,
             ),
           )
         ],

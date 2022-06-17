@@ -153,6 +153,7 @@ class _ArtPiecePageState extends State<ArtPiecePage> {
                                     context,
                                     MaterialPageRoute(
                                         builder: (_) => ChatPage(
+                                            chatCode: "20-21",
                                             contact:
                                                 User(fullName: "hosein", id: 1),
                                             index: 1)));

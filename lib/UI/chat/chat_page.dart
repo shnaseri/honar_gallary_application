@@ -12,8 +12,13 @@ TextEditingController controller = TextEditingController();
 class ChatPage extends StatefulWidget {
   final User contact;
   final int index;
+  final String chatCode;
 
-  const ChatPage({Key? key, required this.contact, required this.index})
+  const ChatPage(
+      {Key? key,
+      required this.contact,
+      required this.index,
+      required this.chatCode})
       : super(key: key);
 
   @override
