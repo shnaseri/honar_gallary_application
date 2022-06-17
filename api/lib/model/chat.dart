@@ -137,4 +137,3 @@ class Chat {
     return map;
   }
 }
-
