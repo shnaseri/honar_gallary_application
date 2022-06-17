@@ -1,4 +1,4 @@
-import 'package:honar_api_v3/api.dart';
+import 'package:honar_api_v10/api.dart';
 
 import 'chat_networkService.dart';
 
@@ -26,7 +26,7 @@ class ChatRepository {
     try {
       // String otpToken = GeneralValues.generalValues.token;
       // await chatNetworkService.pushMessageToServer(otpToken,user.token,messageText);
-      Message message = await getNewMessageAdd(user, messageText, false);
+      Message message = await getNewMessageAdd(user, messageText, true);
       return message;
     } catch (error) {
       rethrow;

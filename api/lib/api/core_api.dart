@@ -66,7 +66,7 @@ class CoreApi {
   /// Parameters:
   ///
   /// * [MultipartFile] file (required):
-  Future<InlineResponse2004> coreContentUpdate(
+  Future<InlineResponse2006> coreContentUpdate(
     MultipartFile file,
   ) async {
     final response = await coreContentUpdateWithHttpInfo(
@@ -81,10 +81,10 @@ class CoreApi {
     if (response.body != null && response.statusCode != HttpStatus.noContent) {
       return await apiClient.deserializeAsync(
         await _decodeBodyBytes(response),
-        'InlineResponse2004',
-      ) as InlineResponse2004;
+        'InlineResponse2006',
+      ) as InlineResponse2006;
     }
-    return Future<InlineResponse2004>.value();
+    return Future<InlineResponse2006>.value();
   }
 
   /// Performs an HTTP 'POST /core/image/upload/' operation and returns the [Response].

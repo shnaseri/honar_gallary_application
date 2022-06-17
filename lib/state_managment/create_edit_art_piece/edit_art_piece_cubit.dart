@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:bloc/bloc.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:honar_api_v3/api.dart';
+import 'package:honar_api_v10/api.dart';
 import 'package:http/http.dart' as http;
 import 'package:meta/meta.dart';
 
@@ -40,7 +40,7 @@ class EditArtPieceCubit extends Cubit<EditArtPieceState> {
       if (ArtPieceCoverTypeEnum.V == getTypeOfArtPiece(type) ||
           ArtPieceCoverTypeEnum.M == getTypeOfArtPiece(type)) {
         print('---- Start Uploading ------');
-        InlineResponse2004 responseContent = await coreApi.coreContentUpdate(
+        InlineResponse2006 responseContent = await coreApi.coreContentUpdate(
             await http.MultipartFile.fromPath('file', file.path));
         print(responseContent.success);
         print('---- End Uploading ------');

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:honar_api_v3/api.dart';
+import 'package:honar_api_v10/api.dart';
 import 'package:honar_gallary/UI/utils/auto_text_direction.dart';
 import 'package:honar_gallary/const/color_const.dart';
 import 'package:nb_utils/src/extensions/context_extensions.dart';
@@ -10,11 +10,11 @@ import '../chat_page.dart';
 
 class TextFieldForChatPage extends StatefulWidget {
   final User contact;
+  final List<Message> messages;
 
-  const TextFieldForChatPage({
-    Key? key,
-    required this.contact,
-  }) : super(key: key);
+  const TextFieldForChatPage(
+      {Key? key, required this.contact, required this.messages})
+      : super(key: key);
 
   @override
   State<TextFieldForChatPage> createState() => _TextFieldForChatPageState();
@@ -41,8 +41,8 @@ class _TextFieldForChatPageState extends State<TextFieldForChatPage> {
                     child: IconButton(
                       onPressed: () {
                         if (controller.text.isNotEmpty) {
-                          BlocProvider.of<ChatCubit>(context).publishMessage(
-                              widget.contact, controller.text, state.messages);
+                          BlocProvider.of<ChatCubit>(context)
+                              .publishMessage(widget.contact, controller.text);
                         }
                         controller.text = "";
                       },

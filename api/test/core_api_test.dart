@@ -8,7 +8,7 @@
 // ignore_for_file: constant_identifier_names
 // ignore_for_file: lines_longer_than_80_chars
 
-import 'package:honar_api_v3/api.dart';
+import 'package:honar_api_v10/api.dart';
 import 'package:test/test.dart';
 
 /// tests for CoreApi
@@ -16,7 +16,7 @@ void main() {
   final instance = CoreApi();
 
   group('tests for CoreApi', () {
-    //Future<InlineResponse2004> coreContentUpdate(MultipartFile file) async
+    //Future<InlineResponse2006> coreContentUpdate(MultipartFile file) async
     test('test coreContentUpdate', () async {
       // TODO
     });

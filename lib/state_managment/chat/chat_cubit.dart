@@ -2,9 +2,10 @@ import 'dart:convert';
 
 import 'package:bloc/bloc.dart';
 import 'package:flutter/foundation.dart';
-import 'package:honar_api_v3/api.dart';
+import 'package:honar_api_v10/api.dart';
 import 'package:honar_gallary/data_managment/chat/chat_repository.dart';
 import 'package:honar_gallary/logic/consts.dart';
+import 'package:honar_gallary/logic/general_values.dart';
 import 'package:meta/meta.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
@@ -16,14 +17,21 @@ class ChatCubit extends Cubit<ChatState> {
   late WebSocketChannel channel;
   bool isWebSocketRunning = false;
   int retryLimit = 1;
+  late ChatApi chatApi;
 
   ChatCubit({required this.contact}) : super(ChatInitial()) {
     chatRepository = ChatRepository();
+    chatApi = ChatApi(interfaceOfUser);
   }
 
   Future<void> fetchConnect(String chatCode) async {
     try {
       if (isWebSocketRunning) return; //chaech if its already running
+      List<Message> messages =
+          await chatApi.chatGetAllChatMessagesList(chatCode);
+      messages = messages.reversed.toList();
+      print(messages);
+
       contact = contact;
       // await chatRepository.connectMMQT(contact.token);
       // List<Message> messages = await chatRepository.getMessages(contact.id);
@@ -37,6 +45,7 @@ class ChatCubit extends Cubit<ChatState> {
         (event) {
           print("-- listen response ");
           print(event);
+          listenImage(event);
         },
         onDone: () {
           print("Done");
@@ -51,6 +60,7 @@ class ChatCubit extends Cubit<ChatState> {
           }
         },
       );
+      emit(ChatConnectToServer(messages));
     } catch (error) {
       print(error);
       rethrow;
@@ -61,8 +71,7 @@ class ChatCubit extends Cubit<ChatState> {
     // chatRepository.disConnectMQTT();
   }
 
-  Future<void> publishMessage(
-      User user, String message, List<Message> oldMessages) async {
+  Future<void> publishMessage(User user, String message) async {
     try {
       print('---- Send Message ------');
       // emit(ChatSendMessage());
@@ -71,12 +80,8 @@ class ChatCubit extends Cubit<ChatState> {
           jsonEncode({"message": newMessage.content, "type": "T"});
       print(jsonEncode2);
       channel.sink.add(jsonEncode2);
-
-      // List<Message> messages = await chatRepository.getMessages(user.id);
-      List<Message> messages = oldMessages.toList();
-      messages.add(newMessage);
       print('---- End Send Message ------');
-      emit(ChatConnectToServer(messages));
+      emit(ChatSendMessage(newMessage));
     } catch (error) {
       print(error);
       emit(ChatErrorState());
@@ -100,5 +105,32 @@ class ChatCubit extends Cubit<ChatState> {
     } catch (error) {
       rethrow;
     }
+  }
+
+  void listenImage(String event) {
+    // I/flutter (24364): {"type": "T", "message": "slmmmm mm", "id": 9, "sender_id": 21, "time": "2022-06-17T05:56:19.0Z"}
+
+    try {
+      dynamic jsonRes = json.decode(event);
+      print(jsonRes["sender_id"]);
+      print((ConfigGeneralValues.configGeneralValues?.userId));
+      print(jsonRes["sender_id"] ==
+          (ConfigGeneralValues.configGeneralValues?.userId));
+      if (jsonRes["sender_id"] ==
+          (ConfigGeneralValues.configGeneralValues?.userId)) return;
+      Message newMessage = Message(
+          id: jsonRes['id'],
+          content: jsonRes["message"],
+          type: "text",
+          isUserSender: jsonRes["sender_id"] ==
+              (ConfigGeneralValues.configGeneralValues?.userId),
+          createdAt: DateTime.parse(jsonRes["time"]));
+      print('---- End Send Message ------');
+      emit(ChatSendMessage(newMessage));
+    } catch (e) {}
+  }
+
+  void changeState(List<Message> messages) {
+    emit(ChatConnectToServer(messages));
   }
 }

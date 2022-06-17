@@ -1,5 +1,5 @@
 import 'package:bloc/bloc.dart';
-import 'package:honar_api_v3/api.dart';
+import 'package:honar_api_v10/api.dart';
 import 'package:honar_gallary/logic/general_values.dart';
 import 'package:meta/meta.dart';
 
@@ -32,6 +32,9 @@ class SplashCubit extends Cubit<SplashState> {
           ..apiKey = ConfigGeneralValues.getInstance()
               .sharedPreferencesHandler
               .getToken()!;
+        InlineResponse2004 response2004 = await authApi.authMeList();
+        ConfigGeneralValues.configGeneralValues?.setUserId(response2004.userId);
+        print(response2004.userId);
         emit(SplashGoToHome());
         return;
       } catch (e) {

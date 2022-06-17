@@ -2,23 +2,26 @@ part of 'chat_cubit.dart';
 
 @immutable
 abstract class ChatState {
-  final List<Message> messages;
 
-  const ChatState({required this.messages});
+  const ChatState();
 }
 
 class ChatInitial extends ChatState {
-  ChatInitial() : super(messages: []);
+  ChatInitial() : super();
 }
 
 class ChatConnectToServer extends ChatState {
-  const ChatConnectToServer(List<Message> messages) : super(messages: messages);
+  final List<Message> messages;
+
+  const ChatConnectToServer(this.messages) : super();
 }
 
 class ChatSendMessage extends ChatState {
-  const ChatSendMessage(List<Message> messages) : super(messages: messages);
+  final Message message;
+
+  const ChatSendMessage(this.message) : super();
 }
 
 class ChatErrorState extends ChatState {
-  ChatErrorState() : super(messages: []);
+  ChatErrorState() : super();
 }
