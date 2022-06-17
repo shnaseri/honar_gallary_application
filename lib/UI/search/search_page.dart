@@ -1,28 +1,24 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-import 'package:honar_api_v13/api.dart';
-import 'package:honar_gallary/const/color_const.dart';
 import 'package:honar_gallary/logic/general_values.dart';
-import 'package:honar_gallary/state_managment/explorer/explorer_cubit.dart';
+import 'package:honar_gallary/state_managment/search/search_cubit.dart';
 import 'package:nb_utils/nb_utils.dart';
 
-import '../gallary/components/common.dart';
 import 'components/search_text_field.dart';
 
-class ExplorerPage extends StatefulWidget {
-  const ExplorerPage({Key? key}) : super(key: key);
+class SearchPage extends StatefulWidget {
+  const SearchPage({Key? key}) : super(key: key);
 
   @override
-  State<ExplorerPage> createState() => _ExplorerPageState();
+  State<SearchPage> createState() => _SearchPageState();
 }
 
-class _ExplorerPageState extends State<ExplorerPage> {
+class _SearchPageState extends State<SearchPage> {
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<ExplorerCubit>(
-      create: (context) => ExplorerCubit(),
+    return BlocProvider<SearchCubit>(
+      create: (context) => SearchCubit(),
       child: Scaffold(
           resizeToAvoidBottomInset: false,
           body: Directionality(
@@ -109,70 +105,47 @@ class _BodySearchWidgetState extends State<BodySearchWidget> {
   @override
   Widget build(BuildContext context) {
     var categories = ConfigGeneralValues.configGeneralValues?.getCategories();
-    return BlocBuilder<ExplorerCubit, ExplorerState>(
+    return BlocBuilder<SearchCubit, SearchState>(
       builder: (context, state) {
-        if (state is ExplorerInitial && startApp) {
-          BlocProvider.of<ExplorerCubit>(context).fetchExplorer(-1);
+        if (state is SearchInitial && startApp) {
+          BlocProvider.of<SearchCubit>(context).search("sl");
+          startApp = false;
+          // return Container();
         }
-        if (state is ExplorerLoaded) {
-          return ListView(
+        if (state is SearchLoaded) {
+          return ListView.builder(
             controller: widget.controller,
             scrollDirection: Axis.vertical,
-            padding: const EdgeInsets.only(bottom: 70),
+            padding: const EdgeInsets.only(bottom: 70, top: 50),
             physics: const ClampingScrollPhysics(),
-            children: [
-              const SizedBox(
-                height: 25,
-              ),
-              SizedBox(
-                height: 40,
-                child: ListView.builder(
-                  physics: const ClampingScrollPhysics(),
-                  itemBuilder: (BuildContext context, int index) {
-                    return GestureDetector(
-                      onTap: () async {
-                        setState(() {
-                          categoryItemSelectedId = categories![index].id;
-                        });
-                        await BlocProvider.of<ExplorerCubit>(context)
-                            .fetchExplorer(categoryItemSelectedId);
-                      },
-                      child: Container(
-                        margin: const EdgeInsets.symmetric(horizontal: 6),
-                        padding: const EdgeInsets.symmetric(horizontal: 6),
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(5),
-                            color: checIndex(index)
-                                ? ColorPallet.colorPalletDark.withOpacity(0.8)
-                                : Colors.white,
-                            border: Border.all(
-                                color: checIndex(index)
-                                    ? Colors.white70
-                                    : ColorPallet.colorPalletDark
-                                        .withOpacity(0.8),
-                                width: 1)),
-                        child: Center(
-                          child: Text(
-                            categories![index].name,
-                            style: TextStyle(
-                                color: checIndex(index)
-                                    ? Colors.white
-                                    : Colors.black),
-                          ),
-                        ),
-                      ),
-                    );
-                  },
-                  itemCount: categories?.length,
-                  scrollDirection: Axis.horizontal,
+            itemBuilder: (context, index) {
+              return Container(
+                margin: EdgeInsets.symmetric(vertical: 10),
+                child: Column(
+                  children: [
+                    Text(
+                      state.artPieces[index].title,
+                      style: TextStyle(
+                          color: Colors.pink, fontWeight: FontWeight.w900),
+                    ),
+                    Text(
+                      state.artPieces[index].title,
+                      style: TextStyle(
+                          color: Colors.pink, fontWeight: FontWeight.w900),
+                    ),
+                    Text(
+                      state.artPieces[index].owner.fullName,
+                      style: TextStyle(
+                          color: Colors.pink, fontWeight: FontWeight.w900),
+                    ),
+                  ],
                 ),
-              ),
-              BodyOfExplorerPage(
-                arts: state.arts,
-              )
-            ],
+              );
+            },
+            itemCount: state.artPieces.length,
           );
         }
+
         return Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: const [
@@ -188,38 +161,4 @@ class _BodySearchWidgetState extends State<BodySearchWidget> {
   bool checIndex(int index) =>
       categoryItemSelectedId == index ||
       (categoryItemSelectedId == -1 && index == 0);
-}
-
-class BodyOfExplorerPage extends StatefulWidget {
-  final List<ArtPiece> arts;
-
-  BodyOfExplorerPage({Key? key, required this.arts}) : super(key: key);
-
-  @override
-  State<BodyOfExplorerPage> createState() => _BodyOfExplorerPageState();
-}
-
-class _BodyOfExplorerPageState extends State<BodyOfExplorerPage> {
-  @override
-  Widget build(BuildContext context) {
-    // TODO: implement build
-    return Container(
-      padding: const EdgeInsets.only(top: 40),
-      child: MasonryGridView.count(
-        physics: const NeverScrollableScrollPhysics(),
-        shrinkWrap: true,
-        crossAxisCount: 2,
-        mainAxisSpacing: 4,
-        crossAxisSpacing: 4,
-        itemCount: widget.arts.length,
-        itemBuilder: (context, index) {
-          return ExplorerTile(
-            extent: (index % 3 + 1) * 100,
-            index: index,
-            artPiece: widget.arts[index],
-          );
-        },
-      ),
-    );
-  }
 }

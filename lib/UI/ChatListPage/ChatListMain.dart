@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:honar_api_v11/api.dart';
+import 'package:honar_api_v13/api.dart';
 import 'package:honar_gallary/UI/chat/chat_page.dart';
 import 'package:honar_gallary/state_managment/ChatList/chat_list_cubit.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
@@ -67,7 +67,7 @@ class _ChatListState extends State<ChatList> {
                 if (state is ChatListLoaded) {
                   return ListView.builder(
                     itemBuilder: (BuildContext context, int index) {
-                      Chat chat = state.chats[index];
+                      InlineResponse2006 chat = state.chats[index];
                       return GestureDetector(
                         onTap: () {
                           pushNewScreen(
@@ -84,12 +84,9 @@ class _ChatListState extends State<ChatList> {
                           );
                         },
                         child: list(
-                            url:
-                                "https://media.istockphoto.com/photos/hot-air-balloons-flying-over-the-botan-canyon-in-turkey-picture-id1297349747?b=1&k=20&m=1297349747&s=170667a&w=0&h=oH31fJty_4xWl_JQ4OIQWZKP8C6ji9Mz7L4XmEnbqRU=",
-                            name: chat.user ?? " ",
-                            tym: chat.updatedAt.hour.toString() +
-                                ":" +
-                                chat.updatedAt.minute.toString(),
+                            url: chat.user.profilePhoto,
+                            name: chat.user.fullName ?? " ",
+                            tym: chat.updatedAt.toString(),
                             desc: chat.lastMessage,
                             msg: "",
                             isRead: false),
