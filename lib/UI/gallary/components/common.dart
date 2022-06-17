@@ -198,46 +198,46 @@ class ImageTile extends StatelessWidget {
   }
 }
 
-class InteractiveTile extends StatefulWidget {
-  const InteractiveTile({
-    Key? key,
-    required this.index,
-    this.extent,
-    this.bottomSpace,
-  }) : super(key: key);
-
-  final int index;
-  final double? extent;
-  final double? bottomSpace;
-
-  @override
-  _InteractiveTileState createState() => _InteractiveTileState();
-}
-
-class _InteractiveTileState extends State<InteractiveTile> {
-  Color color = _defaultColor;
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        setState(() {
-          if (color == _defaultColor) {
-            color = Colors.red;
-          } else {
-            color = _defaultColor;
-          }
-        });
-      },
-      child: Tile(
-        index: widget.index,
-        extent: widget.extent,
-        backgroundColor: color,
-        bottomSpace: widget.bottomSpace,
-      ),
-    );
-  }
-}
+// class InteractiveTile extends StatefulWidget {
+//   const InteractiveTile({
+//     Key? key,
+//     required this.index,
+//     this.extent,
+//     this.bottomSpace,
+//   }) : super(key: key);
+//
+//   final int index;
+//   final double? extent;
+//   final double? bottomSpace;
+//
+//   @override
+//   _InteractiveTileState createState() => _InteractiveTileState();
+// }
+//
+// class _InteractiveTileState extends State<InteractiveTile> {
+//   Color color = _defaultColor;
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return GestureDetector(
+//       onTap: () {
+//         setState(() {
+//           if (color == _defaultColor) {
+//             color = Colors.red;
+//           } else {
+//             color = _defaultColor;
+//           }
+//         });
+//       },
+//       child: Tile(
+//         index: widget.index,
+//         extent: widget.extent,
+//         backgroundColor: color,
+//         bottomSpace: widget.bottomSpace,
+//       ),
+//     );
+//   }
+// }
 
 class ExplorerTile extends StatefulWidget {
   const ExplorerTile(
@@ -266,7 +266,9 @@ class _ExplorerTileState extends State<ExplorerTile> {
         onTap: () {
           pushNewScreen(
             context,
-            screen: const ArtPiecePage(),
+            screen: ArtPiecePage(
+              artId: widget.artPiece.id,
+            ),
             withNavBar: false, // OPTIONAL VALUE. True by default.
             pageTransitionAnimation: PageTransitionAnimation.cupertino,
           );
