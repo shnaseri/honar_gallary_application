@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:honar_api_v8/api.dart';
+import 'package:honar_api_v11/api.dart';
 import 'package:honar_gallary/UI/utils/numeral/Numeral.dart';
 import 'package:honar_gallary/const/color_const.dart';
 
@@ -41,7 +41,7 @@ class RatingInformation extends StatelessWidget {
         Container(
           padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
           child: Text(
-            movie.likeCount ?? "رای داده نشده",
+            movie.likeCount.toString() ?? "رای داده نشده",
             style: textTheme.titleMedium!.copyWith(
               fontWeight: FontWeight.bold,
               color: Colors.amber,

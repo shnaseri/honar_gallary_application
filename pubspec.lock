@@ -485,12 +485,14 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.0"
-  honar_api_v8:
+  honar_api_v11:
     dependency: "direct main"
     description:
-      path: api
-      relative: true
-    source: path
+      path: "."
+      ref: HEAD
+      resolved-ref: "81a1958a5d4b1b31458a8da2601619694c7a7ba1"
+      url: "https://github.com/shnaseri/negare_api.git"
+    source: git
     version: "1.0.0"
   html:
     dependency: transitive
