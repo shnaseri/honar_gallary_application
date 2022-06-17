@@ -9,7 +9,10 @@ import 'blank_component.dart';
 import 'message_tile.dart';
 
 class BodyOfChatPage extends StatefulWidget {
-  const BodyOfChatPage({Key? key}) : super(key: key);
+  final Function addMessageFunction;
+
+  BodyOfChatPage({Key? key, required this.addMessageFunction})
+      : super(key: key);
 
   @override
   State<BodyOfChatPage> createState() => _BodyOfChatPageState();
@@ -30,14 +33,21 @@ class _BodyOfChatPageState extends State<BodyOfChatPage> {
     return BlocBuilder<ChatCubit, ChatState>(
       builder: (context, state) {
         lastDate = " ";
+        print(state);
+        if (state is ChatSendMessage) {
+          print('add message');
+          print(state.message);
+          widget.addMessageFunction(state.message);
+        }
         if (state is ChatConnectToServer) {
           if (state.messages.isEmpty) {
             return BlankPageComponent().paddingBottom(100);
           }
+
           WidgetsBinding.instance!.addPostFrameCallback((_) => _endOfScroll());
           return ListView.builder(
             controller: controller,
-            padding: const EdgeInsets.only(bottom: 50, top: 10),
+            padding: EdgeInsets.only(bottom: context.width() * 0.16, top: 10),
             itemBuilder: (context, index) {
               Message message = state.messages[index];
               var date = Gregorian(message.createdAt.year,
