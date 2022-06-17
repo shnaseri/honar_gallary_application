@@ -43,6 +43,8 @@ class EditArtPieceCubit extends Cubit<EditArtPieceState> {
         InlineResponse2006 response = await coreApi.coreContentUpdate(
             await http.MultipartFile.fromPath('file', file.path));
         print(response.success);
+        InlineResponse2001 response2001 = await artApi.artArtPieceContentUpdate(
+            artId.toString(), ArtPieceContent(contentId: response.contentId));
         print('---- End Uploading ------');
       }
       emit(EditArtPieceSuccessfully());
@@ -106,11 +108,16 @@ class EditArtPieceCubit extends Cubit<EditArtPieceState> {
 
       InlineResponse2001 response200 = await artApi.artArtPieceUpdate(
           artPieceId.toString(),
-          ArtPieceDetail(description: description, title: title, price: price));
+          ArtPieceDetail(
+              description: description,
+              title: title,
+              price: price,
+              categoryId: 1));
       print('----- post information done --------');
       print(response200.success);
       return response200.success;
     } catch (e) {
+      print('send info');
       print(e);
       emit(EditArtPieceError());
       return null;
