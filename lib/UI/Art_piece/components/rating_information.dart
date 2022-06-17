@@ -41,7 +41,7 @@ class RatingInformation extends StatelessWidget {
         Container(
           padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
           child: Text(
-            movie.likeCount.toString() ?? "رای داده نشده",
+            movie.likeCount.toString(),
             style: textTheme.titleMedium!.copyWith(
               fontWeight: FontWeight.bold,
               color: Colors.amber,

@@ -361,7 +361,8 @@ class _ProfileListItemsState extends State<ProfileListItems> {
                           )
                         ],
                       ),
-                      child: state is EditArtPieceInitial
+                      child: state is EditArtPieceInitial ||
+                              state is EditArtPieceSuccessfully
                           ? const Center(
                               child: Text(
                                 'ذخیره',

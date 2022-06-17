@@ -8,7 +8,7 @@ import 'package:nb_utils/nb_utils.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 
 import '../../../home/home_page.dart';
-import '../../Edit_Create_art_piece/edit_art_piece_page.dart';
+import '../../Create_art_piece/creater_art_piece_page.dart';
 import '../../gallary/gallery_view.dart';
 
 class NavigationBarWidget extends StatelessWidget {
@@ -66,7 +66,7 @@ class NavigationBarWidget extends StatelessWidget {
     return [
       const HomePage(),
       const ExplorerPage(),
-      const EditArtPiece(),
+      const CreateArtPiece(),
       const GalleryView(),
     ];
   }

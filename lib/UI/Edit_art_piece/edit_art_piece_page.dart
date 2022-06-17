@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:honar_gallary/UI/Art_piece/components/arc_banner_image.dart';
 import 'package:honar_gallary/const/color_const.dart';
-// import 'package:honar_gallary/UI/Edit_Create_art_piece/image_card.dart';
+// import 'package:honar_gallary/UI/Create_art_piece/image_card.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../../state_managment/create_edit_art_piece/edit_art_piece_cubit.dart';
