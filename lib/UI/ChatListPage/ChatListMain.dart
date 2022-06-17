@@ -5,7 +5,6 @@ import 'package:honar_gallary/UI/chat/chat_page.dart';
 import 'package:honar_gallary/state_managment/ChatList/chat_list_cubit.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 
-import 'ChatListSideBar.dart';
 import 'TileRows.dart';
 
 class ChatList extends StatefulWidget {
@@ -73,12 +72,16 @@ class _ChatListState extends State<ChatList> {
                         onTap: () {
                           pushNewScreen(
                             context,
-                            screen: ChatPage(),
+                            screen: ChatPage(
+                              index: 1,
+                              chatCode: "20-21",
+                              contact: User(fullName: "hossein", id: 1),
+                            ),
                             withNavBar: false,
                             // OPTIONAL VALUE. True by default.
-                            pageTransitionAnimation: PageTransitionAnimation
-                                .cupertino,
-                          )
+                            pageTransitionAnimation:
+                                PageTransitionAnimation.cupertino,
+                          );
                         },
                         child: list(
                             url:

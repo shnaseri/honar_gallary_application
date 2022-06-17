@@ -23,6 +23,7 @@ class MessageTile extends StatelessWidget {
     return BlocBuilder<ChatCubit, ChatState>(
       builder: (context, state) {
         return ChatBubble(
+          elevation: 1,
           clipper: ChatBubbleClipper1(
               type: message.isUserSender
                   ? BubbleType.sendBubble
@@ -30,7 +31,7 @@ class MessageTile extends StatelessWidget {
           alignment: message.isUserSender
               ? Alignment.centerRight
               : Alignment.centerLeft,
-          margin: EdgeInsets.only(top: 20),
+          margin: const EdgeInsets.only(top: 10, left: 10, right: 10),
           backGroundColor: message.isUserSender
               ? ColorPallet.colorPalletNightFog
               : ColorPallet.colorPalletSambucus,
@@ -38,9 +39,20 @@ class MessageTile extends StatelessWidget {
             constraints: BoxConstraints(
               maxWidth: MediaQuery.of(context).size.width * 0.7,
             ),
-            child: Text(
-              message.content,
-              style: TextStyle(color: Colors.white),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                Text(
+                  message.content,
+                  style: TextStyle(color: Colors.white),
+                ),
+                Text(
+                  message.createdAt.hour.toString() +
+                      ":" +
+                      message.createdAt.minute.toString(),
+                  style: TextStyle(color: Colors.white60, fontSize: 10),
+                ),
+              ],
             ),
           ),
         );

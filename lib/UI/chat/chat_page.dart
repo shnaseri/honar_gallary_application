@@ -27,12 +27,16 @@ class ChatPage extends StatefulWidget {
 
 class _ChatPageState extends State<ChatPage> {
   late BuildContext chatContext;
+  late bool startapp;
+  late List<Message> messages;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     controller.text = "";
+    startapp = true;
+    messages = [];
   }
 
   @override
@@ -59,19 +63,30 @@ class _ChatPageState extends State<ChatPage> {
                 ),
                 child: BlocBuilder<ChatCubit, ChatState>(
                   builder: (context, state) {
+                    if (state is ChatConnectToServer) {
+                      messages = state.messages;
+                    }
                     chatContext = context;
                     if (state is ChatErrorState) {
                       // toast(hasErrorChatPage);
                       BlocProvider.of<ChatCubit>(context).emit(ChatInitial());
                     }
-                    if (state is ChatInitial) {
-                      BlocProvider.of<ChatCubit>(context).fetchConnect();
+                    if (state is ChatInitial && startapp) {
+                      BlocProvider.of<ChatCubit>(context).fetchConnect("20-21");
+                      startapp = false;
                     }
                     return Stack(
                       children: [
-                        const BodyOfChatPage(),
+                        BodyOfChatPage(
+                          addMessageFunction: (newMessage) {
+                            messages.add(newMessage);
+                            BlocProvider.of<ChatCubit>(context)
+                                .changeState(messages);
+                          },
+                        ),
                         TextFieldForChatPage(
                           contact: widget.contact,
+                          messages: messages,
                         )
                       ],
                     );
