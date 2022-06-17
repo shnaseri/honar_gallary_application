@@ -6,6 +6,8 @@ class ConfigGeneralValues {
   static ConfigGeneralValues? configGeneralValues;
   late List<Category> categories;
 
+  int? userId;
+
   static ConfigGeneralValues getInstance() {
     configGeneralValues ??= ConfigGeneralValues();
     return configGeneralValues!;
@@ -25,5 +27,8 @@ class ConfigGeneralValues {
 
   List<Category> getCategories() {
     return categories;
+  }
+  void setUserId(int userId) {
+    this.userId = userId;
   }
 }

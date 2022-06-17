@@ -342,6 +342,22 @@ paths:
       tags:
         - auth
     parameters: [ ]
+  "/auth/me/":
+    get:
+      operationId: auth_me_list
+      description: ''
+      parameters: [ ]
+      responses:
+        '200':
+          description: ''
+          schema:
+            type: object
+            properties:
+              user_id:
+                type: integer
+      tags:
+        - auth
+    parameters: [ ]
   "/auth/register/":
     post:
       operationId: auth_register_create

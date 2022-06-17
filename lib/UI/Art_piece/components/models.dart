@@ -9,7 +9,8 @@ class Movie {
       required this.storyline,
       required this.photoUrls,
       required this.actors,
-      required this.price});
+      required this.price,
+      required this.like});
 
   String bannerUrl;
   String posterUrl;
@@ -21,6 +22,7 @@ class Movie {
   List<String> photoUrls;
   List<Actor> actors;
   int price;
+  int like;
 }
 
 class Actor {

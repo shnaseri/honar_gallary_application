@@ -12,7 +12,9 @@ import 'components/photo_scroller.dart';
 import 'components/story_line.dart';
 
 class ArtPiecePage extends StatefulWidget {
-  const ArtPiecePage({Key? key}) : super(key: key);
+  final int artId;
+
+  const ArtPiecePage({Key? key, required this.artId}) : super(key: key);
 
   @override
   State<ArtPiecePage> createState() => _ArtPiecePageState();
@@ -34,6 +36,7 @@ class _ArtPiecePageState extends State<ArtPiecePage> {
       'assets/images/3.png',
       'assets/images/4.png',
     ],
+    like: 0,
     actors: [
       Actor(
         name: 'Louis C.K.',
@@ -75,13 +78,15 @@ class _ArtPiecePageState extends State<ArtPiecePage> {
           builder: (context, state) {
             if (state is ArtPieceInitial && startApp) {
               startApp = false;
-              BlocProvider.of<ArtPieceCubit>(context).fetchArtPiece();
+              BlocProvider.of<ArtPieceCubit>(context)
+                  .fetchArtPiece(widget.artId);
             }
             if (state is ArtPieceLoaded) {
               testMovie.title = state.artPiece.title;
               testMovie.storyline = state.artPiece.description;
               testMovie.price = state.artPiece.price;
               testMovie.bannerUrl = state.artPiece.cover.image;
+              testMovie.like = state.artPiece.likeCount.toInt();
               return Container(
                 height: MediaQuery.of(context).size.height,
                 width: MediaQuery.of(context).size.width,
@@ -100,7 +105,47 @@ class _ArtPiecePageState extends State<ArtPiecePage> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      MovieDetailHeader(testMovie, state.artPiece),
+                      Stack(
+                        children: [
+                          MovieDetailHeader(testMovie, state.artPiece),
+                          Positioned(
+                            child: GestureDetector(
+                              onTap: () async {
+                                if (state.artPiece.isUserLiked) {
+                                  state.artPiece.likeCount--;
+                                } else {
+                                  state.artPiece.likeCount++;
+                                }
+                                setState(() {
+                                  state.artPiece.isUserLiked =
+                                      !state.artPiece.isUserLiked;
+                                });
+
+                                bool status =
+                                    await BlocProvider.of<ArtPieceCubit>(
+                                            context)
+                                        .changeStatusLikeArtPiece(
+                                            state.artPiece.id);
+                              },
+                              child: Container(
+                                height: 40,
+                                width: 40,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(9),
+                                    color: Colors.pink),
+                                child: Center(
+                                  child: !state.artPiece.isUserLiked
+                                      ? const Icon(
+                                          Icons.favorite_border_rounded)
+                                      : const Icon(Icons.favorite),
+                                ),
+                              ),
+                            ),
+                            top: 20,
+                            left: 20,
+                          )
+                        ],
+                      ),
 
                       ElevatedButton(
                               onPressed: () {
@@ -112,7 +157,7 @@ class _ArtPiecePageState extends State<ArtPiecePage> {
                                                 User(fullName: "hosein", id: 1),
                                             index: 1)));
                               },
-                              child: Text("صفحه چت"))
+                              child: const Text("صفحه چت"))
                           .paddingAll(10),
 
                       Padding(
@@ -127,9 +172,9 @@ class _ArtPiecePageState extends State<ArtPiecePage> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Padding(
-                            padding: const EdgeInsets.only(right: 10),
-                            child: const Text(
+                          const Padding(
+                            padding: EdgeInsets.only(right: 10),
+                            child: Text(
                               "نظرات",
                               style: TextStyle(
                                   color: Colors.white,
@@ -148,7 +193,7 @@ class _ArtPiecePageState extends State<ArtPiecePage> {
                           ),
                         ],
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 20,
                       )
                     ],
