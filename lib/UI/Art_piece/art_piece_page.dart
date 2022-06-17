@@ -3,9 +3,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:honar_api_v11/api.dart';
 import 'package:honar_gallary/UI/chat/chat_page.dart';
 import 'package:honar_gallary/UI/comment/comment_page.dart';
+import 'package:honar_gallary/const/color_const.dart';
 import 'package:honar_gallary/state_managment/art_piece/art_piece_cubit.dart';
 import 'package:nb_utils/nb_utils.dart';
 
+import '../Edit_art_piece/edit_art_piece_page.dart';
 import 'components/art_piece_header.dart';
 import 'components/models.dart';
 import 'components/photo_scroller.dart';
@@ -109,37 +111,62 @@ class _ArtPiecePageState extends State<ArtPiecePage> {
                         children: [
                           MovieDetailHeader(testMovie, state.artPiece),
                           Positioned(
-                            child: GestureDetector(
-                              onTap: () async {
-                                if (state.artPiece.isUserLiked) {
-                                  state.artPiece.likeCount--;
-                                } else {
-                                  state.artPiece.likeCount++;
-                                }
-                                setState(() {
-                                  state.artPiece.isUserLiked =
-                                      !state.artPiece.isUserLiked;
-                                });
+                            child: Row(
+                              children: [
+                                GestureDetector(
+                                  onTap: () async {
+                                    if (state.artPiece.isUserLiked) {
+                                      state.artPiece.likeCount--;
+                                    } else {
+                                      state.artPiece.likeCount++;
+                                    }
+                                    setState(() {
+                                      state.artPiece.isUserLiked =
+                                          !state.artPiece.isUserLiked;
+                                    });
 
-                                bool status =
-                                    await BlocProvider.of<ArtPieceCubit>(
-                                            context)
-                                        .changeStatusLikeArtPiece(
-                                            state.artPiece.id);
-                              },
-                              child: Container(
-                                height: 40,
-                                width: 40,
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(9),
-                                    color: Colors.pink),
-                                child: Center(
-                                  child: !state.artPiece.isUserLiked
-                                      ? const Icon(
-                                          Icons.favorite_border_rounded)
-                                      : const Icon(Icons.favorite),
+                                    bool status =
+                                        await BlocProvider.of<ArtPieceCubit>(
+                                                context)
+                                            .changeStatusLikeArtPiece(
+                                                state.artPiece.id);
+                                  },
+                                  child: Container(
+                                    height: 40,
+                                    width: 40,
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(9),
+                                        color: Colors.pink),
+                                    child: Center(
+                                      child: !state.artPiece.isUserLiked
+                                          ? const Icon(
+                                              Icons.favorite_border_rounded)
+                                          : const Icon(Icons.favorite),
+                                    ),
+                                  ),
                                 ),
-                              ),
+                                10.width,
+                                GestureDetector(
+                                  onTap: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (_) => EditArtPiece(
+                                                  artPiece: state.artPiece,
+                                                )));
+                                  },
+                                  child: Container(
+                                    height: 40,
+                                    width: 40,
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(9),
+                                        color: ColorPallet.colorPalletBlueGam),
+                                    child: const Center(
+                                      child: Icon(Icons.edit),
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
                             top: 20,
                             left: 20,
