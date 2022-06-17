@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+
 import 'TileRows.dart';
 
-Drawer sidebarDrawer()
-{
+Drawer sidebarDrawer() {
   return Drawer(
     child: Column(
       children: [
@@ -12,7 +12,7 @@ Drawer sidebarDrawer()
           child: Container(
             width: double.infinity,
             child: Container(
-              padding: const EdgeInsets.symmetric(vertical: 50,horizontal: 20),
+              padding: const EdgeInsets.symmetric(vertical: 50, horizontal: 20),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -20,13 +20,26 @@ Drawer sidebarDrawer()
                     radius: 30,
                     backgroundImage: ExactAssetImage('assets/one.jfif'),
                   ),
-                  const SizedBox(width: 10,),
+                  const SizedBox(
+                    width: 10,
+                  ),
                   Column(
                     children: const [
-                      Text("Hosein Naser",style: TextStyle(color: Colors.white,fontSize: 18,fontWeight: FontWeight.w600),),
-                      SizedBox(height: 5,),
-                      Text("+912569874563",style: TextStyle(color: Colors.white70,fontWeight: FontWeight.w600),),
-
+                      Text(
+                        "Hosein Naser",
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 18,
+                            fontWeight: FontWeight.w600),
+                      ),
+                      SizedBox(
+                        height: 5,
+                      ),
+                      Text(
+                        "+912569874563",
+                        style: TextStyle(
+                            color: Colors.white70, fontWeight: FontWeight.w600),
+                      ),
                     ],
                   ),
                 ],
@@ -40,7 +53,7 @@ Drawer sidebarDrawer()
         // Divider(height: 10,),
         // tile(msg: "Contacts",im: Icons.contact_page_sharp),
         // tile(msg: "Theming",im: Icons.format_paint),
-        tile(msg: "Settings",im: Icons.settings),
+        tile(msg: "Settings", im: Icons.settings),
         // tile(msg: "support",im: Icons.question_answer),
       ],
     ),

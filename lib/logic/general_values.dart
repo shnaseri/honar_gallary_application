@@ -28,6 +28,7 @@ class ConfigGeneralValues {
   List<Category> getCategories() {
     return categories;
   }
+
   void setUserId(int userId) {
     this.userId = userId;
   }
