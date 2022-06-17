@@ -488,9 +488,11 @@ packages:
   honar_api_v11:
     dependency: "direct main"
     description:
-      path: api
-      relative: true
-    source: path
+      path: "."
+      ref: HEAD
+      resolved-ref: ec38250e8460ff8801b2434bbafd1bc75a146801
+      url: "https://github.com/shnaseri/negare_api.git"
+    source: git
     version: "1.0.0"
   html:
     dependency: transitive
