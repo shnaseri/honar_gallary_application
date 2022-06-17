@@ -1,8 +1,8 @@
-# honar_api_v3.model.Chat
+# honar_api_v10.model.Chat
 
 ## Load the model package
 ```dart
-import 'package:honar_api_v3/api.dart';
+import 'package:honar_api_v10/api.dart';
 ```
 
 ## Properties

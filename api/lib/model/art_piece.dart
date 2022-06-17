@@ -16,6 +16,7 @@ class ArtPiece {
     this.id,
     this.title,
     this.price,
+    @required this.category,
     this.description,
     @required this.cover,
     @required this.owner,
@@ -32,6 +33,8 @@ class ArtPiece {
   // minimum: -2147483648
   // maximum: 2147483647
   int price;
+
+  Category category;
 
   String description;
 
@@ -54,6 +57,7 @@ class ArtPiece {
           other.id == id &&
           other.title == title &&
           other.price == price &&
+          other.category == category &&
           other.description == description &&
           other.cover == cover &&
           other.owner == owner &&
@@ -68,6 +72,7 @@ class ArtPiece {
       (id == null ? 0 : id.hashCode) +
       (title == null ? 0 : title.hashCode) +
       (price == null ? 0 : price.hashCode) +
+      (category == null ? 0 : category.hashCode) +
       (description == null ? 0 : description.hashCode) +
       (cover == null ? 0 : cover.hashCode) +
       (owner == null ? 0 : owner.hashCode) +
@@ -78,7 +83,7 @@ class ArtPiece {
 
   @override
   String toString() =>
-      'ArtPiece[id=$id, title=$title, price=$price, description=$description, cover=$cover, owner=$owner, likeCount=$likeCount, type=$type, isUserLiked=$isUserLiked, url=$url]';
+      'ArtPiece[id=$id, title=$title, price=$price, category=$category, description=$description, cover=$cover, owner=$owner, likeCount=$likeCount, type=$type, isUserLiked=$isUserLiked, url=$url]';
 
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
@@ -91,6 +96,7 @@ class ArtPiece {
     if (price != null) {
       json[r'price'] = price;
     }
+    json[r'category'] = category;
     if (description != null) {
       json[r'description'] = description;
     }
@@ -121,6 +127,7 @@ class ArtPiece {
         id: mapValueOfType<int>(json, r'id'),
         title: mapValueOfType<String>(json, r'title'),
         price: mapValueOfType<int>(json, r'price'),
+        category: Category.fromJson(json[r'category']),
         description: mapValueOfType<String>(json, r'description'),
         cover: ImageSerializer.fromJson(json[r'cover']),
         owner: User.fromJson(json[r'owner']),

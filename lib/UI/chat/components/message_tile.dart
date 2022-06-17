@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_chat_bubble/bubble_type.dart';
 import 'package:flutter_chat_bubble/chat_bubble.dart';
 import 'package:flutter_chat_bubble/clippers/chat_bubble_clipper_1.dart';
-import 'package:honar_api_v3/api.dart';
+import 'package:honar_api_v10/api.dart';
 import 'package:honar_gallary/const/color_const.dart';
 
 import '../../../state_managment/chat/chat_cubit.dart';
@@ -23,6 +23,7 @@ class MessageTile extends StatelessWidget {
     return BlocBuilder<ChatCubit, ChatState>(
       builder: (context, state) {
         return ChatBubble(
+          elevation: 1,
           clipper: ChatBubbleClipper1(
               type: message.isUserSender
                   ? BubbleType.sendBubble
@@ -30,7 +31,7 @@ class MessageTile extends StatelessWidget {
           alignment: message.isUserSender
               ? Alignment.centerRight
               : Alignment.centerLeft,
-          margin: EdgeInsets.only(top: 20),
+          margin: const EdgeInsets.only(top: 10, left: 10, right: 10),
           backGroundColor: message.isUserSender
               ? ColorPallet.colorPalletNightFog
               : ColorPallet.colorPalletSambucus,
@@ -38,9 +39,20 @@ class MessageTile extends StatelessWidget {
             constraints: BoxConstraints(
               maxWidth: MediaQuery.of(context).size.width * 0.7,
             ),
-            child: Text(
-              message.content,
-              style: TextStyle(color: Colors.white),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                Text(
+                  message.content,
+                  style: TextStyle(color: Colors.white),
+                ),
+                Text(
+                  message.createdAt.hour.toString() +
+                      ":" +
+                      message.createdAt.minute.toString(),
+                  style: TextStyle(color: Colors.white60, fontSize: 10),
+                ),
+              ],
             ),
           ),
         );

@@ -142,6 +142,50 @@ class AuthApi {
     return Future<TokenRefresh>.value();
   }
 
+  /// Performs an HTTP 'GET /auth/me/' operation and returns the [Response].
+  Future<Response> authMeListWithHttpInfo() async {
+    // ignore: prefer_const_declarations
+    final path = r'/auth/me/';
+
+    // ignore: prefer_final_locals
+    Object postBody;
+
+    final queryParams = <QueryParam>[];
+    final headerParams = <String, String>{};
+    final formParams = <String, String>{};
+
+    const authNames = <String>['Bearer'];
+    const contentTypes = <String>[];
+
+    return apiClient.invokeAPI(
+      path,
+      'GET',
+      queryParams,
+      postBody,
+      headerParams,
+      formParams,
+      contentTypes.isEmpty ? null : contentTypes[0],
+      authNames,
+    );
+  }
+
+  Future<InlineResponse2004> authMeList() async {
+    final response = await authMeListWithHttpInfo();
+    if (response.statusCode >= HttpStatus.badRequest) {
+      throw ApiException(response.statusCode, await _decodeBodyBytes(response));
+    }
+    // When a remote server returns no body with a status of 204, we shall not decode it.
+    // At the time of writing this, `dart:convert` will throw an "Unexpected end of input"
+    // FormatException when trying to decode an empty string.
+    if (response.body != null && response.statusCode != HttpStatus.noContent) {
+      return await apiClient.deserializeAsync(
+        await _decodeBodyBytes(response),
+        'InlineResponse2004',
+      ) as InlineResponse2004;
+    }
+    return Future<InlineResponse2004>.value();
+  }
+
   /// Performs an HTTP 'POST /auth/register/' operation and returns the [Response].
   /// Parameters:
   ///
@@ -378,7 +422,7 @@ class AuthApi {
   /// * [String] id (required):
   ///
   /// * [OtpCode] data (required):
-  Future<InlineResponse2003> authVerifyOtpCodeCreate(
+  Future<InlineResponse2005> authVerifyOtpCodeCreate(
     String id,
     OtpCode data,
   ) async {
@@ -395,9 +439,9 @@ class AuthApi {
     if (response.body != null && response.statusCode != HttpStatus.noContent) {
       return await apiClient.deserializeAsync(
         await _decodeBodyBytes(response),
-        'InlineResponse2003',
-      ) as InlineResponse2003;
+        'InlineResponse2005',
+      ) as InlineResponse2005;
     }
-    return Future<InlineResponse2003>.value();
+    return Future<InlineResponse2005>.value();
   }
 }

@@ -13,38 +13,28 @@ part of openapi.api;
 class InlineResponse2004 {
   /// Returns a new [InlineResponse2004] instance.
   InlineResponse2004({
-    this.success = true,
-    this.contentId,
+    this.userId,
   });
 
-  bool success;
-
-  int contentId;
+  int userId;
 
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is InlineResponse2004 &&
-          other.success == success &&
-          other.contentId == contentId;
+      other is InlineResponse2004 && other.userId == userId;
 
   @override
   int get hashCode =>
       // ignore: unnecessary_parenthesis
-      (success == null ? 0 : success.hashCode) +
-      (contentId == null ? 0 : contentId.hashCode);
+      (userId == null ? 0 : userId.hashCode);
 
   @override
-  String toString() =>
-      'InlineResponse2004[success=$success, contentId=$contentId]';
+  String toString() => 'InlineResponse2004[userId=$userId]';
 
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
-    if (success != null) {
-      json[r'success'] = success;
-    }
-    if (contentId != null) {
-      json[r'content_id'] = contentId;
+    if (userId != null) {
+      json[r'user_id'] = userId;
     }
     return json;
   }
@@ -56,8 +46,7 @@ class InlineResponse2004 {
     if (value is Map) {
       final json = value.cast<String, dynamic>();
       return InlineResponse2004(
-        success: mapValueOfType<bool>(json, r'success'),
-        contentId: mapValueOfType<int>(json, r'content_id'),
+        userId: mapValueOfType<int>(json, r'user_id'),
       );
     }
     return null;

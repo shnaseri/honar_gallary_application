@@ -16,6 +16,7 @@ class ArtPieceDetail {
     this.price,
     this.title,
     this.description,
+    @required this.categoryId,
   });
 
   int price;
@@ -24,30 +25,35 @@ class ArtPieceDetail {
 
   String description;
 
+  int categoryId;
+
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       other is ArtPieceDetail &&
           other.price == price &&
           other.title == title &&
-          other.description == description;
+          other.description == description &&
+          other.categoryId == categoryId;
 
   @override
   int get hashCode =>
       // ignore: unnecessary_parenthesis
       (price == null ? 0 : price.hashCode) +
       (title == null ? 0 : title.hashCode) +
-      (description == null ? 0 : description.hashCode);
+      (description == null ? 0 : description.hashCode) +
+      (categoryId == null ? 0 : categoryId.hashCode);
 
   @override
   String toString() =>
-      'ArtPieceDetail[price=$price, title=$title, description=$description]';
+      'ArtPieceDetail[price=$price, title=$title, description=$description, categoryId=$categoryId]';
 
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
     json[r'price'] = price == null ? null : price;
     json[r'title'] = title == null ? null : title;
     json[r'description'] = description == null ? null : description;
+    json[r'category_id'] = categoryId;
     return json;
   }
 
@@ -61,6 +67,7 @@ class ArtPieceDetail {
         price: mapValueOfType<int>(json, r'price'),
         title: mapValueOfType<String>(json, r'title'),
         description: mapValueOfType<String>(json, r'description'),
+        categoryId: mapValueOfType<int>(json, r'category_id'),
       );
     }
     return null;

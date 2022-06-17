@@ -13,46 +13,46 @@ part of openapi.api;
 class InlineResponse2003 {
   /// Returns a new [InlineResponse2003] instance.
   InlineResponse2003({
-    this.success = true,
-    this.valid,
-    this.accessToken,
+    this.owner,
+    this.postsCount,
+    this.posts = const [],
   });
 
-  bool success;
+  InlineResponse2003Owner owner;
 
-  bool valid;
+  int postsCount;
 
-  String accessToken;
+  List<InlineResponse2003Posts> posts;
 
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       other is InlineResponse2003 &&
-          other.success == success &&
-          other.valid == valid &&
-          other.accessToken == accessToken;
+          other.owner == owner &&
+          other.postsCount == postsCount &&
+          other.posts == posts;
 
   @override
   int get hashCode =>
       // ignore: unnecessary_parenthesis
-      (success == null ? 0 : success.hashCode) +
-      (valid == null ? 0 : valid.hashCode) +
-      (accessToken == null ? 0 : accessToken.hashCode);
+      (owner == null ? 0 : owner.hashCode) +
+      (postsCount == null ? 0 : postsCount.hashCode) +
+      (posts == null ? 0 : posts.hashCode);
 
   @override
   String toString() =>
-      'InlineResponse2003[success=$success, valid=$valid, accessToken=$accessToken]';
+      'InlineResponse2003[owner=$owner, postsCount=$postsCount, posts=$posts]';
 
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
-    if (success != null) {
-      json[r'success'] = success;
+    if (owner != null) {
+      json[r'owner'] = owner;
     }
-    if (valid != null) {
-      json[r'valid'] = valid;
+    if (postsCount != null) {
+      json[r'posts_count'] = postsCount;
     }
-    if (accessToken != null) {
-      json[r'access_token'] = accessToken;
+    if (posts != null) {
+      json[r'posts'] = posts;
     }
     return json;
   }
@@ -64,9 +64,9 @@ class InlineResponse2003 {
     if (value is Map) {
       final json = value.cast<String, dynamic>();
       return InlineResponse2003(
-        success: mapValueOfType<bool>(json, r'success'),
-        valid: mapValueOfType<bool>(json, r'valid'),
-        accessToken: mapValueOfType<String>(json, r'access_token'),
+        owner: InlineResponse2003Owner.fromJson(json[r'owner']),
+        postsCount: mapValueOfType<int>(json, r'posts_count'),
+        posts: InlineResponse2003Posts.listFromJson(json[r'posts']),
       );
     }
     return null;

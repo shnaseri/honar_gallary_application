@@ -1,9 +1,9 @@
-# honar_api_v3.model.AccessRefresh
+# honar_api_v10.model.AccessRefresh
 
 ## Load the model package
 
 ```dart
-import 'package:honar_api_v3/api.dart';
+import 'package:honar_api_v10/api.dart';
 ```
 
 ## Properties
