@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:honar_api_v11/api.dart';
 import 'package:honar_gallary/UI/Art_piece/components/arc_banner_image.dart';
 import 'package:honar_gallary/const/color_const.dart';
-// import 'package:honar_gallary/UI/Edit_Create_art_piece/image_card.dart';
+// import 'package:honar_gallary/UI/Create_art_piece/image_card.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../../state_managment/create_edit_art_piece/edit_art_piece_cubit.dart';
@@ -11,7 +12,9 @@ import 'edit_page_list.dart';
 // import 'package:image_picker/image_picker.dart';
 
 class EditArtPiece extends StatefulWidget {
-  const EditArtPiece({Key? key}) : super(key: key);
+  final ArtPiece artPiece;
+
+  const EditArtPiece({Key? key, required this.artPiece}) : super(key: key);
 
   @override
   _EditArtPieceState createState() => _EditArtPieceState();
@@ -78,6 +81,7 @@ class _EditArtPieceState extends State<EditArtPiece> {
                     child: ArcBannerImage("assets/images/sample1.jpg"),
                   ),
                   ProfileListItems(
+                    artPiece: widget.artPiece,
                     changeState: () {
                       setState(() {});
                     },

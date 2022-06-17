@@ -22,7 +22,7 @@ class EditArtPieceCubit extends Cubit<EditArtPieceState> {
     coreApi = CoreApi(interfaceOfUser);
   }
 
-  Future<void> flowOfCreateArtPiece(File file, String type, String title,
+  Future<bool> flowOfCreateArtPiece(File file, String type, String title,
       String description, List<File> imageSliderFiles,
       {int price = 0}) async {
     try {
@@ -43,12 +43,51 @@ class EditArtPieceCubit extends Cubit<EditArtPieceState> {
         InlineResponse2006 response = await coreApi.coreContentUpdate(
             await http.MultipartFile.fromPath('file', file.path));
         print(response.success);
+        InlineResponse2001 response2001 = await artApi.artArtPieceContentUpdate(
+            artId.toString(), ArtPieceContent(contentId: response.contentId));
         print('---- End Uploading ------');
       }
       emit(EditArtPieceSuccessfully());
+      return true;
     } catch (e) {
       emit(EditArtPieceInitial());
       print(e);
+      return false;
+    }
+  }
+
+  Future<bool> flowOfEditArtPiece(int artId, String type, String title,
+      String description, List<File> imageSliderFiles,
+      {int price = 0}) async {
+    try {
+      int? coverId = 1;
+      // if (getTypeOfArtPiece(type) != ArtPieceCoverTypeEnum.P) {
+      //   coverId = await uploadImage(imageSliderFiles[0]);
+      //   if (coverId != null) {
+      //     artId = await sendInfoConver(coverId, type);
+      //   }
+      // }
+      // int? artId;
+
+      if (artId != null) {
+        await sendInfoArtPiece(artId, title, description, price);
+      }
+      // if (ArtPieceCoverTypeEnum.V == getTypeOfArtPiece(type) ||
+      //     ArtPieceCoverTypeEnum.M == getTypeOfArtPiece(type)) {
+      //   print('---- Start Uploading ------');
+      //   InlineResponse2006 response = await coreApi.coreContentUpdate(
+      //       await http.MultipartFile.fromPath('file', file.path));
+      //   print(response.success);
+      //   InlineResponse2001 response2001 = await artApi.artArtPieceContentUpdate(
+      //       artId.toString(), ArtPieceContent(contentId: response.contentId));
+      //   print('---- End Uploading ------');
+      // }
+      emit(EditArtPieceSuccessfully());
+      return true;
+    } catch (e) {
+      emit(EditArtPieceInitial());
+      print(e);
+      return false;
     }
   }
 
@@ -60,6 +99,7 @@ class EditArtPieceCubit extends Cubit<EditArtPieceState> {
       print(output);
       return output['id'];
     } catch (e) {
+      print(e);
       emit(EditArtPieceError());
       return null;
     }
@@ -75,6 +115,7 @@ class EditArtPieceCubit extends Cubit<EditArtPieceState> {
       print(response200.artPieceId);
       return response200.artPieceId;
     } catch (e) {
+      print(e);
       emit(EditArtPieceError());
       return null;
     }
@@ -102,11 +143,17 @@ class EditArtPieceCubit extends Cubit<EditArtPieceState> {
 
       InlineResponse2001 response200 = await artApi.artArtPieceUpdate(
           artPieceId.toString(),
-          ArtPieceDetail(description: description, title: title, price: price));
+          ArtPieceDetail(
+              description: description,
+              title: title,
+              price: price,
+              categoryId: 1));
       print('----- post information done --------');
       print(response200.success);
       return response200.success;
     } catch (e) {
+      print('send info');
+      print(e);
       emit(EditArtPieceError());
       return null;
     }

@@ -152,11 +152,10 @@ class _ProfileListItemsState extends State<ProfileListItems> {
                   if (dropDownValue == newValue) {
                     return;
                   }
-                  setState(() {
-                    dropDownValue = newValue!;
-                    selected = false;
-                    fileSelected = null;
-                  });
+                  dropDownValue = newValue!;
+                  selected = false;
+                  fileSelected = null;
+                  widget.changeState();
                 },
               ),
               const SizedBox(
@@ -181,10 +180,9 @@ class _ProfileListItemsState extends State<ProfileListItems> {
                               flex: 2,
                               child: TextButton(
                                 onPressed: () {
-                                  setState(() {
-                                    selected = false;
-                                    fileSelected = null;
-                                  });
+                                  selected = false;
+                                  fileSelected = null;
+                                  widget.changeState();
                                 },
                                 child: const Text('حذف'),
                                 style: ButtonStyle(foregroundColor:
@@ -212,14 +210,12 @@ class _ProfileListItemsState extends State<ProfileListItems> {
                           if (result != null) {
                             print(result);
                             fileSelected = File(result.files.single.path!);
-                            setState(() {
-                              selected = true;
-                            });
+                            selected = true;
+                            widget.changeState();
                           } else {
                             // User canceled the picker
-                            setState(() {
-                              selected = false;
-                            });
+                            selected = false;
+                            widget.changeState();
                           }
                         },
                         style: ButtonStyle(
@@ -258,13 +254,6 @@ class _ProfileListItemsState extends State<ProfileListItems> {
                         print("---- current state -----");
                         print(state);
                         if (state is EditArtPieceSuccessfully) {
-                          imageSliderFiles = [];
-                          _title.clear();
-                          _dob.clear();
-                          _about.clear();
-                          fileSelected = null;
-                          selected = false;
-                          setState(() {});
                           showSnackBar(context, "با موفقیت انجام شد");
                           BlocProvider.of<EditArtPieceCubit>(context)
                               .emit(EditArtPieceInitial());
@@ -279,9 +268,8 @@ class _ProfileListItemsState extends State<ProfileListItems> {
                                   return SizedBox(
                                     width: 300,
                                     child: AddImageWidget(onChanged: (file) {
-                                      setState(() {
-                                        imageSliderFiles.add(file);
-                                      });
+                                      imageSliderFiles.add(file);
+                                      widget.changeState();
                                       print(imageSliderFiles.length);
                                       print(imageSliderFiles);
                                     }),
@@ -291,9 +279,8 @@ class _ProfileListItemsState extends State<ProfileListItems> {
                               }
                               return ImageSliderTile(
                                   imageSliderFiles[index - 1], onRemove: () {
-                                setState(() {
-                                  imageSliderFiles.removeAt(index - 1);
-                                });
+                                imageSliderFiles.removeAt(index - 1);
+                                widget.changeState();
                               }).paddingSymmetric(horizontal: 15);
                             },
                             itemCount: (imageSliderFiles.length) + 1,
@@ -308,16 +295,16 @@ class _ProfileListItemsState extends State<ProfileListItems> {
               ),
               BlocBuilder<EditArtPieceCubit, EditArtPieceState>(
                 builder: (context, state) {
-                  if (state is EditArtPieceSuccessfully) {
-                    imageSliderFiles = [];
-                    _title.text = "";
-                    _dob.text = "";
-                    _about.text = "";
-                    fileSelected = null;
-                    selected = false;
-
-                    BlocProvider.of<EditArtPieceCubit>(context).resetState();
-                  }
+                  // if (state is EditArtPieceSuccessfully) {
+                  //   imageSliderFiles = [];
+                  //   _title.text = "";
+                  //   _dob.text = "";
+                  //   _about.text = "";
+                  //   fileSelected = null;
+                  //   selected = false;
+                  //
+                  //   BlocProvider.of<EditArtPieceCubit>(context).resetState();
+                  // }
                   return GestureDetector(
                     // onTap: () {},
                     onTap: () async {
@@ -329,10 +316,24 @@ class _ProfileListItemsState extends State<ProfileListItems> {
                               dropDownValue != items[0])) {
                         return;
                       }
-                      await BlocProvider.of<EditArtPieceCubit>(context)
-                          .flowOfCreateArtPiece(fileSelected!, dropDownValue,
-                              _title.text, _about.text, imageSliderFiles,
-                              price: _dob.text.toInt());
+                      bool status =
+                          await BlocProvider.of<EditArtPieceCubit>(context)
+                              .flowOfCreateArtPiece(
+                                  fileSelected!,
+                                  dropDownValue,
+                                  _title.text,
+                                  _about.text,
+                                  imageSliderFiles,
+                                  price: _dob.text.toInt());
+
+                      imageSliderFiles = [];
+                      _title.text = "";
+                      _dob.text = "";
+                      _about.text = "";
+                      fileSelected = null;
+                      selected = false;
+                      BlocProvider.of<EditArtPieceCubit>(context).resetState();
+                      widget.changeState();
                     },
                     child: Container(
                       width: context.width() * 0.7,
@@ -355,7 +356,8 @@ class _ProfileListItemsState extends State<ProfileListItems> {
                           )
                         ],
                       ),
-                      child: state is EditArtPieceInitial
+                      child: state is EditArtPieceInitial ||
+                              state is EditArtPieceSuccessfully
                           ? const Center(
                               child: Text(
                                 'ذخیره',
