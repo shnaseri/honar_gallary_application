@@ -15,7 +15,8 @@ class TextFieldForChatPage extends StatefulWidget {
   final User contact;
   final List<Message> messages;
 
-  const TextFieldForChatPage({Key? key, required this.contact, required this.messages})
+  const TextFieldForChatPage(
+      {Key? key, required this.contact, required this.messages})
       : super(key: key);
 
   @override
