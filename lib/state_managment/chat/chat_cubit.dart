@@ -1,9 +1,11 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:bloc/bloc.dart';
 import 'package:flutter/foundation.dart';
 import 'package:honar_api_v13/api.dart';
 import 'package:honar_gallary/data_managment/chat/chat_repository.dart';
+import 'package:honar_gallary/data_managment/core/upload_networkservice.dart';
 import 'package:honar_gallary/logic/consts.dart';
 import 'package:honar_gallary/logic/general_values.dart';
 import 'package:meta/meta.dart';
@@ -12,16 +14,18 @@ import 'package:web_socket_channel/web_socket_channel.dart';
 part 'chat_state.dart';
 
 class ChatCubit extends Cubit<ChatState> {
-  User contact;
+  ChatGetAllChatsUser contact;
   late ChatRepository chatRepository;
   late WebSocketChannel channel;
   bool isWebSocketRunning = false;
   int retryLimit = 1;
   late ChatApi chatApi;
+  late List<Message> messages;
 
   ChatCubit({required this.contact}) : super(ChatInitial()) {
     chatRepository = ChatRepository();
     chatApi = ChatApi(interfaceOfUser);
+    messages = [];
   }
 
   Future<void> fetchConnect(String chatCode) async {
@@ -29,9 +33,12 @@ class ChatCubit extends Cubit<ChatState> {
       print(chatCode);
       emit(ChatConnectingToServer());
       if (isWebSocketRunning) return; //chaech if its already running
-      List<Message> messages =
-          await chatApi.chatGetAllChatMessagesList(chatCode);
-      messages = messages.reversed.toList();
+      try {
+        messages = await chatApi.chatGetAllChatMessagesList(chatCode);
+        messages = messages.reversed.toList();
+      } catch (e) {
+        messages = [];
+      }
       print(messages);
 
       contact = contact;
@@ -74,7 +81,7 @@ class ChatCubit extends Cubit<ChatState> {
     // chatRepository.disConnectMQTT();
   }
 
-  Future<void> publishMessage(User user, String message) async {
+  Future<void> publishMessage(ChatGetAllChatsUser user, String message) async {
     try {
       print('---- Send Message ------');
       // emit(ChatSendMessage());
@@ -84,7 +91,9 @@ class ChatCubit extends Cubit<ChatState> {
       print(jsonEncode2);
       channel.sink.add(jsonEncode2);
       print('---- End Send Message ------');
-      emit(ChatSendMessage(newMessage));
+      messages = [...messages, newMessage];
+
+      emit(ChatConnectToServer(messages));
     } catch (error) {
       print(error);
       emit(ChatErrorState());
@@ -123,16 +132,33 @@ class ChatCubit extends Cubit<ChatState> {
       Message newMessage = Message(
           id: jsonRes['id'],
           content: jsonRes["message"],
-          type: "text",
+          type: jsonRes["T"],
           isUserSender: jsonRes["sender_id"] ==
               (ConfigGeneralValues.getInstance().userId),
           createdAt: DateTime.parse(jsonRes["time"]));
       print('---- End Send Message ------');
-      emit(ChatSendMessage(newMessage));
+      messages = [...messages, newMessage];
+      emit(ChatConnectToServer(messages));
     } catch (e) {}
   }
 
   void changeState(List<Message> messages) {
     emit(ChatConnectToServer(messages));
+  }
+
+  Future<int?> uploadImage(File file) async {
+    try {
+      Map output = await UploadNetworkService().uploadImage(file);
+      print(output);
+      int imageId = output['id'];
+      var jsonEncode2 = jsonEncode({"message": imageId, "type": "P"});
+      print(jsonEncode2);
+      channel.sink.add(jsonEncode2);
+      print('---- End Send Message ------');
+      return imageId;
+    } catch (e) {
+      print(e);
+      return null;
+    }
   }
 }

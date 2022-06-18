@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:honar_api_v13/api.dart';
@@ -9,7 +12,7 @@ import '../../../state_managment/chat/chat_cubit.dart';
 import '../chat_page.dart';
 
 class TextFieldForChatPage extends StatefulWidget {
-  final User contact;
+  final ChatGetAllChatsUser contact;
   final List<Message> messages;
 
   const TextFieldForChatPage(
@@ -21,6 +24,24 @@ class TextFieldForChatPage extends StatefulWidget {
 }
 
 class _TextFieldForChatPageState extends State<TextFieldForChatPage> {
+  late Map<String, List<String>> dataExtensions;
+  var items = [
+    'عکس',
+    'فیلم',
+    'موسیقی',
+  ];
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    dataExtensions = {
+      items[0]: ['bmp', 'jpg', 'png'],
+      items[1]: ['mp4', 'mkv', 'avi'],
+      items[2]: ['mp3', 'flac']
+    };
+  }
+
   @override
   Widget build(BuildContext context) {
     String textMessage = "";
@@ -51,6 +72,65 @@ class _TextFieldForChatPageState extends State<TextFieldForChatPage> {
                         textDirection: TextDirection.rtl,
                         color: Colors.white,
                       ),
+                    ),
+                  ),
+                  Expanded(
+                    flex: 1,
+                    child: PopupMenuButton<String>(
+                      icon: const Icon(
+                        Icons.attach_file,
+                        textDirection: TextDirection.rtl,
+                        color: Colors.white,
+                      ),
+                      onSelected: (String result) async {
+                        switch (result) {
+                          case 'picture':
+                            File fileSelected;
+                            FilePickerResult? result = await FilePicker.platform
+                                .pickFiles(
+                                    type: FileType.custom,
+                                    allowedExtensions:
+                                        dataExtensions[items[0]]);
+
+                            if (result != null) {
+                              print(result);
+                              fileSelected = File(result.files.single.path!);
+                              await BlocProvider.of<ChatCubit>(context)
+                                  .uploadImage(fileSelected);
+                            } else {
+                              // User canceled the picker
+                            }
+                            break;
+                          case 'video':
+                            print('filter 2 clicked');
+                            break;
+                          case 'clearFilters':
+                            print('Clear filters');
+                            break;
+                          default:
+                        }
+                      },
+                      itemBuilder: (BuildContext context) =>
+                          <PopupMenuEntry<String>>[
+                        const PopupMenuItem<String>(
+                          value: 'picture',
+                          child: Text(
+                            'عکس',
+                            style: TextStyle(color: Colors.black),
+                          ),
+                        ),
+                        const PopupMenuItem<String>(
+                          value: 'video',
+                          child: Text(
+                            'فیلم',
+                            style: TextStyle(color: Colors.black),
+                          ),
+                        ),
+                        // const PopupMenuItem<String>(
+                        //   value: 'music',
+                        //   child: Text('Clear filters'),
+                        // ),
+                      ],
                     ),
                   ),
                   Expanded(

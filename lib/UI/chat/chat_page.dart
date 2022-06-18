@@ -10,7 +10,7 @@ import 'components/text_field_component.dart';
 TextEditingController controller = TextEditingController();
 
 class ChatPage extends StatefulWidget {
-  final User contact;
+  final ChatGetAllChatsUser contact;
   final int index;
   final String chatCode;
 

@@ -192,9 +192,15 @@ class _ArtPiecePageState extends State<ArtPiecePage> {
                                               builder: (_) => ChatPage(
                                                   chatCode: getChatCode(
                                                       state.artPiece.owner.id),
-                                                  contact: User(
-                                                      fullName: "hosein",
-                                                      id: 1),
+                                                  contact: ChatGetAllChatsUser(
+                                                      id: state
+                                                          .artPiece.owner.id,
+                                                      fullName: state.artPiece
+                                                          .owner.fullName,
+                                                      profilePhoto: state
+                                                          .artPiece
+                                                          .owner
+                                                          .profilePhoto),
                                                   index: 1)));
                                     },
                                     child: Container(

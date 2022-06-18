@@ -75,7 +75,7 @@ class _ChatListState extends State<ChatList> {
                             screen: ChatPage(
                               index: 1,
                               chatCode: chat.chatCode,
-                              contact: User(fullName: "hossein", id: 1),
+                              contact: chat.user,
                             ),
                             withNavBar: false,
                             // OPTIONAL VALUE. True by default.
