@@ -22,7 +22,7 @@ class ChatRepository {
     // client.disconnect();
   }
 
-  pushMessage(User user, String messageText) async {
+  pushMessage(ChatGetAllChatsUser user, String messageText) async {
     try {
       // String otpToken = GeneralValues.generalValues.token;
       // await chatNetworkService.pushMessageToServer(otpToken,user.token,messageText);
@@ -34,7 +34,7 @@ class ChatRepository {
   }
 
   Future<Message> getNewMessageAdd(
-      User user, String messageText, bool own) async {
+      ChatGetAllChatsUser user, String messageText, bool own) async {
     var message = Message(
         content: messageText,
         isUserSender: own,

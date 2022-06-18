@@ -12,7 +12,7 @@ import '../../../state_managment/chat/chat_cubit.dart';
 import '../chat_page.dart';
 
 class TextFieldForChatPage extends StatefulWidget {
-  final User contact;
+  final ChatGetAllChatsUser contact;
   final List<Message> messages;
 
   const TextFieldForChatPage(

@@ -14,7 +14,7 @@ import 'package:web_socket_channel/web_socket_channel.dart';
 part 'chat_state.dart';
 
 class ChatCubit extends Cubit<ChatState> {
-  User contact;
+  ChatGetAllChatsUser contact;
   late ChatRepository chatRepository;
   late WebSocketChannel channel;
   bool isWebSocketRunning = false;
@@ -81,7 +81,7 @@ class ChatCubit extends Cubit<ChatState> {
     // chatRepository.disConnectMQTT();
   }
 
-  Future<void> publishMessage(User user, String message) async {
+  Future<void> publishMessage(ChatGetAllChatsUser user, String message) async {
     try {
       print('---- Send Message ------');
       // emit(ChatSendMessage());
