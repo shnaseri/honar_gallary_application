@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:honar_gallary/const/color_const.dart';
+import 'package:honar_gallary/logic/general_values.dart';
 import 'package:honar_gallary/settings/setting_page.dart';
 import 'package:honar_gallary/state_managment/gallery/gallery_cubit.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
@@ -78,7 +79,13 @@ class _GalleryViewState extends State<GalleryView> {
                                       height: 55,
                                     ),
                                     Text(
-                                      'امیرمهدی ایکانی',
+                                      ConfigGeneralValues.getInstance()
+                                              .profile
+                                              .firstName +
+                                          " " +
+                                          ConfigGeneralValues.getInstance()
+                                              .profile
+                                              .lastName,
                                       style: TextStyle(
                                         color: ColorPallet.colorPalletSambucus,
                                         fontSize: 25,
@@ -109,10 +116,15 @@ class _GalleryViewState extends State<GalleryView> {
                                               backgroundColor: ColorPallet
                                                   .colorPalletNightFog,
                                               radius: 14,
-                                              child: const Center(
+                                              child: Center(
                                                 child: Text(
-                                                  '10',
-                                                  style: TextStyle(
+                                                  ConfigGeneralValues
+                                                          .getInstance()
+                                                      .profile
+                                                      .userProfile
+                                                      .followersCount
+                                                      .toString(),
+                                                  style: const TextStyle(
                                                     color: Colors.white,
                                                     fontSize: 14,
                                                     fontWeight: FontWeight.w800,
@@ -151,10 +163,15 @@ class _GalleryViewState extends State<GalleryView> {
                                               backgroundColor: ColorPallet
                                                   .colorPalletNightFog,
                                               radius: 14,
-                                              child: const Center(
+                                              child: Center(
                                                 child: Text(
-                                                  '1',
-                                                  style: TextStyle(
+                                                  ConfigGeneralValues
+                                                          .getInstance()
+                                                      .profile
+                                                      .userProfile
+                                                      .followingCount
+                                                      .toString(),
+                                                  style: const TextStyle(
                                                     color: Colors.white,
                                                     fontSize: 14,
                                                     fontWeight: FontWeight.w800,

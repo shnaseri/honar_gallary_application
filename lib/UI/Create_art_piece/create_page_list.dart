@@ -4,6 +4,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:honar_gallary/UI/utils/auto_text_direction.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:path/path.dart';
 
@@ -389,30 +390,33 @@ class _ProfileListItemsState extends State<ProfileListItems> {
   }
 
   Widget nameTextField() {
-    return TextFormField(
-      controller: _name,
-      validator: (value) {
-        // if (value.isEmpty) return "Name can't be empty";
+    return AutoDirection(
+      text: _name.text,
+      child: TextFormField(
+        controller: _name,
+        validator: (value) {
+          // if (value.isEmpty) return "Name can't be empty";
 
-        return null;
-      },
-      decoration: const InputDecoration(
-        border: OutlineInputBorder(
-            borderSide: BorderSide(
-          color: Colors.teal,
-        )),
-        focusedBorder: OutlineInputBorder(
-            borderSide: BorderSide(
-          color: Colors.orange,
-          width: 2,
-        )),
-        prefixIcon: Icon(
-          Icons.person,
-          color: Colors.green,
+          return null;
+        },
+        decoration: const InputDecoration(
+          border: OutlineInputBorder(
+              borderSide: BorderSide(
+            color: Colors.teal,
+          )),
+          focusedBorder: OutlineInputBorder(
+              borderSide: BorderSide(
+            color: Colors.orange,
+            width: 2,
+          )),
+          prefixIcon: Icon(
+            Icons.person,
+            color: Colors.green,
+          ),
+          labelText: "نام",
+          // helperText: "این بخش نمی تواند خالی بماند!",
+          // hintText: "بابک بهکام کیا",
         ),
-        labelText: "نام",
-        // helperText: "این بخش نمی تواند خالی بماند!",
-        // hintText: "بابک بهکام کیا",
       ),
     );
   }

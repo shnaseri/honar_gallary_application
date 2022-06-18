@@ -108,7 +108,7 @@ class _BodySearchWidgetState extends State<BodySearchWidget> {
 
   @override
   Widget build(BuildContext context) {
-    var categories = ConfigGeneralValues.configGeneralValues?.getCategories();
+    var categories = ConfigGeneralValues.getInstance().getCategories();
     return BlocBuilder<ExplorerCubit, ExplorerState>(
       builder: (context, state) {
         if (state is ExplorerInitial && startApp) {
@@ -132,7 +132,7 @@ class _BodySearchWidgetState extends State<BodySearchWidget> {
                     return GestureDetector(
                       onTap: () async {
                         setState(() {
-                          categoryItemSelectedId = categories![index].id;
+                          categoryItemSelectedId = categories[index].id;
                         });
                         await BlocProvider.of<ExplorerCubit>(context)
                             .fetchExplorer(categoryItemSelectedId);
@@ -153,7 +153,7 @@ class _BodySearchWidgetState extends State<BodySearchWidget> {
                                 width: 1)),
                         child: Center(
                           child: Text(
-                            categories![index].name,
+                            categories[index].name,
                             style: TextStyle(
                                 color: checIndex(index)
                                     ? Colors.white
@@ -163,7 +163,7 @@ class _BodySearchWidgetState extends State<BodySearchWidget> {
                       ),
                     );
                   },
-                  itemCount: categories?.length,
+                  itemCount: categories.length,
                   scrollDirection: Axis.horizontal,
                 ),
               ),

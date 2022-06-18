@@ -39,9 +39,15 @@ class _BodyOfChatPageState extends State<BodyOfChatPage> {
           print(state.message);
           widget.addMessageFunction(state.message);
         }
+        if (state is ChatConnectingToServer) {
+          return const ConnectingPageComponent().paddingBottom(100);
+        }
+        if (state is ChatErrorState) {
+          return const ErrorPageComponent().paddingBottom(100);
+        }
         if (state is ChatConnectToServer) {
           if (state.messages.isEmpty) {
-            return BlankPageComponent().paddingBottom(100);
+            return const BlankPageComponent().paddingBottom(100);
           }
 
           WidgetsBinding.instance!.addPostFrameCallback((_) => _endOfScroll());
