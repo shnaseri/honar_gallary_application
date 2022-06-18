@@ -125,14 +125,14 @@ class _ArtPiecePageState extends State<ArtPiecePage> {
                                     }
                                     setState(() {
                                       state.artPiece.isUserLiked =
-                                      !state.artPiece.isUserLiked;
+                                          !state.artPiece.isUserLiked;
                                     });
 
                                     bool status =
-                                    await BlocProvider.of<ArtPieceCubit>(
-                                        context)
-                                        .changeStatusLikeArtPiece(
-                                        state.artPiece.id);
+                                        await BlocProvider.of<ArtPieceCubit>(
+                                                context)
+                                            .changeStatusLikeArtPiece(
+                                                state.artPiece.id);
                                   },
                                   child: Container(
                                     height: 40,

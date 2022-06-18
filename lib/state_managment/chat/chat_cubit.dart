@@ -44,7 +44,7 @@ class ChatCubit extends Cubit<ChatState> {
       print(url);
 
       channel.stream.listen(
-            (event) {
+        (event) {
           print("-- listen response ");
           print(event);
           listenImage(event);

@@ -21,5 +21,4 @@ class ChatSendMessage extends ChatState {
   const ChatSendMessage(this.message) : super();
 }
 
-class ChatErrorState extends ChatState {
-}
+class ChatErrorState extends ChatState {}
