@@ -8,6 +8,8 @@ import '../../logic/consts.dart';
 part 'splash_state.dart';
 
 class SplashCubit extends Cubit<SplashState> {
+  late ProfileApi profileApi;
+
   SplashCubit() : super(SplashInitial());
 
   Future<void> verifyToken() async {
@@ -32,12 +34,19 @@ class SplashCubit extends Cubit<SplashState> {
           ..apiKey = ConfigGeneralValues.getInstance()
               .sharedPreferencesHandler
               .getToken()!;
+
         CategoryApi categoryApi = CategoryApi(interfaceOfUser);
-        ConfigGeneralValues.configGeneralValues
-            ?.setListCategory(await categoryApi.categoryGetAllList());
+        ConfigGeneralValues.getInstance()
+            .setListCategory(await categoryApi.categoryGetAllList());
         InlineResponse2004 response2004 = await authApi.authMeList();
-        ConfigGeneralValues.configGeneralValues?.setUserId(response2004.userId);
+        ConfigGeneralValues.getInstance().setUserId(response2004.userId);
         print(response2004.userId);
+
+        profileApi = ProfileApi(interfaceOfUser);
+        FullUser fullUser = await profileApi.profileRead(response2004.userId);
+        print(fullUser);
+        ConfigGeneralValues.getInstance().setProfile(fullUser);
+
         emit(SplashGoToHome());
         return;
       } catch (e) {

@@ -69,7 +69,7 @@ class _ChatPageState extends State<ChatPage> {
                     chatContext = context;
                     if (state is ChatErrorState) {
                       // toast(hasErrorChatPage);
-                      BlocProvider.of<ChatCubit>(context).emit(ChatInitial());
+                      // BlocProvider.of<ChatCubit>(context).emit(ChatInitial());
                     }
                     if (state is ChatInitial && startapp) {
                       BlocProvider.of<ChatCubit>(context)

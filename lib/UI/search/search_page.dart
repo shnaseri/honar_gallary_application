@@ -104,7 +104,7 @@ class _BodySearchWidgetState extends State<BodySearchWidget> {
 
   @override
   Widget build(BuildContext context) {
-    var categories = ConfigGeneralValues.configGeneralValues?.getCategories();
+    var categories = ConfigGeneralValues.getInstance().getCategories();
     return BlocBuilder<SearchCubit, SearchState>(
       builder: (context, state) {
         if (state is SearchInitial && startApp) {
@@ -129,7 +129,7 @@ class _BodySearchWidgetState extends State<BodySearchWidget> {
                           color: Colors.pink, fontWeight: FontWeight.w900),
                     ),
                     Text(
-                      state.artPieces[index].title,
+                      state.artPieces[index].category.name,
                       style: TextStyle(
                           color: Colors.pink, fontWeight: FontWeight.w900),
                     ),

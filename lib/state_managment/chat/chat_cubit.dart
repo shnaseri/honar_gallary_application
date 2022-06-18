@@ -26,6 +26,8 @@ class ChatCubit extends Cubit<ChatState> {
 
   Future<void> fetchConnect(String chatCode) async {
     try {
+      print(chatCode);
+      emit(ChatConnectingToServer());
       if (isWebSocketRunning) return; //chaech if its already running
       List<Message> messages =
           await chatApi.chatGetAllChatMessagesList(chatCode);
@@ -63,6 +65,7 @@ class ChatCubit extends Cubit<ChatState> {
       emit(ChatConnectToServer(messages));
     } catch (error) {
       print(error);
+      emit(ChatErrorState());
       rethrow;
     }
   }
@@ -113,17 +116,16 @@ class ChatCubit extends Cubit<ChatState> {
     try {
       dynamic jsonRes = json.decode(event);
       print(jsonRes["sender_id"]);
-      print((ConfigGeneralValues.configGeneralValues?.userId));
-      print(jsonRes["sender_id"] ==
-          (ConfigGeneralValues.configGeneralValues?.userId));
-      if (jsonRes["sender_id"] ==
-          (ConfigGeneralValues.configGeneralValues?.userId)) return;
+      print((ConfigGeneralValues.getInstance().userId));
+      print(jsonRes["sender_id"] == (ConfigGeneralValues.getInstance().userId));
+      if (jsonRes["sender_id"] == (ConfigGeneralValues.getInstance().userId))
+        return;
       Message newMessage = Message(
           id: jsonRes['id'],
           content: jsonRes["message"],
           type: "text",
           isUserSender: jsonRes["sender_id"] ==
-              (ConfigGeneralValues.configGeneralValues?.userId),
+              (ConfigGeneralValues.getInstance().userId),
           createdAt: DateTime.parse(jsonRes["time"]));
       print('---- End Send Message ------');
       emit(ChatSendMessage(newMessage));

@@ -34,4 +34,8 @@ class ArtPieceCubit extends Cubit<ArtPieceState> {
       return false;
     }
   }
+
+  void resetState() {
+    emit(ArtPieceInitial());
+  }
 }

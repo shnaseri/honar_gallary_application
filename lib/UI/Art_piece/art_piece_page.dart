@@ -1,9 +1,12 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:honar_api_v13/api.dart';
 import 'package:honar_gallary/UI/chat/chat_page.dart';
 import 'package:honar_gallary/UI/comment/comment_page.dart';
 import 'package:honar_gallary/const/color_const.dart';
+import 'package:honar_gallary/logic/general_values.dart';
 import 'package:honar_gallary/state_managment/art_piece/art_piece_cubit.dart';
 import 'package:nb_utils/nb_utils.dart';
 
@@ -145,27 +148,68 @@ class _ArtPiecePageState extends State<ArtPiecePage> {
                                     ),
                                   ),
                                 ),
-                                10.width,
-                                GestureDetector(
-                                  onTap: () {
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (_) => EditArtPiece(
-                                                  artPiece: state.artPiece,
-                                                )));
-                                  },
-                                  child: Container(
-                                    height: 40,
-                                    width: 40,
-                                    decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(9),
-                                        color: ColorPallet.colorPalletBlueGam),
-                                    child: const Center(
-                                      child: Icon(Icons.edit),
+                                if (state.artPiece.owner.id ==
+                                    ConfigGeneralValues.getInstance().userId)
+                                  10.width,
+                                if (state.artPiece.owner.id ==
+                                    ConfigGeneralValues.getInstance().userId)
+                                  GestureDetector(
+                                    onTap: () {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (_) => EditArtPiece(
+                                                    artPiece: state.artPiece,
+                                                  ))).then((value) {
+                                        BlocProvider.of<ArtPieceCubit>(context)
+                                            .resetState();
+                                        startApp = true;
+                                      });
+                                    },
+                                    child: Container(
+                                      height: 40,
+                                      width: 40,
+                                      decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(9),
+                                          color:
+                                              ColorPallet.colorPalletBlueGam),
+                                      child: const Center(
+                                        child: Icon(Icons.edit),
+                                      ),
                                     ),
                                   ),
-                                ),
+                                if (state.artPiece.owner.id !=
+                                    ConfigGeneralValues.getInstance().userId)
+                                  10.width,
+                                if (state.artPiece.owner.id !=
+                                    ConfigGeneralValues.getInstance().userId)
+                                  GestureDetector(
+                                    onTap: () {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (_) => ChatPage(
+                                                  chatCode: getChatCode(
+                                                      state.artPiece.owner.id),
+                                                  contact: User(
+                                                      fullName: "hosein",
+                                                      id: 1),
+                                                  index: 1)));
+                                    },
+                                    child: Container(
+                                      height: 40,
+                                      width: 40,
+                                      decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(9),
+                                          color:
+                                              ColorPallet.colorPalletBlueGam),
+                                      child: const Center(
+                                        child: Icon(Icons.wechat),
+                                      ),
+                                    ),
+                                  ),
                               ],
                             ),
                             top: 20,
@@ -173,21 +217,6 @@ class _ArtPiecePageState extends State<ArtPiecePage> {
                           )
                         ],
                       ),
-
-                      ElevatedButton(
-                              onPressed: () {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (_) => ChatPage(
-                                            chatCode: "20-21",
-                                            contact:
-                                                User(fullName: "hosein", id: 1),
-                                            index: 1)));
-                              },
-                              child: const Text("صفحه چت"))
-                          .paddingAll(10),
-
                       Padding(
                         padding: const EdgeInsets.all(20.0),
                         child: Storyline(testMovie.storyline),
@@ -253,5 +282,9 @@ class _ArtPiecePageState extends State<ArtPiecePage> {
         ),
       ),
     );
+  }
+
+  getChatCode(int userId) {
+    return "${min<int>(ConfigGeneralValues.getInstance().userId!, userId)}-${max<int>(ConfigGeneralValues.getInstance().userId!, userId)}";
   }
 }
