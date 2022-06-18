@@ -74,10 +74,10 @@ class _BodyOfChatPageState extends State<BodyOfChatPage> {
                   showDate
                       ? Container(
                           width: 59,
-                    height: 22,
-                    decoration: boxDecorationWithRoundedCorners(
-                        backgroundColor: const Color(0xffF2F2F2),
-                        borderRadius: BorderRadius.circular(32)),
+                          height: 22,
+                          decoration: boxDecorationWithRoundedCorners(
+                              backgroundColor: const Color(0xffF2F2F2),
+                              borderRadius: BorderRadius.circular(32)),
                           child: Text(
                             dateString,
                             textDirection: TextDirection.rtl,
