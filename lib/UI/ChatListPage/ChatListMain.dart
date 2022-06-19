@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:honar_api_v13/api.dart';
+import 'package:honar_api_v14/api.dart';
 import 'package:honar_gallary/UI/chat/chat_page.dart';
 import 'package:honar_gallary/state_managment/ChatList/chat_list_cubit.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
@@ -86,7 +86,9 @@ class _ChatListState extends State<ChatList> {
                         child: list(
                             url: chat.user.profilePhoto,
                             name: chat.user.fullName ?? " ",
-                            tym: chat.updatedAt.toString(),
+                            tym: chat.updatedAt.hour.toString() +
+                                ":" +
+                                chat.updatedAt.minute.toString(),
                             desc: chat.lastMessage,
                             msg: "",
                             isRead: false),
