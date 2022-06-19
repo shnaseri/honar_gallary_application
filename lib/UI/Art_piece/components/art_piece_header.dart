@@ -14,14 +14,14 @@ class MovieDetailHeader extends StatelessWidget {
   final Movie movie;
   final ArtPiece artPiece;
 
-  List<Widget> _buildCategoryChips(TextTheme textTheme) {
+  List<Widget> _buildCategoryChips(TextTheme textTheme, ArtPiece artPiece) {
     return [artPiece.category].map((category) {
       return GestureDetector(
         onTap: () {},
         child: Padding(
           padding: const EdgeInsets.only(right: 8.0),
           child: Chip(
-            label: Text(category.name ?? ""),
+            label: Text(category == null ? " " : category.name),
             labelStyle: TextStyle(color: ColorPallet.colorPalletBlueGam),
             backgroundColor: Colors.black12,
           ),
@@ -45,7 +45,7 @@ class MovieDetailHeader extends StatelessWidget {
         const SizedBox(height: 8.0),
         RatingInformation(artPiece),
         const SizedBox(height: 12.0),
-        Row(children: _buildCategoryChips(textTheme)),
+        Row(children: _buildCategoryChips(textTheme, artPiece)),
       ],
     );
 

@@ -84,7 +84,8 @@ class _ProfileListItemsState extends State<ProfileListItems> {
 
     selected = true;
     dropDownValue = getContentType(widget.artPiece.type);
-    dropDownValueCategory = widget.artPiece.category.id;
+    dropDownValueCategory =
+        widget.artPiece.category == null ? null : widget.artPiece.category.id;
   }
 
   @override
