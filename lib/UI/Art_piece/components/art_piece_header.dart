@@ -15,13 +15,13 @@ class MovieDetailHeader extends StatelessWidget {
   final ArtPiece artPiece;
 
   List<Widget> _buildCategoryChips(TextTheme textTheme) {
-    return movie.categories.map((category) {
+    return [artPiece.category].map((category) {
       return GestureDetector(
         onTap: () {},
         child: Padding(
           padding: const EdgeInsets.only(right: 8.0),
           child: Chip(
-            label: Text(category),
+            label: Text(category.name ?? ""),
             labelStyle: TextStyle(color: ColorPallet.colorPalletBlueGam),
             backgroundColor: Colors.black12,
           ),

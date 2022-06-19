@@ -4,12 +4,11 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:honar_api_v14/api.dart';
 import 'package:honar_gallary/UI/utils/auto_text_direction.dart';
+import 'package:honar_gallary/logic/general_values.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:path/path.dart';
-
-// import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
-// import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 
 import '../../const/color_const.dart';
 import '../../state_managment/create_edit_art_piece/edit_art_piece_cubit.dart';
@@ -59,6 +58,7 @@ class _ProfileListItemsState extends State<ProfileListItems> {
 
   // Initial Selected Value
   String dropDownValue = 'عکس';
+  int? dropDownValueCategory;
 
   // List of items in our dropdown menu
   var items = [
@@ -78,6 +78,7 @@ class _ProfileListItemsState extends State<ProfileListItems> {
       items[2]: ['mp3', 'flac']
     };
     selected = false;
+    dropDownValueCategory = null;
   }
 
   @override
@@ -154,6 +155,41 @@ class _ProfileListItemsState extends State<ProfileListItems> {
                     return;
                   }
                   dropDownValue = newValue!;
+                  selected = false;
+                  fileSelected = null;
+                  widget.changeState();
+                },
+              ),
+              20.height,
+              DropdownButtonFormField<int>(
+                hint: Text("دسته بندی خود را انتخاب کنید..."),
+                // Initial Value
+                value: dropDownValueCategory,
+
+                // Down Arrow Icon
+                icon: const Icon(Icons.keyboard_arrow_down),
+
+                // Array list of items
+                items: ConfigGeneralValues.getInstance()
+                    .getCategories()
+                    .sublist(1)
+                    .map<DropdownMenuItem<int>>((Category items) {
+                  return DropdownMenuItem(
+                    value: items.id,
+                    child: Text(items.name),
+                  );
+                }).toList(),
+                elevation: 5,
+                decoration: const InputDecoration(
+                  border: OutlineInputBorder(),
+                ),
+                // After selecting the desired option,it will
+                // change button value to selected value
+                onChanged: (int? newValue) {
+                  if (dropDownValueCategory == newValue) {
+                    return;
+                  }
+                  dropDownValueCategory = newValue!;
                   selected = false;
                   fileSelected = null;
                   widget.changeState();
@@ -313,6 +349,7 @@ class _ProfileListItemsState extends State<ProfileListItems> {
                         return;
                       }
                       if (fileSelected == null ||
+                          dropDownValueCategory == null ||
                           (imageSliderFiles.isEmpty &&
                               dropDownValue != items[0])) {
                         return;
@@ -320,11 +357,12 @@ class _ProfileListItemsState extends State<ProfileListItems> {
                       bool status =
                           await BlocProvider.of<EditArtPieceCubit>(context)
                               .flowOfCreateArtPiece(
-                                  fileSelected!,
+                              fileSelected!,
                                   dropDownValue,
                                   _title.text,
                                   _about.text,
                                   imageSliderFiles,
+                                  dropDownValueCategory!,
                                   price: _dob.text.toInt());
 
                       imageSliderFiles = [];

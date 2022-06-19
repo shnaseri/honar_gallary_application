@@ -20,6 +20,7 @@ class ExplorerCubit extends Cubit<ExplorerState> {
         arts = await artApi.artExploreList();
       } else {
         arts = await artApi.artExploreList(categoryId: categoryItemSelectedId);
+        print(arts);
       }
       emit(ExplorerLoaded(arts));
     } catch (e) {

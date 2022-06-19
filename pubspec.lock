@@ -490,7 +490,7 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: "649a041ed7741847f41ebae647fdec12a60dd020"
+      resolved-ref: "3c96bd8a6cad906164a05013ff282f3422f9a9dd"
       url: "https://github.com/shnaseri/negare_api.git"
     source: git
     version: "1.0.0"
