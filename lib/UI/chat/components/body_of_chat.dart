@@ -126,63 +126,66 @@ class _PictureTileState extends State<PictureTile> {
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
-    return ChatBubble(
-      elevation: 1,
-      clipper: ChatBubbleClipper1(
-          type: widget.message.isUserSender
-              ? BubbleType.sendBubble
-              : BubbleType.receiverBubble),
-      alignment: widget.message.isUserSender
-          ? Alignment.centerRight
-          : Alignment.centerLeft,
-      margin: const EdgeInsets.only(top: 10, left: 10, right: 10),
-      backGroundColor: widget.message.isUserSender
-          ? ColorPallet.colorPalletNightFog
-          : ColorPallet.colorPalletSambucus,
-      child: Container(
-        constraints: BoxConstraints(
-          maxWidth: MediaQuery.of(context).size.width * 0.7,
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            GestureDetector(
-              onTap: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => PlayerContentPage(
-                              type: "picture",
-                              content: widget.message.content,
-                            )));
-              },
-              child: CachedNetworkImage(
-                  color: Colors.white,
-                  imageUrl: widget.message.content,
-                  imageBuilder: (context, imageProvider) {
-                    return Container(
-                      width: context.width(),
-                      height: context.height() * 0.3,
-                      decoration: BoxDecoration(
-                          image: DecorationImage(
-                              fit: BoxFit.contain, image: imageProvider)),
-                    );
-                  },
-                  placeholder: (context, url) {
-                    return Container(
-                      height: context.height() * 0.3,
-                      width: context.width(),
-                      decoration: const BoxDecoration(color: Colors.grey),
-                    );
-                  }),
-            ),
-            Text(
-              widget.message.createdAt.hour.toString() +
-                  ":" +
-                  widget.message.createdAt.minute.toString(),
-              style: TextStyle(color: Colors.white60, fontSize: 10),
-            ),
-          ],
+    return Padding(
+      padding: EdgeInsets.only(bottom: 10),
+      child: ChatBubble(
+        elevation: 1,
+        clipper: ChatBubbleClipper1(
+            type: widget.message.isUserSender
+                ? BubbleType.sendBubble
+                : BubbleType.receiverBubble),
+        alignment: widget.message.isUserSender
+            ? Alignment.centerRight
+            : Alignment.centerLeft,
+        margin: const EdgeInsets.only(top: 10, left: 10, right: 10),
+        backGroundColor: widget.message.isUserSender
+            ? ColorPallet.colorPalletNightFog
+            : ColorPallet.colorPalletSambucus,
+        child: Container(
+          constraints: BoxConstraints(
+            maxWidth: MediaQuery.of(context).size.width * 0.7,
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => PlayerContentPage(
+                                type: "picture",
+                                content: widget.message.content,
+                              )));
+                },
+                child: CachedNetworkImage(
+                    color: Colors.white,
+                    imageUrl: widget.message.content,
+                    imageBuilder: (context, imageProvider) {
+                      return Container(
+                        width: context.width(),
+                        height: context.height() * 0.3,
+                        decoration: BoxDecoration(
+                            image: DecorationImage(
+                                fit: BoxFit.contain, image: imageProvider)),
+                      );
+                    },
+                    placeholder: (context, url) {
+                      return Container(
+                        height: context.height() * 0.3,
+                        width: context.width(),
+                        decoration: const BoxDecoration(color: Colors.grey),
+                      );
+                    }),
+              ),
+              Text(
+                widget.message.createdAt.hour.toString() +
+                    ":" +
+                    widget.message.createdAt.minute.toString(),
+                style: TextStyle(color: Colors.white60, fontSize: 10),
+              ),
+            ],
+          ),
         ),
       ),
     );

@@ -37,8 +37,8 @@ ListTile list(
               height: context.height() * 0.3,
               decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  image: DecorationImage(
-                      fit: BoxFit.contain, image: imageProvider)),
+                  image:
+                      DecorationImage(fit: BoxFit.cover, image: imageProvider)),
             );
           },
           placeholder: (context, url) {

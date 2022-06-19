@@ -23,7 +23,7 @@ class EditArtPieceCubit extends Cubit<EditArtPieceState> {
   }
 
   Future<bool> flowOfCreateArtPiece(File file, String type, String title,
-      String description, List<File> imageSliderFiles,
+      String description, List<File> imageSliderFiles, int categoryId,
       {int price = 0}) async {
     try {
       int? coverId = await uploadImage(
@@ -35,7 +35,7 @@ class EditArtPieceCubit extends Cubit<EditArtPieceState> {
         artId = await sendInfoConver(coverId, type);
       }
       if (artId != null) {
-        await sendInfoArtPiece(artId, title, description, price);
+        await sendInfoArtPiece(artId, title, description, price, categoryId);
       }
       if (ArtPieceCoverTypeEnum.V == getTypeOfArtPiece(type) ||
           ArtPieceCoverTypeEnum.M == getTypeOfArtPiece(type)) {
@@ -57,7 +57,7 @@ class EditArtPieceCubit extends Cubit<EditArtPieceState> {
   }
 
   Future<bool> flowOfEditArtPiece(int artId, String type, String title,
-      String description, List<File> imageSliderFiles,
+      String description, List<File> imageSliderFiles, int categoryId,
       {int price = 0}) async {
     try {
       int? coverId = 1;
@@ -70,7 +70,7 @@ class EditArtPieceCubit extends Cubit<EditArtPieceState> {
       // int? artId;
 
       if (artId != null) {
-        await sendInfoArtPiece(artId, title, description, price);
+        await sendInfoArtPiece(artId, title, description, price, categoryId);
       }
       // if (ArtPieceCoverTypeEnum.V == getTypeOfArtPiece(type) ||
       //     ArtPieceCoverTypeEnum.M == getTypeOfArtPiece(type)) {
@@ -136,8 +136,8 @@ class EditArtPieceCubit extends Cubit<EditArtPieceState> {
     return ArtPieceCoverTypeEnum.M;
   }
 
-  Future<bool?> sendInfoArtPiece(
-      int artPieceId, String title, String description, int price) async {
+  Future<bool?> sendInfoArtPiece(int artPieceId, String title,
+      String description, int price, int categoryId) async {
     try {
       emit(EditArtPieceSendingInformation());
 
@@ -147,7 +147,7 @@ class EditArtPieceCubit extends Cubit<EditArtPieceState> {
               description: description,
               title: title,
               price: price,
-              categoryId: 1));
+              categoryId: categoryId));
       print('----- post information done --------');
       print(response200.success);
       return response200.success;

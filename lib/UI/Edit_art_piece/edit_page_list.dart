@@ -11,6 +11,7 @@ import 'package:nb_utils/nb_utils.dart';
 // import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 
 import '../../const/color_const.dart';
+import '../../logic/general_values.dart';
 import '../../state_managment/create_edit_art_piece/edit_art_piece_cubit.dart';
 import '../video_music_palyer/player_content.dart';
 import 'image_list_view.dart';
@@ -52,6 +53,7 @@ class _ProfileListItemsState extends State<ProfileListItems> {
 
   // Initial Selected Value
   late String dropDownValue;
+  int? dropDownValueCategory;
 
   // List of items in our dropdown menu
   var items = [
@@ -82,6 +84,8 @@ class _ProfileListItemsState extends State<ProfileListItems> {
 
     selected = true;
     dropDownValue = getContentType(widget.artPiece.type);
+    dropDownValueCategory =
+        widget.artPiece.category == null ? null : widget.artPiece.category.id;
   }
 
   @override
@@ -164,6 +168,39 @@ class _ProfileListItemsState extends State<ProfileListItems> {
                 //   });
                 // },
                 onChanged: null,
+              ),
+              20.height,
+              DropdownButtonFormField<int>(
+                hint: Text("دسته بندی خود را انتخاب کنید..."),
+                // Initial Value
+                value: dropDownValueCategory,
+
+                // Down Arrow Icon
+                icon: const Icon(Icons.keyboard_arrow_down),
+
+                // Array list of items
+                items: ConfigGeneralValues.getInstance()
+                    .getCategories()
+                    .sublist(1)
+                    .map<DropdownMenuItem<int>>((Category items) {
+                  return DropdownMenuItem(
+                    value: items.id,
+                    child: Text(items.name),
+                  );
+                }).toList(),
+                elevation: 5,
+                decoration: const InputDecoration(
+                  border: OutlineInputBorder(),
+                ),
+                // After selecting the desired option,it will
+                // change button value to selected value
+                onChanged: (int? newValue) {
+                  if (dropDownValueCategory == newValue) {
+                    return;
+                  }
+                  dropDownValueCategory = newValue!;
+                  widget.changeState();
+                },
               ),
               const SizedBox(
                 height: 20,
@@ -371,6 +408,7 @@ class _ProfileListItemsState extends State<ProfileListItems> {
                                   _title.text,
                                   _about.text,
                                   imageSliderFiles,
+                                  dropDownValueCategory!,
                                   price: _dob.text.toInt());
 
                       imageSliderFiles = [];

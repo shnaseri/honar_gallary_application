@@ -56,6 +56,7 @@ class _TextFieldForChatPageState extends State<TextFieldForChatPage> {
               color: ColorPallet.colorPalletBlueGam.withOpacity(0.35),
               width: context.width(),
               child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Expanded(
                     flex: 1,
@@ -136,9 +137,11 @@ class _TextFieldForChatPageState extends State<TextFieldForChatPage> {
                   Expanded(
                     flex: 6,
                     child: AutoDirection(
-                      text: controller.text,
+                      text: textMessage,
                       child: TextFormField(
-                        maxLines: 20,
+                        expands: true,
+                        maxLines: null,
+                        minLines: null,
                         controller: controller,
                         textInputAction: TextInputAction.newline,
                         // textAlign: TextAlign.end,
@@ -155,6 +158,7 @@ class _TextFieldForChatPageState extends State<TextFieldForChatPage> {
                             hintTextDirection: TextDirection.rtl,
                             contentPadding: EdgeInsets.all(10),
                             border: InputBorder.none),
+                        cursorColor: Colors.white,
                       ),
                     ),
                   ),
