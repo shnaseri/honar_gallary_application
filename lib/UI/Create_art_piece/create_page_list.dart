@@ -357,7 +357,7 @@ class _ProfileListItemsState extends State<ProfileListItems> {
                       bool status =
                           await BlocProvider.of<EditArtPieceCubit>(context)
                               .flowOfCreateArtPiece(
-                              fileSelected!,
+                                  fileSelected!,
                                   dropDownValue,
                                   _title.text,
                                   _about.text,

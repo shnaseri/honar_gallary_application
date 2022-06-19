@@ -403,7 +403,7 @@ class _ProfileListItemsState extends State<ProfileListItems> {
                       bool status =
                           await BlocProvider.of<EditArtPieceCubit>(context)
                               .flowOfEditArtPiece(
-                              widget.artPiece.id,
+                                  widget.artPiece.id,
                                   dropDownValue,
                                   _title.text,
                                   _about.text,

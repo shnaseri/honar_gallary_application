@@ -89,9 +89,9 @@ class _TextFieldForChatPageState extends State<TextFieldForChatPage> {
                             File fileSelected;
                             FilePickerResult? result = await FilePicker.platform
                                 .pickFiles(
-                                type: FileType.custom,
-                                allowedExtensions:
-                                dataExtensions[items[0]]);
+                                    type: FileType.custom,
+                                    allowedExtensions:
+                                        dataExtensions[items[0]]);
 
                             if (result != null) {
                               print(result);
