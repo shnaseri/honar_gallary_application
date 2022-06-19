@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:honar_api_v14/api.dart';
 import 'package:honar_gallary/UI/Art_piece/art_piece_page.dart';
+import 'package:honar_gallary/const/color_const.dart';
 import 'package:honar_gallary/state_managment/gallery/gallery_cubit.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
@@ -350,6 +351,173 @@ class _ExplorerTileState extends State<ExplorerTile> {
               ],
             ),
           )),
+        ));
+
+    if (widget.bottomSpace == null) {
+      return child;
+    }
+
+    return Column(
+      children: [
+        Expanded(child: child),
+        Container(
+          height: widget.bottomSpace,
+          color: Colors.green,
+        )
+      ],
+    );
+  }
+}
+
+class SearchTile extends StatefulWidget {
+  const SearchTile({
+    Key? key,
+    required this.index,
+    this.extent,
+    this.backgroundColor,
+    this.bottomSpace,
+    required this.post,
+  }) : super(key: key);
+
+  final int index;
+  final double? extent;
+  final double? bottomSpace;
+  final Color? backgroundColor;
+  final ArtPieceCompact post;
+
+  @override
+  State<SearchTile> createState() => _SearchTileState();
+}
+
+class _SearchTileState extends State<SearchTile> {
+  late bool showTitle;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    showTitle = false;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final child = GestureDetector(
+        onTap: () {
+          if (showTitle) {
+            setState(() {
+              showTitle = !showTitle;
+            });
+            return;
+          }
+          pushNewScreen(
+            context,
+            screen: ArtPiecePage(artId: widget.post.id),
+            withNavBar: false, // OPTIONAL VALUE. True by default.
+            pageTransitionAnimation: PageTransitionAnimation.cupertino,
+          ).then((value) {
+            BlocProvider.of<GalleryCubit>(context).fetchGallery(21);
+          });
+        },
+        onLongPress: () {
+          setState(() {
+            showTitle = !showTitle;
+          });
+        },
+        child: Container(
+          height: widget.extent,
+          decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(9),
+              boxShadow: const [
+                BoxShadow(color: Colors.black26, spreadRadius: 0.2)
+              ]),
+          child: Column(
+            children: [
+              Expanded(
+                flex: 3,
+                child: Center(
+                    child: CachedNetworkImage(
+                        color: Colors.white,
+                        imageUrl: widget.post.cover.image,
+                        imageBuilder: (context, imageProvider) {
+                          return Container(
+                            decoration: BoxDecoration(
+                                borderRadius: const BorderRadius.only(
+                                    topLeft: Radius.circular(9),
+                                    topRight: Radius.circular(9)),
+                                image: DecorationImage(
+                                    fit: BoxFit.cover, image: imageProvider)),
+                          );
+                        },
+                        placeholder: (context, url) {
+                          return Container(
+                            height: context.height() * 0.3,
+                            width: context.width(),
+                            decoration: const BoxDecoration(color: Colors.grey),
+                          );
+                        })),
+              ),
+              Expanded(
+                flex: 2,
+                child: Container(
+                  decoration: BoxDecoration(
+                      color: ColorPallet.colorPalletNightFog,
+                      borderRadius: const BorderRadius.only(
+                          bottomLeft: Radius.circular(9),
+                          bottomRight: Radius.circular(9))),
+                  child: FractionallySizedBox(
+                    widthFactor: 1,
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: Padding(
+                            padding: EdgeInsets.all(5),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                FractionallySizedBox(
+                                  widthFactor: 1,
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                        widget.post.title,
+                                        style: const TextStyle(
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.w700),
+                                      ),
+                                      Container(
+                                        padding: EdgeInsets.all(3),
+                                        decoration: BoxDecoration(
+                                            color: Colors.white,
+                                            border: Border.all(
+                                                color: ColorPallet
+                                                    .colorPalletNightFog),
+                                            borderRadius:
+                                                BorderRadius.circular(7)),
+                                        child: Text(
+                                          widget.post.category.name,
+                                          style: TextStyle(
+                                              color: ColorPallet
+                                                  .colorPalletNightFog,
+                                              fontWeight: FontWeight.w700),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              )
+            ],
+          ),
         ));
 
     if (widget.bottomSpace == null) {

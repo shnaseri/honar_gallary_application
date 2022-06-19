@@ -17,7 +17,7 @@ class SearchCubit extends Cubit<SearchState> {
       emit(SearchLoading());
       SearchResult searchResult = await artApi.artSearchList(query: text);
       print(searchResult);
-      emit(SearchLoaded(searchResult.artists, searchResult.artPieces));
+      emit(SearchLoaded(searchResult.artists, searchResult.artPieces, text));
     } catch (e) {
       emit(SearchError());
     }
