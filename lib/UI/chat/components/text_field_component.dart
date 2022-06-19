@@ -112,7 +112,7 @@ class _TextFieldForChatPageState extends State<TextFieldForChatPage> {
                         }
                       },
                       itemBuilder: (BuildContext context) =>
-                      <PopupMenuEntry<String>>[
+                          <PopupMenuEntry<String>>[
                         const PopupMenuItem<String>(
                           value: 'picture',
                           child: Text(
