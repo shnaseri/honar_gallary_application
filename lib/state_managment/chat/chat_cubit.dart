@@ -127,19 +127,26 @@ class ChatCubit extends Cubit<ChatState> {
       print(jsonRes["sender_id"]);
       print((ConfigGeneralValues.getInstance().userId));
       print(jsonRes["sender_id"] == (ConfigGeneralValues.getInstance().userId));
-      if (jsonRes["sender_id"] == (ConfigGeneralValues.getInstance().userId))
-        return;
-      Message newMessage = Message(
+      if (jsonRes["sender_id"] == (ConfigGeneralValues.getInstance().userId) &&
+          jsonRes["type"] == "T") return;
+      var baseimage = (interfaceOfUser.basePath
+              .substring(0, interfaceOfUser.basePath.length - 4) +
+          jsonRes["message"]);
+      print(baseimage);
+      var message = Message(
           id: jsonRes['id'],
-          content: jsonRes["message"],
-          type: jsonRes["T"],
+          content: jsonRes["type"] == "T" ? jsonRes["message"] : baseimage,
+          type: jsonRes["type"],
           isUserSender: jsonRes["sender_id"] ==
               (ConfigGeneralValues.getInstance().userId),
           createdAt: DateTime.parse(jsonRes["time"]));
+      Message newMessage = message;
       print('---- End Send Message ------');
       messages = [...messages, newMessage];
       emit(ChatConnectToServer(messages));
-    } catch (e) {}
+    } catch (e) {
+      print(e);
+    }
   }
 
   void changeState(List<Message> messages) {
