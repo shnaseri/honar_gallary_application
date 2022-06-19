@@ -1,10 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:honar_gallary/logic/general_values.dart';
 import 'package:honar_gallary/state_managment/search/search_cubit.dart';
 import 'package:nb_utils/nb_utils.dart';
 
+import '../gallary/components/common.dart';
 import 'components/search_text_field.dart';
 
 class SearchPage extends StatefulWidget {
@@ -46,8 +48,26 @@ class _SearchPageState extends State<SearchPage> {
                           height: 100,
                           child: Align(
                             alignment: const Alignment(0, 1.5),
-                            child: TextFieldSearchWidget(
-                              onChanged: (value) {},
+                            child: BlocBuilder<SearchCubit, SearchState>(
+                              builder: (context, state) {
+                                return TextFieldSearchWidget(
+                                  onChanged: (value) {
+                                    if (value.length < 3) {
+                                      BlocProvider.of<SearchCubit>(context)
+                                          .emit(SearchInitial());
+                                      return;
+                                    }
+                                    if (state is SearchLoaded) {
+                                      if (value == state.textSearched) {
+                                        return;
+                                      }
+                                    }
+
+                                    BlocProvider.of<SearchCubit>(context)
+                                        .search(value);
+                                  },
+                                );
+                              },
                             ),
                           ),
                         ),
@@ -107,42 +127,25 @@ class _BodySearchWidgetState extends State<BodySearchWidget> {
     var categories = ConfigGeneralValues.getInstance().getCategories();
     return BlocBuilder<SearchCubit, SearchState>(
       builder: (context, state) {
-        if (state is SearchInitial && startApp) {
-          BlocProvider.of<SearchCubit>(context).search("sl");
+        if (state is SearchInitial) {
           startApp = false;
-          // return Container();
+          return Container();
         }
         if (state is SearchLoaded) {
-          return ListView.builder(
-            controller: widget.controller,
-            scrollDirection: Axis.vertical,
-            padding: const EdgeInsets.only(bottom: 70, top: 50),
-            physics: const ClampingScrollPhysics(),
+          return MasonryGridView.count(
+            physics: const NeverScrollableScrollPhysics(),
+            shrinkWrap: true,
+            crossAxisCount: 2,
+            mainAxisSpacing: 4,
+            crossAxisSpacing: 4,
+            itemCount: state.artPieces.length,
             itemBuilder: (context, index) {
-              return Container(
-                margin: EdgeInsets.symmetric(vertical: 10),
-                child: Column(
-                  children: [
-                    Text(
-                      state.artPieces[index].title,
-                      style: TextStyle(
-                          color: Colors.pink, fontWeight: FontWeight.w900),
-                    ),
-                    Text(
-                      state.artPieces[index].category.name,
-                      style: TextStyle(
-                          color: Colors.pink, fontWeight: FontWeight.w900),
-                    ),
-                    Text(
-                      state.artPieces[index].owner.fullName,
-                      style: TextStyle(
-                          color: Colors.pink, fontWeight: FontWeight.w900),
-                    ),
-                  ],
-                ),
+              return SearchTile(
+                post: state.artPieces[index],
+                index: index,
+                extent: context.height() * 0.18,
               );
             },
-            itemCount: state.artPieces.length,
           );
         }
 
