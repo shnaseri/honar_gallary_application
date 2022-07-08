@@ -81,11 +81,8 @@ class _TileState extends State<Tile> {
               context,
               MaterialPageRoute(
                   builder: (_) => ArtPiecePage(artId: widget.post.id))).then(
-                  (value) =>
-                  BlocProvider.of<GalleryCubit>(context)
-                      .fetchGallery(ConfigGeneralValues
-                      .getInstance()
-                      .userId!));
+              (value) => BlocProvider.of<GalleryCubit>(context)
+                  .fetchGallery(ConfigGeneralValues.getInstance().userId!));
         },
         onLongPress: () {
           setState(() {
@@ -279,10 +276,10 @@ class _ExplorerTileState extends State<ExplorerTile> {
           Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (_) =>
-                    ArtPiecePage(
-                      artId: widget.artPiece.id,
-                    ),));
+                builder: (_) => ArtPiecePage(
+                  artId: widget.artPiece.id,
+                ),
+              ));
         },
         child: Container(
           height: widget.extent,

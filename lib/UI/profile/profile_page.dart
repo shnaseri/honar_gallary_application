@@ -277,31 +277,31 @@ class _ProfilePageState extends State<ProfilePage> {
                                 },
                                 style: ButtonStyle(
                                     backgroundColor:
-                                    MaterialStateProperty.resolveWith(
+                                        MaterialStateProperty.resolveWith(
                                             (states) =>
-                                        ColorPallet.colorPalletBlueGam),
+                                                ColorPallet.colorPalletBlueGam),
                                     padding: MaterialStateProperty.resolveWith(
-                                            (states) => const EdgeInsets.symmetric(
+                                        (states) => const EdgeInsets.symmetric(
                                             horizontal: 50)),
                                     elevation: MaterialStateProperty.resolveWith(
-                                            (states) => 2),
+                                        (states) => 2),
                                     shape: MaterialStateProperty.resolveWith(
-                                            (states) => RoundedRectangleBorder(
+                                        (states) => RoundedRectangleBorder(
                                             borderRadius: BorderRadius.circular(20)))),
                                 child: state is ProfileSendingState
                                     ? Row(
-                                  children: const [
-                                    CircularProgressIndicator(),
-                                  ],
-                                )
+                                        children: const [
+                                          CircularProgressIndicator(),
+                                        ],
+                                      )
                                     : const Text(
-                                  "ذخیره",
-                                  style: TextStyle(
-                                      fontFamily: 'Sahel',
-                                      fontSize: 16,
-                                      letterSpacing: 1.2,
-                                      color: Colors.white),
-                                ),
+                                        "ذخیره",
+                                        style: TextStyle(
+                                            fontFamily: 'Sahel',
+                                            fontSize: 16,
+                                            letterSpacing: 1.2,
+                                            color: Colors.white),
+                                      ),
                               ),
                             );
                           },
@@ -414,19 +414,19 @@ class _TextFieldEditState extends State<TextFieldEdit> {
                   ),
                   suffixIcon: widget.isPasswordTextField
                       ? IconButton(
-                    onPressed: () {
-                      setState(() {
-                        showPassword = !showPassword;
-                      });
-                    },
-                    icon: const Icon(
-                      Icons.remove_red_eye,
-                      color: Colors.white60,
-                    ),
-                  )
+                          onPressed: () {
+                            setState(() {
+                              showPassword = !showPassword;
+                            });
+                          },
+                          icon: const Icon(
+                            Icons.remove_red_eye,
+                            color: Colors.white60,
+                          ),
+                        )
                       : null,
                   contentPadding:
-                  const EdgeInsets.only(bottom: 3, left: 8, right: 8),
+                      const EdgeInsets.only(bottom: 3, left: 8, right: 8),
                   labelStyle: const TextStyle(
                     fontSize: 19,
                     color: Colors.white70,
