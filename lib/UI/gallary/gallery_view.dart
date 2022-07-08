@@ -240,9 +240,7 @@ class _GalleryViewState extends State<GalleryView> {
                       },
                     ),
                   ),
-                  const SizedBox(
-                    height: 15,
-                  ),
+
                   // Container(
                   //   height: 45,
                   //   margin: const EdgeInsets.symmetric(horizontal: 25),
