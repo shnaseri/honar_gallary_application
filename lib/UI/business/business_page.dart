@@ -20,6 +20,7 @@ class BusinessPage extends StatefulWidget {
 class _BusinessPageState extends State<BusinessPage> {
   late bool startApp;
   late FullUser profile;
+  late BuildContext contextCubit;
 
   @override
   void initState() {
@@ -49,191 +50,202 @@ class _BusinessPageState extends State<BusinessPage> {
                 ),
               ),
             ),
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 15),
-              height: MediaQuery.of(context).size.height,
-              child: ListView(
-                padding: const EdgeInsets.only(top: 40, bottom: 40),
-                children: [
-                  Container(
-                    height: 120,
-                    margin: const EdgeInsets.symmetric(horizontal: 10),
-                    padding: const EdgeInsets.symmetric(horizontal: 10),
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(12),
-                        color: Colors.white),
-                    child: Row(
-                      children: [
-                        Expanded(
-                          flex: 2,
-                          child: CachedNetworkImage(
-                            imageBuilder: (context, imageProvider) {
-                              return Container(
-                                decoration: BoxDecoration(
+            RefreshIndicator(
+              onRefresh: () async {
+                await BlocProvider.of<GalleryCubit>(contextCubit).fetchGallery(
+                    ConfigGeneralValues.getInstance().userId!);
+              },
+              child: Container(
+                padding: const EdgeInsets.symmetric(horizontal: 15),
+                height: MediaQuery.of(context).size.height,
+                child: ListView(
+                  physics: ClampingScrollPhysics(),
+                  padding: const EdgeInsets.only(top: 40, bottom: 40),
+                  children: [
+                    Container(
+                      height: 120,
+                      margin: const EdgeInsets.symmetric(horizontal: 10),
+                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(12),
+                          color: Colors.white),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            flex: 2,
+                            child: CachedNetworkImage(
+                              imageBuilder: (context, imageProvider) {
+                                return Container(
+                                  decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      border: Border.all(color: Colors.blueGrey),
+                                      image: DecorationImage(
+                                          fit: BoxFit.contain,
+                                          image: imageProvider)),
+                                );
+                              },
+                              placeholder: (context, strImage) {
+                                return Container(
+                                  decoration: BoxDecoration(
                                     shape: BoxShape.circle,
-                                    border: Border.all(color: Colors.blueGrey),
-                                    image: DecorationImage(
-                                        fit: BoxFit.contain,
-                                        image: imageProvider)),
-                              );
-                            },
-                            placeholder: (context, strImage) {
-                              return Container(
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  color: Colors.grey,
-                                  border: Border.all(
-                                    color: Colors.white,
-                                    width: 2.0,
+                                    color: Colors.grey,
+                                    border: Border.all(
+                                      color: Colors.white,
+                                      width: 2.0,
+                                    ),
                                   ),
+                                );
+                              },
+                              imageUrl: profile.userProfile.avatar.image,
+                              fit: BoxFit.fill,
+                              height: 130,
+                              width: 100,
+                            ),
+                          ),
+                          Expanded(
+                            child: Column(
+                              children: [
+                                const SizedBox(
+                                  height: 10,
                                 ),
-                              );
-                            },
-                            imageUrl: profile.userProfile.avatar.image,
-                            fit: BoxFit.fill,
-                            height: 130,
-                            width: 100,
-                          ),
-                        ),
-                        Expanded(
-                          child: Column(
-                            children: [
-                              const SizedBox(
-                                height: 10,
-                              ),
-                              Text(
-                                profile.firstName + " " + profile.lastName,
-                                style: const TextStyle(
-                                    fontSize: 22,
-                                    fontWeight: FontWeight.w900,
-                                    color: Colors.pink),
-                              ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Column(
-                                    children: [
-                                      Text(
-                                        'دنبال کننده ها',
-                                        style: TextStyle(
-                                          color: ColorPallet.colorPalletBlueGam,
-                                          fontWeight: FontWeight.w500,
-                                          fontSize: 13,
+                                Text(
+                                  profile.firstName + " " + profile.lastName,
+                                  style: const TextStyle(
+                                      fontSize: 22,
+                                      fontWeight: FontWeight.w900,
+                                      color: Colors.pink),
+                                ),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Column(
+                                      children: [
+                                        Text(
+                                          'دنبال کننده ها',
+                                          style: TextStyle(
+                                            color: ColorPallet.colorPalletBlueGam,
+                                            fontWeight: FontWeight.w500,
+                                            fontSize: 13,
+                                          ),
                                         ),
-                                      ),
-                                      CircleAvatar(
-                                        backgroundColor:
-                                            ColorPallet.colorPalletNightFog,
-                                        radius: 10,
-                                        child: Center(
-                                          child: Text(
-                                            ConfigGeneralValues.getInstance()
-                                                .profile
-                                                .userProfile
-                                                .followersCount
-                                                .toString(),
-                                            style: const TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 10,
-                                              fontWeight: FontWeight.w800,
+                                        CircleAvatar(
+                                          backgroundColor:
+                                              ColorPallet.colorPalletNightFog,
+                                          radius: 10,
+                                          child: Center(
+                                            child: Text(
+                                              ConfigGeneralValues.getInstance()
+                                                  .profile
+                                                  .userProfile
+                                                  .followersCount
+                                                  .toString(),
+                                              style: const TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 10,
+                                                fontWeight: FontWeight.w800,
+                                              ),
                                             ),
                                           ),
                                         ),
-                                      ),
-                                    ],
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                      horizontal: 12,
-                                      vertical: 8,
+                                      ],
                                     ),
-                                    child: Container(
-                                      height: 45,
-                                      width: 3,
-                                      decoration: BoxDecoration(
-                                        borderRadius:
-                                            BorderRadius.circular(100),
-                                        color: Colors.grey,
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                        horizontal: 12,
+                                        vertical: 8,
                                       ),
-                                    ),
-                                  ),
-                                  Column(
-                                    children: [
-                                      Text(
-                                        'تعداد پست ها',
-                                        style: TextStyle(
-                                          color: ColorPallet.colorPalletBlueGam,
-                                          fontSize: 13,
+                                      child: Container(
+                                        height: 45,
+                                        width: 3,
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(100),
+                                          color: Colors.grey,
                                         ),
                                       ),
-                                      CircleAvatar(
-                                        backgroundColor:
-                                            ColorPallet.colorPalletNightFog,
-                                        radius: 10,
-                                        child: Center(
-                                          child: Text(
-                                            ConfigGeneralValues.getInstance()
-                                                .profile
-                                                .userProfile
-                                                .followingCount
-                                                .toString(),
-                                            style: const TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 10,
-                                              fontWeight: FontWeight.w800,
+                                    ),
+                                    Column(
+                                      children: [
+                                        Text(
+                                          'تعداد پست ها',
+                                          style: TextStyle(
+                                            color: ColorPallet.colorPalletBlueGam,
+                                            fontSize: 13,
+                                          ),
+                                        ),
+                                        CircleAvatar(
+                                          backgroundColor:
+                                              ColorPallet.colorPalletNightFog,
+                                          radius: 10,
+                                          child: Center(
+                                            child: Text(
+                                              ConfigGeneralValues.getInstance()
+                                                  .profile
+                                                  .userProfile
+                                                  .followingCount
+                                                  .toString(),
+                                              style: const TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 10,
+                                                fontWeight: FontWeight.w800,
+                                              ),
                                             ),
                                           ),
                                         ),
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              )
-                            ],
-                          ),
-                          flex: 6,
-                        )
-                      ],
+                                      ],
+                                    ),
+                                  ],
+                                )
+                              ],
+                            ),
+                            flex: 6,
+                          )
+                        ],
+                      ),
                     ),
-                  ),
-                  BlocBuilder<GalleryCubit, GalleryState>(
-                    builder: (context, state) {
-                      if (state is GalleryInitial && !startApp) {
-                        startApp = true;
-                        BlocProvider.of<GalleryCubit>(context).fetchGallery(
-                            ConfigGeneralValues.getInstance().userId!);
-                      }
-                      if (state is GalleryLoaded) {
-                        return Container(
-                          padding: const EdgeInsets.all(10),
-                          child: MasonryGridView.count(
-                            physics: const NeverScrollableScrollPhysics(),
-                            shrinkWrap: true,
-                            crossAxisCount: 1,
-                            mainAxisSpacing: 4,
-                            crossAxisSpacing: 4,
-                            itemCount: state.arts.length,
-                            itemBuilder: (context, index) {
-                              return GestureDetector(
-                                  onTap: () {
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (_) => ArtPiecePage(
-                                                artId: state.arts[index].id)));
-                                  },
-                                  child: ArtPieceTile(
-                                      artPiece: state.arts[index]));
-                            },
+                    BlocBuilder<GalleryCubit, GalleryState>(
+                      builder: (context, state) {
+                        contextCubit = context;
+                        if (state is GalleryInitial && !startApp) {
+                          startApp = true;
+                          BlocProvider.of<GalleryCubit>(context).fetchGallery(
+                              ConfigGeneralValues.getInstance().userId!);
+                        }
+                        if (state is GalleryLoaded) {
+                          return Container(
+                            padding: const EdgeInsets.all(10),
+                            child: MasonryGridView.count(
+                              physics: const NeverScrollableScrollPhysics(),
+                              shrinkWrap: true,
+                              crossAxisCount: 1,
+                              mainAxisSpacing: 4,
+                              crossAxisSpacing: 4,
+                              itemCount: state.arts.length,
+                              itemBuilder: (context, index) {
+                                return GestureDetector(
+                                    onTap: () {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (_) => ArtPiecePage(
+                                                  artId: state.arts[index].id)));
+                                    },
+                                    child: ArtPieceTile(
+                                        artPiece: state.arts[index]));
+                              },
+                            ),
+                          );
+                        }
+                        return const Padding(
+                          padding: EdgeInsets.only(top: 15),
+                          child: Center(
+                            child: CircularProgressIndicator(),
                           ),
                         );
-                      }
-                      return const Center(
-                        child: CircularProgressIndicator(),
-                      );
-                    },
-                  ),
-                ],
+                      },
+                    ),
+                  ],
+                ),
               ),
             ),
           ],

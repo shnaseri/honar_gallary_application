@@ -66,6 +66,7 @@ class _ArtPiecePageState extends State<ArtPiecePage> {
     ],
   );
   late bool startApp;
+  late BuildContext contextCubit;
 
   @override
   void initState() {
@@ -81,6 +82,7 @@ class _ArtPiecePageState extends State<ArtPiecePage> {
       child: Scaffold(
         body: BlocBuilder<ArtPieceCubit, ArtPieceState>(
           builder: (context, state) {
+            contextCubit = context;
             if (state is ArtPieceInitial && startApp) {
               startApp = false;
               BlocProvider.of<ArtPieceCubit>(context)
@@ -92,174 +94,181 @@ class _ArtPiecePageState extends State<ArtPiecePage> {
               testMovie.price = state.artPiece.price;
               testMovie.bannerUrl = state.artPiece.cover.image;
               testMovie.like = state.artPiece.likeCount.toInt();
-              return Container(
-                height: MediaQuery.of(context).size.height,
-                width: MediaQuery.of(context).size.width,
-                decoration: const BoxDecoration(
-                  gradient: LinearGradient(
-                    colors: [
-                      Color.fromRGBO(4, 9, 35, 1),
-                      Color.fromRGBO(39, 105, 171, 1),
-                    ],
-                    begin: FractionalOffset.bottomCenter,
-                    end: FractionalOffset.topCenter,
+              return RefreshIndicator(
+                onRefresh: ()async{
+                 await BlocProvider.of<ArtPieceCubit>(contextCubit)
+                      .fetchArtPiece(widget.artId);
+                },
+                child: Container(
+                  height: MediaQuery.of(context).size.height,
+                  width: MediaQuery.of(context).size.width,
+                  decoration: const BoxDecoration(
+                    gradient: LinearGradient(
+                      colors: [
+                        Color.fromRGBO(4, 9, 35, 1),
+                        Color.fromRGBO(39, 105, 171, 1),
+                      ],
+                      begin: FractionalOffset.bottomCenter,
+                      end: FractionalOffset.topCenter,
+                    ),
                   ),
-                ),
-                child: SingleChildScrollView(
-                  physics: const ClampingScrollPhysics(),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Stack(
-                        children: [
-                          MovieDetailHeader(testMovie, state.artPiece),
-                          Positioned(
-                            child: Row(
-                              children: [
-                                GestureDetector(
-                                  onTap: () async {
-                                    if (state.artPiece.isUserLiked) {
-                                      state.artPiece.likeCount--;
-                                    } else {
-                                      state.artPiece.likeCount++;
-                                    }
-                                    setState(() {
-                                      state.artPiece.isUserLiked =
-                                          !state.artPiece.isUserLiked;
-                                    });
-
-                                    bool status =
-                                        await BlocProvider.of<ArtPieceCubit>(
-                                                context)
-                                            .changeStatusLikeArtPiece(
-                                                state.artPiece.id);
-                                  },
-                                  child: Container(
-                                    height: 40,
-                                    width: 40,
-                                    decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(9),
-                                        color: Colors.pink),
-                                    child: Center(
-                                      child: !state.artPiece.isUserLiked
-                                          ? const Icon(
-                                              Icons.favorite_border_rounded)
-                                          : const Icon(Icons.favorite),
-                                    ),
-                                  ),
-                                ),
-                                if (state.artPiece.owner.id ==
-                                    ConfigGeneralValues.getInstance().userId)
-                                  10.width,
-                                if (state.artPiece.owner.id ==
-                                    ConfigGeneralValues.getInstance().userId)
+                  child: SingleChildScrollView(
+                    physics: const ClampingScrollPhysics(),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Stack(
+                          children: [
+                            MovieDetailHeader(testMovie, state.artPiece),
+                            Positioned(
+                              child: Row(
+                                children: [
                                   GestureDetector(
-                                    onTap: () {
-                                      Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (_) => EditArtPiece(
-                                                    artPiece: state.artPiece,
-                                                  ))).then((value) {
-                                        BlocProvider.of<ArtPieceCubit>(context)
-                                            .resetState();
-                                        startApp = true;
+                                    onTap: () async {
+                                      if (state.artPiece.isUserLiked) {
+                                        state.artPiece.likeCount--;
+                                      } else {
+                                        state.artPiece.likeCount++;
+                                      }
+                                      setState(() {
+                                        state.artPiece.isUserLiked =
+                                            !state.artPiece.isUserLiked;
                                       });
-                                    },
-                                    child: Container(
-                                      height: 40,
-                                      width: 40,
-                                      decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(9),
-                                          color:
-                                              ColorPallet.colorPalletBlueGam),
-                                      child: const Center(
-                                        child: Icon(Icons.edit),
-                                      ),
-                                    ),
-                                  ),
-                                if (state.artPiece.owner.id !=
-                                    ConfigGeneralValues.getInstance().userId)
-                                  10.width,
-                                if (state.artPiece.owner.id !=
-                                    ConfigGeneralValues.getInstance().userId)
-                                  GestureDetector(
-                                    onTap: () {
-                                      Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (_) => ChatPage(
-                                                  chatCode: getChatCode(
-                                                      state.artPiece.owner.id),
-                                                  contact: ChatGetAllChatsUser(
-                                                      id: state
-                                                          .artPiece.owner.id,
-                                                      fullName: state.artPiece
-                                                          .owner.fullName,
-                                                      profilePhoto: state
-                                                          .artPiece
-                                                          .owner
-                                                          .profilePhoto),
-                                                  index: 1)));
-                                    },
-                                    child: Container(
-                                      height: 40,
-                                      width: 40,
-                                      decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(9),
-                                          color:
-                                              ColorPallet.colorPalletBlueGam),
-                                      child: const Center(
-                                        child: Icon(Icons.wechat),
-                                      ),
-                                    ),
-                                  ),
-                              ],
-                            ),
-                            top: 20,
-                            left: 20,
-                          )
-                        ],
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(20.0),
-                        child: Storyline(testMovie.storyline),
-                      ),
-                      PhotoScroller(testMovie.photoUrls),
-                      // SizedBox(height: 20.0),
-                      // ActorScroller(testMovie.actors),
-                      const SizedBox(height: 60.0),
 
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          const Padding(
-                            padding: EdgeInsets.only(right: 10),
-                            child: Text(
-                              "نظرات",
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 20),
+                                      bool status =
+                                          await BlocProvider.of<ArtPieceCubit>(
+                                                  context)
+                                              .changeStatusLikeArtPiece(
+                                                  state.artPiece.id);
+                                    },
+                                    child: Container(
+                                      height: 40,
+                                      width: 40,
+                                      decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(9),
+                                          color: Colors.pink),
+                                      child: Center(
+                                        child: !state.artPiece.isUserLiked
+                                            ? const Icon(
+                                                Icons.favorite_border_rounded)
+                                            : const Icon(Icons.favorite),
+                                      ),
+                                    ),
+                                  ),
+                                  if (state.artPiece.owner.id ==
+                                      ConfigGeneralValues.getInstance().userId)
+                                    10.width,
+                                  if (state.artPiece.owner.id ==
+                                      ConfigGeneralValues.getInstance().userId)
+                                    GestureDetector(
+                                      onTap: () {
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (_) => EditArtPiece(
+                                                      artPiece: state.artPiece,
+                                                    ))).then((value) {
+                                          BlocProvider.of<ArtPieceCubit>(context)
+                                              .resetState();
+                                          startApp = true;
+                                        });
+                                      },
+                                      child: Container(
+                                        height: 40,
+                                        width: 40,
+                                        decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(9),
+                                            color:
+                                                ColorPallet.colorPalletBlueGam),
+                                        child: const Center(
+                                          child: Icon(Icons.edit),
+                                        ),
+                                      ),
+                                    ),
+                                  if (state.artPiece.owner.id !=
+                                      ConfigGeneralValues.getInstance().userId)
+                                    10.width,
+                                  if (state.artPiece.owner.id !=
+                                      ConfigGeneralValues.getInstance().userId)
+                                    GestureDetector(
+                                      onTap: () {
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (_) => ChatPage(
+                                                    chatCode: getChatCode(
+                                                        state.artPiece.owner.id),
+                                                    contact: ChatGetAllChatsUser(
+                                                        id: state
+                                                            .artPiece.owner.id,
+                                                        fullName: state.artPiece
+                                                            .owner.fullName,
+                                                        profilePhoto: state
+                                                            .artPiece
+                                                            .owner
+                                                            .profilePhoto),
+                                                    index: 1)));
+                                      },
+                                      child: Container(
+                                        height: 40,
+                                        width: 40,
+                                        decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(9),
+                                            color:
+                                                ColorPallet.colorPalletBlueGam),
+                                        child: const Center(
+                                          child: Icon(Icons.wechat),
+                                        ),
+                                      ),
+                                    ),
+                                ],
+                              ),
+                              top: 20,
+                              left: 20,
+                            )
+                          ],
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(20.0),
+                          child: Storyline(testMovie.storyline),
+                        ),
+                        if(state.artPiece.images.isNotEmpty)
+                        PhotoScroller(state.artPiece.images),
+                        // SizedBox(height: 20.0),
+                        // ActorScroller(testMovie.actors),
+                        const SizedBox(height: 60.0),
+
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            const Padding(
+                              padding: EdgeInsets.only(right: 10),
+                              child: Text(
+                                "نظرات",
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 20),
+                              ),
                             ),
-                          ),
-                          TextButton(
-                            onPressed: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (_) => const CommentPage()));
-                            },
-                            child: const Text("مشاهده همه"),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      )
-                    ],
+                            TextButton(
+                              onPressed: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (_) => const CommentPage()));
+                              },
+                              child: const Text("مشاهده همه"),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(
+                          height: 20,
+                        )
+                      ],
+                    ),
                   ),
                 ),
               );

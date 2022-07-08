@@ -9,6 +9,8 @@ class EditArtPieceUploadingCover extends EditArtPieceState {}
 
 class EditArtPieceSendingCover extends EditArtPieceState {}
 
+class EditArtPieceUploadingImages extends EditArtPieceState {}
+
 class EditArtPieceSendingInformation extends EditArtPieceState {}
 
 class EditArtPieceUploadingContent extends EditArtPieceState {}

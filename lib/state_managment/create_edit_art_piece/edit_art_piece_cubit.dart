@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:bloc/bloc.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:honar_api_v14/api.dart';
 import 'package:http/http.dart' as http;
 import 'package:meta/meta.dart';
@@ -26,6 +27,7 @@ class EditArtPieceCubit extends Cubit<EditArtPieceState> {
       String description, List<File> imageSliderFiles, int categoryId,
       {int price = 0}) async {
     try {
+      emit(EditArtPieceUploadingCover());
       int? coverId = await uploadImage(
           getTypeOfArtPiece(type) == ArtPieceCoverTypeEnum.P
               ? file
@@ -35,7 +37,15 @@ class EditArtPieceCubit extends Cubit<EditArtPieceState> {
         artId = await sendInfoConver(coverId, type);
       }
       if (artId != null) {
-        await sendInfoArtPiece(artId, title, description, price, categoryId);
+        List<int> imageIds = [];
+        if (ArtPieceCoverTypeEnum.V == getTypeOfArtPiece(type) ||
+            ArtPieceCoverTypeEnum.M == getTypeOfArtPiece(type)) {
+          emit(EditArtPieceUploadingImages());
+          for (File file in imageSliderFiles) {
+            imageIds.add(await uploadImage(file) ?? 1);
+          }
+        }
+        await sendInfoArtPiece(artId, title, description, price, categoryId,imageIds);
       }
       if (ArtPieceCoverTypeEnum.V == getTypeOfArtPiece(type) ||
           ArtPieceCoverTypeEnum.M == getTypeOfArtPiece(type)) {
@@ -71,7 +81,7 @@ class EditArtPieceCubit extends Cubit<EditArtPieceState> {
       // int? artId;
 
       if (artId != null) {
-        await sendInfoArtPiece(artId, title, description, price, categoryId);
+        await sendInfoArtPiece(artId, title, description, price, categoryId,[]);
       }
       // if (ArtPieceCoverTypeEnum.V == getTypeOfArtPiece(type) ||
       //     ArtPieceCoverTypeEnum.M == getTypeOfArtPiece(type)) {
@@ -94,7 +104,6 @@ class EditArtPieceCubit extends Cubit<EditArtPieceState> {
 
   Future<int?> uploadImage(File file) async {
     try {
-      emit(EditArtPieceUploadingCover());
 
       Map output = await uploadNetworkService.uploadImage(file);
       print(output);
@@ -138,7 +147,7 @@ class EditArtPieceCubit extends Cubit<EditArtPieceState> {
   }
 
   Future<bool?> sendInfoArtPiece(int artPieceId, String title,
-      String description, int price, int categoryId) async {
+      String description, int price, int categoryId , List<int> ImageIds) async {
     try {
       emit(EditArtPieceSendingInformation());
 
@@ -148,7 +157,9 @@ class EditArtPieceCubit extends Cubit<EditArtPieceState> {
               description: description,
               title: title,
               price: price,
-              categoryId: categoryId));
+              categoryId: categoryId,
+              imageIds: ImageIds
+          ));
       print('----- post information done --------');
       print(response200.success);
       return response200.success;
