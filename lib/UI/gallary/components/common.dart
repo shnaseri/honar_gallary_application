@@ -4,9 +4,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:honar_api_v14/api.dart';
 import 'package:honar_gallary/UI/Art_piece/art_piece_page.dart';
 import 'package:honar_gallary/const/color_const.dart';
+import 'package:honar_gallary/logic/general_values.dart';
 import 'package:honar_gallary/state_managment/gallery/gallery_cubit.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 
 const _defaultColor = Color(0xFF34568B);
 
@@ -77,14 +77,15 @@ class _TileState extends State<Tile> {
             });
             return;
           }
-          pushNewScreen(
-            context,
-            screen: ArtPiecePage(artId: widget.post.id),
-            withNavBar: false, // OPTIONAL VALUE. True by default.
-            pageTransitionAnimation: PageTransitionAnimation.cupertino,
-          ).then((value) {
-            BlocProvider.of<GalleryCubit>(context).fetchGallery(21);
-          });
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (_) => ArtPiecePage(artId: widget.post.id))).then(
+                  (value) =>
+                  BlocProvider.of<GalleryCubit>(context)
+                      .fetchGallery(ConfigGeneralValues
+                      .getInstance()
+                      .userId!));
         },
         onLongPress: () {
           setState(() {
@@ -265,14 +266,13 @@ class _ExplorerTileState extends State<ExplorerTile> {
   Widget build(BuildContext context) {
     final child = GestureDetector(
         onTap: () {
-          pushNewScreen(
-            context,
-            screen: ArtPiecePage(
-              artId: widget.artPiece.id,
-            ),
-            withNavBar: false, // OPTIONAL VALUE. True by default.
-            pageTransitionAnimation: PageTransitionAnimation.cupertino,
-          );
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (_) =>
+                    ArtPiecePage(
+                      artId: widget.artPiece.id,
+                    ),));
         },
         child: Container(
           height: widget.extent,
@@ -409,14 +409,11 @@ class _SearchTileState extends State<SearchTile> {
             });
             return;
           }
-          pushNewScreen(
-            context,
-            screen: ArtPiecePage(artId: widget.post.id),
-            withNavBar: false, // OPTIONAL VALUE. True by default.
-            pageTransitionAnimation: PageTransitionAnimation.cupertino,
-          ).then((value) {
-            BlocProvider.of<GalleryCubit>(context).fetchGallery(21);
-          });
+
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (_) => ArtPiecePage(artId: widget.post.id)));
         },
         onLongPress: () {
           setState(() {

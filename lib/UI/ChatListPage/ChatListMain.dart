@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:honar_api_v14/api.dart';
 import 'package:honar_gallary/UI/chat/chat_page.dart';
 import 'package:honar_gallary/state_managment/ChatList/chat_list_cubit.dart';
-import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 
 import 'TileRows.dart';
 
@@ -70,18 +69,15 @@ class _ChatListState extends State<ChatList> {
                       InlineResponse2006 chat = state.chats[index];
                       return GestureDetector(
                         onTap: () {
-                          pushNewScreen(
-                            context,
-                            screen: ChatPage(
-                              index: 1,
-                              chatCode: chat.chatCode,
-                              contact: chat.user,
-                            ),
-                            withNavBar: false,
-                            // OPTIONAL VALUE. True by default.
-                            pageTransitionAnimation:
-                                PageTransitionAnimation.cupertino,
-                          );
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (_) => ChatPage(
+                                  index: 1,
+                                  chatCode: chat.chatCode,
+                                  contact: chat.user,
+                                ),
+                              ));
                         },
                         child: list(
                             url: chat.user.profilePhoto,

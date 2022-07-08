@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:honar_gallary/const/color_const.dart';
-import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 
 import '../../search/search_page.dart';
 import '../../utils/auto_text_direction.dart';
@@ -25,12 +24,11 @@ class _TextFieldSearchWidgetState extends State<TextFieldSearchWidget> {
       widthFactor: 0.7,
       child: GestureDetector(
         onTap: () {
-          pushNewScreen(
-            context,
-            screen: const SearchPage(),
-            withNavBar: false, // OPTIONAL VALUE. True by default.
-            pageTransitionAnimation: PageTransitionAnimation.fade,
-          );
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (_) => const SearchPage(),
+              ));
         },
         child: AutoDirection(
           text: value,

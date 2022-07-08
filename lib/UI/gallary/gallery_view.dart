@@ -6,7 +6,6 @@ import 'package:honar_gallary/const/color_const.dart';
 import 'package:honar_gallary/logic/general_values.dart';
 import 'package:honar_gallary/settings/setting_page.dart';
 import 'package:honar_gallary/state_managment/gallery/gallery_cubit.dart';
-import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 
 import 'components/common.dart';
 
@@ -193,14 +192,11 @@ class _GalleryViewState extends State<GalleryView> {
                               right: 20,
                               child: GestureDetector(
                                 onTap: () {
-                                  pushNewScreen(
-                                    context,
-                                    screen: const SettingsPage(),
-                                    withNavBar: false,
-                                    // OPTIONAL VALUE. True by default.
-                                    pageTransitionAnimation:
-                                        PageTransitionAnimation.cupertino,
-                                  );
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (_) =>
+                                              const SettingsPage()));
                                 },
                                 child: Icon(
                                   Icons.settings,
@@ -214,14 +210,11 @@ class _GalleryViewState extends State<GalleryView> {
                               left: 20,
                               child: GestureDetector(
                                 onTap: () {
-                                  pushNewScreen(
-                                    context,
-                                    screen: const BusinessPage(),
-                                    withNavBar: false,
-                                    // OPTIONAL VALUE. True by default.
-                                    pageTransitionAnimation:
-                                        PageTransitionAnimation.cupertino,
-                                  );
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (_) => BusinessPage(),
+                                      ));
                                 },
                                 child: Icon(
                                   Icons.business_center_sharp,
@@ -277,7 +270,8 @@ class _GalleryViewState extends State<GalleryView> {
                     builder: (context, state) {
                       if (state is GalleryInitial && !startApp) {
                         startApp = true;
-                        BlocProvider.of<GalleryCubit>(context).fetchGallery(21);
+                        BlocProvider.of<GalleryCubit>(context).fetchGallery(
+                            ConfigGeneralValues.getInstance().userId!);
                       }
                       if (state is GalleryLoaded) {
                         return Container(

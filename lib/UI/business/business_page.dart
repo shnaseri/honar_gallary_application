@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 
+import '../../logic/general_values.dart';
 import '../../state_managment/gallery/gallery_cubit.dart';
 import '../gallary/components/common.dart';
 
@@ -79,7 +79,8 @@ class _BusinessPageState extends State<BusinessPage> {
                     builder: (context, state) {
                       if (state is GalleryInitial && !startApp) {
                         startApp = true;
-                        BlocProvider.of<GalleryCubit>(context).fetchGallery(21);
+                        BlocProvider.of<GalleryCubit>(context).fetchGallery(
+                            ConfigGeneralValues.getInstance().userId!);
                       }
                       if (state is GalleryLoaded) {
                         return Container(
