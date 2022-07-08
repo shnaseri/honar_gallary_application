@@ -103,13 +103,14 @@ showMessage(BuildContext context, String title, String message,
                                                 await functionRun();
                                               },
                                               child: Container(
-                                                decoration:  BoxDecoration(
-                                                    color: ColorPallet.colorPalletBlueGam,
+                                                decoration: BoxDecoration(
+                                                    color: ColorPallet
+                                                        .colorPalletBlueGam,
                                                     borderRadius:
-                                                    const BorderRadius.only(
-                                                        bottomLeft:
-                                                        Radius.circular(
-                                                            20))),
+                                                        const BorderRadius.only(
+                                                            bottomLeft:
+                                                                Radius.circular(
+                                                                    20))),
                                                 child: Container(
                                                   child: Center(
                                                     child: Text(
@@ -134,11 +135,11 @@ showMessage(BuildContext context, String title, String message,
                                                   decoration: BoxDecoration(
                                                       color: Color(0xffea004e),
                                                       borderRadius:
-                                                      BorderRadius.only(
-                                                          bottomRight:
-                                                          Radius
-                                                              .circular(
-                                                              20))),
+                                                          BorderRadius.only(
+                                                              bottomRight:
+                                                                  Radius
+                                                                      .circular(
+                                                                          20))),
                                                   child: Container(
                                                     child: Center(
                                                       child: Text(
@@ -146,7 +147,7 @@ showMessage(BuildContext context, String title, String message,
                                                         style: boldTextStyle(
                                                           color: Colors.white,
                                                           weight:
-                                                          FontWeight.bold,
+                                                              FontWeight.bold,
                                                         ),
                                                       ),
                                                     ),
@@ -173,7 +174,6 @@ showMessage(BuildContext context, String title, String message,
       });
 }
 
-
 showDialogUpload(BuildContext context, int StateLevel) async {
   double width = MediaQuery.of(context).size.width;
   double height = MediaQuery.of(context).size.height;
@@ -196,9 +196,7 @@ showDialogUpload(BuildContext context, int StateLevel) async {
                     child: ListView(
                       physics: NeverScrollableScrollPhysics(),
                       shrinkWrap: true,
-                      children: [
-
-                      ],
+                      children: [],
                     ),
                   ),
                 ),
