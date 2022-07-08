@@ -95,8 +95,8 @@ class _ArtPiecePageState extends State<ArtPiecePage> {
               testMovie.bannerUrl = state.artPiece.cover.image;
               testMovie.like = state.artPiece.likeCount.toInt();
               return RefreshIndicator(
-                onRefresh: ()async{
-                 await BlocProvider.of<ArtPieceCubit>(contextCubit)
+                onRefresh: () async {
+                  await BlocProvider.of<ArtPieceCubit>(contextCubit)
                       .fetchArtPiece(widget.artId);
                 },
                 child: Container(
@@ -145,7 +145,8 @@ class _ArtPiecePageState extends State<ArtPiecePage> {
                                       height: 40,
                                       width: 40,
                                       decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(9),
+                                          borderRadius:
+                                              BorderRadius.circular(9),
                                           color: Colors.pink),
                                       child: Center(
                                         child: !state.artPiece.isUserLiked
@@ -168,7 +169,8 @@ class _ArtPiecePageState extends State<ArtPiecePage> {
                                                 builder: (_) => EditArtPiece(
                                                       artPiece: state.artPiece,
                                                     ))).then((value) {
-                                          BlocProvider.of<ArtPieceCubit>(context)
+                                          BlocProvider.of<ArtPieceCubit>(
+                                                  context)
                                               .resetState();
                                           startApp = true;
                                         });
@@ -197,17 +199,22 @@ class _ArtPiecePageState extends State<ArtPiecePage> {
                                             context,
                                             MaterialPageRoute(
                                                 builder: (_) => ChatPage(
-                                                    chatCode: getChatCode(
-                                                        state.artPiece.owner.id),
-                                                    contact: ChatGetAllChatsUser(
-                                                        id: state
-                                                            .artPiece.owner.id,
-                                                        fullName: state.artPiece
-                                                            .owner.fullName,
-                                                        profilePhoto: state
-                                                            .artPiece
-                                                            .owner
-                                                            .profilePhoto),
+                                                    chatCode: getChatCode(state
+                                                        .artPiece.owner.id),
+                                                    contact:
+                                                        ChatGetAllChatsUser(
+                                                            id:
+                                                                state.artPiece
+                                                                    .owner.id,
+                                                            fullName:
+                                                                state
+                                                                    .artPiece
+                                                                    .owner
+                                                                    .fullName,
+                                                            profilePhoto: state
+                                                                .artPiece
+                                                                .owner
+                                                                .profilePhoto),
                                                     index: 1)));
                                       },
                                       child: Container(
@@ -234,8 +241,8 @@ class _ArtPiecePageState extends State<ArtPiecePage> {
                           padding: const EdgeInsets.all(20.0),
                           child: Storyline(testMovie.storyline),
                         ),
-                        if(state.artPiece.images.isNotEmpty)
-                        PhotoScroller(state.artPiece.images),
+                        if (state.artPiece.images.isNotEmpty)
+                          PhotoScroller(state.artPiece.images),
                         // SizedBox(height: 20.0),
                         // ActorScroller(testMovie.actors),
                         const SizedBox(height: 60.0),

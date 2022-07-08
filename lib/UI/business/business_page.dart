@@ -52,8 +52,8 @@ class _BusinessPageState extends State<BusinessPage> {
             ),
             RefreshIndicator(
               onRefresh: () async {
-                await BlocProvider.of<GalleryCubit>(contextCubit).fetchGallery(
-                    ConfigGeneralValues.getInstance().userId!);
+                await BlocProvider.of<GalleryCubit>(contextCubit)
+                    .fetchGallery(ConfigGeneralValues.getInstance().userId!);
               },
               child: Container(
                 padding: const EdgeInsets.symmetric(horizontal: 15),
@@ -78,7 +78,8 @@ class _BusinessPageState extends State<BusinessPage> {
                                 return Container(
                                   decoration: BoxDecoration(
                                       shape: BoxShape.circle,
-                                      border: Border.all(color: Colors.blueGrey),
+                                      border:
+                                          Border.all(color: Colors.blueGrey),
                                       image: DecorationImage(
                                           fit: BoxFit.contain,
                                           image: imageProvider)),
@@ -123,7 +124,8 @@ class _BusinessPageState extends State<BusinessPage> {
                                         Text(
                                           'دنبال کننده ها',
                                           style: TextStyle(
-                                            color: ColorPallet.colorPalletBlueGam,
+                                            color:
+                                                ColorPallet.colorPalletBlueGam,
                                             fontWeight: FontWeight.w500,
                                             fontSize: 13,
                                           ),
@@ -169,7 +171,8 @@ class _BusinessPageState extends State<BusinessPage> {
                                         Text(
                                           'تعداد پست ها',
                                           style: TextStyle(
-                                            color: ColorPallet.colorPalletBlueGam,
+                                            color:
+                                                ColorPallet.colorPalletBlueGam,
                                             fontSize: 13,
                                           ),
                                         ),
@@ -228,7 +231,8 @@ class _BusinessPageState extends State<BusinessPage> {
                                           context,
                                           MaterialPageRoute(
                                               builder: (_) => ArtPiecePage(
-                                                  artId: state.arts[index].id)));
+                                                  artId:
+                                                      state.arts[index].id)));
                                     },
                                     child: ArtPieceTile(
                                         artPiece: state.arts[index]));

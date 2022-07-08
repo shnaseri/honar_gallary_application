@@ -45,7 +45,8 @@ class EditArtPieceCubit extends Cubit<EditArtPieceState> {
             imageIds.add(await uploadImage(file) ?? 1);
           }
         }
-        await sendInfoArtPiece(artId, title, description, price, categoryId,imageIds);
+        await sendInfoArtPiece(
+            artId, title, description, price, categoryId, imageIds);
       }
       if (ArtPieceCoverTypeEnum.V == getTypeOfArtPiece(type) ||
           ArtPieceCoverTypeEnum.M == getTypeOfArtPiece(type)) {
@@ -81,7 +82,8 @@ class EditArtPieceCubit extends Cubit<EditArtPieceState> {
       // int? artId;
 
       if (artId != null) {
-        await sendInfoArtPiece(artId, title, description, price, categoryId,[]);
+        await sendInfoArtPiece(
+            artId, title, description, price, categoryId, []);
       }
       // if (ArtPieceCoverTypeEnum.V == getTypeOfArtPiece(type) ||
       //     ArtPieceCoverTypeEnum.M == getTypeOfArtPiece(type)) {
@@ -104,7 +106,6 @@ class EditArtPieceCubit extends Cubit<EditArtPieceState> {
 
   Future<int?> uploadImage(File file) async {
     try {
-
       Map output = await uploadNetworkService.uploadImage(file);
       print(output);
       return output['id'];
@@ -147,7 +148,7 @@ class EditArtPieceCubit extends Cubit<EditArtPieceState> {
   }
 
   Future<bool?> sendInfoArtPiece(int artPieceId, String title,
-      String description, int price, int categoryId , List<int> ImageIds) async {
+      String description, int price, int categoryId, List<int> ImageIds) async {
     try {
       emit(EditArtPieceSendingInformation());
 
@@ -158,8 +159,7 @@ class EditArtPieceCubit extends Cubit<EditArtPieceState> {
               title: title,
               price: price,
               categoryId: categoryId,
-              imageIds: ImageIds
-          ));
+              imageIds: ImageIds));
       print('----- post information done --------');
       print(response200.success);
       return response200.success;

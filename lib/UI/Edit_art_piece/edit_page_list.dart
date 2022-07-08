@@ -351,7 +351,8 @@ class _ProfileListItemsState extends State<ProfileListItems> {
                                     if (state is EditArtPieceInitial) {
                                       return SizedBox(
                                         width: 300,
-                                        child: AddImageWidget(onChanged: (file) {
+                                        child:
+                                            AddImageWidget(onChanged: (file) {
                                           setState(() {
                                             imageSliderFiles.add(file);
                                           });
@@ -363,7 +364,8 @@ class _ProfileListItemsState extends State<ProfileListItems> {
                                     return Container();
                                   }
                                   return ImageSliderTile(
-                                      imageSliderFiles[index - 1], onRemove: () {
+                                      imageSliderFiles[index - 1],
+                                      onRemove: () {
                                     setState(() {
                                       imageSliderFiles.removeAt(index - 1);
                                     });
@@ -385,15 +387,13 @@ class _ProfileListItemsState extends State<ProfileListItems> {
                         child: Container(
                           padding: EdgeInsets.all(6),
                           decoration: BoxDecoration(
-                            color: Colors.black,
-                            borderRadius: BorderRadius.circular(12)
-                          ),
-                          child: Text(
+                              color: Colors.black,
+                              borderRadius: BorderRadius.circular(12)),
+                          child: const Text(
                             "امکان ویرایش این بخش وجود ندارد",
                             style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.w800
-                            ),
+                                color: Colors.white,
+                                fontWeight: FontWeight.w800),
                           ),
                         ),
                       ),

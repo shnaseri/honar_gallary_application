@@ -12,37 +12,41 @@ class PhotoScroller extends StatelessWidget {
     var photo = photoUrls[index];
 
     return GestureDetector(
-      onTap: (){
-        Navigator.push(context, MaterialPageRoute(builder: (_) => ImageShowPage(content: photo.image,)));
+      onTap: () {
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (_) => ImageShowPage(
+                      content: photo.image,
+                    )));
       },
       child: Padding(
         padding: const EdgeInsets.only(right: 16.0),
         child: ClipRRect(
-          borderRadius: BorderRadius.circular(4.0),
-          child: CachedNetworkImage(
-              color: Colors.white,
-              imageUrl: photo.image,
-              imageBuilder: (context, imageProvider) {
-                return Container(
-                  height: context.height() * 0.3,
-                  width: context.width()*0.4,
-                  decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(4.0),
+            child: CachedNetworkImage(
+                color: Colors.white,
+                imageUrl: photo.image,
+                imageBuilder: (context, imageProvider) {
+                  return Container(
+                    height: context.height() * 0.3,
+                    width: context.width() * 0.4,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(11),
+                        image: DecorationImage(
+                            fit: BoxFit.cover, image: imageProvider)),
+                  );
+                },
+                placeholder: (context, url) {
+                  return Container(
+                    height: context.height() * 0.3,
+                    width: context.width() * 0.4,
+                    decoration: BoxDecoration(
+                      color: Colors.grey,
                       borderRadius: BorderRadius.circular(11),
-                      image: DecorationImage(
-                          fit: BoxFit.cover, image: imageProvider)),
-                );
-              },
-              placeholder: (context, url) {
-                return Container(
-                  height: context.height() * 0.3,
-                  width: context.width()*0.4,
-                  decoration: BoxDecoration(
-                    color: Colors.grey,
-                    borderRadius: BorderRadius.circular(11),
-                  ),
-                );
-              })
-        ),
+                    ),
+                  );
+                })),
       ),
     );
   }
