@@ -648,6 +648,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.2"
+  more_loading_gif:
+    dependency: "direct main"
+    description:
+      name: more_loading_gif
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.0.3"
   nb_utils:
     dependency: "direct main"
     description:

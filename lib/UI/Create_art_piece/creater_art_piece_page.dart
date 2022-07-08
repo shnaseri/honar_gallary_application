@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:honar_gallary/UI/Art_piece/components/arc_banner_image.dart';
 import 'package:honar_gallary/const/color_const.dart';
-
 // import 'package:honar_gallary/UI/Create_art_piece/image_card.dart';
 import 'package:nb_utils/nb_utils.dart';
 
@@ -72,19 +70,10 @@ class _CreateArtPieceState extends State<CreateArtPiece> {
                 fontFamily: 'Sahel'),
             child: Container(
               width: context.width(),
-              child: ListView(
-                physics: const ClampingScrollPhysics(),
-                children: [
-                  const Padding(
-                    padding: EdgeInsets.only(bottom: 1.0),
-                    child: ArcBannerImage("assets/images/sample1.jpg"),
-                  ),
-                  ProfileListItems(
-                    changeState: () {
-                      setState(() {});
-                    },
-                  ),
-                ],
+              child: ProfileListItems(
+                changeState: () {
+                  setState(() {});
+                },
               ),
             )),
       ),

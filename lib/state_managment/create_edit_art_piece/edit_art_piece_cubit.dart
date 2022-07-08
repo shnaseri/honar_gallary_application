@@ -40,6 +40,7 @@ class EditArtPieceCubit extends Cubit<EditArtPieceState> {
       if (ArtPieceCoverTypeEnum.V == getTypeOfArtPiece(type) ||
           ArtPieceCoverTypeEnum.M == getTypeOfArtPiece(type)) {
         print('---- Start Uploading ------');
+        emit(EditArtPieceUploadingContent());
         InlineResponse2007 response = await coreApi.coreContentUpdate(
             await http.MultipartFile.fromPath('file', file.path));
         print(response.success);
