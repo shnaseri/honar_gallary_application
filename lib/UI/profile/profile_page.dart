@@ -317,7 +317,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                   (states) => const EdgeInsets.symmetric(
                                       horizontal: 50)),
                               shape: MaterialStateProperty.resolveWith(
-                                    (states) => RoundedRectangleBorder(
+                                (states) => RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(20)),
                               ),
                             ),
