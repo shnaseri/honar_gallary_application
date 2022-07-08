@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:honar_gallary/UI/business/business_page.dart';
 import 'package:honar_gallary/const/color_const.dart';
 import 'package:honar_gallary/logic/general_values.dart';
 import 'package:honar_gallary/settings/setting_page.dart';
 import 'package:honar_gallary/state_managment/gallery/gallery_cubit.dart';
-import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 
 import 'components/common.dart';
 
@@ -192,14 +192,11 @@ class _GalleryViewState extends State<GalleryView> {
                               right: 20,
                               child: GestureDetector(
                                 onTap: () {
-                                  pushNewScreen(
-                                    context,
-                                    screen: const SettingsPage(),
-                                    withNavBar: false,
-                                    // OPTIONAL VALUE. True by default.
-                                    pageTransitionAnimation:
-                                        PageTransitionAnimation.cupertino,
-                                  );
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (_) =>
+                                              const SettingsPage()));
                                 },
                                 child: Icon(
                                   Icons.settings,
@@ -212,7 +209,13 @@ class _GalleryViewState extends State<GalleryView> {
                               top: 90,
                               left: 20,
                               child: GestureDetector(
-                                onTap: () {},
+                                onTap: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (_) => BusinessPage(),
+                                      ));
+                                },
                                 child: Icon(
                                   Icons.business_center_sharp,
                                   color: ColorPallet.colorPalletNightFog,
@@ -237,9 +240,7 @@ class _GalleryViewState extends State<GalleryView> {
                       },
                     ),
                   ),
-                  const SizedBox(
-                    height: 15,
-                  ),
+
                   // Container(
                   //   height: 45,
                   //   margin: const EdgeInsets.symmetric(horizontal: 25),
@@ -267,7 +268,8 @@ class _GalleryViewState extends State<GalleryView> {
                     builder: (context, state) {
                       if (state is GalleryInitial && !startApp) {
                         startApp = true;
-                        BlocProvider.of<GalleryCubit>(context).fetchGallery(21);
+                        BlocProvider.of<GalleryCubit>(context).fetchGallery(
+                            ConfigGeneralValues.getInstance().userId!);
                       }
                       if (state is GalleryLoaded) {
                         return Container(
@@ -275,15 +277,15 @@ class _GalleryViewState extends State<GalleryView> {
                           child: MasonryGridView.count(
                             physics: const NeverScrollableScrollPhysics(),
                             shrinkWrap: true,
-                            crossAxisCount: 2,
-                            mainAxisSpacing: 4,
-                            crossAxisSpacing: 4,
+                            crossAxisCount: 3,
+                            mainAxisSpacing: 10,
+                            crossAxisSpacing: 10,
                             itemCount: state.arts.length,
                             itemBuilder: (context, index) {
                               return Tile(
                                 post: state.arts[index],
                                 index: index,
-                                extent: (index % 3 + 1) * 100,
+                                extent: 180,
                               );
                             },
                           ),

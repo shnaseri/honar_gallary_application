@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:honar_api_v14/api.dart';
@@ -27,6 +30,9 @@ class _ProfilePageState extends State<ProfilePage> {
   late TextEditingController _about;
   late FullUser profile;
 
+  late bool selectedImage;
+  File? selectedFile;
+
   @override
   void initState() {
     // TODO: implement initState
@@ -37,6 +43,7 @@ class _ProfilePageState extends State<ProfilePage> {
     _lastname = TextEditingController(text: profile.lastName);
     _email = TextEditingController(text: profile.email);
     _phoneNumber = TextEditingController(text: profile.userProfile.phoneNumber);
+    selectedImage = false;
   }
 
   @override
@@ -80,35 +87,43 @@ class _ProfilePageState extends State<ProfilePage> {
                           Container(
                             width: 130,
                             height: 130,
-                            child: CachedNetworkImage(
-                              imageBuilder: (context, imageProvider) {
-                                return Container(
-                                  decoration: BoxDecoration(
-                                      shape: BoxShape.circle,
-                                      image: DecorationImage(
-                                          fit: BoxFit.cover,
-                                          image: imageProvider)),
-                                );
-                              },
-                              placeholder: (context, strImage) {
-                                return Container(
-                                  decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    color: Colors.grey,
-                                    border: Border.all(
-                                      color: Colors.white,
-                                      width: 2.0,
-                                    ),
+                            child: selectedImage && selectedFile != null
+                                ? Container(
+                                    decoration: BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        image: DecorationImage(
+                                            fit: BoxFit.cover,
+                                            image: FileImage(selectedFile!))),
+                                  )
+                                : CachedNetworkImage(
+                                    imageBuilder: (context, imageProvider) {
+                                      return Container(
+                                        decoration: BoxDecoration(
+                                            shape: BoxShape.circle,
+                                            image: DecorationImage(
+                                                fit: BoxFit.cover,
+                                                image: imageProvider)),
+                                      );
+                                    },
+                                    placeholder: (context, strImage) {
+                                      return Container(
+                                        decoration: BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          color: Colors.grey,
+                                          border: Border.all(
+                                            color: Colors.white,
+                                            width: 2.0,
+                                          ),
+                                        ),
+                                      );
+                                    },
+                                    imageUrl: profile.userProfile.avatar != null
+                                        ? profile.userProfile.avatar.image
+                                        : 'https://picsum.photos/id/237/200/300',
+                                    fit: BoxFit.fill,
+                                    height: context.height() * 0.05,
+                                    width: context.width(),
                                   ),
-                                );
-                              },
-                              imageUrl: profile.userProfile.avatar != null
-                                  ? profile.userProfile.avatar.image
-                                  : 'https://picsum.photos/id/237/200/300',
-                              fit: BoxFit.fill,
-                              height: context.height() * 0.05,
-                              width: context.width(),
-                            ),
                             decoration: BoxDecoration(
                               border: Border.all(
                                   width: 4,
@@ -127,23 +142,71 @@ class _ProfilePageState extends State<ProfilePage> {
                           Positioned(
                               bottom: 0,
                               right: 0,
-                              child: Container(
-                                height: 40,
-                                width: 40,
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  border: Border.all(
-                                    width: 4,
-                                    color: Theme.of(context)
-                                        .scaffoldBackgroundColor,
-                                  ),
-                                  color: Colors.green,
-                                ),
-                                child: const Icon(
-                                  Icons.edit,
-                                  color: Colors.white,
-                                ),
-                              )),
+                              child: selectedImage && selectedFile != null
+                                  ? GestureDetector(
+                                      onTap: () async {
+                                        setState(() {
+                                          selectedFile = null;
+                                          selectedImage = false;
+                                        });
+                                      },
+                                      child: Container(
+                                        height: 40,
+                                        width: 40,
+                                        decoration: BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          border: Border.all(
+                                            width: 4,
+                                            color: Theme.of(context)
+                                                .scaffoldBackgroundColor,
+                                          ),
+                                          color: Colors.red,
+                                        ),
+                                        child: const Icon(
+                                          Icons.delete,
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                    )
+                                  : GestureDetector(
+                                      onTap: () async {
+                                        FilePickerResult? result =
+                                            await FilePicker.platform.pickFiles(
+                                                type: FileType.custom,
+                                                allowedExtensions: [
+                                              'bmp',
+                                              'jpg',
+                                              'png'
+                                            ]);
+
+                                        if (result != null) {
+                                          setState(() {
+                                            selectedFile =
+                                                File(result.files.single.path!);
+                                            selectedImage = true;
+                                          });
+                                        } else {
+                                          selectedImage = false;
+                                        }
+                                      },
+                                      child: Container(
+                                        height: 40,
+                                        width: 40,
+                                        decoration: BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          border: Border.all(
+                                            width: 4,
+                                            color: Theme.of(context)
+                                                .scaffoldBackgroundColor,
+                                          ),
+                                          color: Colors.green,
+                                        ),
+                                        child: const Icon(
+                                          Icons.edit,
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                    )),
                         ],
                       ),
                     ),
@@ -193,6 +256,8 @@ class _ProfilePageState extends State<ProfilePage> {
                                   }
                                   print("---- send info profile ---");
                                   try {
+                                    await BlocProvider.of<ProfileCubit>(context)
+                                        .uploadProfile(selectedFile!);
                                     profile =
                                         await BlocProvider.of<ProfileCubit>(
                                                 context)
@@ -265,6 +330,8 @@ class _ProfilePageState extends State<ProfilePage> {
                                   TextEditingController(text: profile.email);
                               _phoneNumber = TextEditingController(
                                   text: profile.userProfile.phoneNumber);
+                              selectedFile = null;
+                              selectedImage = false;
                               setState(() {});
                             },
                             child: const Text("بازنشانی",

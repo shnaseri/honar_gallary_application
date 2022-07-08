@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:bloc/bloc.dart';
 import 'package:honar_api_v14/api.dart';
 import 'package:honar_gallary/logic/consts.dart';
@@ -11,6 +13,10 @@ class ProfileCubit extends Cubit<ProfileState> {
 
   ProfileCubit() : super(ProfileInitial()) {
     profileApi = ProfileApi(interfaceOfUser);
+  }
+
+  Future uploadProfile(File file) async {
+    try {} catch (e) {}
   }
 
   Future sendInfoProfile(
