@@ -311,7 +311,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           child: OutlinedButton(
                             style: ButtonStyle(
                               side: MaterialStateProperty.resolveWith(
-                                      (states) => const BorderSide(
+                                  (states) => const BorderSide(
                                       width: 2.0, color: Colors.white)),
                               padding: MaterialStateProperty.resolveWith(
                                       (states) => const EdgeInsets.symmetric(
