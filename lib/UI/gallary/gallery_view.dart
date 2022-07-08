@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:honar_gallary/UI/business/business_page.dart';
 import 'package:honar_gallary/const/color_const.dart';
 import 'package:honar_gallary/logic/general_values.dart';
 import 'package:honar_gallary/settings/setting_page.dart';
@@ -212,7 +213,16 @@ class _GalleryViewState extends State<GalleryView> {
                               top: 90,
                               left: 20,
                               child: GestureDetector(
-                                onTap: () {},
+                                onTap: () {
+                                  pushNewScreen(
+                                    context,
+                                    screen: const BusinessPage(),
+                                    withNavBar: false,
+                                    // OPTIONAL VALUE. True by default.
+                                    pageTransitionAnimation:
+                                        PageTransitionAnimation.cupertino,
+                                  );
+                                },
                                 child: Icon(
                                   Icons.business_center_sharp,
                                   color: ColorPallet.colorPalletNightFog,

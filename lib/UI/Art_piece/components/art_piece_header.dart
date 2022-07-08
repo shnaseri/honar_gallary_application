@@ -39,6 +39,8 @@ class MovieDetailHeader extends StatelessWidget {
       children: [
         Text(
           movie.title,
+          overflow: TextOverflow.ellipsis,
+          maxLines: 1,
           style: textTheme.titleMedium!.copyWith(
               fontWeight: FontWeight.bold, fontStyle: FontStyle.italic),
         ),
