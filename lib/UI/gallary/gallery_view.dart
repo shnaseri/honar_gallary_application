@@ -18,6 +18,7 @@ class GalleryView extends StatefulWidget {
 
 class _GalleryViewState extends State<GalleryView> {
   late bool startApp;
+  late BuildContext contextCubit;
 
   @override
   void initState() {
@@ -46,257 +47,271 @@ class _GalleryViewState extends State<GalleryView> {
                 ),
               ),
             ),
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 15),
-              height: MediaQuery.of(context).size.height,
-              child: ListView(
-                padding: const EdgeInsets.only(top: 40, bottom: 70),
-                children: [
-                  Container(
-                    height: 250,
-                    padding: const EdgeInsets.symmetric(horizontal: 15),
-                    child: LayoutBuilder(
-                      builder: (context, constraints) {
-                        double innerHeight = constraints.maxHeight;
-                        double innerWidth = constraints.maxWidth;
-                        return Stack(
-                          fit: StackFit.expand,
-                          children: [
-                            Positioned(
-                              bottom: 0,
-                              left: 0,
-                              right: 0,
-                              child: Container(
-                                height: innerHeight * 0.68,
-                                width: innerWidth,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(15),
-                                  color: Colors.white,
-                                ),
-                                child: Column(
-                                  children: [
-                                    const SizedBox(
-                                      height: 55,
-                                    ),
-                                    Text(
-                                      ConfigGeneralValues.getInstance()
-                                              .profile
-                                              .firstName +
-                                          " " +
-                                          ConfigGeneralValues.getInstance()
-                                              .profile
-                                              .lastName,
-                                      style: TextStyle(
-                                        color: ColorPallet.colorPalletSambucus,
-                                        fontSize: 25,
+            RefreshIndicator(
+              onRefresh: () async {
+                await BlocProvider.of<GalleryCubit>(contextCubit)
+                    .fetchGallery(ConfigGeneralValues.getInstance().userId!);
+              },
+              child: Container(
+                padding: const EdgeInsets.symmetric(horizontal: 15),
+                height: MediaQuery.of(context).size.height,
+                child: ListView(
+                  physics: ClampingScrollPhysics(),
+                  padding: const EdgeInsets.only(top: 40, bottom: 70),
+                  children: [
+                    Container(
+                      height: 250,
+                      padding: const EdgeInsets.symmetric(horizontal: 15),
+                      child: LayoutBuilder(
+                        builder: (context, constraints) {
+                          double innerHeight = constraints.maxHeight;
+                          double innerWidth = constraints.maxWidth;
+                          return Stack(
+                            fit: StackFit.expand,
+                            children: [
+                              Positioned(
+                                bottom: 0,
+                                left: 0,
+                                right: 0,
+                                child: Container(
+                                  height: innerHeight * 0.68,
+                                  width: innerWidth,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(15),
+                                    color: Colors.white,
+                                  ),
+                                  child: Column(
+                                    children: [
+                                      const SizedBox(
+                                        height: 55,
                                       ),
-                                    ),
-                                    Container(
-                                      color: Colors.white,
-                                    ),
-                                    const SizedBox(
-                                      height: 5,
-                                    ),
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        Column(
-                                          children: [
-                                            Text(
-                                              'دنبال کننده ها',
-                                              style: TextStyle(
-                                                color: ColorPallet
-                                                    .colorPalletBlueGam,
-                                                fontWeight: FontWeight.w500,
-                                                fontSize: 18,
+                                      Text(
+                                        ConfigGeneralValues.getInstance()
+                                                .profile
+                                                .firstName +
+                                            " " +
+                                            ConfigGeneralValues.getInstance()
+                                                .profile
+                                                .lastName,
+                                        style: TextStyle(
+                                          color:
+                                              ColorPallet.colorPalletSambucus,
+                                          fontSize: 25,
+                                        ),
+                                      ),
+                                      Container(
+                                        color: Colors.white,
+                                      ),
+                                      const SizedBox(
+                                        height: 5,
+                                      ),
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Column(
+                                            children: [
+                                              Text(
+                                                'دنبال کننده ها',
+                                                style: TextStyle(
+                                                  color: ColorPallet
+                                                      .colorPalletBlueGam,
+                                                  fontWeight: FontWeight.w500,
+                                                  fontSize: 18,
+                                                ),
                                               ),
-                                            ),
-                                            CircleAvatar(
-                                              backgroundColor: ColorPallet
-                                                  .colorPalletNightFog,
-                                              radius: 14,
-                                              child: Center(
-                                                child: Text(
-                                                  ConfigGeneralValues
-                                                          .getInstance()
-                                                      .profile
-                                                      .userProfile
-                                                      .followersCount
-                                                      .toString(),
-                                                  style: const TextStyle(
-                                                    color: Colors.white,
-                                                    fontSize: 14,
-                                                    fontWeight: FontWeight.w800,
+                                              CircleAvatar(
+                                                backgroundColor: ColorPallet
+                                                    .colorPalletNightFog,
+                                                radius: 14,
+                                                child: Center(
+                                                  child: Text(
+                                                    ConfigGeneralValues
+                                                            .getInstance()
+                                                        .profile
+                                                        .userProfile
+                                                        .followersCount
+                                                        .toString(),
+                                                    style: const TextStyle(
+                                                      color: Colors.white,
+                                                      fontSize: 14,
+                                                      fontWeight:
+                                                          FontWeight.w800,
+                                                    ),
                                                   ),
                                                 ),
                                               ),
-                                            ),
-                                          ],
-                                        ),
-                                        Padding(
-                                          padding: const EdgeInsets.symmetric(
-                                            horizontal: 25,
-                                            vertical: 8,
+                                            ],
                                           ),
-                                          child: Container(
-                                            height: 45,
-                                            width: 3,
-                                            decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(100),
-                                              color: Colors.grey,
+                                          Padding(
+                                            padding: const EdgeInsets.symmetric(
+                                              horizontal: 25,
+                                              vertical: 8,
                                             ),
-                                          ),
-                                        ),
-                                        Column(
-                                          children: [
-                                            Text(
-                                              'تعداد پست ها',
-                                              style: TextStyle(
-                                                color: ColorPallet
-                                                    .colorPalletBlueGam,
-                                                fontSize: 18,
+                                            child: Container(
+                                              height: 45,
+                                              width: 3,
+                                              decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(100),
+                                                color: Colors.grey,
                                               ),
                                             ),
-                                            CircleAvatar(
-                                              backgroundColor: ColorPallet
-                                                  .colorPalletNightFog,
-                                              radius: 14,
-                                              child: Center(
-                                                child: Text(
-                                                  ConfigGeneralValues
-                                                          .getInstance()
-                                                      .profile
-                                                      .userProfile
-                                                      .followingCount
-                                                      .toString(),
-                                                  style: const TextStyle(
-                                                    color: Colors.white,
-                                                    fontSize: 14,
-                                                    fontWeight: FontWeight.w800,
+                                          ),
+                                          Column(
+                                            children: [
+                                              Text(
+                                                'تعداد پست ها',
+                                                style: TextStyle(
+                                                  color: ColorPallet
+                                                      .colorPalletBlueGam,
+                                                  fontSize: 18,
+                                                ),
+                                              ),
+                                              CircleAvatar(
+                                                backgroundColor: ColorPallet
+                                                    .colorPalletNightFog,
+                                                radius: 14,
+                                                child: Center(
+                                                  child: Text(
+                                                    ConfigGeneralValues
+                                                            .getInstance()
+                                                        .profile
+                                                        .userProfile
+                                                        .followingCount
+                                                        .toString(),
+                                                    style: const TextStyle(
+                                                      color: Colors.white,
+                                                      fontSize: 14,
+                                                      fontWeight:
+                                                          FontWeight.w800,
+                                                    ),
                                                   ),
                                                 ),
                                               ),
-                                            ),
-                                          ],
-                                        ),
-                                      ],
-                                    )
-                                  ],
+                                            ],
+                                          ),
+                                        ],
+                                      )
+                                    ],
+                                  ),
                                 ),
                               ),
-                            ),
-                            Positioned(
-                              top: 90,
-                              right: 20,
-                              child: GestureDetector(
-                                onTap: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (_) =>
-                                              const SettingsPage()));
-                                },
-                                child: Icon(
-                                  Icons.settings,
-                                  color: ColorPallet.colorPalletNightFog,
-                                  size: 25,
+                              Positioned(
+                                top: 90,
+                                right: 20,
+                                child: GestureDetector(
+                                  onTap: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (_) =>
+                                                const SettingsPage()));
+                                  },
+                                  child: Icon(
+                                    Icons.settings,
+                                    color: ColorPallet.colorPalletNightFog,
+                                    size: 25,
+                                  ),
                                 ),
                               ),
-                            ),
-                            Positioned(
-                              top: 90,
-                              left: 20,
-                              child: GestureDetector(
-                                onTap: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (_) => BusinessPage(),
-                                      ));
-                                },
-                                child: Icon(
-                                  Icons.business_center_sharp,
-                                  color: ColorPallet.colorPalletNightFog,
-                                  size: 25,
+                              Positioned(
+                                top: 90,
+                                left: 20,
+                                child: GestureDetector(
+                                  onTap: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (_) => BusinessPage(),
+                                        ));
+                                  },
+                                  child: Icon(
+                                    Icons.business_center_sharp,
+                                    color: ColorPallet.colorPalletNightFog,
+                                    size: 25,
+                                  ),
                                 ),
                               ),
-                            ),
-                            Positioned(
-                              top: 0,
-                              left: 0,
-                              right: 0,
-                              child: Center(
-                                child: Image.asset(
-                                  'assets/images/profile.png',
-                                  width: innerWidth * 0.41,
-                                  fit: BoxFit.fitWidth,
+                              Positioned(
+                                top: 0,
+                                left: 0,
+                                right: 0,
+                                child: Center(
+                                  child: Image.asset(
+                                    'assets/images/profile.png',
+                                    width: innerWidth * 0.41,
+                                    fit: BoxFit.fitWidth,
+                                  ),
                                 ),
                               ),
+                            ],
+                          );
+                        },
+                      ),
+                    ),
+
+                    // Container(
+                    //   height: 45,
+                    //   margin: const EdgeInsets.symmetric(horizontal: 25),
+                    //   padding: const EdgeInsets.symmetric(horizontal: 5),
+                    //   decoration: BoxDecoration(
+                    //       color: Colors.white,
+                    //       borderRadius: BorderRadius.circular(10)),
+                    //   child: Row(
+                    //     mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    //     children: [
+                    //       const Text(
+                    //         " صفحه تجاری این کاربر باز است ",
+                    //         style: TextStyle(
+                    //             color: Colors.black, fontWeight: FontWeight.w900),
+                    //       ),
+                    //       ElevatedButton(
+                    //           onPressed: () {}, child: const Text("مشاهده"))
+                    //     ],
+                    //   ),
+                    // ),
+                    const SizedBox(
+                      height: 5,
+                    ),
+                    BlocBuilder<GalleryCubit, GalleryState>(
+                      builder: (context, state) {
+                        contextCubit = context;
+                        if (state is GalleryInitial && !startApp) {
+                          startApp = true;
+                          BlocProvider.of<GalleryCubit>(context).fetchGallery(
+                              ConfigGeneralValues.getInstance().userId!);
+                        }
+                        if (state is GalleryLoaded) {
+                          return Container(
+                            padding: const EdgeInsets.all(10),
+                            child: MasonryGridView.count(
+                              physics: const NeverScrollableScrollPhysics(),
+                              shrinkWrap: true,
+                              crossAxisCount: 3,
+                              mainAxisSpacing: 10,
+                              crossAxisSpacing: 10,
+                              itemCount: state.arts.length,
+                              itemBuilder: (context, index) {
+                                return Tile(
+                                  post: state.arts[index],
+                                  index: index,
+                                  extent: 180,
+                                );
+                              },
                             ),
-                          ],
+                          );
+                        }
+                        return const Padding(
+                          padding: EdgeInsets.only(top: 15),
+                          child: Center(
+                            child: CircularProgressIndicator(),
+                          ),
                         );
                       },
                     ),
-                  ),
-
-                  // Container(
-                  //   height: 45,
-                  //   margin: const EdgeInsets.symmetric(horizontal: 25),
-                  //   padding: const EdgeInsets.symmetric(horizontal: 5),
-                  //   decoration: BoxDecoration(
-                  //       color: Colors.white,
-                  //       borderRadius: BorderRadius.circular(10)),
-                  //   child: Row(
-                  //     mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  //     children: [
-                  //       const Text(
-                  //         " صفحه تجاری این کاربر باز است ",
-                  //         style: TextStyle(
-                  //             color: Colors.black, fontWeight: FontWeight.w900),
-                  //       ),
-                  //       ElevatedButton(
-                  //           onPressed: () {}, child: const Text("مشاهده"))
-                  //     ],
-                  //   ),
-                  // ),
-                  const SizedBox(
-                    height: 5,
-                  ),
-                  BlocBuilder<GalleryCubit, GalleryState>(
-                    builder: (context, state) {
-                      if (state is GalleryInitial && !startApp) {
-                        startApp = true;
-                        BlocProvider.of<GalleryCubit>(context).fetchGallery(
-                            ConfigGeneralValues.getInstance().userId!);
-                      }
-                      if (state is GalleryLoaded) {
-                        return Container(
-                          padding: const EdgeInsets.all(10),
-                          child: MasonryGridView.count(
-                            physics: const NeverScrollableScrollPhysics(),
-                            shrinkWrap: true,
-                            crossAxisCount: 3,
-                            mainAxisSpacing: 10,
-                            crossAxisSpacing: 10,
-                            itemCount: state.arts.length,
-                            itemBuilder: (context, index) {
-                              return Tile(
-                                post: state.arts[index],
-                                index: index,
-                                extent: 180,
-                              );
-                            },
-                          ),
-                        );
-                      }
-                      return const Center(
-                        child: CircularProgressIndicator(),
-                      );
-                    },
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ],

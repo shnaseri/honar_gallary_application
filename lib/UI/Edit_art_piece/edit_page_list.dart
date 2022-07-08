@@ -326,52 +326,78 @@ class _ProfileListItemsState extends State<ProfileListItems> {
               ),
               aboutTextField(),
               if (dropDownValue != items[0])
-                Column(
+                Stack(
                   children: [
-                    const SizedBox(
-                      height: 20,
+                    Column(
+                      children: [
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        BlocBuilder<EditArtPieceCubit, EditArtPieceState>(
+                          builder: (context, state) {
+                            print("---- current state -----");
+                            print(state);
+                            if (state is EditArtPieceSuccessfully) {
+                              // showSnackBar(context, "با موفقیت انجام شد");
+                              // BlocProvider.of<EditArtPieceCubit>(context)
+                              //     .emit(EditArtPieceInitial());
+                            }
+                            return SizedBox(
+                              height: 280,
+                              child: ListView.builder(
+                                scrollDirection: Axis.horizontal,
+                                itemBuilder: (BuildContext context, int index) {
+                                  if (index == 0) {
+                                    if (state is EditArtPieceInitial) {
+                                      return SizedBox(
+                                        width: 300,
+                                        child:
+                                            AddImageWidget(onChanged: (file) {
+                                          setState(() {
+                                            imageSliderFiles.add(file);
+                                          });
+                                          print(imageSliderFiles.length);
+                                          print(imageSliderFiles);
+                                        }),
+                                      );
+                                    }
+                                    return Container();
+                                  }
+                                  return ImageSliderTile(
+                                      imageSliderFiles[index - 1],
+                                      onRemove: () {
+                                    setState(() {
+                                      imageSliderFiles.removeAt(index - 1);
+                                    });
+                                  }).paddingSymmetric(horizontal: 15);
+                                },
+                                itemCount: (imageSliderFiles.length) + 1,
+                              ),
+                            );
+                          },
+                        ),
+                      ],
                     ),
-                    BlocBuilder<EditArtPieceCubit, EditArtPieceState>(
-                      builder: (context, state) {
-                        print("---- current state -----");
-                        print(state);
-                        if (state is EditArtPieceSuccessfully) {
-                          // showSnackBar(context, "با موفقیت انجام شد");
-                          // BlocProvider.of<EditArtPieceCubit>(context)
-                          //     .emit(EditArtPieceInitial());
-                        }
-                        return SizedBox(
-                          height: 280,
-                          child: ListView.builder(
-                            scrollDirection: Axis.horizontal,
-                            itemBuilder: (BuildContext context, int index) {
-                              if (index == 0) {
-                                if (state is EditArtPieceInitial) {
-                                  return SizedBox(
-                                    width: 300,
-                                    child: AddImageWidget(onChanged: (file) {
-                                      setState(() {
-                                        imageSliderFiles.add(file);
-                                      });
-                                      print(imageSliderFiles.length);
-                                      print(imageSliderFiles);
-                                    }),
-                                  );
-                                }
-                                return Container();
-                              }
-                              return ImageSliderTile(
-                                  imageSliderFiles[index - 1], onRemove: () {
-                                setState(() {
-                                  imageSliderFiles.removeAt(index - 1);
-                                });
-                              }).paddingSymmetric(horizontal: 15);
-                            },
-                            itemCount: (imageSliderFiles.length) + 1,
+                    Container(
+                      margin: EdgeInsets.all(14),
+                      color: Colors.black26,
+                      height: 280,
+                      width: context.width(),
+                      child: Center(
+                        child: Container(
+                          padding: EdgeInsets.all(6),
+                          decoration: BoxDecoration(
+                              color: Colors.black,
+                              borderRadius: BorderRadius.circular(12)),
+                          child: const Text(
+                            "امکان ویرایش این بخش وجود ندارد",
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.w800),
                           ),
-                        );
-                      },
-                    ),
+                        ),
+                      ),
+                    )
                   ],
                 ),
               const SizedBox(

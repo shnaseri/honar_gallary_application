@@ -664,6 +664,41 @@ class _ProfileListItemsState extends State<ProfileListItems> {
                                                 SizedBox(
                                                   width: 10,
                                                 ),
+                                                Text("عکس ها"),
+                                              ],
+                                            ),
+                                            SizedBox(
+                                                height: 20,
+                                                width: 20,
+                                                child: (state is EditArtPieceInitial ||
+                                                        state
+                                                            is EditArtPieceUploadingCover ||
+                                                        state
+                                                            is EditArtPieceSendingCover ||
+                                                        state
+                                                            is EditArtPieceUploadingImages
+                                                    ? CircularProgressIndicator()
+                                                    : Icon(
+                                                        Icons.check_circle,
+                                                        color: Colors.green,
+                                                      )))
+                                          ],
+                                        ),
+                                      ),
+                                      Container(
+                                        margin: const EdgeInsets.symmetric(
+                                            vertical: 5),
+                                        height: 20,
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Row(
+                                              children: const [
+                                                Text("3-"),
+                                                SizedBox(
+                                                  width: 10,
+                                                ),
                                                 Text("اطلاعات"),
                                               ],
                                             ),
@@ -675,6 +710,8 @@ class _ProfileListItemsState extends State<ProfileListItems> {
                                                             is EditArtPieceUploadingCover ||
                                                         state
                                                             is EditArtPieceSendingCover ||
+                                                        state
+                                                            is EditArtPieceUploadingImages ||
                                                         state
                                                             is EditArtPieceSendingInformation)
                                                     ? CircularProgressIndicator()
@@ -695,7 +732,7 @@ class _ProfileListItemsState extends State<ProfileListItems> {
                                           children: [
                                             Row(
                                               children: [
-                                                const Text("3-"),
+                                                const Text("4-"),
                                                 const SizedBox(
                                                   width: 10,
                                                 ),
