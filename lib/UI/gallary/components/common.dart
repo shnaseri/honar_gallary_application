@@ -96,7 +96,7 @@ class _TileState extends State<Tile> {
           height: widget.extent,
           decoration: BoxDecoration(
               color: Colors.white,
-              borderRadius: BorderRadius.circular(9),
+              borderRadius: BorderRadius.circular(11),
               boxShadow: const [
                 BoxShadow(color: Colors.black26, spreadRadius: 0.2)
               ]),
@@ -111,7 +111,7 @@ class _TileState extends State<Tile> {
                           width: context.width(),
                           height: context.height() * 0.3,
                           decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(9),
+                              borderRadius: BorderRadius.circular(11),
                               image: DecorationImage(
                                   fit: BoxFit.cover, image: imageProvider)),
                         );
@@ -120,25 +120,35 @@ class _TileState extends State<Tile> {
                         return Container(
                           height: context.height() * 0.3,
                           width: context.width(),
-                          decoration: const BoxDecoration(color: Colors.grey),
+                          decoration: BoxDecoration(
+                            color: Colors.grey,
+                            borderRadius: BorderRadius.circular(11),
+                          ),
                         );
                       })),
               Positioned(
-                child: Row(
-                  children: [
-                    Text(
-                      (widget.post.countLike ?? 0).toString(),
-                      style: const TextStyle(
-                          fontWeight: FontWeight.w900,
-                          fontSize: 15,
-                          color: Colors.pink),
-                    ),
-                    2.width,
-                    const Icon(
-                      Icons.favorite_border_rounded,
-                      color: Colors.pinkAccent,
-                    ),
-                  ],
+                child: Container(
+                  padding: EdgeInsets.symmetric(vertical: 4, horizontal: 6),
+                  margin: EdgeInsets.only(top: 5),
+                  decoration: BoxDecoration(
+                      color: Colors.pink,
+                      borderRadius: BorderRadius.circular(9)),
+                  child: Row(
+                    children: [
+                      Text(
+                        (widget.post.countLike ?? 0).toString(),
+                        style: const TextStyle(
+                            fontWeight: FontWeight.w900,
+                            fontSize: 12,
+                            color: Colors.white),
+                      ),
+                      2.width,
+                      const Icon(
+                        Icons.favorite_border_rounded,
+                        color: Colors.white,
+                      ),
+                    ],
+                  ),
                 ),
                 top: 0,
                 left: 5,

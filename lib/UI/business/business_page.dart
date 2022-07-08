@@ -19,12 +19,14 @@ class BusinessPage extends StatefulWidget {
 
 class _BusinessPageState extends State<BusinessPage> {
   late bool startApp;
+  late FullUser profile;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     startApp = false;
+    profile = ConfigGeneralValues.getInstance().profile;
   }
 
   @override
@@ -51,33 +53,148 @@ class _BusinessPageState extends State<BusinessPage> {
               padding: const EdgeInsets.symmetric(horizontal: 15),
               height: MediaQuery.of(context).size.height,
               child: ListView(
-                padding: const EdgeInsets.only(top: 40, bottom: 70),
+                padding: const EdgeInsets.only(top: 40, bottom: 40),
                 children: [
-                  const SizedBox(
-                    height: 15,
-                  ),
-                  // Container(
-                  //   height: 45,
-                  //   margin: const EdgeInsets.symmetric(horizontal: 25),
-                  //   padding: const EdgeInsets.symmetric(horizontal: 5),
-                  //   decoration: BoxDecoration(
-                  //       color: Colors.white,
-                  //       borderRadius: BorderRadius.circular(10)),
-                  //   child: Row(
-                  //     mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  //     children: [
-                  //       const Text(
-                  //         " صفحه تجاری این کاربر باز است ",
-                  //         style: TextStyle(
-                  //             color: Colors.black, fontWeight: FontWeight.w900),
-                  //       ),
-                  //       ElevatedButton(
-                  //           onPressed: () {}, child: const Text("مشاهده"))
-                  //     ],
-                  //   ),
-                  // ),
-                  const SizedBox(
-                    height: 5,
+                  Container(
+                    height: 120,
+                    margin: const EdgeInsets.symmetric(horizontal: 10),
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(12),
+                        color: Colors.white),
+                    child: Row(
+                      children: [
+                        Expanded(
+                          flex: 2,
+                          child: CachedNetworkImage(
+                            imageBuilder: (context, imageProvider) {
+                              return Container(
+                                decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    border: Border.all(color: Colors.blueGrey),
+                                    image: DecorationImage(
+                                        fit: BoxFit.contain,
+                                        image: imageProvider)),
+                              );
+                            },
+                            placeholder: (context, strImage) {
+                              return Container(
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  color: Colors.grey,
+                                  border: Border.all(
+                                    color: Colors.white,
+                                    width: 2.0,
+                                  ),
+                                ),
+                              );
+                            },
+                            imageUrl: profile.userProfile.avatar.image,
+                            fit: BoxFit.fill,
+                            height: 130,
+                            width: 100,
+                          ),
+                        ),
+                        Expanded(
+                          child: Column(
+                            children: [
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              Text(
+                                profile.firstName + " " + profile.lastName,
+                                style: const TextStyle(
+                                    fontSize: 22,
+                                    fontWeight: FontWeight.w900,
+                                    color: Colors.pink),
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Column(
+                                    children: [
+                                      Text(
+                                        'دنبال کننده ها',
+                                        style: TextStyle(
+                                          color: ColorPallet.colorPalletBlueGam,
+                                          fontWeight: FontWeight.w500,
+                                          fontSize: 13,
+                                        ),
+                                      ),
+                                      CircleAvatar(
+                                        backgroundColor:
+                                            ColorPallet.colorPalletNightFog,
+                                        radius: 10,
+                                        child: Center(
+                                          child: Text(
+                                            ConfigGeneralValues.getInstance()
+                                                .profile
+                                                .userProfile
+                                                .followersCount
+                                                .toString(),
+                                            style: const TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 10,
+                                              fontWeight: FontWeight.w800,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                      horizontal: 12,
+                                      vertical: 8,
+                                    ),
+                                    child: Container(
+                                      height: 45,
+                                      width: 3,
+                                      decoration: BoxDecoration(
+                                        borderRadius:
+                                            BorderRadius.circular(100),
+                                        color: Colors.grey,
+                                      ),
+                                    ),
+                                  ),
+                                  Column(
+                                    children: [
+                                      Text(
+                                        'تعداد پست ها',
+                                        style: TextStyle(
+                                          color: ColorPallet.colorPalletBlueGam,
+                                          fontSize: 13,
+                                        ),
+                                      ),
+                                      CircleAvatar(
+                                        backgroundColor:
+                                            ColorPallet.colorPalletNightFog,
+                                        radius: 10,
+                                        child: Center(
+                                          child: Text(
+                                            ConfigGeneralValues.getInstance()
+                                                .profile
+                                                .userProfile
+                                                .followingCount
+                                                .toString(),
+                                            style: const TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 10,
+                                              fontWeight: FontWeight.w800,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              )
+                            ],
+                          ),
+                          flex: 6,
+                        )
+                      ],
+                    ),
                   ),
                   BlocBuilder<GalleryCubit, GalleryState>(
                     builder: (context, state) {
@@ -139,7 +256,7 @@ class ArtPieceTile extends StatelessWidget {
     return Container(
       width: MediaQuery.of(context).size.width,
       height: MediaQuery.of(context).size.height / 3,
-      margin: const EdgeInsets.symmetric(vertical: 10),
+      margin: const EdgeInsets.symmetric(vertical: 7),
       decoration: BoxDecoration(borderRadius: BorderRadius.circular(15)),
       child: Stack(
         children: [

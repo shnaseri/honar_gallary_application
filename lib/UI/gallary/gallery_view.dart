@@ -277,15 +277,15 @@ class _GalleryViewState extends State<GalleryView> {
                           child: MasonryGridView.count(
                             physics: const NeverScrollableScrollPhysics(),
                             shrinkWrap: true,
-                            crossAxisCount: 2,
-                            mainAxisSpacing: 4,
-                            crossAxisSpacing: 4,
+                            crossAxisCount: 3,
+                            mainAxisSpacing: 10,
+                            crossAxisSpacing: 10,
                             itemCount: state.arts.length,
                             itemBuilder: (context, index) {
                               return Tile(
                                 post: state.arts[index],
                                 index: index,
-                                extent: (index % 3 + 1) * 100,
+                                extent: 180,
                               );
                             },
                           ),

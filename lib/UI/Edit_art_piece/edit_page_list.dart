@@ -328,7 +328,7 @@ class _ProfileListItemsState extends State<ProfileListItems> {
               if (dropDownValue != items[0])
                 Column(
                   children: [
-                    SizedBox(
+                    const SizedBox(
                       height: 20,
                     ),
                     BlocBuilder<EditArtPieceCubit, EditArtPieceState>(
