@@ -314,7 +314,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                   (states) => const BorderSide(
                                       width: 2.0, color: Colors.white)),
                               padding: MaterialStateProperty.resolveWith(
-                                      (states) => const EdgeInsets.symmetric(
+                                  (states) => const EdgeInsets.symmetric(
                                       horizontal: 50)),
                               shape: MaterialStateProperty.resolveWith(
                                     (states) => RoundedRectangleBorder(
