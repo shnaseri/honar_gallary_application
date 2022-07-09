@@ -79,8 +79,6 @@ class _BusinessPageState extends State<BusinessPage> {
                                 return Container(
                                   decoration: BoxDecoration(
                                       shape: BoxShape.circle,
-                                      border:
-                                          Border.all(color: Colors.blueGrey),
                                       image: DecorationImage(
                                           fit: BoxFit.contain,
                                           image: imageProvider)),
@@ -98,7 +96,9 @@ class _BusinessPageState extends State<BusinessPage> {
                                   ),
                                 );
                               },
-                              imageUrl: profile.userProfile!.avatar!.image!,
+                              imageUrl: profile.userProfile!.avatar == null
+                                  ? "http://188.121.110.151:8000/media/images/icons8-test-account-64.png"
+                                  : profile.userProfile!.avatar!.image!,
                               fit: BoxFit.fill,
                               height: 130,
                               width: 100,
@@ -291,8 +291,6 @@ class ArtPieceTile extends StatelessWidget {
               },
               placeholder: (context, url) {
                 return Container(
-                  height: context.height() * 0.3,
-                  width: context.width(),
                   decoration: const BoxDecoration(color: Colors.grey),
                 );
               }),

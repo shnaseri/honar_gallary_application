@@ -263,7 +263,9 @@ class _ArtPiecePageState extends State<ArtPiecePage> {
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (_) => const CommentPage()));
+                                        builder: (_) => CommentPage(
+                                              artPiece: state.artPiece,
+                                            )));
                               },
                               child: const Text("مشاهده همه"),
                             ),
