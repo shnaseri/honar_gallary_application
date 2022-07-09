@@ -42,7 +42,8 @@ class _ProfilePageState extends State<ProfilePage> {
     _name = TextEditingController(text: profile.firstName);
     _lastname = TextEditingController(text: profile.lastName);
     _email = TextEditingController(text: profile.email);
-    _phoneNumber = TextEditingController(text: profile.userProfile!.phoneNumber);
+    _phoneNumber =
+        TextEditingController(text: profile.userProfile!.phoneNumber);
     selectedImage = false;
   }
 
@@ -117,7 +118,8 @@ class _ProfilePageState extends State<ProfilePage> {
                                         ),
                                       );
                                     },
-                                    imageUrl: profile.userProfile!.avatar! != null
+                                    imageUrl: profile.userProfile!.avatar! !=
+                                            null
                                         ? profile.userProfile!.avatar!.image!
                                         : 'https://picsum.photos/id/237/200/300',
                                     fit: BoxFit.fill,

@@ -52,8 +52,9 @@ class _BusinessPageState extends State<BusinessPage> {
             ),
             RefreshIndicator(
               onRefresh: () async {
-                await BlocProvider.of<GalleryCubit>(contextCubit)
-                    .fetchGallery(ConfigGeneralValues.getInstance().userId!,isBusiness:true);
+                await BlocProvider.of<GalleryCubit>(contextCubit).fetchGallery(
+                    ConfigGeneralValues.getInstance().userId!,
+                    isBusiness: true);
               },
               child: Container(
                 padding: const EdgeInsets.symmetric(horizontal: 15),
@@ -184,8 +185,8 @@ class _BusinessPageState extends State<BusinessPage> {
                                             child: Text(
                                               ConfigGeneralValues.getInstance()
                                                   .profile
-                                                  .userProfile
-                                                  !.followingCount
+                                                  .userProfile!
+                                                  .followingCount
                                                   .toString(),
                                               style: const TextStyle(
                                                 color: Colors.white,
@@ -212,7 +213,8 @@ class _BusinessPageState extends State<BusinessPage> {
                         if (state is GalleryInitial && !startApp) {
                           startApp = true;
                           BlocProvider.of<GalleryCubit>(context).fetchGallery(
-                              ConfigGeneralValues.getInstance().userId!,isBusiness:true);
+                              ConfigGeneralValues.getInstance().userId!,
+                              isBusiness: true);
                         }
                         if (state is GalleryLoaded) {
                           return Container(
@@ -291,8 +293,7 @@ class ArtPieceTile extends StatelessWidget {
                 return Container(
                   height: context.height() * 0.3,
                   width: context.width(),
-                  decoration: const BoxDecoration(
-                      color: Colors.grey),
+                  decoration: const BoxDecoration(color: Colors.grey),
                 );
               }),
           Padding(

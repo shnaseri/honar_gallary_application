@@ -12,13 +12,13 @@ class GalleryCubit extends Cubit<GalleryState> {
     artApi = ArtApi(interfaceOfUser);
   }
 
-  Future<void> fetchGallery(int userId, {bool isBusiness=false}) async {
+  Future<void> fetchGallery(int userId, {bool isBusiness = false}) async {
     emit(GalleryLoading());
     try {
       ArtGalleryRead200Response? response2003 =
-          await artApi.artGalleryRead(userId.toString(),business: isBusiness);
-      emit(GalleryLoaded(
-          response2003!.owner!, response2003.postsCount!, response2003.posts,response2003.profile!));
+          await artApi.artGalleryRead(userId.toString(), business: isBusiness);
+      emit(GalleryLoaded(response2003!.owner!, response2003.postsCount!,
+          response2003.posts, response2003.profile!));
     } catch (e) {
       print(e);
       emit(GalleryError());

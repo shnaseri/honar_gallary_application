@@ -66,7 +66,8 @@ class _ChatListState extends State<ChatList> {
                 if (state is ChatListLoaded) {
                   return ListView.builder(
                     itemBuilder: (BuildContext context, int index) {
-                      ChatGetAllChatsList200ResponseInner chat = state.chats[index];
+                      ChatGetAllChatsList200ResponseInner chat =
+                          state.chats[index];
                       return GestureDetector(
                         onTap: () {
                           Navigator.push(

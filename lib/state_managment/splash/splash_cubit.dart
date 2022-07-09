@@ -25,12 +25,12 @@ class SplashCubit extends Cubit<SplashState> {
         emit(SplashGoToAuth());
       }
       try {
-        String? token =ConfigGeneralValues.getInstance()
+        String? token = ConfigGeneralValues.getInstance()
             .sharedPreferencesHandler
             .getToken();
         AuthApi authApi = AuthApi(interfaceOfUser);
-        TokenVerify? verify = await authApi.authVerifyCreate(TokenVerify(
-            token: token!));
+        TokenVerify? verify =
+            await authApi.authVerifyCreate(TokenVerify(token: token!));
 
         HttpBearerAuth auth = HttpBearerAuth();
         auth.accessToken = ConfigGeneralValues.getInstance()

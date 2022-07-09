@@ -52,11 +52,13 @@ class EditArtPieceCubit extends Cubit<EditArtPieceState> {
           ArtPieceCoverTypeEnum.M == getTypeOfArtPiece(type)) {
         print('---- Start Uploading ------');
         emit(EditArtPieceUploadingContent());
-        CoreContentUpdate200Response? response = await coreApi.coreContentUpdate(
-            await http.MultipartFile.fromPath('file', file.path));
+        CoreContentUpdate200Response? response =
+            await coreApi.coreContentUpdate(
+                await http.MultipartFile.fromPath('file', file.path));
         print(response!.success);
-        ArtArtPieceUpdate200Response? response2001 = await artApi.artArtPieceContentUpdate(
-            artId.toString(), ArtPieceContent(contentId: response.contentId!));
+        ArtArtPieceUpdate200Response? response2001 =
+            await artApi.artArtPieceContentUpdate(artId.toString(),
+                ArtPieceContent(contentId: response.contentId!));
         print('---- End Uploading ------');
       }
       emit(EditArtPieceSuccessfully());
@@ -120,8 +122,9 @@ class EditArtPieceCubit extends Cubit<EditArtPieceState> {
     try {
       emit(EditArtPieceSendingCover());
 
-      ArtArtPieceCoverCreate200Response? response200 = await artApi.artArtPieceCoverCreate(
-          ArtPieceCover(cover: cover, type: getTypeOfArtPiece(type)));
+      ArtArtPieceCoverCreate200Response? response200 =
+          await artApi.artArtPieceCoverCreate(
+              ArtPieceCover(cover: cover, type: getTypeOfArtPiece(type)));
       print('----- post information done --------');
       print(response200!.artPieceId);
       return response200.artPieceId;
@@ -152,14 +155,15 @@ class EditArtPieceCubit extends Cubit<EditArtPieceState> {
     try {
       emit(EditArtPieceSendingInformation());
 
-      ArtArtPieceUpdate200Response? response200 = await artApi.artArtPieceUpdate(
-          artPieceId.toString(),
-          ArtPieceDetail(
-              description: description,
-              title: title,
-              price: price,
-              categoryId: categoryId,
-              imageIds: ImageIds));
+      ArtArtPieceUpdate200Response? response200 =
+          await artApi.artArtPieceUpdate(
+              artPieceId.toString(),
+              ArtPieceDetail(
+                  description: description,
+                  title: title,
+                  price: price,
+                  categoryId: categoryId,
+                  imageIds: ImageIds));
       print('----- post information done --------');
       print(response200!.success);
       return response200.success;

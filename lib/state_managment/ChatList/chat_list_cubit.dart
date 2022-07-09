@@ -14,7 +14,8 @@ class ChatListCubit extends Cubit<ChatListState> {
 
   Future<void> fetchChatList() async {
     try {
-      List<ChatGetAllChatsList200ResponseInner> chats = (await chatApi.chatGetAllChatsList())!;
+      List<ChatGetAllChatsList200ResponseInner> chats =
+          (await chatApi.chatGetAllChatsList())!;
       print(chats);
       emit(ChatListLoaded(chats));
     } catch (e) {

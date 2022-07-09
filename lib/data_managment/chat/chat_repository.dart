@@ -22,7 +22,8 @@ class ChatRepository {
     // client.disconnect();
   }
 
-  pushMessage(ChatGetAllChatsList200ResponseInnerUser user, String messageText) async {
+  pushMessage(
+      ChatGetAllChatsList200ResponseInnerUser user, String messageText) async {
     try {
       // String otpToken = GeneralValues.generalValues.token;
       // await chatNetworkService.pushMessageToServer(otpToken,user.token,messageText);
@@ -33,8 +34,8 @@ class ChatRepository {
     }
   }
 
-  Future<Message> getNewMessageAdd(
-      ChatGetAllChatsList200ResponseInnerUser user, String messageText, bool own) async {
+  Future<Message> getNewMessageAdd(ChatGetAllChatsList200ResponseInnerUser user,
+      String messageText, bool own) async {
     var message = Message(
         content: messageText,
         isUserSender: own,

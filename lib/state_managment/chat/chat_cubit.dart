@@ -81,7 +81,8 @@ class ChatCubit extends Cubit<ChatState> {
     // chatRepository.disConnectMQTT();
   }
 
-  Future<void> publishMessage(ChatGetAllChatsList200ResponseInnerUser user, String message) async {
+  Future<void> publishMessage(
+      ChatGetAllChatsList200ResponseInnerUser user, String message) async {
     try {
       print('---- Send Message ------');
       // emit(ChatSendMessage());

@@ -13,7 +13,7 @@ class GalleryLoaded extends GalleryState {
   final ArtGalleryRead200ResponseOwner owner;
   final ArtGalleryRead200ResponseProfile profile;
 
-  GalleryLoaded(this.owner, this.postCount, this.arts,this.profile);
+  GalleryLoaded(this.owner, this.postCount, this.arts, this.profile);
 }
 
 class GalleryError extends GalleryState {}

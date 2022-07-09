@@ -19,8 +19,8 @@ class OtpCubit extends Cubit<OtpState> {
     try {
       print("--- sending otp ----");
 
-      AuthVerifyOtpCodeCreate200Response? response2004 = await authApi.authVerifyOtpCodeCreate(
-          userId.toString(), OtpCode(otpCode: code));
+      AuthVerifyOtpCodeCreate200Response? response2004 = await authApi
+          .authVerifyOtpCodeCreate(userId.toString(), OtpCode(otpCode: code));
       if (response2004!.success && response2004.valid!) {
         emit(OtpLoadedCodeState());
         ConfigGeneralValues.getInstance().putToken(response2004.accessToken!);
