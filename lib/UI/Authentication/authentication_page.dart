@@ -147,6 +147,7 @@ class _AuthenticationPageState extends State<AuthenticationPage> {
               CategoryApi categoryApi = CategoryApi(interfaceOfUser);
               ConfigGeneralValues.getInstance()
                   .setListCategory((await categoryApi.categoryGetAllList())!);
+              authApi = AuthApi(interfaceOfUser);
               AuthMeList200Response response2004 =
                   (await authApi.authMeList())!;
               ConfigGeneralValues.getInstance().setUserId(response2004.userId!);

@@ -17,7 +17,6 @@ class SplashCubit extends Cubit<SplashState> {
       emit(SplashLoading());
       await Future.delayed(const Duration(seconds: 1));
       interfaceOfUser = ApiClient();
-      AuthApi authApi = AuthApi(interfaceOfUser);
       if (ConfigGeneralValues.getInstance()
               .sharedPreferencesHandler
               .getToken() ==

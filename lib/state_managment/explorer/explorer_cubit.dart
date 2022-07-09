@@ -12,19 +12,20 @@ class ExplorerCubit extends Cubit<ExplorerState> {
     artApi = ArtApi(interfaceOfUser);
   }
 
-  Future<void> fetchExplorer(int categoryItemSelectedId) async {
+  Future<void> fetchExplorer(int categoryItemSelectedId, {int page = 1}) async {
     emit(ExplorerLoading());
     try {
       List<ArtPiece> arts;
       if (categoryItemSelectedId == -1) {
-        arts = (await artApi.artExploreList())!;
+        arts = (await artApi.artExploreList(pageCount: 15, page: page))!;
       } else {
-        arts =
-            (await artApi.artExploreList(categoryId: categoryItemSelectedId))!;
+        arts = (await artApi.artExploreList(
+            categoryId: categoryItemSelectedId, pageCount: 15, page: page))!;
         print(arts);
       }
       emit(ExplorerLoaded(arts));
     } catch (e) {
+      print(e);
       emit(ExplorerError());
     }
   }
