@@ -7,14 +7,14 @@ packages:
       name: _fe_analyzer_shared
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "40.0.0"
+    version: "32.0.0"
   analyzer:
     dependency: transitive
     description:
       name: analyzer
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "4.1.0"
+    version: "3.0.0"
   animated_login:
     dependency: "direct main"
     description:
@@ -126,7 +126,7 @@ packages:
       name: build_resolvers
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.0.9"
+    version: "2.0.6"
   build_runner:
     dependency: "direct dev"
     description:
@@ -204,6 +204,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.1"
+  cli_util:
+    dependency: transitive
+    description:
+      name: cli_util
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.3.5"
   clock:
     dependency: transitive
     description:
@@ -308,7 +315,7 @@ packages:
       name: dart_style
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.2.3"
+    version: "2.2.1"
   dbus:
     dependency: transitive
     description:
@@ -485,12 +492,12 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.0"
-  honar_api_v14:
+  honar_api_v17:
     dependency: "direct main"
     description:
       path: "."
       ref: HEAD
-      resolved-ref: "3c96bd8a6cad906164a05013ff282f3422f9a9dd"
+      resolved-ref: d903d4d6074c85f03a9c5715e0ae287fe9e52efb
       url: "https://github.com/shnaseri/negare_api.git"
     source: git
     version: "1.0.0"
@@ -689,7 +696,7 @@ packages:
       name: openapi_generator
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "3.3.1"
+    version: "3.3.0+1"
   openapi_generator_annotations:
     dependency: "direct main"
     description:
@@ -698,12 +705,12 @@ packages:
     source: hosted
     version: "3.3.0"
   openapi_generator_cli:
-    dependency: transitive
+    dependency: "direct overridden"
     description:
       name: openapi_generator_cli
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "3.3.0"
+    version: "4.0.0"
   package_config:
     dependency: transitive
     description:

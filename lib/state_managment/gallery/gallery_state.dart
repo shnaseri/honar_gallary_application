@@ -8,11 +8,12 @@ class GalleryInitial extends GalleryState {}
 class GalleryLoading extends GalleryState {}
 
 class GalleryLoaded extends GalleryState {
-  final List<InlineResponse2003Posts> arts;
+  final List<ArtGalleryRead200ResponsePostsInner> arts;
   final int postCount;
-  final InlineResponse2003Owner owner;
+  final ArtGalleryRead200ResponseOwner owner;
+  final ArtGalleryRead200ResponseProfile profile;
 
-  GalleryLoaded(this.owner, this.postCount, this.arts);
+  GalleryLoaded(this.owner, this.postCount, this.arts,this.profile);
 }
 
 class GalleryError extends GalleryState {}

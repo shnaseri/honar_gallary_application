@@ -4,7 +4,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:honar_api_v14/api.dart';
+import 'package:honar_api_v17/api.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 // import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
@@ -83,7 +83,7 @@ class _ProfileListItemsState extends State<ProfileListItems> {
     _about = TextEditingController(text: widget.artPiece.description);
 
     selected = true;
-    dropDownValue = getContentType(widget.artPiece.type);
+    dropDownValue = getContentType(widget.artPiece.type!);
     dropDownValueCategory =
         widget.artPiece.category == null ? null : widget.artPiece.category.id;
   }
@@ -217,11 +217,11 @@ class _ProfileListItemsState extends State<ProfileListItems> {
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) => PlayerContentPage(
-                                            type: widget.artPiece.type,
-                                            content: widget.artPiece.type ==
+                                            type: widget.artPiece.type!,
+                                            content: widget.artPiece.type! ==
                                                     "picture"
-                                                ? widget.artPiece.cover.image
-                                                : widget.artPiece.url,
+                                                ? widget.artPiece.cover.image!
+                                                : widget.artPiece.url!,
                                           )));
                             },
                             style: ButtonStyle(
@@ -429,7 +429,7 @@ class _ProfileListItemsState extends State<ProfileListItems> {
                       bool status =
                           await BlocProvider.of<EditArtPieceCubit>(context)
                               .flowOfEditArtPiece(
-                                  widget.artPiece.id,
+                                  widget.artPiece.id!,
                                   dropDownValue,
                                   _title.text,
                                   _about.text,

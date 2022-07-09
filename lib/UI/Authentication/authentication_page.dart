@@ -1,6 +1,6 @@
 import 'package:animated_login/animated_login.dart';
 import 'package:flutter/material.dart';
-import 'package:honar_api_v14/api.dart';
+import 'package:honar_api_v17/api.dart';
 import 'package:honar_gallary/UI/Authentication/otp/otp_page.dart';
 import 'package:honar_gallary/const/color_const.dart';
 import 'package:honar_gallary/logic/consts.dart';
@@ -135,18 +135,26 @@ class _AuthenticationPageState extends State<AuthenticationPage> {
         child: AnimatedLogin(
           onLogin: (login) async {
             try {
-              AccessRefresh token = await authApi.authLoginCreate(
+              AccessRefresh token = (await authApi.authLoginCreate(
                   TokenObtainPair(
-                      email: login.email, password: login.password));
+                      email: login.email, password: login.password)))!;
 
               Navigator.pushReplacementNamed(context, homePagePath);
               ConfigGeneralValues.getInstance().putToken(token.access);
-              interfaceOfUser.getAuthentication<ApiKeyAuth>(r'Bearer')
-                ..apiKeyPrefix = 'Bearer'
-                ..apiKey = token.access;
+              HttpBearerAuth auth = HttpBearerAuth();
+              auth.accessToken = token.access;
+              interfaceOfUser = ApiClient(authentication: auth);
               CategoryApi categoryApi = CategoryApi(interfaceOfUser);
               ConfigGeneralValues.getInstance()
-                  .setListCategory(await categoryApi.categoryGetAllList());
+                  .setListCategory((await categoryApi.categoryGetAllList())!);
+              AuthMeList200Response response2004 = (await authApi.authMeList())!;
+              ConfigGeneralValues.getInstance().setUserId(response2004.userId!);
+              print(response2004.userId);
+              late ProfileApi profileApi = ProfileApi(interfaceOfUser);
+              profileApi = ProfileApi(interfaceOfUser);
+              FullUser? fullUser = await profileApi.profileRead(response2004.userId!);
+              print(fullUser);
+              ConfigGeneralValues.getInstance().setProfile(fullUser!);
               return '';
             } catch (e) {
               print(e);
@@ -168,13 +176,13 @@ class _AuthenticationPageState extends State<AuthenticationPage> {
           },
           onSignup: (login) async {
             try {
-              UserId userId = await authApi.authRegisterCreate(Register(
+              UserId? userId = await authApi.authRegisterCreate(Register(
                   email: login.email,
                   password: login.password,
                   firstName: "s",
                   lastName: login.name));
               try {
-                await authApi.authSendOtpCodeCreate(userId.id.toString());
+                await authApi.authSendOtpCodeCreate(userId!.id.toString());
               } catch (e) {}
               // AccessRefresh token = await authApi.authLoginCreate(
               //     TokenObtainPair(
@@ -182,7 +190,7 @@ class _AuthenticationPageState extends State<AuthenticationPage> {
               Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
-                      builder: (_) => OTPPage(userId: userId.id)));
+                      builder: (_) => OTPPage(userId: userId!.id!)));
 
               return "";
             } catch (e) {

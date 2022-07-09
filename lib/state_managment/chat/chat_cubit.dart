@@ -3,7 +3,7 @@ import 'dart:io';
 
 import 'package:bloc/bloc.dart';
 import 'package:flutter/foundation.dart';
-import 'package:honar_api_v14/api.dart';
+import 'package:honar_api_v17/api.dart';
 import 'package:honar_gallary/data_managment/chat/chat_repository.dart';
 import 'package:honar_gallary/data_managment/core/upload_networkservice.dart';
 import 'package:honar_gallary/logic/consts.dart';
@@ -14,7 +14,7 @@ import 'package:web_socket_channel/web_socket_channel.dart';
 part 'chat_state.dart';
 
 class ChatCubit extends Cubit<ChatState> {
-  ChatGetAllChatsUser contact;
+  ChatGetAllChatsList200ResponseInnerUser contact;
   late ChatRepository chatRepository;
   late WebSocketChannel channel;
   bool isWebSocketRunning = false;
@@ -34,7 +34,7 @@ class ChatCubit extends Cubit<ChatState> {
       emit(ChatConnectingToServer());
       if (isWebSocketRunning) return; //chaech if its already running
       try {
-        messages = await chatApi.chatGetAllChatMessagesList(chatCode);
+        messages = (await chatApi.chatGetAllChatMessagesList(chatCode))!;
         messages = messages.reversed.toList();
       } catch (e) {
         messages = [];
@@ -46,7 +46,7 @@ class ChatCubit extends Cubit<ChatState> {
       // List<Message> messages = await chatRepository.getMessages(contact.id);
       // emit(ChatConnectToServer(messages));
       var url =
-          "ws://188.121.110.151:8000/socket/chat/$chatCode/?token=${(interfaceOfUser.authentications['Bearer'] as ApiKeyAuth).apiKey}";
+          "ws://188.121.110.151:8000/socket/chat/$chatCode/?token=${(interfaceOfUser.authentication as ApiKeyAuth).apiKey}";
       channel = WebSocketChannel.connect(Uri.parse(url));
       print(url);
 
@@ -81,7 +81,7 @@ class ChatCubit extends Cubit<ChatState> {
     // chatRepository.disConnectMQTT();
   }
 
-  Future<void> publishMessage(ChatGetAllChatsUser user, String message) async {
+  Future<void> publishMessage(ChatGetAllChatsList200ResponseInnerUser user, String message) async {
     try {
       print('---- Send Message ------');
       // emit(ChatSendMessage());

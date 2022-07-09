@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_chat_bubble/bubble_type.dart';
 import 'package:flutter_chat_bubble/chat_bubble.dart';
 import 'package:flutter_chat_bubble/clippers/chat_bubble_clipper_1.dart';
-import 'package:honar_api_v14/api.dart';
+import 'package:honar_api_v17/api.dart';
 import 'package:honar_gallary/const/color_const.dart';
 
 import '../../../state_managment/chat/chat_cubit.dart';
@@ -25,14 +25,14 @@ class MessageTile extends StatelessWidget {
         return ChatBubble(
           elevation: 1,
           clipper: ChatBubbleClipper1(
-              type: message.isUserSender
+              type: message.isUserSender!
                   ? BubbleType.sendBubble
                   : BubbleType.receiverBubble),
-          alignment: message.isUserSender
+          alignment: message.isUserSender!
               ? Alignment.centerRight
               : Alignment.centerLeft,
           margin: const EdgeInsets.only(top: 10, left: 10, right: 10),
-          backGroundColor: message.isUserSender
+          backGroundColor: message.isUserSender!
               ? ColorPallet.colorPalletNightFog
               : ColorPallet.colorPalletSambucus,
           child: Container(
@@ -43,13 +43,13 @@ class MessageTile extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 Text(
-                  message.content,
+                  message.content!,
                   style: TextStyle(color: Colors.white),
                 ),
                 Text(
-                  message.createdAt.hour.toString() +
+                  message.createdAt!.hour.toString() +
                       ":" +
-                      message.createdAt.minute.toString(),
+                      message.createdAt!.minute.toString(),
                   style: TextStyle(color: Colors.white60, fontSize: 10),
                 ),
               ],

@@ -1,5 +1,5 @@
 import 'package:bloc/bloc.dart';
-import 'package:honar_api_v14/api.dart';
+import 'package:honar_api_v17/api.dart';
 import 'package:honar_gallary/logic/consts.dart';
 import 'package:meta/meta.dart';
 
@@ -12,13 +12,13 @@ class GalleryCubit extends Cubit<GalleryState> {
     artApi = ArtApi(interfaceOfUser);
   }
 
-  Future<void> fetchGallery(int userId) async {
+  Future<void> fetchGallery(int userId, {bool isBusiness=false}) async {
     emit(GalleryLoading());
     try {
-      InlineResponse2003 response2003 =
-          await artApi.artGalleryRead(userId.toString());
+      ArtGalleryRead200Response? response2003 =
+          await artApi.artGalleryRead(userId.toString(),business: isBusiness);
       emit(GalleryLoaded(
-          response2003.owner, response2003.postsCount, response2003.posts));
+          response2003!.owner!, response2003.postsCount!, response2003.posts,response2003.profile!));
     } catch (e) {
       print(e);
       emit(GalleryError());

@@ -1,5 +1,5 @@
 import 'package:bloc/bloc.dart';
-import 'package:honar_api_v14/api.dart';
+import 'package:honar_api_v17/api.dart';
 import 'package:honar_gallary/logic/general_values.dart';
 import 'package:meta/meta.dart';
 
@@ -15,7 +15,7 @@ class SplashCubit extends Cubit<SplashState> {
   Future<void> verifyToken() async {
     try {
       emit(SplashLoading());
-      await Future.delayed(const Duration(seconds: 2));
+      await Future.delayed(const Duration(seconds: 1));
       interfaceOfUser = ApiClient();
       AuthApi authApi = AuthApi(interfaceOfUser);
       if (ConfigGeneralValues.getInstance()
@@ -25,31 +25,37 @@ class SplashCubit extends Cubit<SplashState> {
         emit(SplashGoToAuth());
       }
       try {
-        TokenVerify verify = await authApi.authVerifyCreate(TokenVerify(
-            token: ConfigGeneralValues.getInstance()
-                .sharedPreferencesHandler
-                .getToken()!));
-        interfaceOfUser.getAuthentication<ApiKeyAuth>(r'Bearer')
-          ..apiKeyPrefix = 'Bearer'
-          ..apiKey = ConfigGeneralValues.getInstance()
-              .sharedPreferencesHandler
-              .getToken()!;
+        String? token =ConfigGeneralValues.getInstance()
+            .sharedPreferencesHandler
+            .getToken();
+        AuthApi authApi = AuthApi(interfaceOfUser);
+        TokenVerify? verify = await authApi.authVerifyCreate(TokenVerify(
+            token: token!));
 
+        HttpBearerAuth auth = HttpBearerAuth();
+        auth.accessToken = ConfigGeneralValues.getInstance()
+            .sharedPreferencesHandler
+            .getToken()!;
+        print(auth.accessToken);
+        interfaceOfUser = ApiClient(authentication: auth);
         CategoryApi categoryApi = CategoryApi(interfaceOfUser);
         ConfigGeneralValues.getInstance()
-            .setListCategory(await categoryApi.categoryGetAllList());
-        InlineResponse2004 response2004 = await authApi.authMeList();
-        ConfigGeneralValues.getInstance().setUserId(response2004.userId);
+            .setListCategory((await categoryApi.categoryGetAllList())!);
+        authApi = AuthApi(interfaceOfUser);
+        AuthMeList200Response response2004 = (await authApi.authMeList())!;
+        ConfigGeneralValues.getInstance().setUserId(response2004.userId!);
         print(response2004.userId);
 
         profileApi = ProfileApi(interfaceOfUser);
-        FullUser fullUser = await profileApi.profileRead(response2004.userId);
+        FullUser? fullUser = await profileApi.profileRead(response2004.userId!);
         print(fullUser);
-        ConfigGeneralValues.getInstance().setProfile(fullUser);
+        ConfigGeneralValues.getInstance().setProfile(fullUser!);
 
         emit(SplashGoToHome());
         return;
       } catch (e) {
+        print("------");
+        print(e);
         emit(SplashGoToAuth());
         return;
       }

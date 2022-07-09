@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_chat_bubble/bubble_type.dart';
 import 'package:flutter_chat_bubble/chat_bubble.dart';
 import 'package:flutter_chat_bubble/clippers/chat_bubble_clipper_1.dart';
-import 'package:honar_api_v14/api.dart';
+import 'package:honar_api_v17/api.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:shamsi_date/shamsi_date.dart';
 
@@ -63,8 +63,8 @@ class _BodyOfChatPageState extends State<BodyOfChatPage> {
             itemBuilder: (context, index) {
               Message message = state.messages[index];
               print(message.type);
-              var date = Gregorian(message.createdAt.year,
-                  message.createdAt.month, message.createdAt.day);
+              var date = Gregorian(message.createdAt!.year,
+                  message.createdAt!.month, message.createdAt!.day);
               var dateFormatter = date.toJalali().formatter;
               String dateString = "${dateFormatter.d} ${dateFormatter.mN}";
               bool showDate = lastDate != dateString;
@@ -131,14 +131,14 @@ class _PictureTileState extends State<PictureTile> {
       child: ChatBubble(
         elevation: 1,
         clipper: ChatBubbleClipper1(
-            type: widget.message.isUserSender
+            type: widget.message.isUserSender!
                 ? BubbleType.sendBubble
                 : BubbleType.receiverBubble),
-        alignment: widget.message.isUserSender
+        alignment: widget.message.isUserSender!
             ? Alignment.centerRight
             : Alignment.centerLeft,
         margin: const EdgeInsets.only(top: 10, left: 10, right: 10),
-        backGroundColor: widget.message.isUserSender
+        backGroundColor: widget.message.isUserSender!
             ? ColorPallet.colorPalletNightFog
             : ColorPallet.colorPalletSambucus,
         child: Container(
@@ -155,12 +155,12 @@ class _PictureTileState extends State<PictureTile> {
                       MaterialPageRoute(
                           builder: (context) => PlayerContentPage(
                                 type: "picture",
-                                content: widget.message.content,
+                                content: widget.message.content!,
                               )));
                 },
                 child: CachedNetworkImage(
                     color: Colors.white,
-                    imageUrl: widget.message.content,
+                    imageUrl: widget.message.content!,
                     imageBuilder: (context, imageProvider) {
                       return Container(
                         width: context.width(),
@@ -179,9 +179,9 @@ class _PictureTileState extends State<PictureTile> {
                     }),
               ),
               Text(
-                widget.message.createdAt.hour.toString() +
+                widget.message.createdAt!.hour.toString() +
                     ":" +
-                    widget.message.createdAt.minute.toString(),
+                    widget.message.createdAt!.minute.toString(),
                 style: TextStyle(color: Colors.white60, fontSize: 10),
               ),
             ],

@@ -4,7 +4,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:honar_api_v14/api.dart';
+import 'package:honar_api_v17/api.dart';
 import 'package:honar_gallary/UI/utils/auto_text_direction.dart';
 import 'package:honar_gallary/const/color_const.dart';
 import 'package:honar_gallary/logic/general_values.dart';
@@ -42,7 +42,7 @@ class _ProfilePageState extends State<ProfilePage> {
     _name = TextEditingController(text: profile.firstName);
     _lastname = TextEditingController(text: profile.lastName);
     _email = TextEditingController(text: profile.email);
-    _phoneNumber = TextEditingController(text: profile.userProfile.phoneNumber);
+    _phoneNumber = TextEditingController(text: profile.userProfile!.phoneNumber);
     selectedImage = false;
   }
 
@@ -117,8 +117,8 @@ class _ProfilePageState extends State<ProfilePage> {
                                         ),
                                       );
                                     },
-                                    imageUrl: profile.userProfile.avatar != null
-                                        ? profile.userProfile.avatar.image
+                                    imageUrl: profile.userProfile!.avatar! != null
+                                        ? profile.userProfile!.avatar!.image!
                                         : 'https://picsum.photos/id/237/200/300',
                                     fit: BoxFit.fill,
                                     height: context.height() * 0.05,
@@ -329,7 +329,7 @@ class _ProfilePageState extends State<ProfilePage> {
                               _email =
                                   TextEditingController(text: profile.email);
                               _phoneNumber = TextEditingController(
-                                  text: profile.userProfile.phoneNumber);
+                                  text: profile.userProfile!.phoneNumber);
                               selectedFile = null;
                               selectedImage = false;
                               setState(() {});

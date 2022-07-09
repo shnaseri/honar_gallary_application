@@ -1,5 +1,5 @@
 import 'package:bloc/bloc.dart';
-import 'package:honar_api_v14/api.dart';
+import 'package:honar_api_v17/api.dart';
 import 'package:honar_gallary/logic/consts.dart';
 import 'package:meta/meta.dart';
 
@@ -15,9 +15,9 @@ class SearchCubit extends Cubit<SearchState> {
   Future<void> search(String text) async {
     try {
       emit(SearchLoading());
-      SearchResult searchResult = await artApi.artSearchList(query: text);
+      SearchResult? searchResult = await artApi.artSearchList(query: text);
       print(searchResult);
-      emit(SearchLoaded(searchResult.artists, searchResult.artPieces, text));
+      emit(SearchLoaded(searchResult!.artists, searchResult.artPieces, text));
     } catch (e) {
       emit(SearchError());
     }

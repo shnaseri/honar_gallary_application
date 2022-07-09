@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:honar_api_v14/api.dart';
+import 'package:honar_api_v17/api.dart';
 import 'package:honar_gallary/UI/Art_piece/components/poster.dart';
 import 'package:honar_gallary/UI/Art_piece/components/rating_information.dart';
 import 'package:honar_gallary/UI/video_music_palyer/components/arc_banner.dart';
@@ -62,7 +62,7 @@ class MovieDetailHeader extends StatelessWidget {
                     MaterialPageRoute(
                         builder: (context) => PlayerContentPage(
                               type: "picture",
-                              content: artPiece.cover.image,
+                              content: artPiece.cover.image!,
                             )));
               },
               child: ArcBannerImageOnline(movie.bannerUrl)),
@@ -81,10 +81,10 @@ class MovieDetailHeader extends StatelessWidget {
                       context,
                       MaterialPageRoute(
                           builder: (context) => PlayerContentPage(
-                                type: artPiece.type,
-                                content: artPiece.type == "picture"
-                                    ? artPiece.cover.image
-                                    : artPiece.url,
+                                type: artPiece.type!,
+                                content: artPiece.type! == "picture"
+                                    ? artPiece.cover.image!
+                                    : artPiece.url!,
                               )));
                 },
                 child: Poster(

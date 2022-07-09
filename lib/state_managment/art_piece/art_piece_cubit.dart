@@ -1,5 +1,5 @@
 import 'package:bloc/bloc.dart';
-import 'package:honar_api_v14/api.dart';
+import 'package:honar_api_v17/api.dart';
 import 'package:honar_gallary/logic/consts.dart';
 import 'package:meta/meta.dart';
 
@@ -16,8 +16,8 @@ class ArtPieceCubit extends Cubit<ArtPieceState> {
     emit(ArtPieceLoading());
     try {
       print(id);
-      ArtPiece artPiece = await artApi.artArtPieceRead(id.toString());
-      emit(ArtPieceLoaded(artPiece));
+      ArtPiece? artPiece = await artApi.artArtPieceRead(id.toString());
+      emit(ArtPieceLoaded(artPiece!));
     } catch (e) {
       print(e);
       emit(ArtPieceError());
@@ -26,9 +26,9 @@ class ArtPieceCubit extends Cubit<ArtPieceState> {
 
   Future<bool> changeStatusLikeArtPiece(int artId) async {
     try {
-      InlineResponse2002 response2002 =
+      ArtArtPieceLikeUpdate200Response? response2002 =
           await artApi.artArtPieceLikeUpdate(artId.toString());
-      print(response2002.like);
+      print(response2002!.like);
       return response2002.like;
     } catch (e) {
       return false;
