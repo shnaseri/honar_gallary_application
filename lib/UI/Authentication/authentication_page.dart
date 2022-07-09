@@ -147,12 +147,14 @@ class _AuthenticationPageState extends State<AuthenticationPage> {
               CategoryApi categoryApi = CategoryApi(interfaceOfUser);
               ConfigGeneralValues.getInstance()
                   .setListCategory((await categoryApi.categoryGetAllList())!);
-              AuthMeList200Response response2004 = (await authApi.authMeList())!;
+              AuthMeList200Response response2004 =
+                  (await authApi.authMeList())!;
               ConfigGeneralValues.getInstance().setUserId(response2004.userId!);
               print(response2004.userId);
               late ProfileApi profileApi = ProfileApi(interfaceOfUser);
               profileApi = ProfileApi(interfaceOfUser);
-              FullUser? fullUser = await profileApi.profileRead(response2004.userId!);
+              FullUser? fullUser =
+                  await profileApi.profileRead(response2004.userId!);
               print(fullUser);
               ConfigGeneralValues.getInstance().setProfile(fullUser!);
               return '';
