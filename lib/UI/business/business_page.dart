@@ -292,7 +292,7 @@ class ArtPieceTile extends StatelessWidget {
                   height: context.height() * 0.3,
                   width: context.width(),
                   decoration: const BoxDecoration(
-                      shape: BoxShape.circle, color: Colors.grey),
+                      color: Colors.grey),
                 );
               }),
           Padding(
