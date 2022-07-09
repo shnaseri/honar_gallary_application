@@ -1,5 +1,5 @@
 import 'package:bloc/bloc.dart';
-import 'package:honar_api_v14/api.dart';
+import 'package:honar_api_v17/api.dart';
 import 'package:honar_gallary/logic/consts.dart';
 import 'package:meta/meta.dart';
 
@@ -19,14 +19,27 @@ class OtpCubit extends Cubit<OtpState> {
     try {
       print("--- sending otp ----");
 
-      InlineResponse2005 response2004 = await authApi.authVerifyOtpCodeCreate(
-          userId.toString(), OtpCode(otpCode: code));
-      if (response2004.success && response2004.valid) {
+      AuthVerifyOtpCodeCreate200Response? response2004 = await authApi
+          .authVerifyOtpCodeCreate(userId.toString(), OtpCode(otpCode: code));
+      if (response2004!.success && response2004.valid!) {
         emit(OtpLoadedCodeState());
-        ConfigGeneralValues.getInstance().putToken(response2004.accessToken);
-        interfaceOfUser.getAuthentication<ApiKeyAuth>(r'Bearer')
-          ..apiKeyPrefix = 'Bearer'
-          ..apiKey = response2004.accessToken;
+        ConfigGeneralValues.getInstance().putToken(response2004.accessToken!);
+
+        HttpBearerAuth auth = HttpBearerAuth();
+        auth.accessToken = response2004.accessToken;
+        interfaceOfUser = ApiClient(authentication: auth);
+
+        CategoryApi categoryApi = CategoryApi(interfaceOfUser);
+        ConfigGeneralValues.getInstance()
+            .setListCategory((await categoryApi.categoryGetAllList())!);
+        AuthMeList200Response response200 = (await authApi.authMeList())!;
+        ConfigGeneralValues.getInstance().setUserId(response200.userId!);
+        print(response200.userId);
+        late ProfileApi profileApi = ProfileApi(interfaceOfUser);
+        profileApi = ProfileApi(interfaceOfUser);
+        FullUser? fullUser = await profileApi.profileRead(response200.userId!);
+        print(fullUser);
+        ConfigGeneralValues.getInstance().setProfile(fullUser!);
         return true;
       } else {
         emit(OtpBadCode());

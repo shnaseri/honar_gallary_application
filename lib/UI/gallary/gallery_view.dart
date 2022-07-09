@@ -88,11 +88,11 @@ class _GalleryViewState extends State<GalleryView> {
                                       Text(
                                         ConfigGeneralValues.getInstance()
                                                 .profile
-                                                .firstName +
+                                                .firstName! +
                                             " " +
                                             ConfigGeneralValues.getInstance()
                                                 .profile
-                                                .lastName,
+                                                .lastName!,
                                         style: TextStyle(
                                           color:
                                               ColorPallet.colorPalletSambucus,
@@ -129,7 +129,7 @@ class _GalleryViewState extends State<GalleryView> {
                                                     ConfigGeneralValues
                                                             .getInstance()
                                                         .profile
-                                                        .userProfile
+                                                        .userProfile!
                                                         .followersCount
                                                         .toString(),
                                                     style: const TextStyle(
@@ -177,7 +177,7 @@ class _GalleryViewState extends State<GalleryView> {
                                                     ConfigGeneralValues
                                                             .getInstance()
                                                         .profile
-                                                        .userProfile
+                                                        .userProfile!
                                                         .followingCount
                                                         .toString(),
                                                     style: const TextStyle(

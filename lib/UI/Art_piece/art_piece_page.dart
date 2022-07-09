@@ -2,7 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:honar_api_v14/api.dart';
+import 'package:honar_api_v17/api.dart';
 import 'package:honar_gallary/UI/chat/chat_page.dart';
 import 'package:honar_gallary/UI/comment/comment_page.dart';
 import 'package:honar_gallary/const/color_const.dart';
@@ -89,11 +89,11 @@ class _ArtPiecePageState extends State<ArtPiecePage> {
                   .fetchArtPiece(widget.artId);
             }
             if (state is ArtPieceLoaded) {
-              testMovie.title = state.artPiece.title;
-              testMovie.storyline = state.artPiece.description;
-              testMovie.price = state.artPiece.price;
-              testMovie.bannerUrl = state.artPiece.cover.image;
-              testMovie.like = state.artPiece.likeCount.toInt();
+              testMovie.title = state.artPiece.title!;
+              testMovie.storyline = state.artPiece.description!;
+              testMovie.price = state.artPiece.price!;
+              testMovie.bannerUrl = state.artPiece.cover.image!;
+              testMovie.like = state.artPiece.likeCount!.toInt();
               return RefreshIndicator(
                 onRefresh: () async {
                   await BlocProvider.of<ArtPieceCubit>(contextCubit)
@@ -125,21 +125,23 @@ class _ArtPiecePageState extends State<ArtPiecePage> {
                                 children: [
                                   GestureDetector(
                                     onTap: () async {
-                                      if (state.artPiece.isUserLiked) {
-                                        state.artPiece.likeCount--;
+                                      if (state.artPiece.isUserLiked!) {
+                                        state.artPiece.likeCount =
+                                            state.artPiece.likeCount! - 1;
                                       } else {
-                                        state.artPiece.likeCount++;
+                                        state.artPiece.likeCount =
+                                            state.artPiece.likeCount! + 1;
                                       }
                                       setState(() {
                                         state.artPiece.isUserLiked =
-                                            !state.artPiece.isUserLiked;
+                                            !state.artPiece.isUserLiked!;
                                       });
 
                                       bool status =
                                           await BlocProvider.of<ArtPieceCubit>(
                                                   context)
                                               .changeStatusLikeArtPiece(
-                                                  state.artPiece.id);
+                                                  state.artPiece.id!);
                                     },
                                     child: Container(
                                       height: 40,
@@ -149,7 +151,7 @@ class _ArtPiecePageState extends State<ArtPiecePage> {
                                               BorderRadius.circular(9),
                                           color: Colors.pink),
                                       child: Center(
-                                        child: !state.artPiece.isUserLiked
+                                        child: !(state.artPiece.isUserLiked!)
                                             ? const Icon(
                                                 Icons.favorite_border_rounded)
                                             : const Icon(Icons.favorite),
@@ -198,24 +200,20 @@ class _ArtPiecePageState extends State<ArtPiecePage> {
                                         Navigator.push(
                                             context,
                                             MaterialPageRoute(
-                                                builder: (_) => ChatPage(
-                                                    chatCode: getChatCode(state
-                                                        .artPiece.owner.id),
-                                                    contact:
-                                                        ChatGetAllChatsUser(
-                                                            id:
-                                                                state.artPiece
-                                                                    .owner.id,
-                                                            fullName:
-                                                                state
-                                                                    .artPiece
-                                                                    .owner
-                                                                    .fullName,
-                                                            profilePhoto: state
-                                                                .artPiece
-                                                                .owner
-                                                                .profilePhoto),
-                                                    index: 1)));
+                                              builder: (_) => ChatPage(
+                                                chatCode: getChatCode(
+                                                    state.artPiece.owner.id!),
+                                                index: 1,
+                                                contact:
+                                                    ChatGetAllChatsList200ResponseInnerUser(
+                                                        fullName: state.artPiece
+                                                            .owner.fullName,
+                                                        profilePhoto: state
+                                                            .artPiece
+                                                            .owner
+                                                            .profilePhoto),
+                                              ),
+                                            ));
                                       },
                                       child: Container(
                                         height: 40,

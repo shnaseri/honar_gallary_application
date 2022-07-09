@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:bloc/bloc.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:honar_api_v14/api.dart';
+import 'package:honar_api_v17/api.dart';
 import 'package:http/http.dart' as http;
 import 'package:meta/meta.dart';
 
@@ -52,11 +52,13 @@ class EditArtPieceCubit extends Cubit<EditArtPieceState> {
           ArtPieceCoverTypeEnum.M == getTypeOfArtPiece(type)) {
         print('---- Start Uploading ------');
         emit(EditArtPieceUploadingContent());
-        InlineResponse2007 response = await coreApi.coreContentUpdate(
-            await http.MultipartFile.fromPath('file', file.path));
-        print(response.success);
-        InlineResponse2001 response2001 = await artApi.artArtPieceContentUpdate(
-            artId.toString(), ArtPieceContent(contentId: response.contentId));
+        CoreContentUpdate200Response? response =
+            await coreApi.coreContentUpdate(
+                await http.MultipartFile.fromPath('file', file.path));
+        print(response!.success);
+        ArtArtPieceUpdate200Response? response2001 =
+            await artApi.artArtPieceContentUpdate(artId.toString(),
+                ArtPieceContent(contentId: response.contentId!));
         print('---- End Uploading ------');
       }
       emit(EditArtPieceSuccessfully());
@@ -120,10 +122,11 @@ class EditArtPieceCubit extends Cubit<EditArtPieceState> {
     try {
       emit(EditArtPieceSendingCover());
 
-      InlineResponse200 response200 = await artApi.artArtPieceCoverCreate(
-          ArtPieceCover(cover: cover, type: getTypeOfArtPiece(type)));
+      ArtArtPieceCoverCreate200Response? response200 =
+          await artApi.artArtPieceCoverCreate(
+              ArtPieceCover(cover: cover, type: getTypeOfArtPiece(type)));
       print('----- post information done --------');
-      print(response200.artPieceId);
+      print(response200!.artPieceId);
       return response200.artPieceId;
     } catch (e) {
       print(e);
@@ -152,16 +155,17 @@ class EditArtPieceCubit extends Cubit<EditArtPieceState> {
     try {
       emit(EditArtPieceSendingInformation());
 
-      InlineResponse2001 response200 = await artApi.artArtPieceUpdate(
-          artPieceId.toString(),
-          ArtPieceDetail(
-              description: description,
-              title: title,
-              price: price,
-              categoryId: categoryId,
-              imageIds: ImageIds));
+      ArtArtPieceUpdate200Response? response200 =
+          await artApi.artArtPieceUpdate(
+              artPieceId.toString(),
+              ArtPieceDetail(
+                  description: description,
+                  title: title,
+                  price: price,
+                  categoryId: categoryId,
+                  imageIds: ImageIds));
       print('----- post information done --------');
-      print(response200.success);
+      print(response200!.success);
       return response200.success;
     } catch (e) {
       print('send info');

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:honar_api_v14/api.dart';
+import 'package:honar_api_v17/api.dart';
 import 'package:honar_gallary/UI/utils/numeral/Numeral.dart';
 import 'package:honar_gallary/const/color_const.dart';
 
@@ -68,7 +68,7 @@ class RatingInformation extends StatelessWidget {
               borderRadius: BorderRadius.circular(12)),
           padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
           child: Text(
-            Numeral(movie.price).toString(),
+            Numeral(movie.price!).toString(),
             style: textTheme.titleMedium!.copyWith(
               fontWeight: FontWeight.bold,
               color: Colors.white,

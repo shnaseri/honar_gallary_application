@@ -1,5 +1,5 @@
 import 'package:bloc/bloc.dart';
-import 'package:honar_api_v14/api.dart';
+import 'package:honar_api_v17/api.dart';
 import 'package:honar_gallary/logic/consts.dart';
 import 'package:meta/meta.dart';
 
@@ -17,9 +17,10 @@ class ExplorerCubit extends Cubit<ExplorerState> {
     try {
       List<ArtPiece> arts;
       if (categoryItemSelectedId == -1) {
-        arts = await artApi.artExploreList();
+        arts = (await artApi.artExploreList())!;
       } else {
-        arts = await artApi.artExploreList(categoryId: categoryItemSelectedId);
+        arts =
+            (await artApi.artExploreList(categoryId: categoryItemSelectedId))!;
         print(arts);
       }
       emit(ExplorerLoaded(arts));

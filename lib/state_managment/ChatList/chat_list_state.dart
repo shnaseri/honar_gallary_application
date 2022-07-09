@@ -8,7 +8,7 @@ class ChatListInitial extends ChatListState {}
 class ChatListLoading extends ChatListState {}
 
 class ChatListLoaded extends ChatListState {
-  final List<InlineResponse2006> chats;
+  final List<ChatGetAllChatsList200ResponseInner> chats;
 
   ChatListLoaded(this.chats);
 }

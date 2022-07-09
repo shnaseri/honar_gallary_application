@@ -2,7 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-import 'package:honar_api_v14/api.dart';
+import 'package:honar_api_v17/api.dart';
 import 'package:honar_gallary/const/color_const.dart';
 import 'package:nb_utils/nb_utils.dart';
 
@@ -52,8 +52,9 @@ class _BusinessPageState extends State<BusinessPage> {
             ),
             RefreshIndicator(
               onRefresh: () async {
-                await BlocProvider.of<GalleryCubit>(contextCubit)
-                    .fetchGallery(ConfigGeneralValues.getInstance().userId!);
+                await BlocProvider.of<GalleryCubit>(contextCubit).fetchGallery(
+                    ConfigGeneralValues.getInstance().userId!,
+                    isBusiness: true);
               },
               child: Container(
                 padding: const EdgeInsets.symmetric(horizontal: 15),
@@ -97,7 +98,7 @@ class _BusinessPageState extends State<BusinessPage> {
                                   ),
                                 );
                               },
-                              imageUrl: profile.userProfile.avatar.image,
+                              imageUrl: profile.userProfile!.avatar!.image!,
                               fit: BoxFit.fill,
                               height: 130,
                               width: 100,
@@ -110,7 +111,7 @@ class _BusinessPageState extends State<BusinessPage> {
                                   height: 10,
                                 ),
                                 Text(
-                                  profile.firstName + " " + profile.lastName,
+                                  profile.firstName! + " " + profile.lastName!,
                                   style: const TextStyle(
                                       fontSize: 22,
                                       fontWeight: FontWeight.w900,
@@ -138,7 +139,7 @@ class _BusinessPageState extends State<BusinessPage> {
                                             child: Text(
                                               ConfigGeneralValues.getInstance()
                                                   .profile
-                                                  .userProfile
+                                                  .userProfile!
                                                   .followersCount
                                                   .toString(),
                                               style: const TextStyle(
@@ -184,7 +185,7 @@ class _BusinessPageState extends State<BusinessPage> {
                                             child: Text(
                                               ConfigGeneralValues.getInstance()
                                                   .profile
-                                                  .userProfile
+                                                  .userProfile!
                                                   .followingCount
                                                   .toString(),
                                               style: const TextStyle(
@@ -212,7 +213,8 @@ class _BusinessPageState extends State<BusinessPage> {
                         if (state is GalleryInitial && !startApp) {
                           startApp = true;
                           BlocProvider.of<GalleryCubit>(context).fetchGallery(
-                              ConfigGeneralValues.getInstance().userId!);
+                              ConfigGeneralValues.getInstance().userId!,
+                              isBusiness: true);
                         }
                         if (state is GalleryLoaded) {
                           return Container(
@@ -232,7 +234,7 @@ class _BusinessPageState extends State<BusinessPage> {
                                           MaterialPageRoute(
                                               builder: (_) => ArtPiecePage(
                                                   artId:
-                                                      state.arts[index].id)));
+                                                      state.arts[index].id!)));
                                     },
                                     child: ArtPieceTile(
                                         artPiece: state.arts[index]));
@@ -260,7 +262,7 @@ class _BusinessPageState extends State<BusinessPage> {
 }
 
 class ArtPieceTile extends StatelessWidget {
-  InlineResponse2003Posts artPiece;
+  ArtGalleryRead200ResponsePostsInner artPiece;
 
   ArtPieceTile({
     required this.artPiece,
@@ -278,7 +280,7 @@ class ArtPieceTile extends StatelessWidget {
         children: [
           CachedNetworkImage(
               color: Colors.white,
-              imageUrl: artPiece.image,
+              imageUrl: artPiece.image!,
               imageBuilder: (context, imageProvider) {
                 return Container(
                   decoration: BoxDecoration(
@@ -291,8 +293,7 @@ class ArtPieceTile extends StatelessWidget {
                 return Container(
                   height: context.height() * 0.3,
                   width: context.width(),
-                  decoration: const BoxDecoration(
-                      shape: BoxShape.circle, color: Colors.grey),
+                  decoration: const BoxDecoration(color: Colors.grey),
                 );
               }),
           Padding(
@@ -313,7 +314,7 @@ class ArtPieceTile extends StatelessWidget {
                                 topLeft: Radius.circular(15)),
                             color: ColorPallet.colorPalletDark),
                         child: Text(
-                          artPiece.title,
+                          artPiece.title!,
                           style: const TextStyle(
                             fontWeight: FontWeight.w900,
                             color: Colors.white,
@@ -340,7 +341,7 @@ class ArtPieceTile extends StatelessWidget {
                           constraints:
                               BoxConstraints(maxWidth: context.width() * 0.7),
                           child: Text(
-                            artPiece.title * 3,
+                            artPiece.title!,
                             style: const TextStyle(
                                 color: Colors.cyan,
                                 fontWeight: FontWeight.bold,

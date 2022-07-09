@@ -1,7 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:honar_api_v14/api.dart';
+import 'package:honar_api_v17/api.dart';
 import 'package:honar_gallary/UI/Art_piece/art_piece_page.dart';
 import 'package:honar_gallary/const/color_const.dart';
 import 'package:honar_gallary/logic/general_values.dart';
@@ -50,7 +50,7 @@ class Tile extends StatefulWidget {
   final double? extent;
   final double? bottomSpace;
   final Color? backgroundColor;
-  final InlineResponse2003Posts post;
+  final ArtGalleryRead200ResponsePostsInner post;
 
   @override
   State<Tile> createState() => _TileState();
@@ -80,7 +80,7 @@ class _TileState extends State<Tile> {
           Navigator.push(
               context,
               MaterialPageRoute(
-                  builder: (_) => ArtPiecePage(artId: widget.post.id))).then(
+                  builder: (_) => ArtPiecePage(artId: widget.post.id!))).then(
               (value) => BlocProvider.of<GalleryCubit>(context)
                   .fetchGallery(ConfigGeneralValues.getInstance().userId!));
         },
@@ -102,7 +102,7 @@ class _TileState extends State<Tile> {
               Center(
                   child: CachedNetworkImage(
                       color: Colors.white,
-                      imageUrl: widget.post.image,
+                      imageUrl: widget.post.image!,
                       imageBuilder: (context, imageProvider) {
                         return Container(
                           width: context.width(),
@@ -158,7 +158,7 @@ class _TileState extends State<Tile> {
                   ),
                   child: Center(
                     child: Text(
-                      widget.post.title,
+                      widget.post.title!,
                       style: const TextStyle(
                           color: Colors.white, fontWeight: FontWeight.w700),
                     ),
@@ -277,7 +277,7 @@ class _ExplorerTileState extends State<ExplorerTile> {
               context,
               MaterialPageRoute(
                 builder: (_) => ArtPiecePage(
-                  artId: widget.artPiece.id,
+                  artId: widget.artPiece.id!,
                 ),
               ));
         },
@@ -303,7 +303,7 @@ class _ExplorerTileState extends State<ExplorerTile> {
                 Center(
                     child: CachedNetworkImage(
                         color: Colors.white,
-                        imageUrl: widget.artPiece.cover.image,
+                        imageUrl: widget.artPiece.cover.image!,
                         imageBuilder: (context, imageProvider) {
                           return Container(
                             width: context.width(),
@@ -420,7 +420,7 @@ class _SearchTileState extends State<SearchTile> {
           Navigator.push(
               context,
               MaterialPageRoute(
-                  builder: (_) => ArtPiecePage(artId: widget.post.id)));
+                  builder: (_) => ArtPiecePage(artId: widget.post.id!)));
         },
         onLongPress: () {
           setState(() {
@@ -442,7 +442,7 @@ class _SearchTileState extends State<SearchTile> {
                 child: Center(
                     child: CachedNetworkImage(
                         color: Colors.white,
-                        imageUrl: widget.post.cover.image,
+                        imageUrl: widget.post.cover.image!,
                         imageBuilder: (context, imageProvider) {
                           return Container(
                             decoration: BoxDecoration(
@@ -486,7 +486,7 @@ class _SearchTileState extends State<SearchTile> {
                                         MainAxisAlignment.spaceBetween,
                                     children: [
                                       Text(
-                                        widget.post.title,
+                                        widget.post.title!,
                                         style: const TextStyle(
                                             color: Colors.white,
                                             fontWeight: FontWeight.w700),

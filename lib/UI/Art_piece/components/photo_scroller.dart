@@ -1,6 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:honar_api_v14/api.dart';
+import 'package:honar_api_v17/api.dart';
 import 'package:honar_gallary/UI/video_music_palyer/components/image_view.dart';
 import 'package:nb_utils/nb_utils.dart';
 
@@ -17,7 +17,7 @@ class PhotoScroller extends StatelessWidget {
             context,
             MaterialPageRoute(
                 builder: (_) => ImageShowPage(
-                      content: photo.image,
+                      content: photo.image!,
                     )));
       },
       child: Padding(
@@ -26,7 +26,7 @@ class PhotoScroller extends StatelessWidget {
             borderRadius: BorderRadius.circular(4.0),
             child: CachedNetworkImage(
                 color: Colors.white,
-                imageUrl: photo.image,
+                imageUrl: photo.image!,
                 imageBuilder: (context, imageProvider) {
                   return Container(
                     height: context.height() * 0.3,

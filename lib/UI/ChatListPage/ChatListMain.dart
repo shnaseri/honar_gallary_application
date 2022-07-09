@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:honar_api_v14/api.dart';
+import 'package:honar_api_v17/api.dart';
 import 'package:honar_gallary/UI/chat/chat_page.dart';
 import 'package:honar_gallary/state_managment/ChatList/chat_list_cubit.dart';
 
@@ -66,7 +66,8 @@ class _ChatListState extends State<ChatList> {
                 if (state is ChatListLoaded) {
                   return ListView.builder(
                     itemBuilder: (BuildContext context, int index) {
-                      InlineResponse2006 chat = state.chats[index];
+                      ChatGetAllChatsList200ResponseInner chat =
+                          state.chats[index];
                       return GestureDetector(
                         onTap: () {
                           Navigator.push(
@@ -74,18 +75,18 @@ class _ChatListState extends State<ChatList> {
                               MaterialPageRoute(
                                 builder: (_) => ChatPage(
                                   index: 1,
-                                  chatCode: chat.chatCode,
-                                  contact: chat.user,
+                                  chatCode: chat.chatCode!,
+                                  contact: chat.user!,
                                 ),
                               ));
                         },
                         child: list(
-                            url: chat.user.profilePhoto,
-                            name: chat.user.fullName ?? " ",
-                            tym: chat.updatedAt.hour.toString() +
+                            url: chat.user!.profilePhoto!,
+                            name: chat.user!.fullName ?? " ",
+                            tym: chat.updatedAt!.hour.toString() +
                                 ":" +
-                                chat.updatedAt.minute.toString(),
-                            desc: chat.lastMessage,
+                                chat.updatedAt!.minute.toString(),
+                            desc: chat.lastMessage!,
                             msg: "",
                             isRead: false),
                       );
