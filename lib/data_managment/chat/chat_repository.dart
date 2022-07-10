@@ -1,4 +1,4 @@
-import 'package:honar_api_v17/api.dart';
+import 'package:honar_api_v18/api.dart';
 
 import 'chat_networkService.dart';
 
@@ -23,7 +23,7 @@ class ChatRepository {
   }
 
   pushMessage(
-      ChatGetAllChatsList200ResponseInnerUser user, String messageText) async {
+      ArtGalleryRead200ResponseOwner user, String messageText) async {
     try {
       // String otpToken = GeneralValues.generalValues.token;
       // await chatNetworkService.pushMessageToServer(otpToken,user.token,messageText);
@@ -34,7 +34,7 @@ class ChatRepository {
     }
   }
 
-  Future<Message> getNewMessageAdd(ChatGetAllChatsList200ResponseInnerUser user,
+  Future<Message> getNewMessageAdd(ArtGalleryRead200ResponseOwner user,
       String messageText, bool own) async {
     var message = Message(
         content: messageText,

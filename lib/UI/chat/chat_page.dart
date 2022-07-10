@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:honar_api_v17/api.dart';
+import 'package:honar_api_v18/api.dart';
 import 'package:honar_gallary/state_managment/chat/chat_cubit.dart';
 
 import '../utils/appbar/appbar_title_profile.dart';
@@ -12,7 +12,7 @@ import 'components/text_field_component.dart';
 TextEditingController controller = TextEditingController();
 
 class ChatPage extends StatefulWidget {
-  final ChatGetAllChatsList200ResponseInnerUser contact;
+  final ArtGalleryRead200ResponseOwner contact;
   final int index;
   final String chatCode;
 
