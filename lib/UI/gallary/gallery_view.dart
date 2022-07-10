@@ -349,7 +349,10 @@ class _GalleryViewState extends State<GalleryView> {
                                           ),
                                         ),
                                       ),
-                                    if (state.enableBusiness)
+                                    if (state.enableBusiness ||
+                                        state.owner.id ==
+                                            ConfigGeneralValues.getInstance()
+                                                .userId)
                                       Positioned(
                                         top: 90,
                                         left: 20,
@@ -365,8 +368,10 @@ class _GalleryViewState extends State<GalleryView> {
                                           },
                                           child: Icon(
                                             Icons.business_center_sharp,
-                                            color:
-                                                ColorPallet.colorPalletNightFog,
+                                            color: state.enableBusiness
+                                                ? ColorPallet
+                                                    .colorPalletNightFog
+                                                : Colors.red,
                                             size: 25,
                                           ),
                                         ),

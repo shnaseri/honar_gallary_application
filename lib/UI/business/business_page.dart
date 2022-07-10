@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:honar_api_v20/api.dart';
+import 'package:honar_gallary/UI/utils/numeral/Numeral.dart';
 import 'package:honar_gallary/const/color_const.dart';
 import 'package:nb_utils/nb_utils.dart';
 
@@ -341,7 +342,7 @@ class ArtPieceTile extends StatelessWidget {
                           constraints:
                               BoxConstraints(maxWidth: context.width() * 0.7),
                           child: Text(
-                            artPiece.title!,
+                            artPiece.description!,
                             style: const TextStyle(
                                 color: Colors.cyan,
                                 fontWeight: FontWeight.bold,
@@ -355,6 +356,19 @@ class ArtPieceTile extends StatelessWidget {
               ],
             ),
           ),
+          Positioned(child: Container(
+            padding: EdgeInsets.all(8),
+            decoration: BoxDecoration(
+              color: ColorPallet.colorPalletSambucus,
+              borderRadius: BorderRadius.only(topLeft: Radius.circular(10),bottomRight: Radius.circular(10))
+            ),
+            child: Center(
+              child: Text(
+                Numeral(artPiece.price!).toString(),
+                style: TextStyle(color: Colors.white),
+              ),
+            ),
+          ),top: 0,left: 0,)
         ],
       ),
     );

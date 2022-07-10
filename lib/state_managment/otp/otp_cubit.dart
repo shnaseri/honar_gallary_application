@@ -28,7 +28,7 @@ class OtpCubit extends Cubit<OtpState> {
         HttpBearerAuth auth = HttpBearerAuth();
         auth.accessToken = response2004.accessToken;
         interfaceOfUser = ApiClient(authentication: auth);
-
+        authApi = AuthApi(interfaceOfUser);
         CategoryApi categoryApi = CategoryApi(interfaceOfUser);
         ConfigGeneralValues.getInstance()
             .setListCategory((await categoryApi.categoryGetAllList())!);
