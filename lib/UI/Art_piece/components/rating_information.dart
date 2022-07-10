@@ -29,57 +29,86 @@ class RatingInformation extends StatelessWidget {
     var textTheme = theme.textTheme;
     var ratingCaptionStyle = textTheme.caption!.copyWith(color: Colors.white);
 
-    var numericRating = Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Text(
-          ' لایک ها',
-          style: ratingCaptionStyle,
-        ),
-        const SizedBox(height: 4.0),
-        Container(
-          padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
-          child: Text(
-            movie.likeCount.toString(),
-            style: textTheme.titleMedium!.copyWith(
-              fontWeight: FontWeight.bold,
-              color: Colors.amber,
-            ),
-          ),
-        ),
-      ],
-    );
+    var numericRating = movie.price != 0
+        ? Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                ' لایک ها',
+                style: ratingCaptionStyle,
+              ),
+              const SizedBox(height: 4.0),
+              Container(
+                padding:
+                    const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+                child: Text(
+                  movie.likeCount.toString(),
+                  style: textTheme.titleMedium!.copyWith(
+                    fontWeight: FontWeight.bold,
+                    color: Colors.amber,
+                  ),
+                ),
+              ),
+            ],
+          )
+        : Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                'لایک ها:',
+                style: ratingCaptionStyle,
+              ),
+              const SizedBox(width: 6.0),
+              Container(
+                decoration: BoxDecoration(
+                    color: Colors.amber,
+                    borderRadius: BorderRadius.circular(6)),
+                padding: const EdgeInsets.symmetric(vertical: 2, horizontal: 9),
+                child: Text(
+                  movie.likeCount.toString(),
+                  style: textTheme.titleMedium!.copyWith(
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+            ],
+          );
 
-    var starRating = Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Text(
-          'قیمت',
-          style: ratingCaptionStyle,
-        ),
-        const SizedBox(
-          height: 4,
-        ),
-        Container(
-          decoration: BoxDecoration(
-              color: ColorPallet.colorPalletNightFog,
-              borderRadius: BorderRadius.circular(12)),
-          padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
-          child: Text(
-            Numeral(movie.price!).toString(),
-            style: textTheme.titleMedium!.copyWith(
-              fontWeight: FontWeight.bold,
-              color: Colors.white,
-              fontSize: 13,
-            ),
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-          ),
-        ),
-      ],
-    );
+    var starRating = movie.price != 0
+        ? Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                'قیمت',
+                style: ratingCaptionStyle,
+              ),
+              const SizedBox(
+                height: 4,
+              ),
+              Container(
+                decoration: BoxDecoration(
+                    color: ColorPallet.colorPalletNightFog,
+                    borderRadius: BorderRadius.circular(12)),
+                padding:
+                    const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+                child: Text(
+                  Numeral(movie.price!).toString(),
+                  style: textTheme.titleMedium!.copyWith(
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                    fontSize: 13,
+                  ),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
+            ],
+          )
+        : Container();
 
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,

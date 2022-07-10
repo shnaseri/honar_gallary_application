@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:honar_api_v17/api.dart';
@@ -29,6 +31,9 @@ class _ChatPageState extends State<ChatPage> {
   late BuildContext chatContext;
   late bool startapp;
   late List<Message> messages;
+  File? fileSelected;
+  String? type;
+  late bool uploading;
 
   @override
   void initState() {
@@ -37,6 +42,7 @@ class _ChatPageState extends State<ChatPage> {
     controller.text = "";
     startapp = true;
     messages = [];
+    uploading = false;
   }
 
   @override
@@ -65,6 +71,15 @@ class _ChatPageState extends State<ChatPage> {
                   builder: (context, state) {
                     if (state is ChatConnectToServer) {
                       messages = state.messages;
+                      if (fileSelected != null) {
+                        if (uploading) {
+                          fileSelected = null;
+                          uploading = false;
+                          type = null;
+                        } else {
+                          uploading = true;
+                        }
+                      }
                     }
                     chatContext = context;
                     if (state is ChatErrorState) {
@@ -79,16 +94,23 @@ class _ChatPageState extends State<ChatPage> {
                     return Stack(
                       children: [
                         BodyOfChatPage(
-                          addMessageFunction: (newMessage) {
-                            messages.add(newMessage);
-                            BlocProvider.of<ChatCubit>(context)
-                                .changeState(messages);
-                          },
-                        ),
+                            addMessageFunction: (newMessage) {
+                              messages.add(newMessage);
+                              BlocProvider.of<ChatCubit>(context)
+                                  .changeState(messages);
+                            },
+                            fileSelected: fileSelected,
+                            type: type),
                         TextFieldForChatPage(
-                          contact: widget.contact,
-                          messages: messages,
-                        )
+                            contact: widget.contact,
+                            messages: messages,
+                            onSubmit: (File file, String t) {
+                              print("submit chat upload");
+                              setState(() {
+                                fileSelected = file;
+                                type = t;
+                              });
+                            })
                       ],
                     );
                   },
