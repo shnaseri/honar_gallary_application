@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:honar_api_v19/api.dart';
+import 'package:honar_api_v20/api.dart';
 import 'package:honar_gallary/UI/Art_piece/components/poster.dart';
 import 'package:honar_gallary/UI/Art_piece/components/rating_information.dart';
 import 'package:honar_gallary/UI/video_music_palyer/components/arc_banner.dart';
@@ -29,7 +29,7 @@ class MovieDetailHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var textTheme = Theme.of(context).textTheme;
-
+    print(artPiece.cover.image);
     var movieInformation = Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
