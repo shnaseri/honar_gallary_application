@@ -21,6 +21,7 @@ abstract class AppBarWidget extends StatelessWidget with PreferredSizeWidget {
       // backgroundColor: Color(0xffd0dee9),
       leading: getLeading(),
       actions: getActions(),
+      centerTitle: true,
     );
   }
 
