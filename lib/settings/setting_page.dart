@@ -1,7 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:honar_gallary/UI/profile/profile_page.dart';
 import 'package:honar_gallary/const/color_const.dart';
+import 'package:nb_utils/nb_utils.dart';
+
+import '../UI/utils/show_dialog.dart';
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({Key? key}) : super(key: key);
@@ -131,7 +135,16 @@ class _SettingsPageState extends State<SettingsPage> {
                     shape: MaterialStateProperty.resolveWith((states) =>
                         RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(20)))),
-                onPressed: () {},
+                onPressed: () {
+                  showMessage(
+                      context, 'خروج', 'آیا از خروج از برنامه اطمینان دارد؟',
+                      functionRun: () async {
+                    final _prefs = await SharedPreferences.getInstance();
+                    await _prefs.clear();
+                    print('1');
+                    Phoenix.rebirth(context);
+                  });
+                },
                 child: const Text("خروج",
                     style: TextStyle(
                         fontSize: 16, letterSpacing: 2.2, color: Colors.white)),

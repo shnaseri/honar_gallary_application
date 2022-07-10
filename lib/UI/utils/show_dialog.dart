@@ -133,7 +133,7 @@ showMessage(BuildContext context, String title, String message,
                                                 },
                                                 child: Container(
                                                   decoration: BoxDecoration(
-                                                      color: Color(0xffea004e),
+                                                      color: Colors.grey,
                                                       borderRadius:
                                                           BorderRadius.only(
                                                               bottomRight:
