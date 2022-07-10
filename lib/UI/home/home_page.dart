@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:honar_gallary/UI/ChatListPage/ChatListMain.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:honar_gallary/state_managment/home_page/home_cubit.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -9,20 +10,32 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  late bool startApp;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    startApp = true;
+  }
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Center(
-              child: ElevatedButton(
-                  onPressed: () {
-                    Navigator.push(
-                        context, MaterialPageRoute(builder: (_) => ChatList()));
-                  },
-                  child: Text("صفحه چت")))
-        ],
+    return BlocProvider(
+      create: (context) => HomeCubit(),
+      child: Scaffold(
+        body: BlocBuilder<HomeCubit, HomeState>(
+          builder: (context, state) {
+            if(state is HomeInitial && startApp) {
+              BlocProvider.of<HomeCubit>(context).fetchHome();
+              startApp = false;
+            }
+              return Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+              ],
+            );
+
+          },
+        ),
       ),
     );
   }
