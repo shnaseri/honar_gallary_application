@@ -272,6 +272,7 @@ paths:
               posts:
                 type: array
                 items:
+                  required: []
                   type: object
                   properties:
                     id:
@@ -778,6 +779,7 @@ paths:
                 type: object
                 properties:
                   most_commented_post_in_last_7_days:
+                    required: []
                     type: object
                     properties:
                       id:
@@ -798,6 +800,7 @@ paths:
                       description:
                         type: string
                   most_liked_post_in_last_7_days:
+                    required: []
                     type: object
                     properties:
                       id:
@@ -829,6 +832,7 @@ paths:
               feed:
                 type: array
                 items:
+                  required: []
                   type: object
                   properties:
                     id:
