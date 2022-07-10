@@ -6,12 +6,8 @@ import 'package:honar_gallary/UI/video_music_palyer/components/arc_banner.dart';
 import 'package:honar_gallary/UI/video_music_palyer/player_content.dart';
 import 'package:honar_gallary/const/color_const.dart';
 
-import 'models.dart';
-
 class MovieDetailHeader extends StatelessWidget {
-  const MovieDetailHeader(this.movie, this.artPiece, {Key? key})
-      : super(key: key);
-  final Movie movie;
+  const MovieDetailHeader(this.artPiece, {Key? key}) : super(key: key);
   final ArtPiece artPiece;
 
   List<Widget> _buildCategoryChips(TextTheme textTheme, ArtPiece artPiece) {
@@ -38,7 +34,7 @@ class MovieDetailHeader extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          movie.title,
+          artPiece.title!,
           overflow: TextOverflow.ellipsis,
           maxLines: 1,
           style: textTheme.titleMedium!.copyWith(
@@ -65,7 +61,7 @@ class MovieDetailHeader extends StatelessWidget {
                               content: artPiece.cover.image!,
                             )));
               },
-              child: ArcBannerImageOnline(movie.bannerUrl)),
+              child: ArcBannerImageOnline(artPiece.cover.image!)),
         ),
         Positioned(
           bottom: 0,

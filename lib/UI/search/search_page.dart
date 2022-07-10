@@ -21,82 +21,89 @@ class _SearchPageState extends State<SearchPage> {
   Widget build(BuildContext context) {
     return BlocProvider<SearchCubit>(
       create: (context) => SearchCubit(),
-      child: Scaffold(
-          resizeToAvoidBottomInset: false,
-          body: Directionality(
-            textDirection: TextDirection.rtl,
-            child: Scaffold(
-              resizeToAvoidBottomInset: false,
-              body: GestureDetector(
-                onTap: () {
-                  FocusScope.of(context).unfocus();
-                },
-                child: Container(
-                    decoration: const BoxDecoration(
-                      gradient: LinearGradient(
-                        colors: [
-                          Color.fromRGBO(4, 9, 35, 1),
-                          Color.fromRGBO(39, 105, 171, 1),
-                        ],
-                        begin: FractionalOffset.bottomCenter,
-                        end: FractionalOffset.topCenter,
+      child: Directionality(
+        textDirection: TextDirection.ltr,
+        child: Scaffold(
+            resizeToAvoidBottomInset: false,
+            body: Directionality(
+              textDirection: TextDirection.rtl,
+              child: Scaffold(
+                resizeToAvoidBottomInset: false,
+                body: GestureDetector(
+                  onTap: () {
+                    FocusScope.of(context).unfocus();
+                  },
+                  child: Container(
+                      decoration: const BoxDecoration(
+                        gradient: LinearGradient(
+                          colors: [
+                            Color.fromRGBO(4, 9, 35, 1),
+                            Color.fromRGBO(39, 105, 171, 1),
+                          ],
+                          begin: FractionalOffset.bottomCenter,
+                          end: FractionalOffset.topCenter,
+                        ),
                       ),
-                    ),
-                    child: Stack(
-                      children: [
-                        SizedBox(
-                          height: 100,
-                          child: Align(
-                            alignment: const Alignment(0, 1.5),
-                            child: BlocBuilder<SearchCubit, SearchState>(
-                              builder: (context, state) {
-                                return TextFieldSearchWidget(
-                                  onChanged: (value) {
-                                    if (value.length < 3) {
-                                      BlocProvider.of<SearchCubit>(context)
-                                          .emit(SearchInitial());
-                                      return;
-                                    }
-                                    if (state is SearchLoaded) {
-                                      if (value == state.textSearched) {
+                      child: Stack(
+                        children: [
+                          SizedBox(
+                            height: 100,
+                            child: Align(
+                              alignment: const Alignment(0, 1.5),
+                              child: BlocBuilder<SearchCubit, SearchState>(
+                                builder: (context, state) {
+                                  return TextFieldSearchWidget(
+                                    onChanged: (value) {
+                                      if (value.length < 3) {
+                                        BlocProvider.of<SearchCubit>(context)
+                                            .emit(SearchInitial());
                                         return;
                                       }
-                                    }
+                                      if (state is SearchLoaded) {
+                                        if (value == state.textSearched) {
+                                          return;
+                                        }
+                                      }
 
-                                    BlocProvider.of<SearchCubit>(context)
-                                        .search(value);
-                                  },
-                                );
-                              },
+                                      BlocProvider.of<SearchCubit>(context)
+                                          .search(value);
+                                    },
+                                  );
+                                },
+                              ),
                             ),
                           ),
-                        ),
-                        SizedBox(
-                          height: context.height(),
-                          width: context.width(),
-                          child: DraggableScrollableSheet(
-                              expand: true,
-                              minChildSize: 0.8,
-                              initialChildSize: 0.82,
-                              builder: (context, listScrollController) {
-                                return Container(
-                                    decoration: boxDecorationWithRoundedCorners(
-                                        backgroundColor: Colors.white,
-                                        borderRadius: const BorderRadius.only(
-                                            topRight: Radius.circular(40),
-                                            topLeft: Radius.circular(40))),
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: BodySearchWidget(
-                                          controller: listScrollController),
-                                    ));
-                              }),
-                        )
-                      ],
-                    )),
+                          SizedBox(
+                            height: context.height(),
+                            width: context.width(),
+                            child: DraggableScrollableSheet(
+                                expand: true,
+                                minChildSize: 0.8,
+                                initialChildSize: 0.82,
+                                builder: (context, listScrollController) {
+                                  return Container(
+                                      decoration:
+                                          boxDecorationWithRoundedCorners(
+                                              backgroundColor: Colors.white,
+                                              borderRadius:
+                                                  const BorderRadius.only(
+                                                      topRight:
+                                                          Radius.circular(40),
+                                                      topLeft:
+                                                          Radius.circular(40))),
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: BodySearchWidget(
+                                            controller: listScrollController),
+                                      ));
+                                }),
+                          )
+                        ],
+                      )),
+                ),
               ),
-            ),
-          )),
+            )),
+      ),
     );
   }
 }
@@ -129,7 +136,21 @@ class _BodySearchWidgetState extends State<BodySearchWidget> {
       builder: (context, state) {
         if (state is SearchInitial) {
           startApp = false;
-          return Container();
+          return Container(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                  width: context.width(),
+                  height: context.height() * 0.3,
+                  decoration: const BoxDecoration(
+                      image: DecorationImage(
+                          image: AssetImage("assets/images/dribble_5-15.jpg"))),
+                ),
+                Text("هنرمندان منتظر شما هستند ...")
+              ],
+            ),
+          );
         }
         if (state is SearchLoaded) {
           return ListView(

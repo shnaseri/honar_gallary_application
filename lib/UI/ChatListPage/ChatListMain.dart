@@ -4,6 +4,7 @@ import 'package:honar_api_v17/api.dart';
 import 'package:honar_gallary/UI/chat/chat_page.dart';
 import 'package:honar_gallary/state_managment/ChatList/chat_list_cubit.dart';
 
+import '../utils/appbar/appbar_titile_back.dart';
 import 'TileRows.dart';
 
 class ChatList extends StatefulWidget {
@@ -28,8 +29,9 @@ class _ChatListState extends State<ChatList> {
     return BlocProvider<ChatListCubit>(
       create: (context) => ChatListCubit(),
       child: Directionality(
-        textDirection: TextDirection.rtl,
+        textDirection: TextDirection.ltr,
         child: Scaffold(
+          appBar: AppBarTitleWithBack(context, "گفتگو ها"),
           // appBar: AppBar(
           //   elevation: 0.0,
           //   backgroundColor: Colors.purple,
@@ -46,60 +48,63 @@ class _ChatListState extends State<ChatList> {
           //   ],
           // )
 
-          body: Container(
-            decoration: const BoxDecoration(
-              gradient: LinearGradient(
-                colors: [
-                  Color.fromRGBO(4, 9, 35, 1),
-                  Color.fromRGBO(39, 105, 171, 1),
-                ],
-                begin: FractionalOffset.bottomCenter,
-                end: FractionalOffset.topCenter,
+          body: Directionality(
+            textDirection: TextDirection.rtl,
+            child: Container(
+              decoration: const BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [
+                    Color.fromRGBO(4, 9, 35, 1),
+                    Color.fromRGBO(39, 105, 171, 1),
+                  ],
+                  begin: FractionalOffset.bottomCenter,
+                  end: FractionalOffset.topCenter,
+                ),
               ),
-            ),
-            child: BlocBuilder<ChatListCubit, ChatListState>(
-              builder: (context, state) {
-                if (state is ChatListInitial && startup) {
-                  BlocProvider.of<ChatListCubit>(context).fetchChatList();
-                  startup = false;
-                }
-                if (state is ChatListLoaded) {
-                  return ListView.builder(
-                    itemBuilder: (BuildContext context, int index) {
-                      ChatGetAllChatsList200ResponseInner chat =
-                          state.chats[index];
-                      return GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (_) => ChatPage(
-                                  index: 1,
-                                  chatCode: chat.chatCode!,
-                                  contact: chat.user!,
-                                ),
-                              ));
-                        },
-                        child: list(
-                            url: chat.user!.profilePhoto!,
-                            name: chat.user!.fullName ?? " ",
-                            tym: chat.updatedAt!.hour.toString() +
-                                ":" +
-                                chat.updatedAt!.minute.toString(),
-                            desc: chat.lastMessage!,
-                            msg: "",
-                            isRead: false),
-                      );
-                    },
-                    itemCount: state.chats.length,
+              child: BlocBuilder<ChatListCubit, ChatListState>(
+                builder: (context, state) {
+                  if (state is ChatListInitial && startup) {
+                    BlocProvider.of<ChatListCubit>(context).fetchChatList();
+                    startup = false;
+                  }
+                  if (state is ChatListLoaded) {
+                    return ListView.builder(
+                      itemBuilder: (BuildContext context, int index) {
+                        ChatGetAllChatsList200ResponseInner chat =
+                            state.chats[index];
+                        return GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (_) => ChatPage(
+                                    index: 1,
+                                    chatCode: chat.chatCode!,
+                                    contact: chat.user!,
+                                  ),
+                                ));
+                          },
+                          child: list(
+                              url: chat.user!.profilePhoto!,
+                              name: chat.user!.fullName ?? " ",
+                              tym: chat.updatedAt!.hour.toString() +
+                                  ":" +
+                                  chat.updatedAt!.minute.toString(),
+                              desc: chat.lastMessage!,
+                              msg: "",
+                              isRead: false),
+                        );
+                      },
+                      itemCount: state.chats.length,
+                    );
+                  }
+                  return const Center(
+                    child: CircularProgressIndicator(
+                      color: Colors.pink,
+                    ),
                   );
-                }
-                return const Center(
-                  child: CircularProgressIndicator(
-                    color: Colors.pink,
-                  ),
-                );
-              },
+                },
+              ),
             ),
           ),
         ),
