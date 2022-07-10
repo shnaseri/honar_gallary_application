@@ -451,8 +451,8 @@ class _ProfileListItemsState extends State<ProfileListItems> {
                       decoration: BoxDecoration(
                         gradient: LinearGradient(
                           colors: [
-                            Colors.teal,
-                            Colors.teal.shade200,
+                            ColorPallet.colorPalletBlueGam,
+                            ColorPallet.colorPalletNightFog,
                           ],
                           begin: Alignment.topLeft,
                           end: Alignment.bottomRight,
