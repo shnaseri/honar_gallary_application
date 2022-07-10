@@ -610,7 +610,7 @@ class _SearchArtistTileState extends State<SearchArtistTile> {
                       imageBuilder: (context, imageProvider) {
                         return Container(
                           decoration: BoxDecoration(
-                            color: Colors.white,
+                              color: Colors.white,
                               borderRadius: const BorderRadius.only(
                                   topLeft: Radius.circular(9),
                                   topRight: Radius.circular(9)),
@@ -642,8 +642,7 @@ class _SearchArtistTileState extends State<SearchArtistTile> {
                           widget.user.fullName!,
                           overflow: TextOverflow.ellipsis,
                           style: const TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.w700),
+                              color: Colors.white, fontWeight: FontWeight.w700),
                         ),
                       ),
                     ),
