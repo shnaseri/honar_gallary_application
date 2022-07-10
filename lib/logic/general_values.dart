@@ -10,7 +10,10 @@ class ConfigGeneralValues {
 
   late FullUser _profile;
 
+  bool enableBusiness = false;
+
   List<Category> get categories => _categories;
+
 
   static ConfigGeneralValues getInstance() {
     _configGeneralValues ??= ConfigGeneralValues();

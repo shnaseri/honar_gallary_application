@@ -12,8 +12,9 @@ class GalleryLoaded extends GalleryState {
   final int postCount;
   final ArtGalleryRead200ResponseOwner owner;
   final ArtGalleryRead200ResponseProfile profile;
+  final bool enableBusiness;
 
-  GalleryLoaded(this.owner, this.postCount, this.arts, this.profile);
+  GalleryLoaded(this.owner, this.postCount, this.arts, this.profile,this.enableBusiness);
 }
 
 class GalleryError extends GalleryState {}

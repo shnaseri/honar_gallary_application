@@ -66,7 +66,6 @@ class _GalleryViewState extends State<GalleryView> {
                 padding: const EdgeInsets.symmetric(horizontal: 15),
                 height: MediaQuery.of(context).size.height,
                 child: ListView(
-                  physics: ClampingScrollPhysics(),
                   padding: const EdgeInsets.only(top: 40, bottom: 70),
                   children: [
                     BlocBuilder<GalleryCubit, GalleryState>(
@@ -333,7 +332,7 @@ class _GalleryViewState extends State<GalleryView> {
                                                         state.owner.id!),
                                                     index: 1,
                                                     contact:
-                                                    ArtGalleryRead200ResponseOwner(
+                                                        ArtGalleryRead200ResponseOwner(
                                                             fullName: state
                                                                 .owner.fullName,
                                                             profilePhoto: state
@@ -350,27 +349,28 @@ class _GalleryViewState extends State<GalleryView> {
                                           ),
                                         ),
                                       ),
-                                    Positioned(
-                                      top: 90,
-                                      left: 20,
-                                      child: GestureDetector(
-                                        onTap: () {
-                                          Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                builder: (_) => BusinessPage(
-                                                  id: widget.id,
-                                                ),
-                                              ));
-                                        },
-                                        child: Icon(
-                                          Icons.business_center_sharp,
-                                          color:
-                                              ColorPallet.colorPalletNightFog,
-                                          size: 25,
+                                    if (state.enableBusiness)
+                                      Positioned(
+                                        top: 90,
+                                        left: 20,
+                                        child: GestureDetector(
+                                          onTap: () {
+                                            Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (_) => BusinessPage(
+                                                    id: widget.id,
+                                                  ),
+                                                ));
+                                          },
+                                          child: Icon(
+                                            Icons.business_center_sharp,
+                                            color:
+                                                ColorPallet.colorPalletNightFog,
+                                            size: 25,
+                                          ),
                                         ),
                                       ),
-                                    ),
                                     Positioned(
                                       top: 0,
                                       left: 0,
