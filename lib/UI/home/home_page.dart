@@ -1,10 +1,13 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:honar_api_v20/api.dart';
 import 'package:honar_gallary/const/color_const.dart';
 import 'package:honar_gallary/state_managment/home_page/home_cubit.dart';
 import 'package:more_loading_gif/more_loading_gif.dart';
 import 'package:nb_utils/nb_utils.dart';
 
+import '../Art_piece/art_piece_page.dart';
 import '../business/business_page.dart';
 
 class HomePage extends StatefulWidget {
@@ -40,6 +43,7 @@ class _HomePageState extends State<HomePage> {
                 height: context.height(),
                 width: context.width(),
                 child: ListView(
+                  physics: ClampingScrollPhysics(),
                   children: [
                     const HomeHeader(),
                     Container(
@@ -53,7 +57,8 @@ class _HomePageState extends State<HomePage> {
                                 Container(
                                   height: 200,
                                   width: context.width(),
-                                  margin: EdgeInsets.symmetric(vertical: 10,horizontal: 10),
+                                  margin: EdgeInsets.symmetric(
+                                      vertical: 10, horizontal: 10),
                                   padding: EdgeInsets.symmetric(
                                       vertical: 5, horizontal: 10),
                                   decoration: BoxDecoration(
@@ -76,12 +81,18 @@ class _HomePageState extends State<HomePage> {
                                               Text(
                                                 "بیشترین لایک ",
                                                 style: TextStyle(
-                                                    color: ColorPallet.colorPalletDark,fontWeight: FontWeight.w900,fontSize: 20),
+                                                    color: ColorPallet
+                                                        .colorPalletDark,
+                                                    fontWeight: FontWeight.w900,
+                                                    fontSize: 20),
                                               )
                                             ],
                                           ),
                                         ),
-                                        Expanded(child: Container())
+                                        Expanded(child: Container(
+                                          margin: EdgeInsets.symmetric(horizontal: 10,vertical: 6),
+                                          child: OfferTile(index: 1, post: state.homepage.feed[0]),
+                                        ))
                                       ],
                                     ),
                                   ),
@@ -317,6 +328,198 @@ class _HomeHeaderState extends State<HomeHeader> {
         }
         return Container();
       },
+    );
+  }
+}
+
+class OfferTile extends StatefulWidget {
+  const OfferTile({
+    Key? key,
+    required this.index,
+    this.extent,
+    this.backgroundColor,
+    this.bottomSpace,
+    required this.post,
+  }) : super(key: key);
+
+  final int index;
+  final double? extent;
+  final double? bottomSpace;
+  final Color? backgroundColor;
+  final ArtGalleryRead200ResponsePostsInner post;
+
+  @override
+  State<OfferTile> createState() => _OfferTileState();
+}
+
+class _OfferTileState extends State<OfferTile> {
+  late bool showTitle;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    showTitle = false;
+    print(widget.post.countLike);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final child = GestureDetector(
+        onTap: () {
+          if (showTitle) {
+            setState(() {
+              showTitle = !showTitle;
+            });
+            return;
+          }
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (_) => ArtPiecePage(artId: widget.post.id!)));
+        },
+        onLongPress: () {
+          setState(() {
+            showTitle = !showTitle;
+          });
+        },
+        child: Container(
+          height: widget.extent,
+          decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(11),
+              boxShadow: const [
+                BoxShadow(color: Colors.black26, spreadRadius: 0.2)
+              ]),
+          child: Stack(
+            children: [
+              Center(
+                  child: CachedNetworkImage(
+                      color: Colors.white,
+                      imageUrl: widget.post.image!,
+                      imageBuilder: (context, imageProvider) {
+                        return Container(
+                          width: context.width(),
+                          height: context.height() * 0.3,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(11),
+                              image: DecorationImage(
+                                  fit: BoxFit.cover, image: imageProvider)),
+                        );
+                      },
+                      placeholder: (context, url) {
+                        return Container(
+                          height: context.height() * 0.3,
+                          width: context.width(),
+                          decoration: BoxDecoration(
+                            color: Colors.grey,
+                            borderRadius: BorderRadius.circular(11),
+                          ),
+                        );
+                      })),
+              Positioned(
+                child: Container(
+                  padding: EdgeInsets.symmetric(vertical: 4, horizontal: 6),
+                  margin: EdgeInsets.only(top: 5),
+                  decoration: BoxDecoration(
+                      color: Colors.pink,
+                      borderRadius: BorderRadius.circular(9)),
+                  child: Row(
+                    children: [
+                      Text(
+                        (widget.post.countLike ?? 0).toString(),
+                        style: const TextStyle(
+                            fontWeight: FontWeight.w900,
+                            fontSize: 12,
+                            color: Colors.white),
+                      ),
+                      2.width,
+                      const Icon(
+                        Icons.favorite_border_rounded,
+                        color: Colors.white,
+                      ),
+                    ],
+                  ),
+                ),
+                top: 0,
+                left: 5,
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 10),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 0.0, left: 15.0),
+                      child: Row(
+                        children: [
+                          const SizedBox(width: 10.0),
+                          Container(
+                            padding: const EdgeInsets.symmetric(horizontal: 15),
+                            decoration: BoxDecoration(
+                                borderRadius: const BorderRadius.only(
+                                    topRight: Radius.circular(15),
+                                    topLeft: Radius.circular(15)),
+                                color: ColorPallet.colorPalletDark),
+                            child: Text(
+                              widget.post.title!,
+                              style: const TextStyle(
+                                fontWeight: FontWeight.w900,
+                                color: Colors.white,
+                                fontSize: 20.0,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Row(
+                      children: [
+
+                        const SizedBox(width: 10.0),
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 6),
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(horizontal: 5),
+                            decoration: BoxDecoration(
+                                borderRadius: const BorderRadius.only(
+                                    bottomLeft: Radius.circular(10),
+                                    bottomRight: Radius.circular(10)),
+                                color: ColorPallet.colorPalletDark),
+                            child: ConstrainedBox(
+                              constraints:
+                              BoxConstraints(maxWidth: context.width() * 0.7),
+                              child: Text(
+                                "تعداد کامنت ها:" + widget.post.countComment.toString(),
+                                style: const TextStyle(
+                                    color: Colors.cyan,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 14.0),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ));
+
+    if (widget.bottomSpace == null) {
+      return child;
+    }
+
+    return Column(
+      children: [
+        Expanded(child: child),
+        Container(
+          height: widget.bottomSpace,
+          color: Colors.green,
+        )
+      ],
     );
   }
 }

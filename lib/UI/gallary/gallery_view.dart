@@ -72,8 +72,8 @@ class _GalleryViewState extends State<GalleryView> {
                       builder: (context, state) {
                         if (state is GalleryLoaded) {
                           return Container(
-                            height: 250,
-                            padding: const EdgeInsets.symmetric(horizontal: 15),
+                            height: 265,
+                            padding: const EdgeInsets.symmetric(horizontal: 15,vertical:5 ),
                             child: LayoutBuilder(
                               builder: (context, constraints) {
                                 double innerHeight = constraints.maxHeight;
