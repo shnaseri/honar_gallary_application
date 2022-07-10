@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:honar_api_v17/api.dart';
 import 'package:honar_gallary/UI/Art_piece/art_piece_page.dart';
+import 'package:honar_gallary/UI/gallary/gallery_view.dart';
 import 'package:honar_gallary/const/color_const.dart';
 import 'package:honar_gallary/logic/general_values.dart';
 import 'package:honar_gallary/state_managment/gallery/gallery_cubit.dart';
@@ -516,6 +517,138 @@ class _SearchTileState extends State<SearchTile> {
                           ),
                         ),
                       ],
+                    ),
+                  ),
+                ),
+              )
+            ],
+          ),
+        ));
+
+    if (widget.bottomSpace == null) {
+      return child;
+    }
+
+    return Column(
+      children: [
+        Expanded(child: child),
+        Container(
+          height: widget.bottomSpace,
+          color: Colors.green,
+        )
+      ],
+    );
+  }
+}
+
+class SearchArtistTile extends StatefulWidget {
+  const SearchArtistTile({
+    Key? key,
+    required this.index,
+    this.extent,
+    this.backgroundColor,
+    this.bottomSpace,
+    required this.user,
+  }) : super(key: key);
+
+  final int index;
+  final double? extent;
+  final double? bottomSpace;
+  final Color? backgroundColor;
+  final User user;
+
+  @override
+  State<SearchArtistTile> createState() => _SearchArtistTileState();
+}
+
+class _SearchArtistTileState extends State<SearchArtistTile> {
+  late bool showTitle;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    showTitle = false;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final child = GestureDetector(
+        onTap: () {
+          if (showTitle) {
+            setState(() {
+              showTitle = !showTitle;
+            });
+            return;
+          }
+
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (_) => GalleryView(
+                        uid: widget.user.id,
+                      )));
+        },
+        onLongPress: () {
+          setState(() {
+            showTitle = !showTitle;
+          });
+        },
+        child: Container(
+          height: widget.extent,
+          decoration: BoxDecoration(
+              color: Colors.black87,
+              borderRadius: BorderRadius.circular(9),
+              boxShadow: const [
+                BoxShadow(color: Colors.black26, spreadRadius: 0.2)
+              ]),
+          child: Stack(
+            alignment: Alignment.bottomRight,
+            children: [
+              Center(
+                  child: CachedNetworkImage(
+                      color: Colors.white,
+                      imageUrl: widget.user.profilePhoto.isEmptyOrNull
+                          ? "http://188.121.110.151:8000/media/images/icons8-test-account-64.png"
+                          : widget.user.profilePhoto!,
+                      imageBuilder: (context, imageProvider) {
+                        return Container(
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: const BorderRadius.only(
+                                  topLeft: Radius.circular(9),
+                                  topRight: Radius.circular(9)),
+                              image: DecorationImage(
+                                  fit: BoxFit.cover, image: imageProvider)),
+                        );
+                      },
+                      placeholder: (context, url) {
+                        return Container(
+                          height: context.height() * 0.3,
+                          width: context.width(),
+                          decoration: const BoxDecoration(color: Colors.grey),
+                        );
+                      })),
+              FractionallySizedBox(
+                widthFactor: 0.7,
+                child: Container(
+                  margin: EdgeInsets.only(bottom: 6),
+                  decoration: BoxDecoration(
+                      color: ColorPallet.colorPalletSambucus,
+                      borderRadius: BorderRadius.circular(13)),
+                  child: FractionallySizedBox(
+                    widthFactor: 1,
+                    child: Padding(
+                      padding: EdgeInsets.all(5),
+                      child: FractionallySizedBox(
+                        widthFactor: 1,
+                        child: Text(
+                          widget.user.fullName!,
+                          overflow: TextOverflow.ellipsis,
+                          style: const TextStyle(
+                              color: Colors.white, fontWeight: FontWeight.w700),
+                        ),
+                      ),
                     ),
                   ),
                 ),

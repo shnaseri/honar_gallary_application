@@ -1,16 +1,24 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:honar_api_v17/api.dart';
 import 'package:honar_gallary/UI/business/business_page.dart';
 import 'package:honar_gallary/const/color_const.dart';
 import 'package:honar_gallary/logic/general_values.dart';
 import 'package:honar_gallary/settings/setting_page.dart';
 import 'package:honar_gallary/state_managment/gallery/gallery_cubit.dart';
 
+import '../Art_piece/art_piece_page.dart';
+import '../chat/chat_page.dart';
 import 'components/common.dart';
 
 class GalleryView extends StatefulWidget {
-  const GalleryView({Key? key}) : super(key: key);
+  late int id;
+
+  GalleryView({Key? key, int? uid}) : super(key: key) {
+    id = uid ?? ConfigGeneralValues.getInstance().userId!;
+  }
 
   @override
   State<GalleryView> createState() => _GalleryViewState();
@@ -50,7 +58,7 @@ class _GalleryViewState extends State<GalleryView> {
             RefreshIndicator(
               onRefresh: () async {
                 await BlocProvider.of<GalleryCubit>(contextCubit)
-                    .fetchGallery(ConfigGeneralValues.getInstance().userId!);
+                    .fetchGallery(widget.id);
               },
               child: Container(
                 padding: const EdgeInsets.symmetric(horizontal: 15),
@@ -59,218 +67,262 @@ class _GalleryViewState extends State<GalleryView> {
                   physics: ClampingScrollPhysics(),
                   padding: const EdgeInsets.only(top: 40, bottom: 70),
                   children: [
-                    Container(
-                      height: 250,
-                      padding: const EdgeInsets.symmetric(horizontal: 15),
-                      child: LayoutBuilder(
-                        builder: (context, constraints) {
-                          double innerHeight = constraints.maxHeight;
-                          double innerWidth = constraints.maxWidth;
-                          return Stack(
-                            fit: StackFit.expand,
-                            children: [
-                              Positioned(
-                                bottom: 0,
-                                left: 0,
-                                right: 0,
-                                child: Container(
-                                  height: innerHeight * 0.68,
-                                  width: innerWidth,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(15),
-                                    color: Colors.white,
-                                  ),
-                                  child: Column(
-                                    children: [
-                                      const SizedBox(
-                                        height: 55,
-                                      ),
-                                      Text(
-                                        ConfigGeneralValues.getInstance()
-                                                .profile
-                                                .firstName! +
-                                            " " +
-                                            ConfigGeneralValues.getInstance()
-                                                .profile
-                                                .lastName!,
-                                        style: TextStyle(
-                                          color:
-                                              ColorPallet.colorPalletSambucus,
-                                          fontSize: 25,
+                    BlocBuilder<GalleryCubit, GalleryState>(
+                      builder: (context, state) {
+                        if (state is GalleryLoaded) {
+                          return Container(
+                            height: 250,
+                            padding: const EdgeInsets.symmetric(horizontal: 15),
+                            child: LayoutBuilder(
+                              builder: (context, constraints) {
+                                double innerHeight = constraints.maxHeight;
+                                double innerWidth = constraints.maxWidth;
+                                return Stack(
+                                  fit: StackFit.expand,
+                                  children: [
+                                    Positioned(
+                                      bottom: 0,
+                                      left: 0,
+                                      right: 0,
+                                      child: Container(
+                                        height: innerHeight * 0.68,
+                                        width: innerWidth,
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(15),
+                                          color: Colors.white,
+                                        ),
+                                        child: Column(
+                                          children: [
+                                            const SizedBox(
+                                              height: 55,
+                                            ),
+                                            Text(
+                                              state.owner.fullName!,
+                                              style: TextStyle(
+                                                color: ColorPallet
+                                                    .colorPalletSambucus,
+                                                fontSize: 25,
+                                              ),
+                                            ),
+                                            Container(
+                                              color: Colors.white,
+                                            ),
+                                            const SizedBox(
+                                              height: 5,
+                                            ),
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                Column(
+                                                  children: [
+                                                    Text(
+                                                      'دنبال کننده ها',
+                                                      style: TextStyle(
+                                                        color: ColorPallet
+                                                            .colorPalletBlueGam,
+                                                        fontWeight:
+                                                            FontWeight.w500,
+                                                        fontSize: 18,
+                                                      ),
+                                                    ),
+                                                    CircleAvatar(
+                                                      backgroundColor: ColorPallet
+                                                          .colorPalletNightFog,
+                                                      radius: 14,
+                                                      child: Center(
+                                                        child: Text(
+                                                          state.profile
+                                                              .followerCount
+                                                              .toString(),
+                                                          style:
+                                                              const TextStyle(
+                                                            color: Colors.white,
+                                                            fontSize: 14,
+                                                            fontWeight:
+                                                                FontWeight.w800,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                                Padding(
+                                                  padding: const EdgeInsets
+                                                      .symmetric(
+                                                    horizontal: 25,
+                                                    vertical: 8,
+                                                  ),
+                                                  child: Container(
+                                                    height: 45,
+                                                    width: 3,
+                                                    decoration: BoxDecoration(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              100),
+                                                      color: Colors.grey,
+                                                    ),
+                                                  ),
+                                                ),
+                                                Column(
+                                                  children: [
+                                                    Text(
+                                                      'دنبال شونده ها',
+                                                      style: TextStyle(
+                                                        color: ColorPallet
+                                                            .colorPalletBlueGam,
+                                                        fontSize: 18,
+                                                      ),
+                                                    ),
+                                                    CircleAvatar(
+                                                      backgroundColor: ColorPallet
+                                                          .colorPalletNightFog,
+                                                      radius: 14,
+                                                      child: Center(
+                                                        child: Text(
+                                                          state.profile
+                                                              .followingCount
+                                                              .toString(),
+                                                          style:
+                                                              const TextStyle(
+                                                            color: Colors.white,
+                                                            fontSize: 14,
+                                                            fontWeight:
+                                                                FontWeight.w800,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ],
+                                            )
+                                          ],
                                         ),
                                       ),
-                                      Container(
-                                        color: Colors.white,
+                                    ),
+                                    if (widget.id ==
+                                        ConfigGeneralValues.getInstance()
+                                            .userId)
+                                      Positioned(
+                                        top: 90,
+                                        right: 20,
+                                        child: GestureDetector(
+                                          onTap: () {
+                                            Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (_) =>
+                                                        const SettingsPage()));
+                                          },
+                                          child: Icon(
+                                            Icons.settings,
+                                            color:
+                                                ColorPallet.colorPalletNightFog,
+                                            size: 25,
+                                          ),
+                                        ),
                                       ),
-                                      const SizedBox(
-                                        height: 5,
+                                    if (widget.id !=
+                                        ConfigGeneralValues.getInstance()
+                                            .userId)
+                                      Positioned(
+                                        top: 90,
+                                        right: 20,
+                                        child: GestureDetector(
+                                          onTap: () {
+                                            Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (_) => ChatPage(
+                                                    chatCode: getChatCode(
+                                                        state.owner.id!),
+                                                    index: 1,
+                                                    contact:
+                                                        ChatGetAllChatsList200ResponseInnerUser(
+                                                            fullName: state
+                                                                .owner.fullName,
+                                                            profilePhoto: state
+                                                                .owner
+                                                                .profilePhoto),
+                                                  ),
+                                                ));
+                                          },
+                                          child: Icon(
+                                            Icons.wechat,
+                                            color:
+                                                ColorPallet.colorPalletNightFog,
+                                            size: 25,
+                                          ),
+                                        ),
                                       ),
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          Column(
-                                            children: [
-                                              Text(
-                                                'دنبال کننده ها',
-                                                style: TextStyle(
-                                                  color: ColorPallet
-                                                      .colorPalletBlueGam,
-                                                  fontWeight: FontWeight.w500,
-                                                  fontSize: 18,
+                                    Positioned(
+                                      top: 90,
+                                      left: 20,
+                                      child: GestureDetector(
+                                        onTap: () {
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                builder: (_) => BusinessPage(
+                                                  id: widget.id,
                                                 ),
-                                              ),
-                                              CircleAvatar(
-                                                backgroundColor: ColorPallet
-                                                    .colorPalletNightFog,
-                                                radius: 14,
-                                                child: Center(
-                                                  child: Text(
-                                                    ConfigGeneralValues
-                                                            .getInstance()
-                                                        .profile
-                                                        .userProfile!
-                                                        .followersCount
-                                                        .toString(),
-                                                    style: const TextStyle(
-                                                      color: Colors.white,
-                                                      fontSize: 14,
-                                                      fontWeight:
-                                                          FontWeight.w800,
-                                                    ),
-                                                  ),
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                          Padding(
-                                            padding: const EdgeInsets.symmetric(
-                                              horizontal: 25,
-                                              vertical: 8,
-                                            ),
-                                            child: Container(
-                                              height: 45,
-                                              width: 3,
-                                              decoration: BoxDecoration(
-                                                borderRadius:
-                                                    BorderRadius.circular(100),
-                                                color: Colors.grey,
+                                              ));
+                                        },
+                                        child: Icon(
+                                          Icons.business_center_sharp,
+                                          color:
+                                              ColorPallet.colorPalletNightFog,
+                                          size: 25,
+                                        ),
+                                      ),
+                                    ),
+                                    Positioned(
+                                      top: 0,
+                                      left: 0,
+                                      right: 0,
+                                      child: Center(
+                                          child: CachedNetworkImage(
+                                        imageBuilder: (context, imageProvider) {
+                                          return Container(
+                                            decoration: BoxDecoration(
+                                                shape: BoxShape.circle,
+                                                image: DecorationImage(
+                                                    fit: BoxFit.cover,
+                                                    image: imageProvider)),
+                                          );
+                                        },
+                                        placeholder: (context, strImage) {
+                                          return Container(
+                                            decoration: BoxDecoration(
+                                              shape: BoxShape.circle,
+                                              color: Colors.grey,
+                                              border: Border.all(
+                                                color: Colors.white,
+                                                width: 2.0,
                                               ),
                                             ),
-                                          ),
-                                          Column(
-                                            children: [
-                                              Text(
-                                                'تعداد پست ها',
-                                                style: TextStyle(
-                                                  color: ColorPallet
-                                                      .colorPalletBlueGam,
-                                                  fontSize: 18,
-                                                ),
-                                              ),
-                                              CircleAvatar(
-                                                backgroundColor: ColorPallet
-                                                    .colorPalletNightFog,
-                                                radius: 14,
-                                                child: Center(
-                                                  child: Text(
-                                                    ConfigGeneralValues
-                                                            .getInstance()
-                                                        .profile
-                                                        .userProfile!
-                                                        .followingCount
-                                                        .toString(),
-                                                    style: const TextStyle(
-                                                      color: Colors.white,
-                                                      fontSize: 14,
-                                                      fontWeight:
-                                                          FontWeight.w800,
-                                                    ),
-                                                  ),
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ],
-                                      )
-                                    ],
-                                  ),
-                                ),
-                              ),
-                              Positioned(
-                                top: 90,
-                                right: 20,
-                                child: GestureDetector(
-                                  onTap: () {
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (_) =>
-                                                const SettingsPage()));
-                                  },
-                                  child: Icon(
-                                    Icons.settings,
-                                    color: ColorPallet.colorPalletNightFog,
-                                    size: 25,
-                                  ),
-                                ),
-                              ),
-                              Positioned(
-                                top: 90,
-                                left: 20,
-                                child: GestureDetector(
-                                  onTap: () {
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (_) => BusinessPage(),
-                                        ));
-                                  },
-                                  child: Icon(
-                                    Icons.business_center_sharp,
-                                    color: ColorPallet.colorPalletNightFog,
-                                    size: 25,
-                                  ),
-                                ),
-                              ),
-                              Positioned(
-                                top: 0,
-                                left: 0,
-                                right: 0,
-                                child: Center(
-                                  child: Image.asset(
-                                    'assets/images/profile.png',
-                                    width: innerWidth * 0.41,
-                                    fit: BoxFit.fitWidth,
-                                  ),
-                                ),
-                              ),
-                            ],
+                                          );
+                                        },
+                                        imageUrl: state
+                                                .owner.profilePhoto!.isEmpty
+                                            ? "http://188.121.110.151:8000/media/images/icons8-test-account-64.png"
+                                            : state.owner.profilePhoto!,
+                                        fit: BoxFit.fill,
+                                        height: 165,
+                                        width: 110,
+                                      )),
+                                    ),
+                                  ],
+                                );
+                              },
+                            ),
                           );
-                        },
-                      ),
+                        }
+                        return Container();
+                      },
                     ),
-
-                    // Container(
-                    //   height: 45,
-                    //   margin: const EdgeInsets.symmetric(horizontal: 25),
-                    //   padding: const EdgeInsets.symmetric(horizontal: 5),
-                    //   decoration: BoxDecoration(
-                    //       color: Colors.white,
-                    //       borderRadius: BorderRadius.circular(10)),
-                    //   child: Row(
-                    //     mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    //     children: [
-                    //       const Text(
-                    //         " صفحه تجاری این کاربر باز است ",
-                    //         style: TextStyle(
-                    //             color: Colors.black, fontWeight: FontWeight.w900),
-                    //       ),
-                    //       ElevatedButton(
-                    //           onPressed: () {}, child: const Text("مشاهده"))
-                    //     ],
-                    //   ),
-                    // ),
                     const SizedBox(
                       height: 5,
                     ),
@@ -279,8 +331,8 @@ class _GalleryViewState extends State<GalleryView> {
                         contextCubit = context;
                         if (state is GalleryInitial && !startApp) {
                           startApp = true;
-                          BlocProvider.of<GalleryCubit>(context).fetchGallery(
-                              ConfigGeneralValues.getInstance().userId!);
+                          BlocProvider.of<GalleryCubit>(context)
+                              .fetchGallery(widget.id);
                         }
                         if (state is GalleryLoaded) {
                           return Container(

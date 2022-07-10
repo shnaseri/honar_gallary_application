@@ -118,11 +118,11 @@ class _ProfilePageState extends State<ProfilePage> {
                                         ),
                                       );
                                     },
-                                    imageUrl: profile.userProfile!.avatar! !=
+                                    imageUrl: profile.userProfile!.avatar !=
                                             null
                                         ? profile.userProfile!.avatar!.image!
-                                        : 'https://picsum.photos/id/237/200/300',
-                                    fit: BoxFit.fill,
+                                        : "http://188.121.110.151:8000/media/images/icons8-test-account-64.png",
+                                    fit: BoxFit.cover,
                                     height: context.height() * 0.05,
                                     width: context.width(),
                                   ),
@@ -254,12 +254,20 @@ class _ProfilePageState extends State<ProfilePage> {
                                       _lastname.text == "" ||
                                       _email.text == "" ||
                                       _phoneNumber.text == "") {
+                                    showSnackBar(context,
+                                        "اطلاعات را به طور کامل وارد کنید");
                                     return;
                                   }
                                   print("---- send info profile ---");
                                   try {
-                                    await BlocProvider.of<ProfileCubit>(context)
-                                        .uploadProfile(selectedFile!);
+                                    bool status =
+                                        await BlocProvider.of<ProfileCubit>(
+                                                context)
+                                            .uploadProfile(selectedFile!);
+                                    if (!status) {
+                                      showSnackBar(context, "عکس آپلود نشد");
+                                      return;
+                                    }
                                     profile =
                                         await BlocProvider.of<ProfileCubit>(
                                                 context)
@@ -268,13 +276,14 @@ class _ProfilePageState extends State<ProfilePage> {
                                                 _lastname.text,
                                                 _email.text,
                                                 _phoneNumber.text);
-                                    ConfigGeneralValues.getInstance()
-                                        .setProfile(profile);
+                                    selectedFile = null;
+                                    selectedImage = false;
+                                    setState(() {});
                                     showSnackBar(
                                         context, "اطلاعات با موفقیت انجام شد");
                                   } catch (e) {
                                     showSnackBar(
-                                        context, "اطلاعات با موفقیت انجام شد");
+                                        context, "اطلاعات با موفقیت انجام نشد");
                                   }
                                 },
                                 style: ButtonStyle(
@@ -296,14 +305,22 @@ class _ProfilePageState extends State<ProfilePage> {
                                           CircularProgressIndicator(),
                                         ],
                                       )
-                                    : const Text(
-                                        "ذخیره",
-                                        style: TextStyle(
-                                            fontFamily: 'Sahel',
-                                            fontSize: 16,
-                                            letterSpacing: 1.2,
-                                            color: Colors.white),
-                                      ),
+                                    : state is! ProfileSendingState
+                                        ? const Text(
+                                            "ذخیره",
+                                            style: TextStyle(
+                                                fontFamily: 'Sahel',
+                                                fontSize: 16,
+                                                letterSpacing: 1.2,
+                                                color: Colors.white),
+                                          )
+                                        : Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: const [
+                                              CircularProgressIndicator()
+                                            ],
+                                          ),
                               ),
                             );
                           },

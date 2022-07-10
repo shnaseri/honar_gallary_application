@@ -30,7 +30,7 @@ class MainPageState extends State<MainPage> {
       const HomePage(),
       const ExplorerPage(),
       const CreateArtPiece(),
-      const GalleryView(),
+      GalleryView(),
     ];
   }
 

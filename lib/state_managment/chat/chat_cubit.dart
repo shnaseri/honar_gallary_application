@@ -46,7 +46,7 @@ class ChatCubit extends Cubit<ChatState> {
       // List<Message> messages = await chatRepository.getMessages(contact.id);
       // emit(ChatConnectToServer(messages));
       var url =
-          "ws://188.121.110.151:8000/socket/chat/$chatCode/?token=${(interfaceOfUser.authentication as ApiKeyAuth).apiKey}";
+          "ws://188.121.110.151:8000/socket/chat/$chatCode/?token=${(interfaceOfUser.authentication as HttpBearerAuth).accessToken}";
       channel = WebSocketChannel.connect(Uri.parse(url));
       print(url);
 

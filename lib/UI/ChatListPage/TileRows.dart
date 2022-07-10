@@ -30,7 +30,9 @@ ListTile list(
       radius: 30,
       child: CachedNetworkImage(
           color: Colors.white,
-          imageUrl: url,
+          imageUrl: url.isEmptyOrNull
+              ? "http://188.121.110.151:8000/media/images/icons8-test-account-64.png"
+              : url,
           imageBuilder: (context, imageProvider) {
             return Container(
               width: context.width(),

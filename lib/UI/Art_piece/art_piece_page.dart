@@ -305,8 +305,8 @@ class _ArtPiecePageState extends State<ArtPiecePage> {
       ),
     );
   }
+}
 
-  getChatCode(int userId) {
-    return "${min<int>(ConfigGeneralValues.getInstance().userId!, userId)}-${max<int>(ConfigGeneralValues.getInstance().userId!, userId)}";
-  }
+getChatCode(int userId) {
+  return "${min<int>(ConfigGeneralValues.getInstance().userId!, userId)}-${max<int>(ConfigGeneralValues.getInstance().userId!, userId)}";
 }
