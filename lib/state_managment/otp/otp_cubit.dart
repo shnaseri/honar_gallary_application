@@ -32,6 +32,7 @@ class OtpCubit extends Cubit<OtpState> {
         CategoryApi categoryApi = CategoryApi(interfaceOfUser);
         ConfigGeneralValues.getInstance()
             .setListCategory((await categoryApi.categoryGetAllList())!);
+        authApi = AuthApi(interfaceOfUser);
         AuthMeList200Response response200 = (await authApi.authMeList())!;
         ConfigGeneralValues.getInstance().setUserId(response200.userId!);
         print(response200.userId);
