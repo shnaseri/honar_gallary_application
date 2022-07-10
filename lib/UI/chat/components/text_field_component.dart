@@ -14,9 +14,13 @@ import '../chat_page.dart';
 class TextFieldForChatPage extends StatefulWidget {
   final ChatGetAllChatsList200ResponseInnerUser contact;
   final List<Message> messages;
+  Function onSubmit;
 
-  const TextFieldForChatPage(
-      {Key? key, required this.contact, required this.messages})
+  TextFieldForChatPage(
+      {Key? key,
+      required this.contact,
+      required this.messages,
+      required this.onSubmit})
       : super(key: key);
 
   @override
@@ -86,16 +90,16 @@ class _TextFieldForChatPageState extends State<TextFieldForChatPage> {
                       onSelected: (String result) async {
                         switch (result) {
                           case 'picture':
-                            File fileSelected;
                             FilePickerResult? result = await FilePicker.platform
                                 .pickFiles(
                                     type: FileType.custom,
                                     allowedExtensions:
                                         dataExtensions[items[0]]);
-
                             if (result != null) {
                               print(result);
+                              File fileSelected;
                               fileSelected = File(result.files.single.path!);
+                              widget.onSubmit(fileSelected, "picture");
                               await BlocProvider.of<ChatCubit>(context)
                                   .uploadImage(fileSelected);
                             } else {
@@ -103,7 +107,22 @@ class _TextFieldForChatPageState extends State<TextFieldForChatPage> {
                             }
                             break;
                           case 'video':
-                            print('filter 2 clicked');
+                            FilePickerResult? result = await FilePicker.platform
+                                .pickFiles(
+                                    type: FileType.custom,
+                                    allowedExtensions:
+                                        dataExtensions[items[1]]);
+                            if (result != null) {
+                              print(result);
+                              File fileSelected;
+                              fileSelected = File(result.files.single.path!);
+                              widget.onSubmit(fileSelected, "video");
+
+                              await BlocProvider.of<ChatCubit>(context)
+                                  .uploadVideo(fileSelected);
+                            } else {
+                              // User canceled the picker
+                            }
                             break;
                           case 'clearFilters':
                             print('Clear filters');

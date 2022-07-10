@@ -8,6 +8,7 @@ import 'package:honar_gallary/data_managment/chat/chat_repository.dart';
 import 'package:honar_gallary/data_managment/core/upload_networkservice.dart';
 import 'package:honar_gallary/logic/consts.dart';
 import 'package:honar_gallary/logic/general_values.dart';
+import 'package:http/http.dart' as http;
 import 'package:meta/meta.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
@@ -20,12 +21,14 @@ class ChatCubit extends Cubit<ChatState> {
   bool isWebSocketRunning = false;
   int retryLimit = 1;
   late ChatApi chatApi;
+  late CoreApi coreApi;
   late List<Message> messages;
 
   ChatCubit({required this.contact}) : super(ChatInitial()) {
     chatRepository = ChatRepository();
     chatApi = ChatApi(interfaceOfUser);
     messages = [];
+    coreApi = CoreApi(interfaceOfUser);
   }
 
   Future<void> fetchConnect(String chatCode) async {
@@ -136,7 +139,7 @@ class ChatCubit extends Cubit<ChatState> {
       print(baseimage);
       var message = Message(
           id: jsonRes['id'],
-          content: jsonRes["type"] == "T" ? jsonRes["message"] : baseimage,
+          content: jsonRes["type"] != "P" ? jsonRes["message"] : baseimage,
           type: jsonRes["type"],
           isUserSender: jsonRes["sender_id"] ==
               (ConfigGeneralValues.getInstance().userId),
@@ -168,5 +171,16 @@ class ChatCubit extends Cubit<ChatState> {
       print(e);
       return null;
     }
+  }
+
+  Future uploadVideo(File fileSelected) async {
+    try {
+      CoreContentUpdate200Response? response = await coreApi.coreContentUpdate(
+          await http.MultipartFile.fromPath('file', fileSelected.path));
+      print(response!.contentId);
+      int videoId = response.contentId!;
+      var jsonEncode2 = jsonEncode({"message": videoId, "type": "V"});
+      channel.sink.add(jsonEncode2);
+    } catch (e) {}
   }
 }

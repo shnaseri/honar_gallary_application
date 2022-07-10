@@ -718,6 +718,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.0"
+  package_info:
+    dependency: transitive
+    description:
+      name: package_info
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.4.3+4"
   path:
     dependency: transitive
     description:
@@ -1073,6 +1080,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.1"
+  version_banner:
+    dependency: "direct main"
+    description:
+      name: version_banner
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.2.1"
   video_player:
     dependency: transitive
     description:
@@ -1108,6 +1122,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.10"
+  video_thumbnail:
+    dependency: "direct main"
+    description:
+      name: video_thumbnail
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.5.0"
   wakelock:
     dependency: transitive
     description:

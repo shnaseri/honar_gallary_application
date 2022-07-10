@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_chat_bubble/bubble_type.dart';
 import 'package:flutter_chat_bubble/chat_bubble.dart';
-import 'package:flutter_chat_bubble/clippers/chat_bubble_clipper_1.dart';
+import 'package:flutter_chat_bubble/clippers/chat_bubble_clipper_9.dart';
 import 'package:honar_api_v17/api.dart';
 import 'package:honar_gallary/const/color_const.dart';
 
@@ -24,7 +24,7 @@ class MessageTile extends StatelessWidget {
       builder: (context, state) {
         return ChatBubble(
           elevation: 1,
-          clipper: ChatBubbleClipper1(
+          clipper: ChatBubbleClipper9(
               type: message.isUserSender!
                   ? BubbleType.sendBubble
                   : BubbleType.receiverBubble),
