@@ -11,7 +11,6 @@
 import 'package:honar_api_v17/api.dart';
 import 'package:test/test.dart';
 
-
 /// tests for ChatApi
 void main() {
   // final instance = ChatApi();
@@ -26,6 +25,5 @@ void main() {
     test('test chatGetAllChatsList', () async {
       // TODO
     });
-
   });
 }

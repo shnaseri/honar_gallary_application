@@ -11,7 +11,6 @@
 import 'package:honar_api_v17/api.dart';
 import 'package:test/test.dart';
 
-
 /// tests for ProfileApi
 void main() {
   // final instance = ProfileApi();
@@ -41,6 +40,5 @@ void main() {
     test('test profileUpdate', () async {
       // TODO
     });
-
   });
 }

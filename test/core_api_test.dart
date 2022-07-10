@@ -11,7 +11,6 @@
 import 'package:honar_api_v17/api.dart';
 import 'package:test/test.dart';
 
-
 /// tests for CoreApi
 void main() {
   // final instance = CoreApi();
@@ -53,6 +52,5 @@ void main() {
     test('test coreImageUploadUpdate', () async {
       // TODO
     });
-
   });
 }
