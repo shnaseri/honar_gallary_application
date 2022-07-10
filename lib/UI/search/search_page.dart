@@ -132,20 +132,77 @@ class _BodySearchWidgetState extends State<BodySearchWidget> {
           return Container();
         }
         if (state is SearchLoaded) {
-          return MasonryGridView.count(
-            physics: const NeverScrollableScrollPhysics(),
-            shrinkWrap: true,
-            crossAxisCount: 2,
-            mainAxisSpacing: 4,
-            crossAxisSpacing: 4,
-            itemCount: state.artPieces.length,
-            itemBuilder: (context, index) {
-              return SearchTile(
-                post: state.artPieces[index],
-                index: index,
-                extent: context.height() * 0.18,
-              );
-            },
+          return ListView(
+            children: [
+              const Center(
+                child: Text(
+                  "قطعات هنری",
+                  style: TextStyle(fontWeight: FontWeight.w900, fontSize: 16),
+                ),
+              ),
+              15.height,
+              if (state.artPieces.isNotEmpty)
+                MasonryGridView.count(
+                  physics: const NeverScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                  crossAxisCount: 2,
+                  mainAxisSpacing: 4,
+                  crossAxisSpacing: 4,
+                  itemCount: state.artPieces.length,
+                  itemBuilder: (context, index) {
+                    return SearchTile(
+                      post: state.artPieces[index],
+                      index: index,
+                      extent: context.height() * 0.18,
+                    );
+                  },
+                ),
+              15.height,
+              if (state.artPieces.isEmpty)
+                const Center(
+                  child: Text(
+                    "هیچ قطعات هنری یافت نشد",
+                    style: TextStyle(
+                        fontWeight: FontWeight.w500,
+                        fontSize: 14,
+                        color: Colors.black87),
+                  ),
+                ),
+              15.height,
+              const Center(
+                child: Text(
+                  "هنرمندان",
+                  style: TextStyle(fontWeight: FontWeight.w900, fontSize: 16),
+                ),
+              ),
+              15.height,
+              if (state.artists.isEmpty)
+                const Center(
+                  child: Text(
+                    "هیچ هنرمندی یافت نشد",
+                    style: TextStyle(
+                        fontWeight: FontWeight.w500,
+                        fontSize: 14,
+                        color: Colors.black87),
+                  ),
+                ),
+              if (state.artists.isNotEmpty)
+                MasonryGridView.count(
+                  physics: const NeverScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                  crossAxisCount: 3,
+                  mainAxisSpacing: 4,
+                  crossAxisSpacing: 4,
+                  itemCount: state.artists.length,
+                  itemBuilder: (context, index) {
+                    return SearchArtistTile(
+                      user: state.artists[index],
+                      index: index,
+                      extent: context.height() * 0.2,
+                    );
+                  },
+                ),
+            ],
           );
         }
 
