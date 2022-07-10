@@ -29,4 +29,10 @@ class GalleryCubit extends Cubit<GalleryState> {
       emit(GalleryError());
     }
   }
+
+  Future<bool> followUser(int? id) async {
+    ProfileFollowUpdate200Response? update200response =
+        await profileApi.profileFollowUpdate(id.toString());
+    return update200response!.follow;
+  }
 }

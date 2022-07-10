@@ -4,10 +4,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:honar_api_v17/api.dart';
 import 'package:honar_gallary/UI/business/business_page.dart';
+import 'package:honar_gallary/UI/utils/show_dialog.dart';
 import 'package:honar_gallary/const/color_const.dart';
 import 'package:honar_gallary/logic/general_values.dart';
 import 'package:honar_gallary/settings/setting_page.dart';
 import 'package:honar_gallary/state_managment/gallery/gallery_cubit.dart';
+import 'package:nb_utils/nb_utils.dart';
 
 import '../Art_piece/art_piece_page.dart';
 import '../chat/chat_page.dart';
@@ -97,13 +99,104 @@ class _GalleryViewState extends State<GalleryView> {
                                             const SizedBox(
                                               height: 55,
                                             ),
-                                            Text(
-                                              state.owner.fullName!,
-                                              style: TextStyle(
-                                                color: ColorPallet
-                                                    .colorPalletSambucus,
-                                                fontSize: 25,
-                                              ),
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                Text(
+                                                  state.owner.fullName!,
+                                                  style: TextStyle(
+                                                      color: ColorPallet
+                                                          .colorPalletSambucus,
+                                                      fontSize: 25,
+                                                      fontWeight:
+                                                          FontWeight.w700),
+                                                ),
+                                                5.width,
+                                                if (state.owner.id !=
+                                                    ConfigGeneralValues
+                                                            .getInstance()
+                                                        .userId)
+                                                  IconButton(
+                                                      onPressed: () {
+                                                        showMessage(
+                                                            context,
+                                                            state.profile
+                                                                    .isFollowedByYou!
+                                                                ? "لفو دنبال"
+                                                                : "دنبال کردن",
+                                                            state.profile
+                                                                    .isFollowedByYou!
+                                                                ? "آیا تمایل دارد از دنبال کردن این شخص دست بردارید؟"
+                                                                : "ایا از دنبال کردن این هنرمند اطمینان دارید؟",
+                                                            functionRun:
+                                                                () async {
+                                                          setState(() {
+                                                            if (state.profile
+                                                                .isFollowedByYou!) {
+                                                              state.profile
+                                                                  .followerCount = state
+                                                                      .profile
+                                                                      .followerCount! -
+                                                                  1;
+                                                            } else {
+                                                              state.profile
+                                                                  .followerCount = state
+                                                                      .profile
+                                                                      .followerCount! +
+                                                                  1;
+                                                            }
+                                                            state.profile
+                                                                    .isFollowedByYou =
+                                                                !state.profile
+                                                                    .isFollowedByYou!;
+                                                          });
+                                                          try {
+                                                            bool status = await BlocProvider
+                                                                    .of<GalleryCubit>(
+                                                                        context)
+                                                                .followUser(
+                                                                    state.owner
+                                                                        .id);
+                                                          } catch (e) {
+                                                            setState(() {
+                                                              if (state.profile
+                                                                  .isFollowedByYou!) {
+                                                                state.profile
+                                                                    .followerCount = state
+                                                                        .profile
+                                                                        .followerCount! -
+                                                                    1;
+                                                              } else {
+                                                                state.profile
+                                                                    .followerCount = state
+                                                                        .profile
+                                                                        .followerCount! +
+                                                                    1;
+                                                              }
+                                                              state.profile
+                                                                      .isFollowedByYou =
+                                                                  !state.profile
+                                                                      .isFollowedByYou!;
+                                                            });
+                                                          }
+                                                        });
+                                                      },
+                                                      icon: state.profile
+                                                              .isFollowedByYou!
+                                                          ? Icon(
+                                                              LineIcons
+                                                                  .user_minus,
+                                                              color: ColorPallet
+                                                                  .colorPalletSambucus,
+                                                            )
+                                                          : Icon(
+                                                              LineIcons
+                                                                  .user_plus,
+                                                              color: ColorPallet
+                                                                  .colorPalletSambucus,
+                                                            ))
+                                              ],
                                             ),
                                             Container(
                                               color: Colors.white,

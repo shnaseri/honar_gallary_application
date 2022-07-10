@@ -74,14 +74,17 @@ showMessage(BuildContext context, String title, String message,
                                       SizedBox(
                                         height: height * 0.02,
                                       ),
-                                      Text(
-                                        message,
-                                        maxLines: 4,
-                                        textAlign: TextAlign.center,
-                                        style: boldTextStyle(
-                                          weight: FontWeight.bold,
-                                          letterSpacing: 1.25,
-                                          color: Color(0xff4a4a4a),
+                                      Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Text(
+                                          message,
+                                          maxLines: 4,
+                                          textAlign: TextAlign.center,
+                                          style: boldTextStyle(
+                                            weight: FontWeight.bold,
+                                            letterSpacing: 1.25,
+                                            color: Color(0xff4a4a4a),
+                                          ),
                                         ),
                                       ),
                                     ],
