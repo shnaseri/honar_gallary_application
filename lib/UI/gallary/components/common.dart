@@ -583,7 +583,11 @@ class _SearchArtistTileState extends State<SearchArtistTile> {
           }
 
           Navigator.push(
-              context, MaterialPageRoute(builder: (_) => GalleryView()));
+              context,
+              MaterialPageRoute(
+                  builder: (_) => GalleryView(
+                        uid: widget.user.id,
+                      )));
         },
         onLongPress: () {
           setState(() {
@@ -615,7 +619,7 @@ class _SearchArtistTileState extends State<SearchArtistTile> {
                                   topLeft: Radius.circular(9),
                                   topRight: Radius.circular(9)),
                               image: DecorationImage(
-                                  fit: BoxFit.contain, image: imageProvider)),
+                                  fit: BoxFit.cover, image: imageProvider)),
                         );
                       },
                       placeholder: (context, url) {
