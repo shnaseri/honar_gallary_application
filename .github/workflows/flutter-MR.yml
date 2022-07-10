@@ -26,10 +26,10 @@ jobs:
           # flutter-version: '1.12.x' # you can also specify exact version of flutter
       - name: Build Apk
         run: |
-        flutter pub get
+          flutter pub get
 
-        flutter format --set-exit-if-changed .
+          flutter format --set-exit-if-changed .
 
-        flutter test --no-sound-null-safety
+          flutter test --no-sound-null-safety
 
-        flutter build apk --no-sound-null-safety
+          flutter build apk --no-sound-null-safety
