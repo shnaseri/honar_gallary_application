@@ -12,7 +12,11 @@ class PlayerContentPage extends StatefulWidget {
   String? coverImage;
 
   PlayerContentPage(
-      {Key? key, required this.type, required this.content, this.title,this.coverImage})
+      {Key? key,
+      required this.type,
+      required this.content,
+      this.title,
+      this.coverImage})
       : super(key: key);
 
   @override
