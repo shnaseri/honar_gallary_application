@@ -2,7 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:honar_api_v20/api.dart';
+import 'package:honar_api_v22/api.dart';
 import 'package:honar_gallary/const/color_const.dart';
 import 'package:honar_gallary/state_managment/home_page/home_cubit.dart';
 import 'package:more_loading_gif/more_loading_gif.dart';
@@ -10,6 +10,7 @@ import 'package:nb_utils/nb_utils.dart';
 
 import '../Art_piece/art_piece_page.dart';
 import '../business/business_page.dart';
+import '../gallary/gallery_view.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -47,14 +48,6 @@ class _HomePageState extends State<HomePage> {
                   physics: ClampingScrollPhysics(),
                   children: [
                     const HomeHeader(),
-                    if (state.homepage.offers!.mostLikedPostInLast7Days != null)
-                      OfferCard(
-                        title: 'بیشترین لایک',
-                        svg: "assets/images/most_like.svg",
-                        post: state.homepage.offers!.mostLikedPostInLast7Days!,
-                        rtl: true,
-                        color: Colors.teal,
-                      ),
                     if (state.homepage.feed.isNotEmpty)
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 15),
@@ -62,16 +55,19 @@ class _HomePageState extends State<HomePage> {
                           artPiece: state.homepage.feed[0],
                         ),
                       ),
-                    if (state.homepage.offers!.mostCommentedPostInLast7Days !=
+                    if (state.homepage.offers!.mostLikedArtPieceLast7Days !=
                         null)
-                      OfferCard(
-                        title: 'بیشترین نظر',
-                        svg: "assets/images/most_comment.svg",
-                        post: state
-                            .homepage.offers!.mostCommentedPostInLast7Days!,
-                        rtl: false,
-                        color: Colors.lightGreen,
-                      ),
+                      if (state.homepage.offers!.mostLikedArtPieceLast7Days!
+                              .id !=
+                          null)
+                        OfferCard(
+                          title: 'بیشترین لایک',
+                          svg: "assets/images/most_comment_user.svg",
+                          post: state
+                              .homepage.offers!.mostLikedArtPieceLast7Days!,
+                          rtl: true,
+                          color: Colors.teal,
+                        ),
                     if (state.homepage.feed.length >= 2)
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 15),
@@ -79,16 +75,19 @@ class _HomePageState extends State<HomePage> {
                           artPiece: state.homepage.feed[1],
                         ),
                       ),
-                    if (state.homepage.offers!.mostFavoriteUserInLast7Days !=
+                    if (state.homepage.offers!.mostCommentedArtPieceLast7Days !=
                         null)
-                      OfferUserCard(
-                        title: 'بیشترین لایک شده',
-                        svg: "assets/images/most_like_user.svg",
-                        post:
-                            state.homepage.offers!.mostFavoriteUserInLast7Days!,
-                        rtl: true,
-                        color: ColorPallet.colorPalletPurpleRain,
-                      ),
+                      if (state.homepage.offers!.mostCommentedArtPieceLast7Days!
+                              .id !=
+                          null)
+                        OfferCard(
+                          title: 'بیشترین نظر',
+                          svg: "assets/images/most_comment.svg",
+                          post: state
+                              .homepage.offers!.mostCommentedArtPieceLast7Days!,
+                          rtl: false,
+                          color: Colors.lightGreen,
+                        ),
                     if (state.homepage.feed.length >= 3)
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 15),
@@ -96,6 +95,19 @@ class _HomePageState extends State<HomePage> {
                           artPiece: state.homepage.feed[2],
                         ),
                       ),
+                    if (state.homepage.offers!.mostCommentedUserLast7Days !=
+                        null)
+                      if (state.homepage.offers!.mostCommentedUserLast7Days!
+                              .id !=
+                          null)
+                        OfferUserCard(
+                          title: 'بیشترین لایک شده',
+                          svg: "assets/images/most_like.svg",
+                          post: state
+                              .homepage.offers!.mostCommentedUserLast7Days!,
+                          rtl: true,
+                          color: ColorPallet.colorPalletPurpleRain,
+                        ),
                     if (state.homepage.feed.length >= 4)
                       Container(
                         child: ListView.builder(
@@ -139,20 +151,6 @@ class _HomePageState extends State<HomePage> {
       ),
     );
   }
-
-  int getItemCount(HomeLoaded state) {
-    int length = state.homepage.feed.length;
-    if (state.homepage.offers!.mostCommentedPostInLast7Days != null) {
-      length++;
-    }
-    if (state.homepage.offers!.mostLikedPostInLast7Days != null) {
-      length++;
-    }
-    if (state.homepage.offers!.mostFavoriteUserInLast7Days != null) {
-      length++;
-    }
-    return length;
-  }
 }
 
 class HomeHeader extends StatefulWidget {
@@ -173,10 +171,25 @@ class _HomeHeaderState extends State<HomeHeader> {
             padding: EdgeInsets.only(bottom: 10, top: 15),
             width: context.width(),
             decoration: BoxDecoration(
-                borderRadius: BorderRadius.only(
-                    bottomRight: Radius.circular(10),
-                    bottomLeft: Radius.circular(10)),
-                color: ColorPallet.colorPalletDark),
+              boxShadow: [
+                BoxShadow(
+                    color: Colors.black54,
+                    blurRadius: 4,
+                    spreadRadius: 7,
+                    offset: Offset(-1, -1))
+              ],
+              gradient: LinearGradient(
+                colors: [
+                  Color.fromRGBO(4, 9, 35, 1),
+                  Color.fromRGBO(39, 105, 171, 1),
+                ],
+                begin: FractionalOffset.bottomCenter,
+                end: FractionalOffset.topCenter,
+              ),
+              borderRadius: BorderRadius.only(
+                  bottomRight: Radius.circular(10),
+                  bottomLeft: Radius.circular(10)),
+            ),
             child: state.homepage.stats!.commentsYouReceivedLast30Days != 0 ||
                     state.homepage.stats!.commentsYouGivenLast30Days != 0 ||
                     state.homepage.stats!.likesYouGivenLast30Days != 0 ||
@@ -640,93 +653,104 @@ class _OfferUserCardState extends State<OfferUserCard> {
     // TODO: implement build
     return Directionality(
       textDirection: widget.rtl ? TextDirection.rtl : TextDirection.ltr,
-      child: Column(
-        children: [
-          Container(
-            height: 200,
-            width: context.width(),
-            margin: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-            padding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
-            decoration: BoxDecoration(
-              color: widget.color,
-              borderRadius: BorderRadius.circular(10),
-            ),
-            child: Container(
-              child: Row(
-                children: [
-                  Expanded(
-                    child: Column(
+      child: GestureDetector(
+        onTap: () {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (_) => GalleryView(
+                        uid: widget.post.id,
+                      )));
+        },
+        child: Column(
+          children: [
+            Container(
+              height: 200,
+              width: context.width(),
+              margin: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+              padding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+              decoration: BoxDecoration(
+                color: widget.color,
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: Container(
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: Column(
+                        children: [
+                          10.height,
+                          Container(
+                            height: context.height() * 0.15,
+                            child: SvgPicture.asset(widget.svg,
+                                semanticsLabel: 'A red up arrow'),
+                          ),
+                          10.height,
+                          Text(
+                            widget.title,
+                            style: TextStyle(
+                                color: ColorPallet.colorPalletDark,
+                                fontWeight: FontWeight.w900,
+                                fontSize: 20),
+                          )
+                        ],
+                      ),
+                    ),
+                    Expanded(
+                        child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        10.height,
                         Container(
-                          height: context.height() * 0.15,
-                          child: SvgPicture.asset(widget.svg,
-                              semanticsLabel: 'A red up arrow'),
+                          padding: EdgeInsets.all(3),
+                          decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              border: Border.all(color: Colors.amber)),
+                          child: CachedNetworkImage(
+                            imageBuilder: (context, imageProvider) {
+                              return Container(
+                                decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    image: DecorationImage(
+                                        fit: BoxFit.cover,
+                                        image: imageProvider)),
+                              );
+                            },
+                            placeholder: (context, strImage) {
+                              return Container(
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  color: Colors.grey,
+                                  border: Border.all(
+                                    color: Colors.white,
+                                    width: 2.0,
+                                  ),
+                                ),
+                              );
+                            },
+                            imageUrl: widget.post.profilePhoto!.isEmpty
+                                ? "http://188.121.110.151:8000/media/images/icons8-test-account-64.png"
+                                : widget.post.profilePhoto!,
+                            fit: BoxFit.fill,
+                            height: 100,
+                            // width: 110,
+                          ),
                         ),
-                        10.height,
+                        15.height,
                         Text(
-                          widget.title,
+                          widget.post.fullName!,
                           style: TextStyle(
-                              color: ColorPallet.colorPalletDark,
+                              color: ColorPallet.colorPalletSambucus,
                               fontWeight: FontWeight.w900,
-                              fontSize: 20),
+                              fontSize: 18),
                         )
                       ],
-                    ),
-                  ),
-                  Expanded(
-                      child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Container(
-                        padding: EdgeInsets.all(3),
-                        decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            border: Border.all(color: Colors.amber)),
-                        child: CachedNetworkImage(
-                          imageBuilder: (context, imageProvider) {
-                            return Container(
-                              decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  image: DecorationImage(
-                                      fit: BoxFit.cover, image: imageProvider)),
-                            );
-                          },
-                          placeholder: (context, strImage) {
-                            return Container(
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                color: Colors.grey,
-                                border: Border.all(
-                                  color: Colors.white,
-                                  width: 2.0,
-                                ),
-                              ),
-                            );
-                          },
-                          imageUrl: widget.post.profilePhoto!.isEmpty
-                              ? "http://188.121.110.151:8000/media/images/icons8-test-account-64.png"
-                              : widget.post.profilePhoto!,
-                          fit: BoxFit.fill,
-                          height: 100,
-                          // width: 110,
-                        ),
-                      ),
-                      15.height,
-                      Text(
-                        widget.post.fullName!,
-                        style: TextStyle(
-                            color: ColorPallet.colorPalletSambucus,
-                            fontWeight: FontWeight.w900,
-                            fontSize: 18),
-                      )
-                    ],
-                  ))
-                ],
+                    ))
+                  ],
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

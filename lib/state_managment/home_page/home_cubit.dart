@@ -1,5 +1,5 @@
 import 'package:bloc/bloc.dart';
-import 'package:honar_api_v20/api.dart';
+import 'package:honar_api_v22/api.dart';
 import 'package:meta/meta.dart';
 
 import '../../logic/consts.dart';
@@ -18,8 +18,9 @@ class HomeCubit extends Cubit<HomeState> {
       emit(HomeLoading());
       CoreHomepageList200Response? coreHomepageList200Response =
           await coreApi.coreHomepageList(page: 1, pageCount: 20);
+      print(coreHomepageList200Response!.offers);
       print(coreHomepageList200Response);
-      emit(HomeLoaded(coreHomepageList200Response!));
+      emit(HomeLoaded(coreHomepageList200Response));
     } catch (e) {
       print(e);
       emit(HomeError());

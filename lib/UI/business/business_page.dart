@@ -2,7 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-import 'package:honar_api_v20/api.dart';
+import 'package:honar_api_v22/api.dart';
 import 'package:honar_gallary/UI/utils/numeral/Numeral.dart';
 import 'package:honar_gallary/const/color_const.dart';
 import 'package:nb_utils/nb_utils.dart';
@@ -230,17 +230,8 @@ class _BusinessPageState extends State<BusinessPage> {
                               crossAxisSpacing: 4,
                               itemCount: state.arts.length,
                               itemBuilder: (context, index) {
-                                return GestureDetector(
-                                    onTap: () {
-                                      Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (_) => ArtPiecePage(
-                                                  artId:
-                                                      state.arts[index].id!)));
-                                    },
-                                    child: ArtPieceTile(
-                                        artPiece: state.arts[index]));
+                                return ArtPieceTile(
+                                    artPiece: state.arts[index]);
                               },
                             ),
                           );
@@ -274,107 +265,117 @@ class ArtPieceTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: MediaQuery.of(context).size.width,
-      height: MediaQuery.of(context).size.height / 3,
-      margin: const EdgeInsets.symmetric(vertical: 7),
-      decoration: BoxDecoration(borderRadius: BorderRadius.circular(15)),
-      child: Stack(
-        children: [
-          CachedNetworkImage(
-              color: Colors.white,
-              imageUrl: artPiece.image!,
-              imageBuilder: (context, imageProvider) {
-                return Container(
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(15),
-                      image: DecorationImage(
-                          fit: BoxFit.cover, image: imageProvider)),
-                );
-              },
-              placeholder: (context, url) {
-                return Container(
-                  decoration: const BoxDecoration(color: Colors.grey),
-                );
-              }),
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 10),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 0.0, left: 15.0),
-                  child: Row(
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (_) => ArtPiecePage(
+                    artId:
+                    artPiece.id!)));
+      },
+      child: Container(
+        width: MediaQuery.of(context).size.width,
+        height: MediaQuery.of(context).size.height / 3,
+        margin: const EdgeInsets.symmetric(vertical: 7),
+        decoration: BoxDecoration(borderRadius: BorderRadius.circular(15)),
+        child: Stack(
+          children: [
+            CachedNetworkImage(
+                color: Colors.white,
+                imageUrl: artPiece.image!,
+                imageBuilder: (context, imageProvider) {
+                  return Container(
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(15),
+                        image: DecorationImage(
+                            fit: BoxFit.cover, image: imageProvider)),
+                  );
+                },
+                placeholder: (context, url) {
+                  return Container(
+                    decoration: const BoxDecoration(color: Colors.grey),
+                  );
+                }),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 10),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 0.0, left: 15.0),
+                    child: Row(
+                      children: [
+                        const SizedBox(width: 15.0),
+                        Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 15),
+                          decoration: BoxDecoration(
+                              borderRadius: const BorderRadius.only(
+                                  topRight: Radius.circular(15),
+                                  topLeft: Radius.circular(15)),
+                              color: ColorPallet.colorPalletDark),
+                          child: Text(
+                            artPiece.title!,
+                            style: const TextStyle(
+                              fontWeight: FontWeight.w900,
+                              color: Colors.white,
+                              fontSize: 20.0,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Row(
                     children: [
                       const SizedBox(width: 15.0),
-                      Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 15),
-                        decoration: BoxDecoration(
-                            borderRadius: const BorderRadius.only(
-                                topRight: Radius.circular(15),
-                                topLeft: Radius.circular(15)),
-                            color: ColorPallet.colorPalletDark),
-                        child: Text(
-                          artPiece.title!,
-                          style: const TextStyle(
-                            fontWeight: FontWeight.w900,
-                            color: Colors.white,
-                            fontSize: 20.0,
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 6),
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 15),
+                          decoration: BoxDecoration(
+                              borderRadius: const BorderRadius.only(
+                                  bottomLeft: Radius.circular(10),
+                                  bottomRight: Radius.circular(10)),
+                              color: ColorPallet.colorPalletDark),
+                          child: ConstrainedBox(
+                            constraints:
+                                BoxConstraints(maxWidth: context.width() * 0.7),
+                            child: Text(
+                              artPiece.description!,
+                              style: const TextStyle(
+                                  color: Colors.cyan,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 16.0),
+                            ),
                           ),
                         ),
                       ),
                     ],
                   ),
-                ),
-                Row(
-                  children: [
-                    const SizedBox(width: 15.0),
-                    Padding(
-                      padding: const EdgeInsets.only(bottom: 6),
-                      child: Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 15),
-                        decoration: BoxDecoration(
-                            borderRadius: const BorderRadius.only(
-                                bottomLeft: Radius.circular(10),
-                                bottomRight: Radius.circular(10)),
-                            color: ColorPallet.colorPalletDark),
-                        child: ConstrainedBox(
-                          constraints:
-                              BoxConstraints(maxWidth: context.width() * 0.7),
-                          child: Text(
-                            artPiece.description!,
-                            style: const TextStyle(
-                                color: Colors.cyan,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 16.0),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ),
-          Positioned(
-            child: Container(
-              padding: EdgeInsets.all(8),
-              decoration: BoxDecoration(
-                  color: ColorPallet.colorPalletSambucus,
-                  borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(10),
-                      bottomRight: Radius.circular(10))),
-              child: Center(
-                child: Text(
-                  Numeral(artPiece.price!).toString(),
-                  style: TextStyle(color: Colors.white),
-                ),
+                ],
               ),
             ),
-            top: 0,
-            left: 0,
-          )
-        ],
+            Positioned(
+              child: Container(
+                padding: EdgeInsets.all(8),
+                decoration: BoxDecoration(
+                    color: ColorPallet.colorPalletSambucus,
+                    borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(10),
+                        bottomRight: Radius.circular(10))),
+                child: Center(
+                  child: Text(
+                    Numeral(artPiece.price!).toString(),
+                    style: TextStyle(color: Colors.white),
+                  ),
+                ),
+              ),
+              top: 0,
+              left: 0,
+            )
+          ],
+        ),
       ),
     );
   }

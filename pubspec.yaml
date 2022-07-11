@@ -48,7 +48,7 @@ dependencies:
   file_picker: ^4.5.1
   openapi_generator_annotations: ^3.3.0
   intl: ^0.17.0
-  honar_api_v20:
+  honar_api_v22:
     git:
       url: https://github.com/shnaseri/negare_api.git
   shamsi_date: ^1.0.1
