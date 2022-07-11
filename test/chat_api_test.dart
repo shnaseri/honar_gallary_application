@@ -30,7 +30,7 @@ Future<void> main() async {
     //Future<List<ChatGetAllChatsList200ResponseInner>> chatGetAllChatsList() async
     test('test chatGetAllChatsList', () async {
       final response = await instance.chatGetAllChatsList();
-      expect(response!.isNotEmpty,true);
+      expect(response!.isNotEmpty, true);
     });
   });
 }
