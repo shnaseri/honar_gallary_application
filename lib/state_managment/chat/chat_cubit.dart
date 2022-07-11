@@ -3,7 +3,7 @@ import 'dart:io';
 
 import 'package:bloc/bloc.dart';
 import 'package:flutter/foundation.dart';
-import 'package:honar_api_v17/api.dart';
+import 'package:honar_api_v22/api.dart';
 import 'package:honar_gallary/data_managment/chat/chat_repository.dart';
 import 'package:honar_gallary/data_managment/core/upload_networkservice.dart';
 import 'package:honar_gallary/logic/consts.dart';
@@ -15,7 +15,7 @@ import 'package:web_socket_channel/web_socket_channel.dart';
 part 'chat_state.dart';
 
 class ChatCubit extends Cubit<ChatState> {
-  ChatGetAllChatsList200ResponseInnerUser contact;
+  ArtGalleryRead200ResponseOwner contact;
   late ChatRepository chatRepository;
   late WebSocketChannel channel;
   bool isWebSocketRunning = false;
@@ -85,7 +85,7 @@ class ChatCubit extends Cubit<ChatState> {
   }
 
   Future<void> publishMessage(
-      ChatGetAllChatsList200ResponseInnerUser user, String message) async {
+      ArtGalleryRead200ResponseOwner user, String message) async {
     try {
       print('---- Send Message ------');
       // emit(ChatSendMessage());

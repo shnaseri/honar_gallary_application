@@ -1,3 +1,4 @@
+---
 swagger: '2.0'
 info:
   title: Snippets API
@@ -250,9 +251,9 @@ paths:
                 properties:
                   id:
                     type: integer
-                  profile_photo:
-                    type: string
                   full_name:
+                    type: string
+                  profile_photo:
                     type: string
               profile:
                 type: object
@@ -263,11 +264,15 @@ paths:
                     type: integer
                   is_followed_by_you:
                     type: boolean
+                  is_business:
+                    type: boolean
+                    default: false
               posts_count:
                 type: integer
               posts:
                 type: array
                 items:
+                  required: []
                   type: object
                   properties:
                     id:
@@ -280,9 +285,13 @@ paths:
                       type: string
                     count_like:
                       type: integer
+                    count_comment:
+                      type: integer
                     price:
                       type: integer
                       default: 0
+                    description:
+                      type: string
         '404':
           description: ''
           schema:
@@ -732,6 +741,131 @@ paths:
       tags:
         - core
     parameters: []
+  "/core/homepage/":
+    get:
+      operationId: core_homepage_list
+      description: ''
+      parameters:
+        - name: page
+          in: query
+          required: false
+          type: integer
+          default: 1
+          x-nullable: true
+        - name: page_count
+          in: query
+          required: false
+          type: integer
+          default: 10
+          x-nullable: true
+      responses:
+        '200':
+          description: ''
+          schema:
+            type: object
+            properties:
+              stats:
+                type: object
+                properties:
+                  comments_you_received_last_30_days:
+                    type: integer
+                  likes_you_received_last_30_days:
+                    type: integer
+                  comments_you_given_last_30_days:
+                    type: integer
+                  likes_you_given_last_30_days:
+                    type: integer
+              offers:
+                type: object
+                properties:
+                  most_commented_art_piece_last_7_days:
+                    required: []
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      title:
+                        type: string
+                      type:
+                        type: string
+                      image:
+                        type: string
+                      count_like:
+                        type: integer
+                      count_comment:
+                        type: integer
+                      price:
+                        type: integer
+                        default: 0
+                      description:
+                        type: string
+                  most_liked_art_piece_last_7_days:
+                    required: []
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      title:
+                        type: string
+                      type:
+                        type: string
+                      image:
+                        type: string
+                      count_like:
+                        type: integer
+                      count_comment:
+                        type: integer
+                      price:
+                        type: integer
+                        default: 0
+                      description:
+                        type: string
+                  most_commented_user_last_7_days:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      full_name:
+                        type: string
+                      profile_photo:
+                        type: string
+              feed:
+                type: array
+                items:
+                  required: []
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    title:
+                      type: string
+                    type:
+                      type: string
+                    image:
+                      type: string
+                    count_like:
+                      type: integer
+                    count_comment:
+                      type: integer
+                    price:
+                      type: integer
+                      default: 0
+                    description:
+                      type: string
+        '406':
+          description: ''
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                default: false
+              error:
+                type: string
+                default: invalid data
+      tags:
+        - core
+    parameters: []
   "/core/image/upload/":
     get:
       operationId: core_image_upload_list
@@ -862,6 +996,32 @@ paths:
               error:
                 type: string
                 default: invalid data
+      tags:
+        - profile
+    parameters: []
+  "/profile/toggle-business/":
+    put:
+      operationId: profile_toggle-business_update
+      description: ''
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          schema:
+            type: object
+            properties:
+              business:
+                type: boolean
+                default: false
+        '404':
+          description: ''
+          schema:
+            type: object
+            properties:
+              detail:
+                type: string
+                readOnly: true
+                default: Not Found.
       tags:
         - profile
     parameters: []

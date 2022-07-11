@@ -1,5 +1,5 @@
 import 'package:bloc/bloc.dart';
-import 'package:honar_api_v17/api.dart';
+import 'package:honar_api_v22/api.dart';
 import 'package:honar_gallary/logic/consts.dart';
 import 'package:meta/meta.dart';
 
@@ -28,7 +28,7 @@ class OtpCubit extends Cubit<OtpState> {
         HttpBearerAuth auth = HttpBearerAuth();
         auth.accessToken = response2004.accessToken;
         interfaceOfUser = ApiClient(authentication: auth);
-
+        authApi = AuthApi(interfaceOfUser);
         CategoryApi categoryApi = CategoryApi(interfaceOfUser);
         ConfigGeneralValues.getInstance()
             .setListCategory((await categoryApi.categoryGetAllList())!);

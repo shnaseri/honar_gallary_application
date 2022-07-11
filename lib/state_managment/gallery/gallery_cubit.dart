@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
-import 'package:honar_api_v17/api.dart';
+import 'package:honar_api_v22/api.dart';
 import 'package:honar_gallary/logic/consts.dart';
+import 'package:honar_gallary/logic/general_values.dart';
 import 'package:meta/meta.dart';
 
 part 'gallery_state.dart';
@@ -22,8 +23,14 @@ class GalleryCubit extends Cubit<GalleryState> {
       // }
       ArtGalleryRead200Response? response2003 =
           await artApi.artGalleryRead(userId.toString(), business: isBusiness);
-      emit(GalleryLoaded(response2003!.owner!, response2003.postsCount!,
-          response2003.posts, response2003.profile!));
+      ConfigGeneralValues.getInstance().enableBusiness =
+          response2003!.profile!.isBusiness;
+      emit(GalleryLoaded(
+          response2003.owner!,
+          response2003.postsCount!,
+          response2003.posts,
+          response2003.profile!,
+          response2003.profile!.isBusiness));
     } catch (e) {
       print(e);
       emit(GalleryError());

@@ -2,10 +2,10 @@ import 'package:dot_navigation_bar/dot_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:honar_gallary/const/color_const.dart';
 
-import '../../home/home_page.dart';
 import '../Create_art_piece/creater_art_piece_page.dart';
 import '../explorer/explorer_page.dart';
 import '../gallary/gallery_view.dart';
+import '../home/home_page.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({Key? key}) : super(key: key);

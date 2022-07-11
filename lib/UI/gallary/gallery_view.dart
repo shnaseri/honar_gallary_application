@@ -2,7 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-import 'package:honar_api_v17/api.dart';
+import 'package:honar_api_v22/api.dart';
 import 'package:honar_gallary/UI/business/business_page.dart';
 import 'package:honar_gallary/UI/utils/show_dialog.dart';
 import 'package:honar_gallary/const/color_const.dart';
@@ -66,15 +66,15 @@ class _GalleryViewState extends State<GalleryView> {
                 padding: const EdgeInsets.symmetric(horizontal: 15),
                 height: MediaQuery.of(context).size.height,
                 child: ListView(
-                  physics: ClampingScrollPhysics(),
                   padding: const EdgeInsets.only(top: 40, bottom: 70),
                   children: [
                     BlocBuilder<GalleryCubit, GalleryState>(
                       builder: (context, state) {
                         if (state is GalleryLoaded) {
                           return Container(
-                            height: 250,
-                            padding: const EdgeInsets.symmetric(horizontal: 15),
+                            height: 265,
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 15, vertical: 5),
                             child: LayoutBuilder(
                               builder: (context, constraints) {
                                 double innerHeight = constraints.maxHeight;
@@ -333,7 +333,7 @@ class _GalleryViewState extends State<GalleryView> {
                                                         state.owner.id!),
                                                     index: 1,
                                                     contact:
-                                                        ChatGetAllChatsList200ResponseInnerUser(
+                                                        ArtGalleryRead200ResponseOwner(
                                                             fullName: state
                                                                 .owner.fullName,
                                                             profilePhoto: state
@@ -350,27 +350,33 @@ class _GalleryViewState extends State<GalleryView> {
                                           ),
                                         ),
                                       ),
-                                    Positioned(
-                                      top: 90,
-                                      left: 20,
-                                      child: GestureDetector(
-                                        onTap: () {
-                                          Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                builder: (_) => BusinessPage(
-                                                  id: widget.id,
-                                                ),
-                                              ));
-                                        },
-                                        child: Icon(
-                                          Icons.business_center_sharp,
-                                          color:
-                                              ColorPallet.colorPalletNightFog,
-                                          size: 25,
+                                    if (state.enableBusiness ||
+                                        state.owner.id ==
+                                            ConfigGeneralValues.getInstance()
+                                                .userId)
+                                      Positioned(
+                                        top: 90,
+                                        left: 20,
+                                        child: GestureDetector(
+                                          onTap: () {
+                                            Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (_) => BusinessPage(
+                                                    id: widget.id,
+                                                  ),
+                                                ));
+                                          },
+                                          child: Icon(
+                                            Icons.business_center_sharp,
+                                            color: state.enableBusiness
+                                                ? ColorPallet
+                                                    .colorPalletNightFog
+                                                : Colors.red,
+                                            size: 25,
+                                          ),
                                         ),
                                       ),
-                                    ),
                                     Positioned(
                                       top: 0,
                                       left: 0,

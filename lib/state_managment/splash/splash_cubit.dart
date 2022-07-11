@@ -1,5 +1,5 @@
 import 'package:bloc/bloc.dart';
-import 'package:honar_api_v17/api.dart';
+import 'package:honar_api_v22/api.dart';
 import 'package:honar_gallary/logic/general_values.dart';
 import 'package:meta/meta.dart';
 
@@ -28,8 +28,6 @@ class SplashCubit extends Cubit<SplashState> {
             .sharedPreferencesHandler
             .getToken();
         AuthApi authApi = AuthApi(interfaceOfUser);
-        TokenVerify? verify =
-            await authApi.authVerifyCreate(TokenVerify(token: token!));
 
         HttpBearerAuth auth = HttpBearerAuth();
         auth.accessToken = ConfigGeneralValues.getInstance()

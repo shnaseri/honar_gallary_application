@@ -1,8 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
+import 'package:honar_api_v22/api.dart';
 import 'package:honar_gallary/UI/profile/profile_page.dart';
 import 'package:honar_gallary/const/color_const.dart';
+import 'package:honar_gallary/logic/consts.dart';
+import 'package:honar_gallary/logic/general_values.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../UI/utils/show_dialog.dart';
@@ -119,7 +122,19 @@ class _SettingsPageState extends State<SettingsPage> {
             const SizedBox(
               height: 10,
             ),
-            buildNotificationOptionRow("کسب و کار", true),
+            buildNotificationOptionRow(
+                "کسب و کار", ConfigGeneralValues.getInstance().enableBusiness,
+                () async {
+              final profileApi = ProfileApi(interfaceOfUser);
+              ProfileToggleBusinessUpdate200Response? response;
+              try {
+                response = await profileApi.profileToggleBusinessUpdate();
+                setState(() {
+                  ConfigGeneralValues.getInstance().enableBusiness =
+                      response!.business;
+                });
+              } catch (e) {}
+            }),
             // buildNotificationOptionRow("Account activity", true),
             // buildNotificationOptionRow("Opportunity", false),
             const SizedBox(
@@ -156,7 +171,8 @@ class _SettingsPageState extends State<SettingsPage> {
     );
   }
 
-  Row buildNotificationOptionRow(String title, bool isActive) {
+  Row buildNotificationOptionRow(
+      String title, bool isActive, Function function) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -173,6 +189,7 @@ class _SettingsPageState extends State<SettingsPage> {
               onChanged: (bool val) {
                 setState(() {
                   isActive = val;
+                  function();
                 });
               },
             ))

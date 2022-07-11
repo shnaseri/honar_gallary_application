@@ -2,7 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:honar_api_v17/api.dart';
+import 'package:honar_api_v22/api.dart';
 import 'package:honar_gallary/UI/chat/chat_page.dart';
 import 'package:honar_gallary/UI/comment/comment_page.dart';
 import 'package:honar_gallary/const/color_const.dart';
@@ -202,12 +202,11 @@ class _ArtPiecePageState extends State<ArtPiecePage> {
                                         chatCode: getChatCode(
                                             state.artPiece.owner.id!),
                                         index: 1,
-                                        contact:
-                                            ChatGetAllChatsList200ResponseInnerUser(
-                                                fullName: state
-                                                    .artPiece.owner.fullName,
-                                                profilePhoto: state.artPiece
-                                                    .owner.profilePhoto),
+                                        contact: ArtGalleryRead200ResponseOwner(
+                                            fullName:
+                                                state.artPiece.owner.fullName,
+                                            profilePhoto: state
+                                                .artPiece.owner.profilePhoto),
                                       ),
                                     ));
                               },
