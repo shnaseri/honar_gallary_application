@@ -107,35 +107,41 @@ class _ProfileListItemsState extends State<ProfileListItems> {
                       const SizedBox(
                         height: 20,
                       ),
-                      TextFormField(
-                        controller: _dob,
-                        validator: (value) {
-                          // if (value.isEmpty) return "DOB can't be empty";
+                      AutoDirection(
+                        text: _dob.text.isEmptyOrNull ? "hell" : _title.text,
+                        child: TextFormField(
+                          controller: _dob,
+                          validator: (value) {
+                            // if (value.isEmpty) return "DOB can't be empty";
 
-                          return null;
-                        },
-                        keyboardType: TextInputType.number,
-                        inputFormatters: <TextInputFormatter>[
-                          FilteringTextInputFormatter.digitsOnly
-                        ],
-                        decoration: InputDecoration(
-                          border: OutlineInputBorder(
-                              borderSide: BorderSide(
-                            color: ColorPallet.colorPalletSambucus,
-                          )),
-                          focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                            color: ColorPallet.colorPalletSambucus,
-                            width: 2,
-                          )),
-                          prefixIcon: Icon(
-                            Icons.monetization_on_outlined,
-                            color: ColorPallet.colorPalletNightFog,
+                            return null;
+                          },
+                          onChanged: (str) {
+                            setState(() {});
+                          },
+                          keyboardType: TextInputType.number,
+                          inputFormatters: <TextInputFormatter>[
+                            FilteringTextInputFormatter.digitsOnly
+                          ],
+                          decoration: InputDecoration(
+                            border: OutlineInputBorder(
+                                borderSide: BorderSide(
+                              color: ColorPallet.colorPalletSambucus,
+                            )),
+                            focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                              color: ColorPallet.colorPalletSambucus,
+                              width: 2,
+                            )),
+                            prefixIcon: Icon(
+                              Icons.monetization_on_outlined,
+                              color: ColorPallet.colorPalletNightFog,
+                            ),
+
+                            labelText: "قیمت",
+                            // helperText: "Provide DOB on dd/mm/yyyy",
+                            // hintText: "01/01/2020",
                           ),
-
-                          labelText: "قیمت",
-                          // helperText: "Provide DOB on dd/mm/yyyy",
-                          // hintText: "01/01/2020",
                         ),
                       ),
                       const SizedBox(
@@ -862,57 +868,66 @@ class _ProfileListItemsState extends State<ProfileListItems> {
   }
 
   Widget titleTextField() {
-    return TextFormField(
-      controller: _title,
-      validator: (value) {
-        // if (value.isEmpty) return "Title can't be empty";
+    return AutoDirection(
+      text: _title.text.isEmptyOrNull ? "سلام" : _title.text,
+      child: TextFormField(
+        controller: _title,
+        validator: (value) {
+          // if (value.isEmpty) return "Title can't be empty";
 
-        return null;
-      },
-      decoration: InputDecoration(
-        border: OutlineInputBorder(
-            borderSide: BorderSide(
-          color: ColorPallet.colorPalletSambucus,
-        )),
-        focusedBorder: OutlineInputBorder(
-            borderSide: BorderSide(
-          color: ColorPallet.colorPalletSambucus,
-          width: 2,
-        )),
-        prefixIcon: Icon(
-          Icons.title,
-          color: ColorPallet.colorPalletBlueGam,
+          return null;
+        },
+        onChanged: (str) {
+          setState(() {});
+        },
+        decoration: InputDecoration(
+          border: OutlineInputBorder(
+              borderSide: BorderSide(
+            color: ColorPallet.colorPalletSambucus,
+          )),
+          focusedBorder: OutlineInputBorder(
+              borderSide: BorderSide(
+            color: ColorPallet.colorPalletSambucus,
+            width: 2,
+          )),
+          prefixIcon: Icon(
+            Icons.title,
+            color: ColorPallet.colorPalletBlueGam,
+          ),
+          labelText: "عنوان",
+          // helperText: "It can't be empty",
+          // hintText: "Flutter Developer",
         ),
-        labelText: "عنوان",
-        // helperText: "It can't be empty",
-        // hintText: "Flutter Developer",
       ),
     );
   }
 
   Widget aboutTextField() {
-    return TextFormField(
-      controller: _about,
-      validator: (value) {
-        // if (value.isEmpty) return "About can't be empty";
+    return AutoDirection(
+      text: _about.text.isEmptyOrNull ? "سلام" : _about.text,
+      child: TextFormField(
+        controller: _about,
+        validator: (value) {
+          // if (value.isEmpty) return "About can't be empty";
 
-        return null;
-      },
-      maxLines: 4,
-      decoration: InputDecoration(
-        border: OutlineInputBorder(
-            borderSide: BorderSide(
-          color: ColorPallet.colorPalletSambucus,
-        )),
-        focusedBorder: OutlineInputBorder(
-            borderSide: BorderSide(
-          color: ColorPallet.colorPalletSambucus,
-          width: 2,
-        )),
+          return null;
+        },
+        maxLines: 4,
+        decoration: InputDecoration(
+          border: OutlineInputBorder(
+              borderSide: BorderSide(
+            color: ColorPallet.colorPalletSambucus,
+          )),
+          focusedBorder: OutlineInputBorder(
+              borderSide: BorderSide(
+            color: ColorPallet.colorPalletSambucus,
+            width: 2,
+          )),
 
-        labelText: "درباره اثر",
-        // helperText: "Write about yourself",
-        // hintText: "I am Dev Stack",
+          labelText: "درباره اثر",
+          // helperText: "Write about yourself",
+          // hintText: "I am Dev Stack",
+        ),
       ),
     );
   }
