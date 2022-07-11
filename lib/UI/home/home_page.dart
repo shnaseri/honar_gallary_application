@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:honar_api_v20/api.dart';
 import 'package:honar_gallary/const/color_const.dart';
 import 'package:honar_gallary/state_managment/home_page/home_cubit.dart';
@@ -46,78 +47,71 @@ class _HomePageState extends State<HomePage> {
                   physics: ClampingScrollPhysics(),
                   children: [
                     const HomeHeader(),
-                    Container(
-                      child: ListView.builder(
-                        physics: NeverScrollableScrollPhysics(),
-                        shrinkWrap: true,
-                        itemBuilder: (BuildContext context, int index) {
-                          if (index == 0) {
-                            return Column(
-                              children: [
-                                Container(
-                                  height: 200,
-                                  width: context.width(),
-                                  margin: EdgeInsets.symmetric(
-                                      vertical: 10, horizontal: 10),
-                                  padding: EdgeInsets.symmetric(
-                                      vertical: 5, horizontal: 10),
-                                  decoration: BoxDecoration(
-                                    color: Colors.green,
-                                    borderRadius: BorderRadius.circular(10),
-                                  ),
-                                  child: Container(
-                                    child: Row(
-                                      children: [
-                                        Expanded(
-                                          child: Column(
-                                            children: [
-                                              Container(
-                                                height: 150,
-                                                decoration: BoxDecoration(
-                                                    image: DecorationImage(
-                                                        image: AssetImage(
-                                                            "assets/images/1.jpeg"))),
-                                              ),
-                                              Text(
-                                                "بیشترین لایک ",
-                                                style: TextStyle(
-                                                    color: ColorPallet
-                                                        .colorPalletDark,
-                                                    fontWeight: FontWeight.w900,
-                                                    fontSize: 20),
-                                              )
-                                            ],
-                                          ),
-                                        ),
-                                        Expanded(child: Container(
-                                          margin: EdgeInsets.symmetric(horizontal: 10,vertical: 6),
-                                          child: OfferTile(index: 1, post: state.homepage.feed[0]),
-                                        ))
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                                if (state.homepage.feed.length > index)
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 15),
-                                    child: ArtPieceTile(
-                                      artPiece: state.homepage.feed[index],
-                                    ),
-                                  )
-                              ],
-                            );
-                          }
-                          return Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 15),
-                            child: ArtPieceTile(
-                              artPiece: state.homepage.feed[index],
-                            ),
-                          );
-                        },
-                        itemCount: 1,
+                    if (state.homepage.offers!.mostLikedPostInLast7Days != null)
+                      OfferCard(
+                        title: 'بیشترین لایک',
+                        svg: "assets/images/most_like.svg",
+                        post: state.homepage.offers!.mostLikedPostInLast7Days!,
+                        rtl: true,
+                        color: Colors.teal,
                       ),
-                    )
+                    if (state.homepage.feed.isNotEmpty)
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 15),
+                        child: ArtPieceTile(
+                          artPiece: state.homepage.feed[0],
+                        ),
+                      ),
+                    if (state.homepage.offers!.mostCommentedPostInLast7Days !=
+                        null)
+                      OfferCard(
+                        title: 'بیشترین نظر',
+                        svg: "assets/images/most_comment.svg",
+                        post: state
+                            .homepage.offers!.mostCommentedPostInLast7Days!,
+                        rtl: false,
+                        color: Colors.lightGreen,
+                      ),
+                    if (state.homepage.feed.length >= 2)
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 15),
+                        child: ArtPieceTile(
+                          artPiece: state.homepage.feed[1],
+                        ),
+                      ),
+                    if (state.homepage.offers!.mostFavoriteUserInLast7Days !=
+                        null)
+                      OfferUserCard(
+                        title: 'بیشترین لایک شده',
+                        svg: "assets/images/most_like_user.svg",
+                        post: state.homepage.offers!.mostFavoriteUserInLast7Days!,
+                        rtl: true,
+                        color: ColorPallet.colorPalletPurpleRain,
+                      ),
+                    if (state.homepage.feed.length >= 3)
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 15),
+                        child: ArtPieceTile(
+                          artPiece: state.homepage.feed[2],
+                        ),
+                      ),
+                    if (state.homepage.feed.length >= 4)
+                      Container(
+                        child: ListView.builder(
+                          physics: NeverScrollableScrollPhysics(),
+                          shrinkWrap: true,
+                          itemBuilder: (BuildContext context, int i) {
+                            return Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 15),
+                              child: ArtPieceTile(
+                                artPiece: state.homepage.feed[i - 3],
+                              ),
+                            );
+                          },
+                          itemCount: state.homepage.feed.length - 3,
+                        ),
+                      )
                   ],
                 ),
               );
@@ -322,7 +316,23 @@ class _HomeHeaderState extends State<HomeHeader> {
                     ],
                   )
                 : Container(
-                    child: Image.asset("assets/images/1.jpeg"),
+                    child: Container(
+                      height: context.height() * 0.25,
+                      child: Column(
+                        children: [
+                          Container(
+                            height: context.height() * 0.2,
+                            child: SvgPicture.asset("assets/images/empty.svg",
+                                semanticsLabel: 'A red up arrow'),
+                          ),
+                          10.height,
+                          Text(
+                            "هنرمندان منتظر شما هستند...",
+                            style: TextStyle(color: Colors.white),
+                          )
+                        ],
+                      ),
+                    ),
                   ),
           );
         }
@@ -475,7 +485,6 @@ class _OfferTileState extends State<OfferTile> {
                     ),
                     Row(
                       children: [
-
                         const SizedBox(width: 10.0),
                         Padding(
                           padding: const EdgeInsets.only(bottom: 6),
@@ -487,10 +496,11 @@ class _OfferTileState extends State<OfferTile> {
                                     bottomRight: Radius.circular(10)),
                                 color: ColorPallet.colorPalletDark),
                             child: ConstrainedBox(
-                              constraints:
-                              BoxConstraints(maxWidth: context.width() * 0.7),
+                              constraints: BoxConstraints(
+                                  maxWidth: context.width() * 0.7),
                               child: Text(
-                                "تعداد کامنت ها:" + widget.post.countComment.toString(),
+                                "تعداد کامنت ها:" +
+                                    widget.post.countComment.toString(),
                                 style: const TextStyle(
                                     color: Colors.cyan,
                                     fontWeight: FontWeight.bold,
@@ -520,6 +530,201 @@ class _OfferTileState extends State<OfferTile> {
           color: Colors.green,
         )
       ],
+    );
+  }
+}
+
+class OfferCard extends StatefulWidget {
+  String svg;
+  ArtGalleryRead200ResponsePostsInner post;
+  String title;
+  bool rtl;
+  Color color;
+
+  OfferCard(
+      {Key? key,
+      required this.svg,
+      required this.post,
+      required this.title,
+      required this.color,
+      required this.rtl})
+      : super(key: key);
+
+  @override
+  State<OfferCard> createState() => _OfferCardState();
+}
+
+class _OfferCardState extends State<OfferCard> {
+  @override
+  Widget build(BuildContext context) {
+    // TODO: implement build
+    return Directionality(
+      textDirection: widget.rtl ? TextDirection.rtl : TextDirection.ltr,
+      child: Column(
+        children: [
+          Container(
+            height: 200,
+            width: context.width(),
+            margin: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+            padding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+            decoration: BoxDecoration(
+              color: widget.color,
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: Container(
+              child: Row(
+                children: [
+                  Expanded(
+                    child: Column(
+                      children: [
+                        10.height,
+                        Container(
+                          height: context.height() * 0.15,
+                          child: SvgPicture.asset(widget.svg,
+                              semanticsLabel: 'A red up arrow'),
+                        ),
+                        10.height,
+                        Text(
+                          widget.title,
+                          style: TextStyle(
+                              color: ColorPallet.colorPalletDark,
+                              fontWeight: FontWeight.w900,
+                              fontSize: 20),
+                        )
+                      ],
+                    ),
+                  ),
+                  Directionality(
+                    textDirection:
+                        widget.rtl ? TextDirection.ltr : TextDirection.rtl,
+                    child: Expanded(
+                        child: Container(
+                      margin: EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                      child: OfferTile(index: 1, post: widget.post),
+                    )),
+                  )
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class OfferUserCard extends StatefulWidget {
+  String svg;
+  ArtGalleryRead200ResponseOwner post;
+  String title;
+  bool rtl;
+  Color color;
+
+  OfferUserCard(
+      {Key? key,
+      required this.svg,
+      required this.post,
+      required this.title,
+      required this.color,
+      required this.rtl})
+      : super(key: key);
+
+  @override
+  State<OfferUserCard> createState() => _OfferUserCardState();
+}
+
+class _OfferUserCardState extends State<OfferUserCard> {
+  @override
+  Widget build(BuildContext context) {
+    // TODO: implement build
+    return Directionality(
+      textDirection: widget.rtl ? TextDirection.rtl : TextDirection.ltr,
+      child: Column(
+        children: [
+          Container(
+            height: 200,
+            width: context.width(),
+            margin: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+            padding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+            decoration: BoxDecoration(
+              color: widget.color,
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: Container(
+              child: Row(
+                children: [
+                  Expanded(
+                    child: Column(
+                      children: [
+                        10.height,
+                        Container(
+                          height: context.height() * 0.15,
+                          child: SvgPicture.asset(widget.svg,
+                              semanticsLabel: 'A red up arrow'),
+                        ),
+                        10.height,
+                        Text(
+                          widget.title,
+                          style: TextStyle(
+                              color: ColorPallet.colorPalletDark,
+                              fontWeight: FontWeight.w900,
+                              fontSize: 20),
+                        )
+                      ],
+                    ),
+                  ),
+                  Expanded(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Container(
+                        padding: EdgeInsets.all(3),
+                        decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            border: Border.all(color: Colors.amber)),
+                        child: CachedNetworkImage(
+                          imageBuilder: (context, imageProvider) {
+                            return Container(
+                              decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  image: DecorationImage(
+                                      fit: BoxFit.cover, image: imageProvider)),
+                            );
+                          },
+                          placeholder: (context, strImage) {
+                            return Container(
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: Colors.grey,
+                                border: Border.all(
+                                  color: Colors.white,
+                                  width: 2.0,
+                                ),
+                              ),
+                            );
+                          },
+                          imageUrl: widget.post.profilePhoto!.isEmpty
+                              ? "http://188.121.110.151:8000/media/images/icons8-test-account-64.png"
+                              : widget.post.profilePhoto!,
+                          fit: BoxFit.fill,
+                          height: 100,
+                          // width: 110,
+                        ),
+                      ),
+                      15.height,
+                      Text(
+                        widget.post.fullName!,
+                        style:
+                            TextStyle(color: ColorPallet.colorPalletSambucus,fontWeight: FontWeight.w900,fontSize: 18),
+                      )
+                    ],
+                  ))
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
