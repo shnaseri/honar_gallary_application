@@ -11,15 +11,15 @@ import 'arc_banner.dart';
 AudioPlayer audioPlayer = AudioPlayer();
 var ap = AudioCache(fixedPlayer: audioPlayer);
 
-playonline() async {
+playonline(String content) async {
+  print("content");
+  print(content);
   ap.clearAll();
-  int success = await audioPlayer.setUrl(
-      'https://raw.githubusercontent.com/sparsh308/sample_musics/master/Alan%20Walker%20-%20Faded.mp3');
+  int success = await audioPlayer.setUrl(content);
   if (success == 1) {
     await initDuration();
   }
-  await audioPlayer.play(
-      'https://raw.githubusercontent.com/sparsh308/sample_musics/master/Alan%20Walker%20-%20Faded.mp3');
+  await audioPlayer.play(content);
 }
 
 Duration? durationMusic;
@@ -45,8 +45,12 @@ resume() async {
 
 class AudioPlayerPage extends StatefulWidget {
   final String content;
+  String? title;
+  String? coverImage;
 
-  const AudioPlayerPage({Key? key, required this.content}) : super(key: key);
+  AudioPlayerPage(
+      {Key? key, required this.content, this.title, this.coverImage})
+      : super(key: key);
 
   @override
   AudioPlayerPageState createState() {
@@ -61,7 +65,7 @@ class AudioPlayerPageState extends State<AudioPlayerPage> {
 
   @override
   void initState() {
-    playonline();
+    playonline(widget.content);
     // TODO: implement initState
     playAudio = false;
     super.initState();
@@ -86,10 +90,9 @@ class AudioPlayerPageState extends State<AudioPlayerPage> {
       alignment: Alignment.center,
       child: Column(
         children: <Widget>[
-          const Padding(
-            padding: EdgeInsets.only(bottom: 0.0),
-            child: ArcBannerImageOnline(
-                "https://facts.net/wp-content/uploads/2020/01/close-up-photography-of-cat-1183434-730x486.jpg"),
+          Padding(
+            padding: const EdgeInsets.only(bottom: 0.0),
+            child: ArcBannerImageOnline(widget.coverImage!),
           ),
           // Container(
           //   width: 150,
@@ -103,9 +106,9 @@ class AudioPlayerPageState extends State<AudioPlayerPage> {
           const SizedBox(
             height: 50,
           ),
-          const Text(
-            'آهنگ alan walker - faded',
-            style: TextStyle(
+          Text(
+            ' آهنگ ' + widget.title!,
+            style: const TextStyle(
               color: Colors.white,
               fontSize: 20,
               fontWeight: FontWeight.bold,

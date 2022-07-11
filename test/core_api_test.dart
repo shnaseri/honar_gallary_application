@@ -12,45 +12,19 @@ import 'package:honar_api_v22/api.dart';
 import 'package:test/test.dart';
 
 /// tests for CoreApi
-void main() {
-  // final instance = CoreApi();
-
+Future<void> main() async {
+  var user = ApiClient();
+  var authApi = AuthApi();
+  final response = await authApi.authLoginCreate(
+      TokenObtainPair(email: "test@gmail.com", password: "123456"));
+  user = ApiClient(
+      authentication: HttpBearerAuth()..accessToken = response!.access);
+  final instance = CoreApi(user);
   group('tests for CoreApi', () {
-    //Future<CoreContentUpdate200Response> coreContentUpdate(MultipartFile file) async
-    test('test coreContentUpdate', () async {
-      // TODO
-    });
-
-    //Future<ImageSerializer> coreImageUploadCreate(ImageSerializer data) async
-    test('test coreImageUploadCreate', () async {
-      // TODO
-    });
-
-    //Future coreImageUploadDelete(int id) async
-    test('test coreImageUploadDelete', () async {
-      // TODO
-    });
-
-    // Examines request and allows certain fields to be expanded within the list view.
-    //
-    //Future<List<ImageSerializer>> coreImageUploadList() async
-    test('test coreImageUploadList', () async {
-      // TODO
-    });
-
-    //Future<ImageSerializer> coreImageUploadPartialUpdate(int id, ImageSerializer data) async
-    test('test coreImageUploadPartialUpdate', () async {
-      // TODO
-    });
-
-    //Future<ImageSerializer> coreImageUploadRead(int id) async
-    test('test coreImageUploadRead', () async {
-      // TODO
-    });
-
-    //Future<ImageSerializer> coreImageUploadUpdate(int id, ImageSerializer data) async
-    test('test coreImageUploadUpdate', () async {
-      // TODO
+    test('test coreHomePage', () async {
+      final response = await instance.coreHomepageList(pageCount: 10, page: 1);
+      expect(response!.stats.runtimeType, CoreHomepageList200ResponseStats);
+      expect(response.offers.runtimeType, CoreHomepageList200ResponseOffers);
     });
   });
 }

@@ -73,11 +73,15 @@ class MovieDetailHeader extends StatelessWidget {
             children: [
               GestureDetector(
                 onTap: () {
+                  print("music url");
+                  print(artPiece.url!);
                   Navigator.push(
                       context,
                       MaterialPageRoute(
                           builder: (context) => PlayerContentPage(
                                 type: artPiece.type!,
+                                title: artPiece.title,
+                                coverImage: artPiece.cover.image,
                                 content: artPiece.type! == "picture"
                                     ? artPiece.cover.image!
                                     : artPiece.url!,

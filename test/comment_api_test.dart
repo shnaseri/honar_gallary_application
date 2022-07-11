@@ -12,18 +12,28 @@ import 'package:honar_api_v22/api.dart';
 import 'package:test/test.dart';
 
 /// tests for CommentApi
-void main() {
+Future<void> main() async {
   // final instance = CommentApi();
-
+  var user = ApiClient();
+  var authApi = AuthApi();
+  final response = await authApi.authLoginCreate(
+      TokenObtainPair(email: "test@gmail.com", password: "123456"));
+  user = ApiClient(
+      authentication: HttpBearerAuth()..accessToken = response!.access);
+  final instance = CommentApi(user);
+  String artPieceId = "1";
   group('tests for CommentApi', () {
     //Future<SingleComment> commentAddCommentCreate(String artPieceId, AddComment data) async
     test('test commentAddCommentCreate', () async {
-      // TODO
+      final response = await instance.commentAddCommentCreate(
+          artPieceId, AddComment(content: "test"));
+      expect(response.runtimeType, SingleComment);
     });
 
     //Future<List<Comments>> commentAllCommentsList(String artPieceId) async
     test('test commentAllCommentsList', () async {
-      // TODO
+      final response = await instance.commentAllCommentsList(artPieceId);
+      expect(response!.first.runtimeType, Comments);
     });
   });
 }

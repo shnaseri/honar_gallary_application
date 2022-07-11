@@ -12,13 +12,19 @@ import 'package:honar_api_v22/api.dart';
 import 'package:test/test.dart';
 
 /// tests for CategoryApi
-void main() {
-  // final instance = CategoryApi();
-
+Future<void> main() async {
+  var user = ApiClient();
+  var authApi = AuthApi();
+  final response = await authApi.authLoginCreate(
+      TokenObtainPair(email: "test@gmail.com", password: "123456"));
+  user = ApiClient(
+      authentication: HttpBearerAuth()..accessToken = response!.access);
+  final instance = CategoryApi(user);
   group('tests for CategoryApi', () {
     //Future<List<Category>> categoryGetAllList() async
     test('test categoryGetAllList', () async {
-      // TODO
+      final response = await instance.categoryGetAllList();
+      expect(response!.first.runtimeType, Category);
     });
   });
 }

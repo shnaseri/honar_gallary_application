@@ -2,7 +2,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-import 'package:honar_api_v22/api.dart';
 import 'package:honar_gallary/UI/business/business_page.dart';
 import 'package:honar_gallary/UI/utils/show_dialog.dart';
 import 'package:honar_gallary/const/color_const.dart';
@@ -11,8 +10,7 @@ import 'package:honar_gallary/settings/setting_page.dart';
 import 'package:honar_gallary/state_managment/gallery/gallery_cubit.dart';
 import 'package:nb_utils/nb_utils.dart';
 
-import '../Art_piece/art_piece_page.dart';
-import '../chat/chat_page.dart';
+import '../ChatListPage/ChatListMain.dart';
 import 'components/common.dart';
 
 class GalleryView extends StatefulWidget {
@@ -317,39 +315,28 @@ class _GalleryViewState extends State<GalleryView> {
                                           ),
                                         ),
                                       ),
-                                    if (widget.id !=
-                                        ConfigGeneralValues.getInstance()
-                                            .userId)
-                                      Positioned(
-                                        top: 90,
-                                        right: 20,
-                                        child: GestureDetector(
-                                          onTap: () {
-                                            Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                  builder: (_) => ChatPage(
-                                                    chatCode: getChatCode(
-                                                        state.owner.id!),
-                                                    index: 1,
-                                                    contact:
-                                                        ArtGalleryRead200ResponseOwner(
-                                                            fullName: state
-                                                                .owner.fullName,
-                                                            profilePhoto: state
-                                                                .owner
-                                                                .profilePhoto),
-                                                  ),
-                                                ));
-                                          },
-                                          child: Icon(
-                                            Icons.wechat,
-                                            color:
-                                                ColorPallet.colorPalletNightFog,
-                                            size: 25,
-                                          ),
+                                    Positioned(
+                                      top: widget.id !=
+                                              ConfigGeneralValues.getInstance()
+                                                  .userId
+                                          ? 90
+                                          : 120,
+                                      right: 20,
+                                      child: GestureDetector(
+                                        onTap: () {
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (_) => ChatList()));
+                                        },
+                                        child: Icon(
+                                          Icons.wechat,
+                                          color:
+                                              ColorPallet.colorPalletNightFog,
+                                          size: 25,
                                         ),
                                       ),
+                                    ),
                                     if (state.enableBusiness ||
                                         state.owner.id ==
                                             ConfigGeneralValues.getInstance()
