@@ -270,9 +270,7 @@ class ArtPieceTile extends StatelessWidget {
         Navigator.push(
             context,
             MaterialPageRoute(
-                builder: (_) => ArtPiecePage(
-                    artId:
-                    artPiece.id!)));
+                builder: (_) => ArtPiecePage(artId: artPiece.id!)));
       },
       child: Container(
         width: MediaQuery.of(context).size.width,
