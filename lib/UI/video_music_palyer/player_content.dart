@@ -12,12 +12,8 @@ class PlayerContentPage extends StatefulWidget {
   String? coverImage;
 
   PlayerContentPage(
-      {Key? key,
-      required this.type,
-      required this.content,
-      this.title,
-      this.coverImage})
-      : super(key: key);
+      {required this.type, required this.content, this.title, this.coverImage})
+      : super();
 
   @override
   State<PlayerContentPage> createState() => _PlayerContentPageState();
