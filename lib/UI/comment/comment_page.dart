@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:honar_api_v22/api.dart';
+import 'package:honar_gallary/UI/utils/auto_text_direction.dart';
 import 'package:honar_gallary/const/color_const.dart';
 import 'package:honar_gallary/state_managment/comment/comment_cubit.dart';
 import 'package:nb_utils/nb_utils.dart';
@@ -202,18 +203,26 @@ class _CommentPageState extends State<CommentPage> {
                                       children: [
                                         Expanded(
                                           flex: 7,
-                                          child: TextFormField(
-                                            controller: textEditingController,
-                                            // onSaved: (String? value) {
-                                            //   message = value!;
-                                            // },
-
-                                            decoration: const InputDecoration(
-                                                border: InputBorder.none,
-                                                hintText: 'نظر دهید...',
-                                                hintStyle: TextStyle(
-                                                    color: Colors.white)),
-                                            maxLines: 6,
+                                          child: AutoDirection(
+                                            text: textEditingController
+                                                    .text.isEmptyOrNull
+                                                ? "سلام"
+                                                : textEditingController.text,
+                                            child: TextFormField(
+                                              controller: textEditingController,
+                                              // onSaved: (String? value) {
+                                              //   message = value!;
+                                              // },
+                                              onChanged: (str) {
+                                                setState(() {});
+                                              },
+                                              decoration: const InputDecoration(
+                                                  border: InputBorder.none,
+                                                  hintText: 'نظر دهید...',
+                                                  hintStyle: TextStyle(
+                                                      color: Colors.white)),
+                                              maxLines: 6,
+                                            ),
                                           ),
                                         ),
                                         Expanded(
@@ -235,6 +244,13 @@ class _CommentPageState extends State<CommentPage> {
                                                             text:
                                                                 textEditingController
                                                                     .text);
+                                                    BlocProvider.of<
+                                                                CommentCubit>(
+                                                            context)
+                                                        .emit(CommentLoaded([
+                                                      ...state.comments,
+                                                      comment!
+                                                    ]));
                                                   } else {
                                                     comment = await BlocProvider
                                                             .of<CommentCubit>(
@@ -249,16 +265,28 @@ class _CommentPageState extends State<CommentPage> {
                                                             text:
                                                                 textEditingController
                                                                     .text);
-                                                  }
-
-                                                  if (comment != null) {
+                                                    state.comments[repIndex]
+                                                        .childComments = [
+                                                      ...state
+                                                          .comments[repIndex]
+                                                          .childComments,
+                                                      ChildComment(
+                                                          id: comment!.id,
+                                                          content:
+                                                              comment.content,
+                                                          writer:
+                                                              comment.writer,
+                                                          createdAt:
+                                                              comment.createdAt)
+                                                    ];
                                                     BlocProvider.of<
                                                                 CommentCubit>(
                                                             context)
-                                                        .emit(CommentLoaded([
-                                                      ...state.comments,
-                                                      comment
-                                                    ]));
+                                                        .emit(CommentLoaded(
+                                                            state.comments));
+                                                  }
+
+                                                  if (comment != null) {
                                                     toast(
                                                         'نظر با موفقیت ثبت شد');
                                                   } else {}
