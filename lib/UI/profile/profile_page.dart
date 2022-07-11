@@ -260,14 +260,19 @@ class _ProfilePageState extends State<ProfilePage> {
                                   }
                                   print("---- send info profile ---");
                                   try {
-                                    bool status =
-                                        await BlocProvider.of<ProfileCubit>(
-                                                context)
-                                            .uploadProfile(selectedFile!);
-                                    if (!status) {
-                                      showSnackBar(context, "عکس آپلود نشد");
-                                      return;
-                                    }
+                                    try {
+                                      if (selectedImage &&
+                                          selectedFile != null) {
+                                        bool status =
+                                            await BlocProvider.of<ProfileCubit>(
+                                                    context)
+                                                .uploadProfile(selectedFile!);
+                                        if (!status) {
+                                          showSnackBar(
+                                              context, "عکس آپلود نشد");
+                                        }
+                                      }
+                                    } catch (e) {}
                                     profile =
                                         await BlocProvider.of<ProfileCubit>(
                                                 context)
