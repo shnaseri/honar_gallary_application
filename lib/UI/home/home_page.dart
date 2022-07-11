@@ -179,7 +179,7 @@ class _HomeHeaderState extends State<HomeHeader> {
                 color: ColorPallet.colorPalletDark),
             child: state.homepage.stats!.commentsYouReceivedLast30Days != 0 ||
                     state.homepage.stats!.commentsYouGivenLast30Days != 0 ||
-                    state.homepage.stats!.likesYouGivenLast30Days == 0 ||
+                    state.homepage.stats!.likesYouGivenLast30Days != 0 ||
                     state.homepage.stats!.likesYouReceivedLast30Days != 0
                 ? Column(
                     children: [
