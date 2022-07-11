@@ -8,8 +8,11 @@ import 'components/video_player.dart';
 class PlayerContentPage extends StatefulWidget {
   final String type;
   final String content;
+  String? title;
+  String? coverImage;
 
-  const PlayerContentPage({Key? key, required this.type, required this.content})
+  PlayerContentPage(
+      {Key? key, required this.type, required this.content, this.title,this.coverImage})
       : super(key: key);
 
   @override
@@ -54,6 +57,8 @@ class _PlayerContentPageState extends State<PlayerContentPage> {
     if (widget.type == "music") {
       return AudioPlayerPage(
         content: widget.content,
+        title: widget.title,
+        coverImage: widget.coverImage,
       );
     }
     return ImageShowPage(
