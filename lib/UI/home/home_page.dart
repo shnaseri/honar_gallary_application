@@ -84,7 +84,8 @@ class _HomePageState extends State<HomePage> {
                       OfferUserCard(
                         title: 'بیشترین لایک شده',
                         svg: "assets/images/most_like_user.svg",
-                        post: state.homepage.offers!.mostFavoriteUserInLast7Days!,
+                        post:
+                            state.homepage.offers!.mostFavoriteUserInLast7Days!,
                         rtl: true,
                         color: ColorPallet.colorPalletPurpleRain,
                       ),
@@ -675,7 +676,7 @@ class _OfferUserCardState extends State<OfferUserCard> {
                   ),
                   Expanded(
                       child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Container(
                         padding: EdgeInsets.all(3),
@@ -714,8 +715,10 @@ class _OfferUserCardState extends State<OfferUserCard> {
                       15.height,
                       Text(
                         widget.post.fullName!,
-                        style:
-                            TextStyle(color: ColorPallet.colorPalletSambucus,fontWeight: FontWeight.w900,fontSize: 18),
+                        style: TextStyle(
+                            color: ColorPallet.colorPalletSambucus,
+                            fontWeight: FontWeight.w900,
+                            fontSize: 18),
                       )
                     ],
                   ))

@@ -9,6 +9,7 @@ class HomeLoading extends HomeState {}
 
 class HomeLoaded extends HomeState {
   final CoreHomepageList200Response homepage;
+
   HomeLoaded(this.homepage);
 }
 
