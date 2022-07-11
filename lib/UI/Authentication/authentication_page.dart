@@ -156,7 +156,6 @@ class _AuthenticationPageState extends State<AuthenticationPage> {
                   TokenObtainPair(
                       email: login.email, password: login.password)))!;
 
-              Navigator.pushReplacementNamed(context, homePagePath);
               ConfigGeneralValues.getInstance().putToken(token.access);
               HttpBearerAuth auth = HttpBearerAuth();
               auth.accessToken = token.access;
@@ -175,6 +174,7 @@ class _AuthenticationPageState extends State<AuthenticationPage> {
                   await profileApi.profileRead(response2004.userId!);
               print(fullUser);
               ConfigGeneralValues.getInstance().setProfile(fullUser!);
+              Navigator.pushReplacementNamed(context, homePagePath);
               return '';
             } catch (e) {
               print(e);
