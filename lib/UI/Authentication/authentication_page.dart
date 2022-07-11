@@ -182,7 +182,7 @@ class _AuthenticationPageState extends State<AuthenticationPage> {
               UserId? userId = await authApi.authRegisterCreate(Register(
                   email: login.email,
                   password: login.password,
-                  firstName: "s",
+                  firstName: "",
                   lastName: login.name));
               try {
                 await authApi.authSendOtpCodeCreate(userId!.id.toString());

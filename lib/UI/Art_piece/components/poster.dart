@@ -56,7 +56,7 @@ class Poster extends StatelessWidget {
             ),
             child: Center(
               child: artpiece.type == "picture"
-                  ? Icon(Icons.search_rounded)
+                  ? Icon(Icons.remove_red_eye_rounded)
                   : Icon(Icons.play_arrow_rounded),
             ),
           )
