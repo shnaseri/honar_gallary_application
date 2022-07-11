@@ -32,7 +32,24 @@ class _AuthenticationPageState extends State<AuthenticationPage> {
   /// You can also set some additional display options such as [showLabelTexts].
   LoginViewTheme get _mobileTheme => LoginViewTheme(
         // showLabelTexts: false,
-
+        animatedComponentOrder: <AnimatedComponent>[
+          AnimatedComponent(component: LoginComponents.logo),
+          AnimatedComponent(component: LoginComponents.title),
+          AnimatedComponent(component: LoginComponents.description),
+          AnimatedComponent(
+            component: LoginComponents.formTitle,
+          ),
+          AnimatedComponent(component: LoginComponents.socialLogins),
+          AnimatedComponent(component: LoginComponents.useEmail),
+          AnimatedComponent(component: LoginComponents.form),
+          AnimatedComponent(component: LoginComponents.notHaveAnAccount),
+          AnimatedComponent(
+            component: LoginComponents.changeActionButton,
+          ),
+          AnimatedComponent(
+            component: LoginComponents.actionButton,
+          ),
+        ],
         backgroundColor: Color.fromRGBO(4, 9, 35, 1),
         // const Color(0xFF6666FF),
         formFieldBackgroundColor: Colors.white,
