@@ -37,24 +37,25 @@ class Storyline extends StatelessWidget {
             fontSize: 16.0,
           ),
         ),
+        const SizedBox(height: 4.0),
         // No expand-collapse in this tutorial, we just slap the "more"
         // button below the text like in the mockup.
-        Row(
-          mainAxisAlignment: MainAxisAlignment.end,
-          crossAxisAlignment: CrossAxisAlignment.end,
-          children: [
-            Text(
-              'بیشتر',
-              style: textTheme.bodyText1!
-                  .copyWith(fontSize: 16.0, color: theme.colorScheme.secondary),
-            ),
-            Icon(
-              Icons.keyboard_arrow_down,
-              size: 18.0,
-              color: theme.colorScheme.secondary,
-            ),
-          ],
-        ),
+        // Row(
+        //   mainAxisAlignment: MainAxisAlignment.end,
+        //   crossAxisAlignment: CrossAxisAlignment.end,
+        //   children: [
+        //     Text(
+        //       'بیشتر',
+        //       style: textTheme.bodyText1!
+        //           .copyWith(fontSize: 14.0, color: Colors.white),
+        //     ),
+        //     Icon(
+        //       Icons.keyboard_arrow_down,
+        //       size: 15.0,
+        //       color: Colors.white,
+        //     ),
+        //   ],
+        // ),
       ],
     );
   }

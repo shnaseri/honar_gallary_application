@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:honar_api_v22/api.dart';
 import 'package:honar_gallary/UI/chat/chat_page.dart';
 import 'package:honar_gallary/UI/comment/comment_page.dart';
@@ -91,31 +92,48 @@ class _ArtPiecePageState extends State<ArtPiecePage> {
                             if (state.artPiece.images.isNotEmpty)
                               const SizedBox(height: 60.0),
 
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                const Padding(
-                                  padding: EdgeInsets.only(right: 10),
-                                  child: Text(
-                                    "نظرات",
-                                    style: TextStyle(
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 20),
-                                  ),
-                                ),
-                                TextButton(
-                                  onPressed: () {
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (_) => CommentPage(
-                                                  artPiece: state.artPiece,
-                                                )));
-                                  },
-                                  child: const Text("مشاهده همه"),
-                                ),
-                              ],
+                            // Row(
+                            //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            //   children: [
+                            //     const Padding(
+                            //       padding: EdgeInsets.only(right: 10),
+                            //       child: Text(
+                            //         "نظرات",
+                            //         style: TextStyle(
+                            //             color: Colors.white,
+                            //             fontWeight: FontWeight.bold,
+                            //             fontSize: 20),
+                            //       ),
+                            //     ),
+                            //     TextButton(
+                            //       onPressed: () {
+                            //         Navigator.push(
+                            //             context,
+                            //             MaterialPageRoute(
+                            //                 builder: (_) => CommentPage(
+                            //                       artPiece: state.artPiece,
+                            //                     )));
+                            //       },
+                            //       child: const Text("مشاهده همه"),
+                            //     ),
+                            //   ],
+                            // ),
+                            10.height,
+                            GestureDetector(
+                              onTap: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (_) => CommentPage(
+                                              artPiece: state.artPiece,
+                                            )));
+                              },
+                              child: CommentCard(
+                                title: 'مشاهده نظرات',
+                                svg: "assets/images/most_comment.svg",
+                                rtl: false,
+                                color: ColorPallet.colorPalletDark,
+                              ),
                             ),
                             const SizedBox(
                               height: 20,
@@ -259,4 +277,75 @@ class _ArtPiecePageState extends State<ArtPiecePage> {
 
 getChatCode(int userId) {
   return "${min<int>(ConfigGeneralValues.getInstance().userId!, userId)}-${max<int>(ConfigGeneralValues.getInstance().userId!, userId)}";
+}
+
+class CommentCard extends StatefulWidget {
+  String svg;
+  String title;
+  bool rtl;
+  Color color;
+
+  CommentCard(
+      {Key? key,
+      required this.svg,
+      required this.title,
+      required this.color,
+      required this.rtl})
+      : super(key: key);
+
+  @override
+  State<CommentCard> createState() => _CommentCardState();
+}
+
+class _CommentCardState extends State<CommentCard> {
+  @override
+  Widget build(BuildContext context) {
+    // TODO: implement build
+    return Directionality(
+      textDirection: widget.rtl ? TextDirection.rtl : TextDirection.ltr,
+      child: Column(
+        children: [
+          Container(
+            height: 200,
+            width: context.width(),
+            margin: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+            padding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+            decoration: BoxDecoration(
+              color: Colors.black12,
+              border: Border.all(
+                color: widget.color,
+              ),
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: Container(
+              child: Row(
+                children: [
+                  Expanded(
+                    child: Column(
+                      children: [
+                        10.height,
+                        Container(
+                          height: context.height() * 0.15,
+                          child: SvgPicture.asset(widget.svg,
+                              semanticsLabel: 'A red up arrow'),
+                        ),
+                        10.height,
+                        Text(
+                          widget.title,
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.w900,
+                              fontSize: 20),
+                        )
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
 }
