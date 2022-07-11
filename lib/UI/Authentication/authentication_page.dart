@@ -199,11 +199,13 @@ class _AuthenticationPageState extends State<AuthenticationPage> {
               UserId? userId = await authApi.authRegisterCreate(Register(
                   email: login.email,
                   password: login.password,
-                  firstName: "",
+                  firstName: ".",
                   lastName: login.name));
               try {
                 await authApi.authSendOtpCodeCreate(userId!.id.toString());
-              } catch (e) {}
+              } catch (e) {
+                print(e);
+              }
               // AccessRefresh token = await authApi.authLoginCreate(
               //     TokenObtainPair(
               //         email: login.email, password: login.password));
