@@ -12,18 +12,25 @@ import 'package:honar_api_v22/api.dart';
 import 'package:test/test.dart';
 
 /// tests for ChatApi
-void main() {
-  // final instance = ChatApi();
-
+Future<void> main() async {
+  var user = ApiClient();
+  var authApi = AuthApi();
+  final response = await authApi.authLoginCreate(
+      TokenObtainPair(email: "test@gmail.com", password: "123456"));
+  user = ApiClient(
+      authentication: HttpBearerAuth()..accessToken = response!.access);
+  final instance = ChatApi(user);
   group('tests for ChatApi', () {
     //Future<List<Message>> chatGetAllChatMessagesList(String chatCode) async
     test('test chatGetAllChatMessagesList', () async {
-      // TODO
+      final response = await instance.chatGetAllChatMessagesList("2-3");
+      expect(response!.first.runtimeType, Message);
     });
 
     //Future<List<ChatGetAllChatsList200ResponseInner>> chatGetAllChatsList() async
     test('test chatGetAllChatsList', () async {
-      // TODO
+      final response = await instance.chatGetAllChatsList();
+      expect(response!.isEmpty,true);
     });
   });
 }

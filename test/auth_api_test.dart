@@ -9,38 +9,54 @@
 // ignore_for_file: lines_longer_than_80_chars
 
 import 'package:honar_api_v22/api.dart';
+import 'package:honar_gallary/logic/consts.dart';
 import 'package:test/test.dart';
 
 /// tests for AuthApi
-void main() {
-  // final instance = AuthApi();
+Future<void> main() async {
+  var user = ApiClient();
+  var instance = AuthApi();
+  final response = await instance.authLoginCreate(
+      TokenObtainPair(email: "test@gmail.com", password: "123456"));
+  user = ApiClient(
+      authentication: HttpBearerAuth()..accessToken = response!.access);
+  instance = AuthApi(user);
+  int userId = 10;
 
   group('tests for AuthApi', () {
     //Future<AccessRefresh> authLoginCreate(TokenObtainPair data) async
     test('test authLoginCreate', () async {
-      // TODO
+      final response = await instance.authLoginCreate(
+          TokenObtainPair(email: "test@gmail.com", password: "123456"));
+      expect(response!.access.runtimeType,String);
+      user = ApiClient(
+          authentication: HttpBearerAuth()..accessToken = response.access);
+      instance = AuthApi(user);
     });
 
-    // Takes a refresh type JSON web token and returns an access type JSON web token if the refresh token is valid.
-    //
-    //Future<TokenRefresh> authLogoutCreate(TokenRefresh data) async
-    test('test authLogoutCreate', () async {
-      // TODO
-    });
 
     //Future<AuthMeList200Response> authMeList() async
     test('test authMeList', () async {
-      // TODO
+      final response = await instance.authMeList();
+      expect(response!.userId,10);
+      userId = response.userId!;
     });
 
     //Future<UserId> authRegisterCreate(Register data) async
     test('test authRegisterCreate', () async {
       // TODO
+      final response = await instance.authRegisterCreate(Register(
+          email: 'test@gmail.com',
+          lastName: "test",
+          firstName: "ftest",
+          password: "123456 "));
+      expect(response!.id, null);
     });
 
     //Future<ArtArtPieceUpdate200Response> authSendOtpCodeCreate(String id) async
     test('test authSendOtpCodeCreate', () async {
-      // TODO
+      final response = await instance.authSendOtpCodeCreate(userId.toString());
+      expect(response!.success,true);
     });
 
     // Takes a token and indicates if it is valid.  This view provides no information about a token's fitness for a particular use.

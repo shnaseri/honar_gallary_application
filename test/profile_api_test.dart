@@ -12,33 +12,39 @@ import 'package:honar_api_v22/api.dart';
 import 'package:test/test.dart';
 
 /// tests for ProfileApi
-void main() {
+Future<void> main() async {
   // final instance = ProfileApi();
-
+  var user = ApiClient();
+  var authApi = AuthApi();
+  final response = await authApi.authLoginCreate(
+      TokenObtainPair(email: "test@gmail.com", password: "123456"));
+  user = ApiClient(
+      authentication: HttpBearerAuth()..accessToken = response!.access);
+  final instance = ProfileApi(user);
   group('tests for ProfileApi', () {
-    //Future<ArtArtPieceUpdate200Response> profileAddProfileImageCreate(AddImage data) async
-    test('test profileAddProfileImageCreate', () async {
-      // TODO
-    });
 
     //Future<ProfileFollowUpdate200Response> profileFollowUpdate(String id) async
     test('test profileFollowUpdate', () async {
-      // TODO
+      final response = await instance.profileFollowUpdate("3");
+      expect(response!.follow.runtimeType,bool);
     });
 
     //Future<FullUser> profilePartialUpdate(int id, FullUser data) async
     test('test profilePartialUpdate', () async {
-      // TODO
+      final response = await instance.profilePartialUpdate(10,FullUser(email: "test@gmail.com",firstName: "1"));
+      expect(response.runtimeType, FullUser);
     });
 
     //Future<FullUser> profileRead(int id) async
     test('test profileRead', () async {
-      // TODO
+      final response = await instance.profileRead(10);
+      expect(response.runtimeType, FullUser);
     });
 
     //Future<FullUser> profileUpdate(int id, FullUser data) async
     test('test profileUpdate', () async {
-      // TODO
+      final response = await instance.profilePartialUpdate(10,FullUser(email: "test@gmail.com",firstName: "1"));
+      expect(response.runtimeType, FullUser);
     });
   });
 }
