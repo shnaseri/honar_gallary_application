@@ -14,7 +14,6 @@ class ConfigGeneralValues {
 
   List<Category> get categories => _categories;
 
-
   static ConfigGeneralValues getInstance() {
     _configGeneralValues ??= ConfigGeneralValues();
     return _configGeneralValues!;

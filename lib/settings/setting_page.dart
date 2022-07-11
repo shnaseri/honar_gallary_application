@@ -122,22 +122,19 @@ class _SettingsPageState extends State<SettingsPage> {
             const SizedBox(
               height: 10,
             ),
-            buildNotificationOptionRow("کسب و کار",
-                ConfigGeneralValues.getInstance().enableBusiness, () async {
-                  final profileApi = ProfileApi(interfaceOfUser);
-                  ProfileToggleBusinessUpdate200Response? response;
-                  try {
-                      response = await profileApi
-                        .profileToggleBusinessUpdate();
-                      setState(() {
-                        ConfigGeneralValues.getInstance().enableBusiness = response!.business;
-                      });
-                  }
-                  catch(e){
-
-                  }
-
-                }),
+            buildNotificationOptionRow(
+                "کسب و کار", ConfigGeneralValues.getInstance().enableBusiness,
+                () async {
+              final profileApi = ProfileApi(interfaceOfUser);
+              ProfileToggleBusinessUpdate200Response? response;
+              try {
+                response = await profileApi.profileToggleBusinessUpdate();
+                setState(() {
+                  ConfigGeneralValues.getInstance().enableBusiness =
+                      response!.business;
+                });
+              } catch (e) {}
+            }),
             // buildNotificationOptionRow("Account activity", true),
             // buildNotificationOptionRow("Opportunity", false),
             const SizedBox(

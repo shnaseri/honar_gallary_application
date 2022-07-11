@@ -356,19 +356,24 @@ class ArtPieceTile extends StatelessWidget {
               ],
             ),
           ),
-          Positioned(child: Container(
-            padding: EdgeInsets.all(8),
-            decoration: BoxDecoration(
-              color: ColorPallet.colorPalletSambucus,
-              borderRadius: BorderRadius.only(topLeft: Radius.circular(10),bottomRight: Radius.circular(10))
-            ),
-            child: Center(
-              child: Text(
-                Numeral(artPiece.price!).toString(),
-                style: TextStyle(color: Colors.white),
+          Positioned(
+            child: Container(
+              padding: EdgeInsets.all(8),
+              decoration: BoxDecoration(
+                  color: ColorPallet.colorPalletSambucus,
+                  borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(10),
+                      bottomRight: Radius.circular(10))),
+              child: Center(
+                child: Text(
+                  Numeral(artPiece.price!).toString(),
+                  style: TextStyle(color: Colors.white),
+                ),
               ),
             ),
-          ),top: 0,left: 0,)
+            top: 0,
+            left: 0,
+          )
         ],
       ),
     );

@@ -202,12 +202,11 @@ class _ArtPiecePageState extends State<ArtPiecePage> {
                                         chatCode: getChatCode(
                                             state.artPiece.owner.id!),
                                         index: 1,
-                                        contact:
-                                        ArtGalleryRead200ResponseOwner(
-                                                fullName: state
-                                                    .artPiece.owner.fullName,
-                                                profilePhoto: state.artPiece
-                                                    .owner.profilePhoto),
+                                        contact: ArtGalleryRead200ResponseOwner(
+                                            fullName:
+                                                state.artPiece.owner.fullName,
+                                            profilePhoto: state
+                                                .artPiece.owner.profilePhoto),
                                       ),
                                     ));
                               },

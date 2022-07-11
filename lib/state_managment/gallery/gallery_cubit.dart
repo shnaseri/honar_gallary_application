@@ -25,8 +25,12 @@ class GalleryCubit extends Cubit<GalleryState> {
           await artApi.artGalleryRead(userId.toString(), business: isBusiness);
       ConfigGeneralValues.getInstance().enableBusiness =
           response2003!.profile!.isBusiness;
-      emit(GalleryLoaded(response2003.owner!, response2003.postsCount!,
-          response2003.posts, response2003.profile!,response2003.profile!.isBusiness));
+      emit(GalleryLoaded(
+          response2003.owner!,
+          response2003.postsCount!,
+          response2003.posts,
+          response2003.profile!,
+          response2003.profile!.isBusiness));
     } catch (e) {
       print(e);
       emit(GalleryError());

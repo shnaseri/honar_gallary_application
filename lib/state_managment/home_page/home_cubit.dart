@@ -17,7 +17,7 @@ class HomeCubit extends Cubit<HomeState> {
     try {
       emit(HomeLoading());
       CoreHomepageList200Response? coreHomepageList200Response =
-      await coreApi.coreHomepageList(page: 1, pageCount: 20);
+          await coreApi.coreHomepageList(page: 1, pageCount: 20);
       print(coreHomepageList200Response);
       emit(HomeLoaded(coreHomepageList200Response!));
     } catch (e) {

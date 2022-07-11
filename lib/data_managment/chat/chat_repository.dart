@@ -22,8 +22,7 @@ class ChatRepository {
     // client.disconnect();
   }
 
-  pushMessage(
-      ArtGalleryRead200ResponseOwner user, String messageText) async {
+  pushMessage(ArtGalleryRead200ResponseOwner user, String messageText) async {
     try {
       // String otpToken = GeneralValues.generalValues.token;
       // await chatNetworkService.pushMessageToServer(otpToken,user.token,messageText);
@@ -34,8 +33,8 @@ class ChatRepository {
     }
   }
 
-  Future<Message> getNewMessageAdd(ArtGalleryRead200ResponseOwner user,
-      String messageText, bool own) async {
+  Future<Message> getNewMessageAdd(
+      ArtGalleryRead200ResponseOwner user, String messageText, bool own) async {
     var message = Message(
         content: messageText,
         isUserSender: own,
