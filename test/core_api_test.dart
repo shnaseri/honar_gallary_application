@@ -22,9 +22,9 @@ Future<void> main() async {
   final instance = CoreApi(user);
   group('tests for CoreApi', () {
     test('test coreHomePage', () async {
-      final response  = await instance.coreHomepageList(pageCount: 10,page: 1);
-      expect(response!.stats.runtimeType , CoreHomepageList200ResponseStats );
-      expect(response.offers.runtimeType , CoreHomepageList200ResponseOffers );
+      final response = await instance.coreHomepageList(pageCount: 10, page: 1);
+      expect(response!.stats.runtimeType, CoreHomepageList200ResponseStats);
+      expect(response.offers.runtimeType, CoreHomepageList200ResponseOffers);
     });
   });
 }

@@ -23,7 +23,7 @@ Future<void> main() async {
   group('tests for CategoryApi', () {
     //Future<List<Category>> categoryGetAllList() async
     test('test categoryGetAllList', () async {
-      final response  = await instance.categoryGetAllList();
+      final response = await instance.categoryGetAllList();
       expect(response!.first.runtimeType, Category);
     });
   });

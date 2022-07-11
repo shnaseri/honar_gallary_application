@@ -22,16 +22,16 @@ Future<void> main() async {
       authentication: HttpBearerAuth()..accessToken = response!.access);
   final instance = ProfileApi(user);
   group('tests for ProfileApi', () {
-
     //Future<ProfileFollowUpdate200Response> profileFollowUpdate(String id) async
     test('test profileFollowUpdate', () async {
       final response = await instance.profileFollowUpdate("3");
-      expect(response!.follow.runtimeType,bool);
+      expect(response!.follow.runtimeType, bool);
     });
 
     //Future<FullUser> profilePartialUpdate(int id, FullUser data) async
     test('test profilePartialUpdate', () async {
-      final response = await instance.profilePartialUpdate(10,FullUser(email: "test@gmail.com",firstName: "1"));
+      final response = await instance.profilePartialUpdate(
+          10, FullUser(email: "test@gmail.com", firstName: "1"));
       expect(response.runtimeType, FullUser);
     });
 
@@ -43,7 +43,8 @@ Future<void> main() async {
 
     //Future<FullUser> profileUpdate(int id, FullUser data) async
     test('test profileUpdate', () async {
-      final response = await instance.profilePartialUpdate(10,FullUser(email: "test@gmail.com",firstName: "1"));
+      final response = await instance.profilePartialUpdate(
+          10, FullUser(email: "test@gmail.com", firstName: "1"));
       expect(response.runtimeType, FullUser);
     });
   });

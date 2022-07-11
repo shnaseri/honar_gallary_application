@@ -28,17 +28,16 @@ Future<void> main() async {
     test('test authLoginCreate', () async {
       final response = await instance.authLoginCreate(
           TokenObtainPair(email: "test@gmail.com", password: "123456"));
-      expect(response!.access.runtimeType,String);
+      expect(response!.access.runtimeType, String);
       user = ApiClient(
           authentication: HttpBearerAuth()..accessToken = response.access);
       instance = AuthApi(user);
     });
 
-
     //Future<AuthMeList200Response> authMeList() async
     test('test authMeList', () async {
       final response = await instance.authMeList();
-      expect(response!.userId,10);
+      expect(response!.userId, 10);
       userId = response.userId!;
     });
 
@@ -56,7 +55,7 @@ Future<void> main() async {
     //Future<ArtArtPieceUpdate200Response> authSendOtpCodeCreate(String id) async
     test('test authSendOtpCodeCreate', () async {
       final response = await instance.authSendOtpCodeCreate(userId.toString());
-      expect(response!.success,true);
+      expect(response!.success, true);
     });
 
     // Takes a token and indicates if it is valid.  This view provides no information about a token's fitness for a particular use.

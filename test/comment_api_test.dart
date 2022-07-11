@@ -25,14 +25,15 @@ Future<void> main() async {
   group('tests for CommentApi', () {
     //Future<SingleComment> commentAddCommentCreate(String artPieceId, AddComment data) async
     test('test commentAddCommentCreate', () async {
-      final response  = await instance.commentAddCommentCreate(artPieceId,AddComment(content: "test"));
+      final response = await instance.commentAddCommentCreate(
+          artPieceId, AddComment(content: "test"));
       expect(response.runtimeType, SingleComment);
     });
 
     //Future<List<Comments>> commentAllCommentsList(String artPieceId) async
     test('test commentAllCommentsList', () async {
-      final response  = await instance.commentAllCommentsList(artPieceId);
-      expect(response!.first.runtimeType,Comments );
+      final response = await instance.commentAllCommentsList(artPieceId);
+      expect(response!.first.runtimeType, Comments);
     });
   });
 }
