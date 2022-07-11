@@ -609,8 +609,7 @@ class _OfferCardState extends State<OfferCard> {
                     ),
                   ),
                   Directionality(
-                    textDirection:
-                        widget.rtl ? TextDirection.ltr : TextDirection.rtl,
+                    textDirection: TextDirection.rtl,
                     child: Expanded(
                         child: Container(
                       margin: EdgeInsets.symmetric(horizontal: 10, vertical: 6),
